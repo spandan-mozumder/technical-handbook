@@ -1,0 +1,58 @@
+# Prometheus
+
+Metrics collection, PromQL, exporters, and alerting
+
+## Prometheus
+
+Prometheus is a time-series database and monitoring system. It pulls metrics from targets at regular intervals, stores them, and supports powerful querying with PromQL.
+
+**Prometheus Architecture**
+
+```mermaid
+flowchart LR
+    APP["App /metrics"] -->|"scrape"| P["Prometheus"]
+    EXP["Node Exporter"] -->|"scrape"| P
+    P -->|"query"| G["Grafana"]
+    P -->|"alert rules"| AM["Alertmanager"]
+    AM -->|"notify"| S["Slack / PagerDuty / Email"]
+    style P fill:#e6522c,color:#fff
+    style G fill:#f97316,color:#fff
+```
+
+## Metric Types & PromQL
+
+- Counter — only increases (requests_total, errors_total)
+- Gauge — can go up or down (temperature, active_connections)
+- Histogram — distribution of values in buckets (request_duration_seconds)
+- Summary — similar to histogram with quantiles
+
+```promql
+# Request rate (per second) over 5 minutes
+rate(http_requests_total[5m])
+
+# Error rate percentage
+rate(http_requests_total{status=~"5.."}[5m])
+/ rate(http_requests_total[5m]) * 100
+
+# 95th percentile latency
+histogram_quantile(0.95, rate(http_request_duration_seconds_bucket[5m]))
+
+# CPU usage per pod
+rate(container_cpu_usage_seconds_total{pod=~"myapp.*"}[5m])
+
+# Memory usage in MB
+container_memory_usage_bytes{pod=~"myapp.*"} / 1024 / 1024
+```
+
+## Exporters
+
+- Node Exporter — system metrics (CPU, memory, disk, network)
+- cAdvisor — container metrics (built into kubelet)
+- Blackbox Exporter — probe endpoints (HTTP, DNS, TCP)
+- App-level — instrument code with client libraries (prom-client for Node.js)
+
+<QA question="Counter vs Gauge — when to use which?">
+
+Counter: for things that only go up — requests served, errors occurred, bytes sent. Always use rate() to get useful per-second values. Gauge: for things that fluctuate — temperature, queue depth, active users. Can be used directly.
+
+</QA>

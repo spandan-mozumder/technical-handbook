@@ -1,0 +1,99 @@
+# Authentication & Security
+
+JWT, sessions, and security best practices
+
+## JWT Authentication
+
+```typescript
+// Auth & Security
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+
+const SECRET = process.env.JWT_SECRET!;
+
+// Login
+async function login(email: string, password: string) {
+  const user = await db.findUserByEmail(email);
+  if (!user) throw new Error('User not found');
+
+  const valid = await bcrypt.compare(password, user.passwordHash);
+  if (!valid) throw new Error('Invalid password');
+
+  const token = jwt.sign(
+    { userId: user.id, role: user.role },
+    SECRET,
+    { expiresIn: '24h' }
+  );
+  return { token, user: { id: user.id, name: user.name } };
+}
+
+// Verify middleware
+function requireAuth(req: Request, res: Response, next: NextFunction) {
+  const token = req.headers.authorization?.split(' ')[1];
+  if (!token) return res.status(401).json({ error: 'No token' });
+  try {
+    req.user = jwt.verify(token, SECRET);
+    next();
+  } catch {
+    res.status(403).json({ error: 'Invalid token' });
+  }
+}
+
+// Role-based access
+function requireRole(...roles: string[]) {
+  return (req: any, res: any, next: any) => {
+    if (!roles.includes(req.user?.role)) {
+      return res.status(403).json({ error: 'Forbidden' });
+    }
+    next();
+  };
+}
+```
+
+## Security Best Practices
+
+- Use helmet middleware — sets security headers (CSP, HSTS, etc.)
+- Enable CORS properly — whitelist specific origins, not '*'
+- Rate limiting — prevent brute force (express-rate-limit)
+- Input validation — use zod or joi for request body validation
+- SQL injection — use parameterized queries, never string concatenation
+- XSS prevention — sanitize user input, use CSP headers
+- HTTPS only — redirect HTTP to HTTPS in production
+- Environment variables — never commit secrets to code
+
+## Error Handling
+
+```typescript
+// Global Error Handler
+// Custom error class
+class AppError extends Error {
+  constructor(public statusCode: number, message: string) {
+    super(message);
+  }
+}
+
+// Async wrapper (avoids try/catch in every route)
+const asyncHandler = (fn: Function) => (req: Request, res: Response, next: NextFunction) =>
+  Promise.resolve(fn(req, res, next)).catch(next);
+
+// Usage
+app.get('/api/users/:id', asyncHandler(async (req, res) => {
+  const user = await db.findUser(req.params.id);
+  if (!user) throw new AppError(404, 'User not found');
+  res.json(user);
+}));
+
+// Global error handler (MUST be last middleware, 4 params)
+app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
+  const status = err.statusCode || 500;
+  res.status(status).json({
+    error: status === 500 ? 'Internal server error' : err.message,
+  });
+});
+```
+
+<QA question="Where should you store JWT tokens on the client?">
+
+HttpOnly cookies are safest — they can't be accessed by JavaScript (prevents XSS theft). Avoid localStorage (vulnerable to XSS). If using cookies, add SameSite=Strict and Secure flags. For SPAs, httpOnly cookies with CSRF tokens is the gold standard.
+
+</QA>

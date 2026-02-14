@@ -1,0 +1,78 @@
+# Abstraction
+
+Hiding complexity behind simple interfaces
+
+## Abstraction
+
+Abstraction hides complex implementation details and shows only essential features to the user. It's achieved through abstract classes and interfaces. It reduces complexity and isolates the impact of changes.
+
+```java
+// Abstract Classes vs Interfaces
+// Abstract Class — partial implementation
+abstract class Vehicle {
+    protected String brand;
+
+    Vehicle(String brand) {
+        this.brand = brand;
+    }
+
+    // Concrete method (shared behavior)
+    public void startEngine() {
+        System.out.println(brand + " engine starting...");
+    }
+
+    // Abstract methods (must be implemented by subclasses)
+    abstract void accelerate();
+    abstract void brake();
+    abstract double fuelEfficiency();
+}
+
+// Interface — pure contract (no state)
+interface GPS {
+    void navigate(String destination);
+    double getDistanceTo(String destination);
+}
+
+interface Bluetooth {
+    void connect(String device);
+    void disconnect();
+}
+
+// Concrete class implementing both
+class Tesla extends Vehicle implements GPS, Bluetooth {
+    Tesla() { super("Tesla"); }
+
+    @Override
+    void accelerate() { System.out.println("Electric acceleration"); }
+
+    @Override
+    void brake() { System.out.println("Regenerative braking"); }
+
+    @Override
+    double fuelEfficiency() { return 0; } // Electric!
+
+    @Override
+    public void navigate(String dest) {
+        System.out.println("Navigating to " + dest);
+    }
+
+    @Override
+    public double getDistanceTo(String dest) { return 10.5; }
+
+    @Override
+    public void connect(String device) {
+        System.out.println("Connected to " + device);
+    }
+
+    @Override
+    public void disconnect() {
+        System.out.println("Disconnected");
+    }
+}
+```
+
+<QA question="When to use abstract class vs interface?">
+
+Use abstract class when: you want to share code (concrete methods) among closely related classes, you need non-public members, you need constructor logic. Use interface when: you want to specify a contract that unrelated classes can implement, you need multiple inheritance, you want loose coupling. In Java 8+, interfaces can have default methods, blurring the line.
+
+</QA>

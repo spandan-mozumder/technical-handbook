@@ -1,0 +1,62 @@
+# Interface Segregation Principle
+
+Many small interfaces over one large interface
+
+## Interface Segregation Principle (ISP)
+
+Clients should not be forced to depend on interfaces they don't use. Instead of one fat interface, create many small, specific interfaces so that implementing classes only need to know about the methods that are of interest to them.
+
+```java
+// ❌ ISP Violation
+// FAT interface — forces all workers to implement everything
+interface Worker {
+    void work();
+    void eat();
+    void sleep();
+    void attendMeeting();
+    void writeCode();
+}
+
+// Robot can't eat or sleep!
+class Robot implements Worker {
+    public void work() { /* OK */ }
+    public void eat() { /* Can't eat! Forced to implement */ }
+    public void sleep() { /* Can't sleep! */ }
+    public void attendMeeting() { /* Can't attend! */ }
+    public void writeCode() { /* OK */ }
+}
+```
+
+```java
+// ✅ ISP Applied
+// Segregated interfaces
+interface Workable {
+    void work();
+}
+
+interface Eatable {
+    void eat();
+}
+
+interface Sleepable {
+    void sleep();
+}
+
+interface Codeable {
+    void writeCode();
+}
+
+// Human implements all relevant interfaces
+class HumanWorker implements Workable, Eatable, Sleepable, Codeable {
+    public void work() { System.out.println("Working..."); }
+    public void eat() { System.out.println("Eating lunch..."); }
+    public void sleep() { System.out.println("Sleeping..."); }
+    public void writeCode() { System.out.println("Writing code..."); }
+}
+
+// Robot only implements what it can do
+class RobotWorker implements Workable, Codeable {
+    public void work() { System.out.println("Robot working..."); }
+    public void writeCode() { System.out.println("Robot coding..."); }
+}
+```

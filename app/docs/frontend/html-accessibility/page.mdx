@@ -1,0 +1,62 @@
+# Accessibility (a11y)
+
+ARIA roles, alt attributes, and inclusive design patterns
+
+## Accessibility Principles
+
+Web accessibility (a11y) ensures content is usable by everyone, including people using screen readers, keyboard navigation, or other assistive technologies. It's a legal requirement in many jurisdictions (ADA, WCAG).
+
+```html
+// Accessibility Best Practices
+<!-- ARIA roles and attributes -->
+<button aria-label="Close dialog" aria-expanded="false">×</button>
+
+<!-- Form accessibility -->
+<label for="email">Email Address</label>
+<input type="email" id="email" name="email"
+  aria-required="true"
+  aria-describedby="email-help"
+  aria-invalid="false" />
+<span id="email-help">We'll never share your email.</span>
+
+<!-- Image alt text -->
+<img src="chart.png" alt="Bar chart showing 40% revenue increase in Q4" />
+<img src="decorative-line.svg" alt="" role="presentation" />
+
+<!-- Skip navigation -->
+<a href="#main-content" class="skip-link">Skip to main content</a>
+
+<!-- Landmark roles (semantic HTML provides these automatically) -->
+<nav aria-label="Primary">...</nav>
+<main id="main-content">...</main>
+<aside aria-label="Related content">...</aside>
+
+<!-- Live regions for dynamic updates -->
+<div aria-live="polite" aria-atomic="true">
+  3 items in your cart
+</div>
+
+<!-- Dialog/Modal -->
+<div role="dialog" aria-modal="true" aria-labelledby="dialog-title">
+  <h2 id="dialog-title">Confirm Action</h2>
+  <button>Cancel</button>
+  <button>Confirm</button>
+</div>
+```
+
+## Key Rules
+
+- Use semantic HTML — it provides built-in accessibility
+- Every image needs an alt attribute (empty alt='' for decorative images)
+- All form inputs need associated labels
+- Ensure keyboard navigation works (Tab, Enter, Escape)
+- Color alone should never convey meaning
+- Maintain 4.5:1 contrast ratio for normal text
+- Use aria-live for dynamic content updates
+- Test with screen readers (VoiceOver, NVDA)
+
+<QA question="When should you use ARIA vs semantic HTML?">
+
+Prefer semantic HTML — it has built-in accessibility. Use ARIA only when HTML alone can't express the interaction (custom widgets, SPAs, dynamic content). The first rule of ARIA: don't use ARIA if you can use a native HTML element.
+
+</QA>

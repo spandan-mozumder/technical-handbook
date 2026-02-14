@@ -1,0 +1,58 @@
+# Document Structure Tags
+
+Essential tags that form the skeleton of every HTML document
+
+## Document Structure
+
+Every HTML document follows a specific structure. These tags form the skeleton that browsers use to parse and render content.
+
+```html
+// Complete Document Structure
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <!-- Metadata — not visible on page -->
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Page description for SEO" />
+  <title>Page Title — Site Name</title>
+  <link rel="stylesheet" href="styles.css" />
+  <link rel="icon" href="favicon.ico" />
+  <base href="https://example.com/" />
+  <style>
+    body { font-family: system-ui; }
+  </style>
+</head>
+<body>
+  <!-- Visible content goes here -->
+  <h1>Content</h1>
+  <script src="app.js" defer></script>
+</body>
+</html>
+```
+
+## Tag Reference
+
+- `<html>` — Root element, wraps entire document. Use lang attribute for accessibility.
+- `<head>` — Contains metadata, styles, scripts, and links. Not rendered visually.
+- `<body>` — Contains all visible content rendered in the browser viewport.
+- `<title>` — Sets the page title shown in browser tab and search results.
+- `<meta>` — Defines metadata: charset, viewport, description, Open Graph tags.
+- `<link>` — Links external resources: stylesheets, icons, preloads.
+- `<style>` — Embeds CSS directly in the document head.
+- `<script>` — Embeds or links JavaScript. Use defer or async for performance.
+- `<base>` — Sets base URL for all relative links in the document.
+
+## Interview Q&A
+
+<QA question="What is the difference between defer and async on script tags?">
+
+defer downloads in parallel and executes after HTML parsing in order. async downloads in parallel and executes immediately when ready (order not guaranteed). Use defer for scripts that depend on DOM; async for independent analytics/tracking scripts.
+
+</QA>
+
+<QA question="Why is the viewport meta tag important?">
+
+Without it, mobile browsers render pages at desktop width (~980px) then scale down. The viewport meta tag tells browsers to use the device width, enabling responsive design.
+
+</QA>

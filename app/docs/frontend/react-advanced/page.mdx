@@ -1,0 +1,79 @@
+# Advanced React
+
+Reconciliation, Virtual DOM, Suspense, Server Components, and optimization
+
+## How React Renders
+
+**React Rendering Pipeline**
+
+```mermaid
+flowchart LR
+    JSX["JSX"] --> VDOM["Virtual DOM"]
+    VDOM --> Diff["Diffing / Reconciliation"]
+    Diff --> Patch["Minimal DOM Updates"]
+    Patch --> DOM["Real DOM"]
+    style VDOM fill:#3b82f6,color:#fff
+    style Diff fill:#8b5cf6,color:#fff
+    style DOM fill:#22c55e,color:#fff
+```
+
+React uses a Virtual DOM — a lightweight JS representation of the real DOM. On state change, React creates a new VDOM tree, diffs it against the previous one (reconciliation), and applies only the minimal changes to the real DOM.
+
+## Performance Optimization
+
+```tsx
+// Optimization Patterns
+import { memo, lazy, Suspense, startTransition } from "react";
+
+// React.memo — skip re-render if props haven't changed
+const ExpensiveList = memo(function ExpensiveList({ items }: { items: Item[] }) {
+  return <ul>{items.map(i => <li key={i.id}>{i.name}</li>)}</ul>;
+});
+
+// Lazy loading — code split components
+const HeavyChart = lazy(() => import("./HeavyChart"));
+function Dashboard() {
+  return (
+    <Suspense fallback={<div>Loading chart...</div>}>
+      <HeavyChart />
+    </Suspense>
+  );
+}
+
+// Transitions — mark non-urgent updates
+function SearchPage() {
+  const [query, setQuery] = useState("");
+  const [results, setResults] = useState([]);
+
+  function handleSearch(value: string) {
+    setQuery(value); // urgent — update input immediately
+    startTransition(() => {
+      setResults(filterResults(value)); // non-urgent — can be deferred
+    });
+  }
+}
+
+// Avoid: creating objects/arrays in JSX (new reference each render)
+// Bad:  <Child style={{ color: "red" }} />
+// Good: const style = useMemo(() => ({ color: "red" }), []);
+```
+
+## Server Components (RSC)
+
+- Server Components run on the server — zero JS sent to client
+- Can directly access databases, file system, secrets
+- Cannot use hooks, event handlers, or browser APIs
+- Client Components ('use client') handle interactivity
+- Default in Next.js App Router — components are server by default
+
+<QA question="What is reconciliation?">
+
+Reconciliation is React's diffing algorithm that compares the new VDOM tree with the previous one. It uses heuristics: (1) Different element types = destroy and rebuild, (2) Same type = update attributes, (3) Keys help identify moved items in lists. This makes updates O(n) instead of O(n³).
+
+</QA>
+
+<QA question="When does a component re-render?">
+
+A component re-renders when: (1) Its state changes, (2) Its parent re-renders (unless wrapped in memo), (3) Context it consumes changes. Props changing alone doesn't cause re-render — the parent re-rendering does.
+
+</QA>

@@ -1,0 +1,132 @@
+# Structural Patterns
+
+Adapter, Decorator, Facade, and Proxy
+
+## Structural Design Patterns
+
+Structural patterns are concerned with how classes and objects are composed to form larger structures. They help ensure that when one part of a system changes, the entire structure doesn't need to change.
+
+### Adapter Pattern
+
+Converts the interface of a class into another interface that clients expect. Lets classes work together that couldn't otherwise because of incompatible interfaces.
+
+```java
+// Adapter Pattern
+// Existing interface
+interface MediaPlayer {
+    void play(String filename);
+}
+
+// Third-party library with incompatible interface
+class AdvancedMediaLib {
+    void playMp4(String file) { System.out.println("Playing MP4: " + file); }
+    void playMkv(String file) { System.out.println("Playing MKV: " + file); }
+}
+
+// Adapter — bridges the gap
+class MediaAdapter implements MediaPlayer {
+    private AdvancedMediaLib lib = new AdvancedMediaLib();
+
+    @Override
+    public void play(String filename) {
+        if (filename.endsWith(".mp4")) {
+            lib.playMp4(filename);
+        } else if (filename.endsWith(".mkv")) {
+            lib.playMkv(filename);
+        }
+    }
+}
+
+// Client code uses the familiar MediaPlayer interface
+MediaPlayer player = new MediaAdapter();
+player.play("movie.mp4");
+```
+
+### Decorator Pattern
+
+```java
+// Decorator Pattern
+// Component interface
+interface Coffee {
+    String getDescription();
+    double getCost();
+}
+
+// Base component
+class SimpleCoffee implements Coffee {
+    public String getDescription() { return "Simple coffee"; }
+    public double getCost() { return 2.00; }
+}
+
+// Abstract decorator
+abstract class CoffeeDecorator implements Coffee {
+    protected Coffee decoratedCoffee;
+    CoffeeDecorator(Coffee coffee) { this.decoratedCoffee = coffee; }
+}
+
+// Concrete decorators
+class MilkDecorator extends CoffeeDecorator {
+    MilkDecorator(Coffee c) { super(c); }
+    public String getDescription() { return decoratedCoffee.getDescription() + ", milk"; }
+    public double getCost() { return decoratedCoffee.getCost() + 0.50; }
+}
+
+class SugarDecorator extends CoffeeDecorator {
+    SugarDecorator(Coffee c) { super(c); }
+    public String getDescription() { return decoratedCoffee.getDescription() + ", sugar"; }
+    public double getCost() { return decoratedCoffee.getCost() + 0.25; }
+}
+
+// Usage — stack decorators
+Coffee order = new SugarDecorator(new MilkDecorator(new SimpleCoffee()));
+System.out.println(order.getDescription()); // "Simple coffee, milk, sugar"
+System.out.println(order.getCost());        // 2.75
+```
+
+### Observer Pattern
+
+```java
+// Observer Pattern
+// Observer interface
+interface EventListener {
+    void update(String event, Object data);
+}
+
+// Subject (Publisher)
+class EventManager {
+    private Map<String, List<EventListener>> listeners = new HashMap<>();
+
+    public void subscribe(String event, EventListener listener) {
+        listeners.computeIfAbsent(event, k -> new ArrayList<>()).add(listener);
+    }
+
+    public void unsubscribe(String event, EventListener listener) {
+        listeners.getOrDefault(event, List.of()).remove(listener);
+    }
+
+    public void notify(String event, Object data) {
+        for (EventListener l : listeners.getOrDefault(event, List.of())) {
+            l.update(event, data);
+        }
+    }
+}
+
+// Concrete observers
+class LoggingListener implements EventListener {
+    public void update(String event, Object data) {
+        System.out.println("[LOG] " + event + ": " + data);
+    }
+}
+
+class AlertListener implements EventListener {
+    public void update(String event, Object data) {
+        System.out.println("[ALERT] " + event + "!");
+    }
+}
+
+// Usage
+EventManager em = new EventManager();
+em.subscribe("save", new LoggingListener());
+em.subscribe("error", new AlertListener());
+em.notify("save", "document.txt");
+```

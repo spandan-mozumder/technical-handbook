@@ -1,0 +1,63 @@
+# Liskov Substitution Principle
+
+Subtypes must be substitutable for base types
+
+## Liskov Substitution Principle (LSP)
+
+Subtypes must be substitutable for their base types without altering the correctness of the program. If class B extends class A, you should be able to use B anywhere A is expected without surprises.
+
+```java
+// ❌ LSP Violation - Rectangle/Square
+// Classic violation: Square extends Rectangle
+class Rectangle {
+    protected int width, height;
+
+    public void setWidth(int w) { width = w; }
+    public void setHeight(int h) { height = h; }
+    public int area() { return width * height; }
+}
+
+class Square extends Rectangle {
+    @Override
+    public void setWidth(int w) {
+        width = w;
+        height = w; // SURPRISE! Also changes height
+    }
+    @Override
+    public void setHeight(int h) {
+        width = h;  // SURPRISE! Also changes width
+        height = h;
+    }
+}
+
+// This breaks when using Square as Rectangle:
+void resize(Rectangle r) {
+    r.setWidth(5);
+    r.setHeight(10);
+    assert r.area() == 50; // FAILS for Square! Area = 100
+```
+
+```java
+// ✅ LSP Applied
+// Fix: Use a common Shape interface
+interface Shape {
+    double area();
+}
+
+class Rectangle implements Shape {
+    private final int width, height;
+    Rectangle(int w, int h) { width = w; height = h; }
+    public double area() { return width * height; }
+}
+
+class Square implements Shape {
+    private final int side;
+    Square(int s) { side = s; }
+    public double area() { return side * side; }
+}
+
+// Both work correctly when treated as Shape
+void printArea(Shape s) {
+    System.out.println("Area: " + s.area()); // Always correct!
+}
+```

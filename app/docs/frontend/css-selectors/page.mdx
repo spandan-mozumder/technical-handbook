@@ -1,0 +1,55 @@
+# CSS Selectors
+
+Targeting elements with universal, class, ID, attribute, and pseudo selectors
+
+## Selector Types
+
+```css
+// Selector Reference
+/* Universal */
+* { box-sizing: border-box; }
+
+/* Element */
+p { margin-bottom: 1rem; }
+
+/* Class */
+.btn { padding: 0.5rem 1rem; cursor: pointer; }
+
+/* ID (high specificity — use sparingly) */
+#hero { min-height: 100vh; }
+
+/* Attribute */
+input[type="email"] { border-color: blue; }
+a[href^="https"] { color: green; }  /* starts with */
+a[href$=".pdf"] { color: red; }     /* ends with */
+
+/* Descendant & Child */
+.nav a { color: white; }       /* any descendant */
+.nav > li { display: inline; } /* direct child only */
+
+/* Sibling */
+h2 + p { font-size: 1.2rem; }  /* adjacent sibling */
+h2 ~ p { color: gray; }        /* general sibling */
+
+/* Pseudo-classes */
+a:hover { text-decoration: underline; }
+li:first-child { font-weight: bold; }
+li:nth-child(odd) { background: #f5f5f5; }
+input:focus { outline: 2px solid blue; }
+input:invalid { border-color: red; }
+.card:not(.featured) { opacity: 0.8; }
+:is(h1, h2, h3) { line-height: 1.2; }
+:has(.error) { border: 2px solid red; }
+
+/* Pseudo-elements */
+.quote::before { content: '"'; font-size: 2rem; }
+p::first-line { font-weight: bold; }
+::selection { background: #3b82f6; color: white; }
+::placeholder { color: #999; }
+```
+
+<QA question="What is the :has() selector?">
+
+:has() is a 'parent selector' — it selects elements that contain matching children. Example: div:has(img) selects divs that contain images. It's a game-changer because CSS traditionally couldn't select parents based on children.
+
+</QA>

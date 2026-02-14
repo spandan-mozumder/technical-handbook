@@ -1,0 +1,62 @@
+# Pipes, Redirection & Processes
+
+Composing commands, managing I/O, and controlling processes
+
+## Pipes & Redirection
+
+```bash
+# Pipe — connect stdout of one command to stdin of next
+cat access.log | grep "ERROR" | sort | uniq -c | sort -rn | head -20
+
+# Redirection
+echo "hello" > file.txt     # write (overwrite)
+echo "world" >> file.txt    # append
+command 2> errors.log       # redirect stderr
+command > out.log 2>&1      # redirect both to file
+command &> /dev/null        # discard all output
+
+# Useful pipelines
+# Find largest files
+find / -type f -exec du -h {} + 2>/dev/null | sort -rh | head -20
+
+# Extract unique IPs from logs
+awk '{print $1}' access.log | sort -u | wc -l
+
+# Replace in all files
+grep -rl "old_text" ./src | xargs sed -i '' 's/old_text/new_text/g'
+
+# Monitor file changes
+watch -n 1 "wc -l app.log"
+
+# Parallel execution
+command1 & command2 & wait  # run both, wait for all
+```
+
+## Process Management
+
+```bash
+# Background & foreground
+long_command &          # run in background
+jobs                    # list background jobs
+fg %1                   # bring job 1 to foreground
+bg %1                   # resume stopped job in background
+
+# Process info
+ps aux                  # all processes
+pgrep -f "node"         # find process by name
+kill -15 <pid>          # graceful shutdown (SIGTERM)
+kill -9 <pid>           # force kill (SIGKILL)
+pkill -f "node server"  # kill by name pattern
+
+# System resources
+top / htop              # interactive process monitor
+df -h                   # disk space
+free -h                 # memory usage
+uptime                  # system uptime & load average
+```
+
+<QA question="Difference between > and >> redirection?">
+
+> overwrites the file completely. >> appends to the end of the file. Use > when you want a fresh file each time, >> when you want to accumulate (logs, append to configs).
+
+</QA>

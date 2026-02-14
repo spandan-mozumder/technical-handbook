@@ -1,0 +1,63 @@
+# BFS & DFS Patterns
+
+Graph and tree traversal strategies
+
+## BFS & DFS Deep Dive
+
+BFS explores level by level (queue-based), finding shortest paths in unweighted graphs. DFS explores as deep as possible first (stack/recursion-based), useful for topological sort, cycle detection, and backtracking.
+
+```typescript
+// BFS/DFS Applications
+// BFS: Level Order Traversal of Binary Tree
+function levelOrder(root: TreeNode<number> | null): number[][] {
+  if (!root) return [];
+  const result: number[][] = [];
+  const queue: TreeNode<number>[] = [root];
+  while (queue.length) {
+    const level: number[] = [];
+    const size = queue.length;
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift()!;
+      level.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    result.push(level);
+  }
+  return result;
+}
+
+// Topological Sort using DFS
+function topologicalSort(n: number, edges: [number, number][]): number[] {
+  const adj: number[][] = Array.from({ length: n }, () => []);
+  for (const [u, v] of edges) adj[u].push(v);
+  
+  const visited = new Set<number>();
+  const stack: number[] = [];
+  
+  function dfs(node: number, visiting: Set<number>): boolean {
+    if (visiting.has(node)) return false; // cycle
+    if (visited.has(node)) return true;
+    visiting.add(node);
+    for (const neighbor of adj[node]) {
+      if (!dfs(neighbor, visiting)) return false;
+    }
+    visiting.delete(node);
+    visited.add(node);
+    stack.push(node);
+    return true;
+  }
+  
+  for (let i = 0; i < n; i++) {
+    if (!visited.has(i) && !dfs(i, new Set())) return []; // cycle exists
+  }
+  return stack.reverse();
+}
+
+class TreeNode<T> {
+  val: T;
+  left: TreeNode<T> | null = null;
+  right: TreeNode<T> | null = null;
+  constructor(val: T) { this.val = val; }
+}
+```

@@ -1,0 +1,79 @@
+# Clustering & Worker Threads
+
+Scaling Node.js across CPU cores and handling CPU-intensive tasks
+
+## Cluster Module
+
+Node.js runs on a single core by default. The cluster module forks multiple processes to utilize all CPU cores. Each worker is a separate process with its own event loop and memory.
+
+```typescript
+// Cluster & Worker Threads
+// Cluster — multiple processes
+import cluster from 'cluster';
+import os from 'os';
+
+if (cluster.isPrimary) {
+  const cpus = os.cpus().length;
+  console.log(`Primary ${process.pid} forking ${cpus} workers`);
+  for (let i = 0; i < cpus; i++) cluster.fork();
+  cluster.on('exit', (worker) => {
+    console.log(`Worker ${worker.process.pid} died, restarting...`);
+    cluster.fork(); // auto-restart
+  });
+} else {
+  // Each worker runs the server
+  import('./server').then(m => m.start());
+}
+
+// Worker Threads — for CPU-intensive in same process
+import { Worker, parentPort, workerData } from 'worker_threads';
+
+function runHeavyTask(data: number[]): Promise<number> {
+  return new Promise((resolve, reject) => {
+    const worker = new Worker('./worker.ts', { workerData: data });
+    worker.on('message', resolve);
+    worker.on('error', reject);
+  });
+}
+
+// worker.ts
+const data = workerData as number[];
+const result = data.reduce((a, b) => a + b, 0);
+parentPort?.postMessage(result);
+```
+
+## File System
+
+```typescript
+// File System Operations
+import { readFile, writeFile, mkdir, readdir, stat } from 'fs/promises';
+import { existsSync } from 'fs';
+import path from 'path';
+
+// Read & write
+const data = await readFile('config.json', 'utf-8');
+const config = JSON.parse(data);
+
+await writeFile('output.json', JSON.stringify(config, null, 2));
+
+// Directory operations
+await mkdir('dist/assets', { recursive: true });
+const files = await readdir('./src', { withFileTypes: true });
+const tsFiles = files.filter(f => f.isFile() && f.name.endsWith('.ts'));
+
+// File info
+const info = await stat('package.json');
+console.log(info.size, info.mtime);
+
+// Path utilities
+path.join('/Users', 'project', 'src');   // OS-specific separators
+path.resolve('./src', '../dist');         // absolute path
+path.extname('file.ts');                  // '.ts'
+path.basename('/a/b/file.ts', '.ts');     // 'file'
+```
+
+<QA question="Cluster vs Worker Threads — when to use which?">
+
+Cluster: multiple processes, each with own memory, ideal for scaling HTTP servers across cores. Worker Threads: threads within one process, share memory via SharedArrayBuffer, ideal for CPU-intensive tasks (parsing, crypto, image processing) without blocking the event loop.
+
+</QA>

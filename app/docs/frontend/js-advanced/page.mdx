@@ -1,0 +1,84 @@
+# Advanced JavaScript
+
+Prototypes, this binding, modules, memory, debouncing/throttling
+
+## Prototypes & this
+
+```js
+// Prototypes & this Binding
+// Prototypal inheritance
+const animal = { speak() { return `${this.name} makes a sound`; } };
+const dog = Object.create(animal);
+dog.name = "Rex";
+dog.speak(); // "Rex makes a sound"
+
+// 'this' binding rules (in priority order):
+// 1. new — creates new object
+// 2. explicit — call/apply/bind
+// 3. implicit — object.method()
+// 4. default — global (or undefined in strict mode)
+
+class EventEmitter {
+  constructor() { this.listeners = new Map(); }
+  on(event, fn) {
+    if (!this.listeners.has(event)) this.listeners.set(event, []);
+    this.listeners.get(event).push(fn);
+  }
+  emit(event, ...args) {
+    this.listeners.get(event)?.forEach(fn => fn(...args));
+  }
+}
+```
+
+## Debouncing & Throttling
+
+```js
+// Performance Utilities
+// Debounce — wait until user stops typing
+function debounce(fn, delay) {
+  let timer;
+  return (...args) => {
+    clearTimeout(timer);
+    timer = setTimeout(() => fn(...args), delay);
+  };
+}
+const search = debounce(query => fetchResults(query), 300);
+
+// Throttle — limit to once per interval
+function throttle(fn, limit) {
+  let inThrottle = false;
+  return (...args) => {
+    if (!inThrottle) {
+      fn(...args);
+      inThrottle = true;
+      setTimeout(() => (inThrottle = false), limit);
+    }
+  };
+}
+const handleScroll = throttle(updatePosition, 100);
+
+// ES Modules
+// Named exports
+export const PI = 3.14;
+export function add(a, b) { return a + b; }
+
+// Default export
+export default class Calculator { }
+
+// Import
+// import Calculator, { PI, add } from './math.js';
+```
+
+## Memory Management
+
+- JavaScript uses garbage collection (mark-and-sweep algorithm)
+- Memory leaks: forgotten timers, detached DOM nodes, closures holding references
+- Use WeakMap/WeakSet for cache — entries are garbage-collected when key is dereferenced
+- Avoid global variables — they persist for app lifetime
+- Use Chrome DevTools Memory tab to profile heap snapshots
+
+<QA question="Difference between debounce and throttle?">
+
+Debounce waits until activity stops (e.g., search input — fire after user stops typing). Throttle limits execution rate (e.g., scroll handler — fire at most once per 100ms). Debounce = 'wait then fire'. Throttle = 'fire at intervals'.
+
+</QA>

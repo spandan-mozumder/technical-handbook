@@ -1,0 +1,33 @@
+# CAP Theorem
+
+Consistency, Availability, and Partition Tolerance trade-offs
+
+## CAP Theorem
+
+CAP theorem states that in a distributed system, you can only guarantee two of three properties simultaneously: Consistency, Availability, and Partition Tolerance. Since network partitions are inevitable, the real choice is between consistency and availability.
+
+**CAP Triangle**
+
+```mermaid
+graph TD
+    A["CAP Theorem"] --> B["Consistency<br/>All nodes see same data"]
+    A --> C["Availability<br/>Every request gets response"]
+    A --> D["Partition Tolerance<br/>Works despite network splits"]
+    B ---|"CP Systems"| D
+    C ---|"AP Systems"| D
+    style B fill:#89b4fa,color:#1e1e2e
+    style C fill:#a6e3a1,color:#1e1e2e
+    style D fill:#f9e2af,color:#1e1e2e
+```
+
+### System Categories
+
+- CP (Consistency + Partition Tolerance): MongoDB, HBase, Redis Cluster — favors correctness over availability. On partition, some nodes refuse requests.
+- AP (Availability + Partition Tolerance): Cassandra, DynamoDB, CouchDB — favors availability over consistency. On partition, nodes serve potentially stale data.
+- CA (Consistency + Availability): Traditional RDBMS (single node) — not truly distributed, so partition tolerance isn't needed.
+
+<Callout variant="info">
+
+In practice, most systems use tunable consistency. For example, Cassandra lets you set consistency level per query (ONE, QUORUM, ALL), trading between consistency and availability on a per-request basis.
+
+</Callout>

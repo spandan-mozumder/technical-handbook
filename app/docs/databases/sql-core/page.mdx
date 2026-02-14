@@ -1,0 +1,66 @@
+# Core SQL Commands
+
+SELECT, INSERT, UPDATE, DELETE, JOIN, GROUP BY, and more
+
+## Essential SQL
+
+```sql
+-- SELECT with filtering and ordering
+SELECT name, email, age FROM users WHERE age > 18 ORDER BY name LIMIT 10;
+
+-- INSERT
+INSERT INTO users (name, email, age) VALUES ('Alice', 'alice@ex.com', 28);
+
+-- UPDATE
+UPDATE users SET age = 29, updated_at = NOW() WHERE email = 'alice@ex.com';
+
+-- DELETE
+DELETE FROM users WHERE status = 'inactive' AND last_login < NOW() - INTERVAL '1 year';
+
+-- JOINs
+SELECT u.name, COUNT(o.id) AS order_count
+FROM users u
+LEFT JOIN orders o ON u.id = o.user_id
+GROUP BY u.id, u.name
+HAVING COUNT(o.id) > 5
+ORDER BY order_count DESC;
+
+-- Window functions
+SELECT name, department, salary,
+  RANK() OVER (PARTITION BY department ORDER BY salary DESC) AS dept_rank,
+  AVG(salary) OVER (PARTITION BY department) AS dept_avg
+FROM employees;
+
+-- Subqueries
+SELECT * FROM users WHERE id IN (
+  SELECT user_id FROM orders WHERE total > 100
+);
+
+-- INDEX (speed up queries)
+CREATE INDEX idx_users_email ON users (email);
+
+-- VIEW (saved query)
+CREATE VIEW active_users AS
+  SELECT * FROM users WHERE status = 'active';
+
+-- TRANSACTION
+BEGIN;
+  UPDATE accounts SET balance = balance - 100 WHERE id = 1;
+  UPDATE accounts SET balance = balance + 100 WHERE id = 2;
+COMMIT;
+```
+
+## JOIN Types
+
+- INNER JOIN — only matching rows from both tables
+- LEFT JOIN — all rows from left table + matches from right (NULL if no match)
+- RIGHT JOIN — all rows from right table + matches from left
+- FULL OUTER JOIN — all rows from both tables
+- CROSS JOIN — cartesian product (every combination)
+- Self JOIN — table joined with itself (e.g., employee → manager)
+
+<QA question="What is the difference between WHERE and HAVING?">
+
+WHERE filters rows BEFORE grouping (can't use aggregate functions). HAVING filters groups AFTER GROUP BY (can use COUNT, SUM, AVG, etc.). Example: WHERE age > 18 ... GROUP BY city HAVING COUNT(*) > 10.
+
+</QA>

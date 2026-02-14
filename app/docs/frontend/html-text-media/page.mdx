@@ -1,0 +1,57 @@
+# Text & Media Elements
+
+Content tags for text formatting, images, audio, and video
+
+## Text Elements
+
+- `<h1>`–`<h6>` — Headings. One `<h1>` per page, maintain hierarchy.
+- `<p>` — Paragraphs of text
+- `<span>` — Inline container for styling/scripting
+- `<div>` — Block container (use semantic tags when possible)
+- `<br>` — Line break (avoid for spacing — use CSS margin)
+- `<hr>` — Thematic break (horizontal rule)
+- `<pre>` — Preformatted text (preserves whitespace)
+- `<blockquote>` — Extended quotation from another source
+- `<code>` — Inline code snippet
+- `<strong>` — Strong importance (bold), `<em>` — Emphasis (italic)
+
+## Media Elements
+
+```html
+// Media Examples
+<!-- Responsive image with fallbacks -->
+<picture>
+  <source srcset="hero.webp" type="image/webp" />
+  <source srcset="hero.jpg" type="image/jpeg" />
+  <img src="hero.jpg" alt="Mountain landscape" 
+       loading="lazy" width="800" height="400" />
+</picture>
+
+<!-- Video with subtitles -->
+<video controls width="640" poster="thumb.jpg" preload="metadata">
+  <source src="video.mp4" type="video/mp4" />
+  <source src="video.webm" type="video/webm" />
+  <track kind="subtitles" src="subs.vtt" srclang="en" label="English" />
+  Your browser doesn't support video.
+</video>
+
+<!-- Audio -->
+<audio controls preload="none">
+  <source src="podcast.mp3" type="audio/mpeg" />
+  <source src="podcast.ogg" type="audio/ogg" />
+</audio>
+
+<!-- Canvas for dynamic graphics -->
+<canvas id="game" width="400" height="300"></canvas>
+
+<!-- Inline SVG -->
+<svg viewBox="0 0 24 24" width="24" height="24">
+  <circle cx="12" cy="12" r="10" fill="#3b82f6" />
+</svg>
+```
+
+<QA question="Why use loading='lazy' on images?">
+
+Lazy loading defers off-screen image downloads until the user scrolls near them. This improves initial page load time, reduces bandwidth, and improves Core Web Vitals (especially LCP for below-fold images).
+
+</QA>

@@ -1,0 +1,46 @@
+# Event Loop
+
+How JavaScript handles async operations under the hood
+
+## The Event Loop
+
+JavaScript is single-threaded but non-blocking thanks to the event loop. It continuously checks: is the call stack empty? If so, take the next task from the queue.
+
+**Event Loop Architecture**
+
+```mermaid
+flowchart TD
+    CS["Call Stack"] -->|"async operation"| WA["Web APIs / Node APIs"]
+    WA -->|"callback ready"| MQ["Microtask Queue (Promises, queueMicrotask)"]
+    WA -->|"callback ready"| TQ["Task Queue (setTimeout, I/O, events)"]
+    MQ -->|"ALL microtasks first"| EL["Event Loop"]
+    TQ -->|"one task at a time"| EL
+    EL -->|"push to stack"| CS
+    style CS fill:#3b82f6,color:#fff
+    style MQ fill:#8b5cf6,color:#fff
+    style TQ fill:#f97316,color:#fff
+    style EL fill:#22c55e,color:#fff
+```
+
+```js
+// Event Loop Priority
+console.log("1: sync");
+
+setTimeout(() => console.log("2: setTimeout"), 0);
+
+Promise.resolve().then(() => console.log("3: microtask"));
+
+queueMicrotask(() => console.log("4: queueMicrotask"));
+
+console.log("5: sync");
+
+// Output: 1, 5, 3, 4, 2
+// Microtasks (Promises) always run BEFORE macrotasks (setTimeout)
+// Even setTimeout(fn, 0) waits for all microtasks to drain
+```
+
+<QA question="Why do Promises execute before setTimeout(fn, 0)?">
+
+Promises go into the microtask queue, setTimeout goes into the macrotask queue. After each macrotask, the event loop drains ALL microtasks before picking the next macrotask. So microtasks always have higher priority.
+
+</QA>

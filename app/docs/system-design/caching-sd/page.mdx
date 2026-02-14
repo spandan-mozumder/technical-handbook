@@ -1,0 +1,37 @@
+# Caching Strategies
+
+Multi-layer caching for performance
+
+## Caching in System Design
+
+**Multi-Layer Cache**
+
+```mermaid
+graph LR
+  C["Client"] --> CDN["CDN<br/>(Edge Cache)"]
+  CDN --> LB["Load Balancer"]
+  LB --> APP["App Server<br/>(Local Cache)"]
+  APP --> REDIS["Redis<br/>(Distributed Cache)"]
+  REDIS -->|"miss"| DB["Database"]
+  style CDN fill:#22c55e,color:#fff
+  style REDIS fill:#ef4444,color:#fff
+  style DB fill:#3b82f6,color:#fff
+```
+
+### Caching Patterns
+
+- Cache-Aside (Lazy Loading): App checks cache → miss → queries DB → writes to cache
+- Write-Through: App writes to cache AND DB simultaneously — consistent but slower writes
+- Write-Behind (Write-Back): App writes to cache → async write to DB — fast but risk of loss
+- Read-Through: Cache handles DB fetching transparently
+- Refresh-Ahead: Proactively refresh before TTL expires
+
+### Cache Invalidation
+
+"There are only two hard things in CS: cache invalidation and naming things." Strategies: TTL (time-to-live), event-based invalidation (publish changes), and versioned keys.
+
+<QA question="What is cache stampede and how to prevent it?">
+
+Cache stampede (thundering herd) occurs when a popular cache key expires and hundreds of requests simultaneously hit the database. Solutions: 1) Lock/mutex — only one request fetches from DB, others wait, 2) Stale-while-revalidate — serve stale data while refreshing in background, 3) Probabilistic early expiration — some requests refresh before TTL.
+
+</QA>

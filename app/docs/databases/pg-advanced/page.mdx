@@ -1,0 +1,83 @@
+# PostgreSQL Advanced
+
+CTEs, JSONB, index types, query planning, and partitioning
+
+## CTEs & JSONB
+
+```sql
+-- CTE (Common Table Expression)
+WITH active_orders AS (
+  SELECT user_id, COUNT(*) AS cnt FROM orders
+  WHERE status = 'active' GROUP BY user_id
+)
+SELECT u.name, ao.cnt
+FROM users u JOIN active_orders ao ON u.id = ao.user_id
+WHERE ao.cnt > 3;
+
+-- Recursive CTE (org chart / tree)
+WITH RECURSIVE subordinates AS (
+  SELECT id, name, manager_id FROM employees WHERE name = 'CEO'
+  UNION ALL
+  SELECT e.id, e.name, e.manager_id
+  FROM employees e JOIN subordinates s ON e.manager_id = s.id
+)
+SELECT * FROM subordinates;
+
+-- JSONB — store and query JSON
+CREATE TABLE products (
+  id SERIAL PRIMARY KEY,
+  name TEXT,
+  attributes JSONB DEFAULT '{}'
+);
+
+INSERT INTO products (name, attributes)
+VALUES ('Laptop', '{"color": "silver", "ram": 16, "tags": ["sale"]}');
+
+-- Query JSONB
+SELECT * FROM products WHERE attributes @> '{"color": "silver"}';
+SELECT * FROM products WHERE attributes->>'ram' = '16';
+SELECT * FROM products WHERE attributes->'tags' ? 'sale';
+```
+
+## Index Types & Query Planning
+
+```sql
+-- B-Tree (default) — equality and range queries
+CREATE INDEX idx_email ON users (email);
+
+-- GIN — for JSONB, arrays, full-text search
+CREATE INDEX idx_attrs ON products USING GIN (attributes);
+
+-- GiST — geometric and range types
+CREATE INDEX idx_location ON places USING GIST (coordinates);
+
+-- Expression index
+CREATE INDEX idx_lower_email ON users (LOWER(email));
+
+-- EXPLAIN ANALYZE — check query plan
+EXPLAIN ANALYZE SELECT * FROM users WHERE email = 'alice@ex.com';
+-- Look for: Index Scan (good) vs Seq Scan (bad)
+
+-- Partitioning — split large tables for performance
+CREATE TABLE orders (
+  id SERIAL, user_id INT, created_at TIMESTAMPTZ, total DECIMAL
+) PARTITION BY RANGE (created_at);
+
+CREATE TABLE orders_2025 PARTITION OF orders
+  FOR VALUES FROM ('2025-01-01') TO ('2026-01-01');
+```
+
+## Performance Tips
+
+- Add indexes on JOIN columns and WHERE conditions
+- Use EXPLAIN ANALYZE to verify index usage
+- Avoid SELECT * — select only needed columns
+- Use connection pooling (PgBouncer / built-in)
+- VACUUM and ANALYZE regularly
+- Partition large tables (>10M rows) by date or ID range
+
+<QA question="When to use GIN vs GiST vs B-Tree index?">
+
+B-Tree (default): equality, range, sorting — most common. GIN: contains/overlap queries — JSONB, arrays, full-text. GiST: proximity queries — geometry, ranges, nearest-neighbor. Use B-Tree unless you have a specific need for GIN/GiST.
+
+</QA>

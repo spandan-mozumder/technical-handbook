@@ -1,0 +1,26 @@
+# S3 & EBS
+
+Object storage and block storage
+
+## S3 (Simple Storage Service)
+
+S3 is object storage — store unlimited files (up to 5TB each) organized in buckets. Highly durable (99.999999999% — 11 nines). Used for static assets, backups, data lakes, and static website hosting.
+
+- Storage Classes: Standard (frequent access), IA (infrequent), Glacier (archive), Deep Archive
+- Lifecycle Policies: auto-transition objects between storage classes based on age
+- Versioning: keep all versions of an object for recovery
+- Pre-signed URLs: temporary access to private objects
+- Event notifications: trigger Lambda on upload/delete
+
+## EBS (Elastic Block Store)
+
+- Block storage volumes attached to EC2 instances (like a hard drive)
+- Types: gp3 (general SSD), io2 (high-performance SSD), st1 (throughput HDD)
+- Snapshots: point-in-time backup, stored in S3
+- Persists independently from EC2 instance lifecycle
+
+<QA question="S3 vs EBS vs EFS — when to use which?">
+
+S3: object storage (files, images, backups, static sites). EBS: block storage attached to one EC2 (databases, OS). EFS: shared file system across multiple EC2 instances. S3 is cheapest, EBS is fastest, EFS is shared.
+
+</QA>

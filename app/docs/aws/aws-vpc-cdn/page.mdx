@@ -1,0 +1,36 @@
+# VPC, CloudFront & Route53
+
+Virtual networks, CDN, and DNS management
+
+## VPC (Virtual Private Cloud)
+
+VPC is your isolated network in AWS. You control IP ranges, subnets, route tables, and gateways. All AWS resources launch inside a VPC.
+
+**VPC Architecture**
+
+```mermaid
+flowchart TD
+    IGW["Internet Gateway"] --> PUB["Public Subnet (web servers)"]
+    PUB --> NAT["NAT Gateway"]
+    NAT --> PRIV["Private Subnet (databases, APIs)"]
+    PUB --> ALB["Application Load Balancer"]
+    ALB --> EC2["EC2 Instances"]
+    SG["Security Groups"] -.-> EC2
+    NACL["Network ACLs"] -.-> PUB
+    style IGW fill:#3b82f6,color:#fff
+    style PRIV fill:#8b5cf6,color:#fff
+    style ALB fill:#22c55e,color:#fff
+```
+
+## CloudFront & Route53
+
+- CloudFront — CDN with 400+ edge locations worldwide. Caches content close to users.
+- Supports S3, ALB, EC2, and custom origins. HTTPS by default with ACM certificates.
+- Route53 — managed DNS service. Routes users to the optimal endpoint.
+- Routing policies: Simple, Weighted, Latency-based, Failover, Geolocation
+
+<QA question="Security Groups vs Network ACLs?">
+
+Security Groups: instance-level firewall, stateful (return traffic auto-allowed), allow rules only. NACLs: subnet-level firewall, stateless (must allow return traffic explicitly), allow AND deny rules. Use SGs for instance control, NACLs for subnet-level defense in depth.
+
+</QA>

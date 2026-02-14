@@ -1,0 +1,77 @@
+# Drizzle ORM
+
+Schema-first, type-safe SQL with minimal abstraction
+
+## Drizzle Schema
+
+Drizzle is a lightweight TypeScript ORM that generates SQL you can read. Unlike Prisma's custom schema language, Drizzle schemas are pure TypeScript. It's 'SQL-like' — if you know SQL, you know Drizzle.
+
+```typescript
+// Schema & Queries
+import { pgTable, serial, text, integer, boolean, timestamp } from 'drizzle-orm/pg-core';
+import { relations } from 'drizzle-orm';
+import { drizzle } from 'drizzle-orm/node-postgres';
+import { eq, gt, and, desc } from 'drizzle-orm';
+
+// Schema definition (pure TypeScript)
+export const users = pgTable('users', {
+  id: serial('id').primaryKey(),
+  name: text('name').notNull(),
+  email: text('email').notNull().unique(),
+  age: integer('age'),
+  createdAt: timestamp('created_at').defaultNow(),
+});
+
+export const posts = pgTable('posts', {
+  id: serial('id').primaryKey(),
+  title: text('title').notNull(),
+  content: text('content'),
+  published: boolean('published').default(false),
+  authorId: integer('author_id').references(() => users.id),
+});
+
+// Relations
+export const usersRelations = relations(users, ({ many }) => ({
+  posts: many(posts),
+}));
+
+export const postsRelations = relations(posts, ({ one }) => ({
+  author: one(users, { fields: [posts.authorId], references: [users.id] }),
+}));
+
+// Queries
+const db = drizzle(pool);
+
+// Select with filter
+const result = await db.select().from(users)
+  .where(and(gt(users.age, 18), eq(users.email, 'alice@ex.com')))
+  .orderBy(desc(users.createdAt))
+  .limit(10);
+
+// Insert
+await db.insert(users).values({ name: 'Alice', email: 'alice@ex.com' });
+
+// Update
+await db.update(users).set({ name: 'Alice S.' }).where(eq(users.id, 1));
+
+// Delete
+await db.delete(users).where(eq(users.id, 1));
+
+// JOIN
+const usersWithPosts = await db.select()
+  .from(users)
+  .leftJoin(posts, eq(users.id, posts.authorId));
+```
+
+## Migrations
+
+- npx drizzle-kit generate — generate SQL migration from schema changes
+- npx drizzle-kit migrate — apply pending migrations
+- npx drizzle-kit push — push schema directly (prototyping)
+- npx drizzle-kit studio — visual database browser
+
+<QA question="Drizzle vs Prisma — key differences?">
+
+Drizzle: TypeScript schemas, SQL-like API, thinner abstraction, smaller bundle, no code generation step. Prisma: custom schema language, higher-level API, auto-generated client, better for rapid prototyping. Drizzle is closer to SQL; Prisma is more ORM-like.
+
+</QA>

@@ -1,0 +1,58 @@
+# Space vs Time Tradeoffs
+
+Understanding when to trade memory for speed and vice versa
+
+## The Fundamental Tradeoff
+
+One of the most important concepts in algorithm design is the space-time tradeoff. You can often make an algorithm faster by using more memory, or use less memory at the cost of speed. Knowing when and how to make this tradeoff is a key interview skill.
+
+**Space-Time Tradeoff Spectrum**
+
+```mermaid
+graph LR
+  A["Recompute Everything<br/>O(1) space, O(n²) time"] --> B["Cache Some Results<br/>O(k) space, O(n log n) time"]
+  B --> C["Hash Map Approach<br/>O(n) space, O(n) time"]
+  C --> D["Precompute Everything<br/>O(n²) space, O(1) lookup"]
+  style A fill:#3b82f6,color:#fff
+  style B fill:#8b5cf6,color:#fff
+  style C fill:#22c55e,color:#fff
+  style D fill:#f97316,color:#fff
+```
+
+### Classic Example: Two Sum
+
+```typescript
+// Brute Force vs Hash Map
+// Approach 1: O(n²) time, O(1) space
+function twoSumBrute(nums: number[], target: number): [number, number] {
+  for (let i = 0; i < nums.length; i++) {
+    for (let j = i + 1; j < nums.length; j++) {
+      if (nums[i] + nums[j] === target) return [i, j];
+    }
+  }
+  return [-1, -1];
+}
+
+// Approach 2: O(n) time, O(n) space — trade space for time
+function twoSumHash(nums: number[], target: number): [number, number] {
+  const map = new Map<number, number>();
+  for (let i = 0; i < nums.length; i++) {
+    const complement = target - nums[i];
+    if (map.has(complement)) return [map.get(complement)!, i];
+    map.set(nums[i], i);
+  }
+  return [-1, -1];
+}
+```
+
+<Callout variant="info">
+
+In most interviews, the hash map approach (trading space for time) is preferred. Interviewers usually want to see O(n) time solutions when possible.
+
+</Callout>
+
+<QA question="When should you prefer saving space over time?">
+
+When dealing with very large datasets that don't fit in memory, embedded systems with limited RAM, or when the time savings from using extra space are marginal. In streaming scenarios, you often can't store all data.
+
+</QA>

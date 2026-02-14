@@ -1,0 +1,126 @@
+# Creational Patterns
+
+Singleton, Factory, Builder, and Prototype
+
+## Creational Design Patterns
+
+Creational patterns deal with object creation mechanisms, trying to create objects in a manner suitable to the situation. They abstract the instantiation process and help make a system independent of how its objects are created.
+
+### Singleton Pattern
+
+Ensures a class has only one instance and provides a global point of access to it. Useful for database connections, configuration managers, and logging.
+
+```java
+// Thread-Safe Singleton
+public class DatabaseConnection {
+    // volatile ensures visibility across threads
+    private static volatile DatabaseConnection instance;
+    private String connectionUrl;
+
+    private DatabaseConnection(String url) {
+        this.connectionUrl = url;
+    }
+
+    // Double-checked locking
+    public static DatabaseConnection getInstance(String url) {
+        if (instance == null) {
+            synchronized (DatabaseConnection.class) {
+                if (instance == null) {
+                    instance = new DatabaseConnection(url);
+                }
+            }
+        }
+        return instance;
+    }
+
+    public void query(String sql) {
+        System.out.println("Executing: " + sql);
+    }
+}
+```
+
+### Factory Pattern
+
+Defines an interface for creating objects, but lets subclasses decide which class to instantiate. Factory Method lets a class defer instantiation to subclasses.
+
+```java
+// Factory Pattern
+// Product interface
+interface Notification {
+    void send(String message);
+}
+
+class EmailNotification implements Notification {
+    public void send(String msg) { System.out.println("Email: " + msg); }
+}
+
+class SMSNotification implements Notification {
+    public void send(String msg) { System.out.println("SMS: " + msg); }
+}
+
+class PushNotification implements Notification {
+    public void send(String msg) { System.out.println("Push: " + msg); }
+}
+
+// Factory
+class NotificationFactory {
+    public static Notification create(String type) {
+        return switch (type.toLowerCase()) {
+            case "email" -> new EmailNotification();
+            case "sms"   -> new SMSNotification();
+            case "push"  -> new PushNotification();
+            default -> throw new IllegalArgumentException("Unknown type: " + type);
+        };
+    }
+}
+
+// Usage
+Notification n = NotificationFactory.create("email");
+n.send("Hello World!");
+```
+
+### Builder Pattern
+
+```java
+// Builder Pattern
+public class HttpRequest {
+    private final String method;
+    private final String url;
+    private final Map<String, String> headers;
+    private final String body;
+    private final int timeout;
+
+    private HttpRequest(Builder builder) {
+        this.method = builder.method;
+        this.url = builder.url;
+        this.headers = builder.headers;
+        this.body = builder.body;
+        this.timeout = builder.timeout;
+    }
+
+    public static class Builder {
+        private String method = "GET";
+        private String url;
+        private Map<String, String> headers = new HashMap<>();
+        private String body;
+        private int timeout = 30000;
+
+        public Builder(String url) { this.url = url; }
+
+        public Builder method(String m) { method = m; return this; }
+        public Builder header(String k, String v) { headers.put(k, v); return this; }
+        public Builder body(String b) { body = b; return this; }
+        public Builder timeout(int t) { timeout = t; return this; }
+
+        public HttpRequest build() { return new HttpRequest(this); }
+    }
+}
+
+// Fluent API usage
+HttpRequest req = new HttpRequest.Builder("https://api.example.com")
+    .method("POST")
+    .header("Content-Type", "application/json")
+    .body("{\"key\": \"value\"}")
+    .timeout(5000)
+    .build();
+```

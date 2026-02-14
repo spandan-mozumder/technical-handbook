@@ -1,0 +1,77 @@
+# Variables, Loops & Conditionals
+
+Shell scripting fundamentals for automation
+
+## Variables & Strings
+
+```bash
+#!/bin/bash
+set -euo pipefail  # strict mode: exit on error, undefined vars, pipe fails
+
+# Variables
+NAME="World"
+COUNT=42
+GREETING="Hello $NAME, count is $COUNT"
+echo "$GREETING"
+
+# Command substitution
+DATE=$(date +%Y-%m-%d)
+FILES=$(ls *.txt 2>/dev/null | wc -l)
+
+# String operations
+STR="Hello World"
+echo ${#STR}            # length: 11
+echo ${STR:0:5}         # substring: Hello
+echo ${STR/World/Bash}  # replace: Hello Bash
+echo ${STR,,}           # lowercase: hello world
+echo ${STR^^}           # uppercase: HELLO WORLD
+```
+
+## Conditionals & Loops
+
+```bash
+# If/else
+if [[ -f "$FILE" ]]; then
+    echo "File exists"
+elif [[ -d "$DIR" ]]; then
+    echo "Directory exists"
+else
+    echo "Not found"
+fi
+
+# String comparison
+[[ "$str" == "hello" ]]   # equal
+[[ "$str" != "hello" ]]   # not equal
+[[ -z "$str" ]]           # empty
+[[ -n "$str" ]]           # not empty
+
+# Number comparison
+[[ $a -eq $b ]]   # equal
+[[ $a -gt $b ]]   # greater than
+[[ $a -lt $b ]]   # less than
+
+# Loops
+for file in *.txt; do
+    echo "Processing: $file"
+    wc -l "$file"
+done
+
+for i in {1..10}; do echo $i; done
+
+while read -r line; do
+    echo "Line: $line"
+done < input.txt
+
+# Array
+FRUITS=("apple" "banana" "cherry")
+echo ${FRUITS[0]}        # apple
+echo ${FRUITS[@]}        # all elements
+echo ${#FRUITS[@]}       # length: 3
+FRUITS+=("date")         # append
+```
+
+<QA question="What does set -euo pipefail do?">
+
+-e: exit immediately on error. -u: treat undefined variables as errors. -o pipefail: a pipe fails if ANY command fails (not just the last one). Together they make scripts safer and bugs easier to catch.
+
+</QA>

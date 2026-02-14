@@ -1,0 +1,52 @@
+# EC2 & Lambda
+
+Virtual servers and serverless compute
+
+## EC2 (Elastic Compute Cloud)
+
+EC2 provides resizable virtual machines in the cloud. You choose instance type (CPU, memory), AMI (OS image), and storage. You manage the OS, runtime, and application.
+
+- Instance Types: t3 (burstable general), m6i (general), c6i (compute), r6i (memory), p4 (GPU)
+- Pricing: On-Demand (pay per hour), Reserved (1-3yr commitment, up to 72% off), Spot (up to 90% off, can be interrupted)
+- Auto Scaling: automatically adjust instance count based on CPU, memory, or custom metrics
+- AMI: Amazon Machine Image — snapshot of OS + pre-installed software
+
+## Lambda (Serverless)
+
+Lambda runs code without provisioning servers. You pay only for compute time consumed. Functions scale automatically from zero to thousands of concurrent executions.
+
+```typescript
+// Lambda Function
+// handler.ts
+export const handler = async (event: APIGatewayProxyEvent) => {
+  const body = JSON.parse(event.body || '{}');
+
+  // Process the request
+  const result = await processOrder(body);
+
+  return {
+    statusCode: 200,
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(result),
+  };
+};
+
+// Limitations:
+// - 15 min max execution time
+// - 10 GB max memory
+// - 250 MB deployment package (50 MB zipped)
+// - Cold starts: 100ms-2s for first invocation
+```
+
+## ECS & EKS
+
+- ECS (Elastic Container Service) — AWS-native container orchestration. Simpler than K8s.
+- EKS (Elastic Kubernetes Service) — managed Kubernetes. Full K8s compatibility.
+- Fargate — serverless compute for ECS/EKS. No EC2 instances to manage.
+- Use ECS for simpler deployments, EKS for K8s ecosystem compatibility.
+
+<QA question="EC2 vs Lambda — when to use which?">
+
+Lambda: event-driven, short tasks (under 15min), variable traffic, pay-per-use. EC2: long-running processes, consistent high traffic, need OS access, specialized hardware. Lambda has cold starts; EC2 is always warm.
+
+</QA>

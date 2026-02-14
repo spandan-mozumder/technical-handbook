@@ -1,0 +1,72 @@
+# Animations & Transitions
+
+Transitions, keyframes, transforms, and performance
+
+## CSS Animations
+
+```css
+// Animation Techniques
+/* Transition — on state change (hover, focus, class toggle) */
+.btn {
+  background: #3b82f6;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  background: #2563eb;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+/* Transform — move, scale, rotate without layout reflow */
+.card:hover {
+  transform: scale(1.05) rotate(1deg);
+}
+
+/* Keyframe animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.animate-in {
+  animation: fadeInUp 0.6s ease-out forwards;
+}
+
+/* Skeleton loading shimmer */
+@keyframes shimmer {
+  0% { background-position: -200% 0; }
+  100% { background-position: 200% 0; }
+}
+.skeleton {
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+/* Staggered animation */
+.list-item {
+  animation: fadeInUp 0.4s ease-out forwards;
+}
+.list-item:nth-child(1) { animation-delay: 0.1s; }
+.list-item:nth-child(2) { animation-delay: 0.2s; }
+.list-item:nth-child(3) { animation-delay: 0.3s; }
+```
+
+## Performance Tips
+
+- Only animate transform and opacity — they use GPU compositing
+- Avoid animating width, height, top, left — they cause layout reflow
+- Use will-change sparingly to hint GPU acceleration
+- Prefer CSS animations over JS for simple transitions
+- Use prefers-reduced-motion to respect user preferences
+
+<QA question="Why is transform better than top/left for animation?">
+
+transform uses GPU compositing — it doesn't trigger layout or paint. Animating top/left triggers layout recalculation for every frame, causing jank. transform: translate() achieves the same visual effect at 60fps.
+
+</QA>

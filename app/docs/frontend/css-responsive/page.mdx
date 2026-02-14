@@ -1,0 +1,57 @@
+# Responsive Design
+
+Media queries, mobile-first approach, and responsive techniques
+
+## Responsive Techniques
+
+```css
+// Mobile-First Responsive
+/* Mobile-first: start with mobile, add complexity */
+.container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Tablet and up */
+@media (min-width: 768px) {
+  .grid { grid-template-columns: 1fr 1fr; }
+  .sidebar { display: block; }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .grid { grid-template-columns: repeat(3, 1fr); }
+}
+
+/* Container queries — respond to parent, not viewport */
+.card-container { container-type: inline-size; }
+@container (min-width: 400px) {
+  .card { flex-direction: row; }
+}
+
+/* Fluid typography — scales smoothly */
+h1 {
+  font-size: clamp(1.5rem, 4vw, 3rem);
+}
+
+/* Responsive images */
+img {
+  max-width: 100%;
+  height: auto;
+}
+```
+
+## Key Breakpoints
+
+- 320px — Small phones
+- 480px — Large phones
+- 768px — Tablets
+- 1024px — Small desktops/laptops
+- 1280px — Large desktops
+
+<QA question="Why mobile-first over desktop-first?">
+
+Mobile-first means: (1) Start with essential content/styles, (2) Progressively enhance for larger screens, (3) Better performance on mobile (no unused desktop CSS loaded), (4) Forces content prioritization.
+
+</QA>

@@ -1,0 +1,27 @@
+# Message Queues
+
+Async communication, decoupling, and event-driven architectures
+
+## Message Queues
+
+Message queues decouple producers from consumers, enabling async processing, load leveling, and fault tolerance. Key choices: RabbitMQ (traditional broker), Kafka (distributed log), SQS (AWS managed), and Redis Streams.
+
+**Queue-based Architecture**
+
+```mermaid
+graph LR
+  A["Web Server"] -->|"enqueue"| Q["Message Queue<br/>(SQS / RabbitMQ)"]
+  Q -->|"dequeue"| W1["Worker 1<br/>(Send Email)"]
+  Q -->|"dequeue"| W2["Worker 2<br/>(Process Image)"]
+  Q -->|"dequeue"| W3["Worker 3<br/>(Generate PDF)"]
+  DLQ["Dead Letter Queue<br/>(Failed messages)"]
+  W1 -->|"failed 3x"| DLQ
+  style Q fill:#8b5cf6,color:#fff
+  style DLQ fill:#ef4444,color:#fff
+```
+
+- At-most-once: Message might be lost, never delivered twice (fire and forget)
+- At-least-once: Message always delivered, but may be duplicated (most common)
+- Exactly-once: Hard to achieve, often simulated via idempotency
+- Dead Letter Queue (DLQ): Store messages that fail processing after N retries
+- Back pressure: Slow down producers when consumers can't keep up

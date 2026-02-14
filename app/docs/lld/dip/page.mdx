@@ -1,0 +1,66 @@
+# Dependency Inversion Principle
+
+Depend on abstractions, not concretions
+
+## Dependency Inversion Principle (DIP)
+
+High-level modules should not depend on low-level modules. Both should depend on abstractions. Abstractions should not depend on details. Details should depend on abstractions. This enables loose coupling and makes code easier to test.
+
+```java
+// ❌ DIP Violation
+// High-level depends directly on low-level
+class MySQLDatabase {
+    public void save(String data) { /* MySQL specific */ }
+}
+
+class UserService {
+    private MySQLDatabase db = new MySQLDatabase(); // Tightly coupled!
+
+    public void createUser(String name) {
+        db.save(name); // Can't switch to PostgreSQL without changing this
+    }
+}
+```
+
+```java
+// ✅ DIP Applied
+// Both depend on abstraction
+interface Database {
+    void save(String data);
+    String find(String id);
+}
+
+class MySQLDatabase implements Database {
+    public void save(String data) { System.out.println("MySQL: Saving " + data); }
+    public String find(String id) { return "MySQL result"; }
+}
+
+class PostgresDatabase implements Database {
+    public void save(String data) { System.out.println("Postgres: Saving " + data); }
+    public String find(String id) { return "Postgres result"; }
+}
+
+// High-level module depends on abstraction
+class UserService {
+    private final Database db; // Depends on interface!
+
+    // Dependency injection via constructor
+    public UserService(Database db) {
+        this.db = db;
+    }
+
+    public void createUser(String name) {
+        db.save(name); // Works with ANY Database implementation
+    }
+}
+
+// Easy to swap and test
+UserService service1 = new UserService(new MySQLDatabase());
+UserService service2 = new UserService(new PostgresDatabase());
+```
+
+<Callout variant="tip">
+
+DIP is the foundation of Dependency Injection (DI). In interviews, mention how DI frameworks (Spring, Dagger, NestJS) automate dependency injection, and how DIP enables unit testing with mocks.
+
+</Callout>

@@ -1,0 +1,84 @@
+# Layout — Flexbox & Grid
+
+Modern layout systems for responsive, powerful designs
+
+## Flexbox
+
+Flexbox is a one-dimensional layout system — arrange items in a row or column with powerful alignment and distribution.
+
+```css
+// Flexbox Patterns
+/* Center anything */
+.center {
+  display: flex;
+  justify-content: center;  /* main axis */
+  align-items: center;      /* cross axis */
+}
+
+/* Navbar: logo left, links right */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Responsive card row */
+.cards {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+.card {
+  flex: 1 1 300px; /* grow shrink basis */
+  min-width: 0;    /* prevent overflow */
+}
+
+/* Holy grail layout */
+.page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.page main { flex: 1; }
+```
+
+## CSS Grid
+
+```css
+// Grid Patterns
+/* Basic grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+/* Named areas */
+.layout {
+  display: grid;
+  grid-template-areas:
+    "header header"
+    "sidebar main"
+    "footer footer";
+  grid-template-columns: 250px 1fr;
+}
+.header  { grid-area: header; }
+.sidebar { grid-area: sidebar; }
+.main    { grid-area: main; }
+
+/* Auto-responsive grid — no media queries needed */
+.gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+}
+
+/* Center with grid */
+.center { display: grid; place-items: center; }
+```
+
+<QA question="When to use Flexbox vs Grid?">
+
+Flexbox = one-dimensional (row OR column). Best for component layouts, navbars, card rows. Grid = two-dimensional (rows AND columns). Best for page layouts, complex grids, overlapping elements. Often used together.
+
+</QA>

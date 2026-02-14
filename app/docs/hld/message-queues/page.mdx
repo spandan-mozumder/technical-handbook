@@ -1,0 +1,43 @@
+# Message Queues
+
+Async processing with Kafka, RabbitMQ, and SQS
+
+## Message Queues
+
+Message queues enable asynchronous communication between services. Producers send messages to a queue, and consumers process them independently. This decouples services, improves reliability, and enables load leveling.
+
+**Message Queue Architecture**
+
+```mermaid
+graph LR
+    A["Producer<br/>(Web Server)"] -->|publish| B["Message Queue<br/>(Kafka/RabbitMQ)"]
+    B -->|consume| C["Consumer 1<br/>(Email Service)"]
+    B -->|consume| D["Consumer 2<br/>(Analytics)"]
+    B -->|consume| E["Consumer 3<br/>(Search Index)"]
+    style B fill:#cba6f7,color:#1e1e2e
+```
+
+### When to Use Message Queues
+
+- Async Processing: Email sending, image processing, report generation
+- Load Leveling: Buffer traffic spikes, process at constant rate
+- Decoupling: Services communicate without knowing each other
+- Fan-out: Same message processed by multiple consumers
+- Retry Logic: Failed messages re-queued automatically
+- Event Sourcing: Store events as immutable sequence
+
+### Comparison
+
+```text
+┌────────────────┬──────────────────┬──────────────────┬──────────────────┐
+│ Feature        │ Kafka            │ RabbitMQ         │ SQS              │
+├────────────────┼──────────────────┼──────────────────┼──────────────────┤
+│ Model          │ Log/Stream       │ Queue/Exchange   │ Queue            │
+│ Throughput     │ Millions/sec     │ Thousands/sec    │ Thousands/sec    │
+│ Ordering       │ Per-partition    │ Per-queue        │ Best-effort      │
+│ Retention      │ Configurable     │ Until consumed   │ 14 days max      │
+│ Use Case       │ Event streaming  │ Task queues      │ Serverless async │
+│ Replay         │ Yes              │ No               │ No               │
+│ Protocol       │ TCP binary       │ AMQP             │ HTTP/HTTPS       │
+└────────────────┴──────────────────┴──────────────────┴──────────────────┘
+```

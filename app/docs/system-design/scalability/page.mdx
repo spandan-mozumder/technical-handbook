@@ -1,0 +1,47 @@
+# Scalability
+
+Horizontal vs vertical scaling, load balancing, and statelessness
+
+## Scalability
+
+Scalability is a system's ability to handle increased load. Vertical scaling (adding more CPU/RAM) has limits. Horizontal scaling (adding more machines) is preferred for large systems but requires statelessness and data distribution.
+
+**Scaling Strategies**
+
+```mermaid
+graph TD
+  subgraph Vertical["Vertical Scaling"]
+    V1["Small Server<br/>2 CPU, 4GB RAM"] --> V2["Big Server<br/>64 CPU, 256GB RAM"]
+  end
+  subgraph Horizontal["Horizontal Scaling"]
+    H1["Server 1"]
+    H2["Server 2"]
+    H3["Server 3"]
+    H4["Server N..."]
+    LB["Load Balancer"] --> H1
+    LB --> H2
+    LB --> H3
+    LB --> H4
+  end
+  style V2 fill:#f97316,color:#fff
+  style LB fill:#3b82f6,color:#fff
+  style Horizontal fill:#22c55e15
+```
+
+### Load Balancing Algorithms
+
+- Round Robin: Distribute requests sequentially
+- Weighted Round Robin: Heavier servers get more traffic
+- Least Connections: Route to server with fewest active connections
+- IP Hash: Same client IP always hits same server (session affinity)
+- Consistent Hashing: Distribute across nodes minimizing redistribution on change
+
+### Statelessness
+
+For horizontal scaling, servers must be stateless — no local session data. Store sessions in Redis/DynamoDB and use JWT tokens. Any server should handle any request.
+
+<QA question="How would you handle 10x traffic increase overnight?">
+
+1) Enable auto-scaling groups with cloud provider, 2) Add read replicas for database, 3) Implement caching layer (Redis/CDN), 4) Queue non-critical operations (email, analytics), 5) Optimize hot paths in code, 6) Set up CDN for static assets, 7) Monitor and set alerts for bottlenecks.
+
+</QA>

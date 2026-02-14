@@ -1,0 +1,63 @@
+# Single Responsibility Principle
+
+A class should have only one reason to change
+
+## Single Responsibility Principle (SRP)
+
+A class should have only one reason to change. Each class should have one and only one responsibility. This makes classes easier to understand, test, and maintain.
+
+### Violation vs. Correct
+
+```java
+// ❌ SRP Violation
+// BAD: User class does authentication, database, AND email
+public class User {
+    public void authenticate(String user, String pass) { /* ... */ }
+    public void saveToDatabase() { /* ... */ }
+    public void sendEmail(String msg) { /* ... */ }
+    public void generateReport() { /* ... */ }
+}
+```
+
+```java
+// ✅ SRP Applied
+// GOOD: Each class has a single responsibility
+public class User {
+    private String name;
+    private String email;
+    // Only user data and behavior
+}
+
+public class AuthenticationService {
+    public boolean authenticate(String username, String password) {
+        // Only handles authentication
+        return true;
+    }
+}
+
+public class UserRepository {
+    public void save(User user) {
+        // Only handles persistence
+    }
+    public User findById(String id) { return null; }
+}
+
+public class EmailService {
+    public void sendEmail(String to, String subject, String body) {
+        // Only handles email sending
+    }
+}
+
+public class ReportGenerator {
+    public String generateReport(User user) {
+        // Only handles report generation
+        return "";
+    }
+}
+```
+
+<Callout variant="tip">
+
+If you can't describe what a class does in one sentence without using 'and' or 'or', it likely violates SRP.
+
+</Callout>

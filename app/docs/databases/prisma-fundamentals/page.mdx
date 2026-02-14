@@ -1,0 +1,110 @@
+# Prisma ORM
+
+Schema, migrations, relations, and type-safe queries
+
+## Prisma Schema
+
+```prisma
+// prisma/schema.prisma
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id        Int      @id @default(autoincrement())
+  email     String   @unique
+  name      String
+  role      Role     @default(USER)
+  posts     Post[]
+  profile   Profile?
+  createdAt DateTime @default(now())
+
+  @@index([email])
+}
+
+model Post {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String?
+  published Boolean  @default(false)
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  Int
+  tags      Tag[]
+}
+
+model Profile {
+  id     Int    @id @default(autoincrement())
+  bio    String
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int    @unique
+}
+
+model Tag {
+  id    Int    @id @default(autoincrement())
+  name  String @unique
+  posts Post[]
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+```
+
+## Prisma Client Queries
+
+```typescript
+// Type-Safe Queries
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+// Create with relation
+const user = await prisma.user.create({
+  data: {
+    email: 'alice@ex.com',
+    name: 'Alice',
+    posts: { create: { title: 'First Post', content: 'Hello!' } },
+    profile: { create: { bio: 'Developer' } },
+  },
+  include: { posts: true, profile: true },
+});
+
+// Find with filtering and relations
+const users = await prisma.user.findMany({
+  where: { role: 'ADMIN', posts: { some: { published: true } } },
+  include: { posts: { where: { published: true } } },
+  orderBy: { createdAt: 'desc' },
+  take: 10,
+});
+
+// Update
+await prisma.user.update({
+  where: { email: 'alice@ex.com' },
+  data: { name: 'Alice Smith' },
+});
+
+// Transaction
+const [user1, user2] = await prisma.$transaction([
+  prisma.user.update({ where: { id: 1 }, data: { balance: { decrement: 100 } } }),
+  prisma.user.update({ where: { id: 2 }, data: { balance: { increment: 100 } } }),
+]);
+```
+
+## Migrations
+
+- npx prisma migrate dev — create + apply migration in development
+- npx prisma migrate deploy — apply pending migrations in production
+- npx prisma db push — quick sync without migration files (prototyping)
+- npx prisma generate — regenerate the client after schema changes
+- npx prisma studio — visual database browser
+
+<QA question="Prisma vs raw SQL — when to use which?">
+
+Prisma: type-safe queries, auto-completion, schema migrations, rapid development. Raw SQL: complex queries (CTEs, window functions), performance-critical operations, vendor-specific features. Prisma supports $queryRaw for escape hatches.
+
+</QA>

@@ -1,0 +1,43 @@
+# Chat Application
+
+Design a real-time messaging system like WhatsApp/Slack
+
+## Design: Chat Application
+
+### Requirements
+
+- 1:1 messaging and group chats
+- Real-time message delivery
+- Offline message queuing
+- Read receipts and typing indicators
+- Message history and search
+- Scale: 50M DAU, 500M messages/day
+
+**Chat System Architecture**
+
+```mermaid
+graph TD
+  C1["Client A"] <-->|"WebSocket"| WS1["Chat Server 1"]
+  C2["Client B"] <-->|"WebSocket"| WS2["Chat Server 2"]
+  WS1 <-->|"Pub/Sub"| REDIS["Redis Pub/Sub<br/>(Message Routing)"]
+  WS2 <--> REDIS
+  WS1 --> MQ["Message Queue<br/>(Kafka)"]
+  MQ --> STORE["Message Store<br/>(Cassandra)"]
+  MQ --> PUSH["Push Notification<br/>Service"]
+  WS1 --> PRES["Presence Service<br/>(Online Status)"]
+  LB["Load Balancer<br/>(Sticky Sessions)"] --> WS1
+  LB --> WS2
+  style REDIS fill:#ef4444,color:#fff
+  style STORE fill:#3b82f6,color:#fff
+  style MQ fill:#8b5cf6,color:#fff
+```
+
+### Key Design Decisions
+
+- WebSocket for real-time bidirectional communication
+- Sticky sessions (via user ID hash) to maintain WS connections
+- Redis Pub/Sub for cross-server message routing
+- Cassandra for message storage (write-heavy, partitioned by chat_id)
+- Push notifications for offline users via APNs/FCM
+- Message ordering: use timestamps + sequence numbers per chat
+- End-to-end encryption: Signal Protocol (client-side key exchange)

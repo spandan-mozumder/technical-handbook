@@ -1,0 +1,43 @@
+# Init, Clone, Add & Commit
+
+Setting up repos, staging changes, and creating commits
+
+## Repository Setup
+
+```bash
+# Initialize a new repo
+git init
+git config user.name "Your Name"
+git config user.email "you@example.com"
+
+# Clone an existing repo
+git clone https://github.com/user/repo.git
+git clone --depth 1 https://github.com/user/repo.git  # shallow clone (faster)
+
+# Stage & commit
+git add .                          # stage all changes
+git add -p                         # stage interactively (hunk by hunk)
+git commit -m "feat: add login"    # commit with message
+git commit --amend                 # modify last commit (message or files)
+
+# Status & diff
+git status                         # what's changed
+git diff                           # unstaged changes
+git diff --staged                  # staged changes
+git log --oneline -10              # recent commits
+```
+
+## Commit Message Convention
+
+- feat: — new feature
+- fix: — bug fix
+- docs: — documentation only
+- refactor: — code change that doesn't fix bug or add feature
+- test: — adding or updating tests
+- chore: — build, CI, dependencies
+
+<QA question="Difference between git add . and git add -A?">
+
+In the repo root they're identical (stage all changes). git add . only stages changes in the current directory and below. git add -A always stages everything in the repo regardless of current directory.
+
+</QA>

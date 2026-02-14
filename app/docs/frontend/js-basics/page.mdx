@@ -1,0 +1,87 @@
+# JavaScript Basics
+
+Variables, functions, scope, closures, and hoisting
+
+## Core Concepts
+
+- var — function-scoped, hoisted (initialized as undefined). Avoid in modern JS.
+- let — block-scoped, hoisted but NOT initialized (temporal dead zone). Use for mutable values.
+- const — block-scoped, cannot be reassigned. Use by default. Objects/arrays are still mutable.
+
+```js
+// Variables, Scope & Closures
+// Hoisting — declarations move to top of scope
+console.log(a); // undefined (var is hoisted)
+// console.log(b); // ReferenceError (let TDZ)
+var a = 1;
+let b = 2;
+
+// Scope
+function outer() {
+  let x = 10; // function scope
+  if (true) {
+    let y = 20; // block scope
+    var z = 30; // function scope (var ignores blocks!)
+  }
+  // y is NOT accessible here, z IS
+}
+
+// Closures — function retains access to outer scope
+function createCounter() {
+  let count = 0;
+  return {
+    increment: () => ++count,
+    getCount: () => count,
+  };
+}
+const counter = createCounter();
+counter.increment(); // 1
+counter.increment(); // 2
+
+// IIFE — Immediately Invoked Function Expression
+(function() {
+  const private = "can't touch this";
+})();
+```
+
+## Functions
+
+```js
+// Function Patterns
+// Arrow functions — lexical 'this'
+const add = (a, b) => a + b;
+const greet = name => `Hello ${name}`;
+
+// Default parameters
+function createUser(name, role = "viewer") {
+  return { name, role };
+}
+
+// Rest & Spread
+function sum(...nums) { return nums.reduce((a, b) => a + b, 0); }
+const merged = { ...obj1, ...obj2 };
+const copied = [...array1, ...array2];
+
+// Destructuring
+const { name, age, role = "user" } = user;
+const [first, second, ...rest] = array;
+
+// Higher-order functions
+const doubled = [1, 2, 3].map(n => n * 2);
+const adults = users.filter(u => u.age >= 18);
+const total = prices.reduce((sum, p) => sum + p, 0);
+```
+
+## Interview Q&A
+
+<QA question="What is a closure?">
+
+A closure is a function that retains access to variables from its outer (enclosing) scope, even after the outer function has returned. This is how JavaScript implements data privacy and stateful functions.
+
+</QA>
+
+<QA question="Explain hoisting">
+
+JavaScript moves declarations to the top of their scope during compilation. var declarations are initialized as undefined. let/const are hoisted but NOT initialized (temporal dead zone). Function declarations are fully hoisted; function expressions are NOT.
+
+</QA>

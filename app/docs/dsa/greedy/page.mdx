@@ -1,0 +1,43 @@
+# Greedy Algorithms
+
+Locally optimal choices for globally optimal solutions
+
+## Greedy Algorithms
+
+Greedy algorithms make the locally optimal choice at each step, hoping to find the global optimum. They don't always work, but when they do (provably), they're simpler and faster than DP. Key: prove the greedy choice property.
+
+```typescript
+// Greedy Problems
+// Jump Game — can you reach the last index?
+function canJump(nums: number[]): boolean {
+  let maxReach = 0;
+  for (let i = 0; i < nums.length; i++) {
+    if (i > maxReach) return false;
+    maxReach = Math.max(maxReach, i + nums[i]);
+  }
+  return true;
+}
+
+// Activity Selection / Meeting Rooms
+function maxMeetings(intervals: [number, number][]): number {
+  intervals.sort((a, b) => a[1] - b[1]); // sort by end time
+  let count = 1, lastEnd = intervals[0][1];
+  for (let i = 1; i < intervals.length; i++) {
+    if (intervals[i][0] >= lastEnd) {
+      count++;
+      lastEnd = intervals[i][1];
+    }
+  }
+  return count;
+}
+
+// Best Time to Buy and Sell Stock
+function maxProfit(prices: number[]): number {
+  let min = Infinity, maxProfit = 0;
+  for (const price of prices) {
+    min = Math.min(min, price);
+    maxProfit = Math.max(maxProfit, price - min);
+  }
+  return maxProfit;
+}
+```

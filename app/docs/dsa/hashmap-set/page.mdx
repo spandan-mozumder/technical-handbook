@@ -1,0 +1,70 @@
+# HashMap & Set
+
+O(1) average lookup with hashing
+
+## Hash Maps & Sets
+
+Hash maps (objects/Maps in JS) provide average O(1) lookup, insert, and delete by mapping keys to indices via a hash function. Sets store unique values with similar O(1) operations. These are the most commonly used data structures in interview solutions.
+
+**Hash Map Internal Structure**
+
+```mermaid
+graph TD
+  K1["key: 'alice'"] -->|hash % 4 = 0| B0["Bucket 0: alice → 95"]
+  K2["key: 'bob'"] -->|hash % 4 = 1| B1["Bucket 1: bob → 87"]
+  K3["key: 'carol'"] -->|hash % 4 = 1| B1
+  K4["key: 'dave'"] -->|hash % 4 = 3| B3["Bucket 3: dave → 92"]
+  B1 --> C["Collision! Chain: bob→87 → carol→91"]
+  style C fill:#f97316,color:#fff
+```
+
+```typescript
+// HashMap & Set Patterns
+// Frequency Counter Pattern
+function topKFrequent(nums: number[], k: number): number[] {
+  const freq = new Map<number, number>();
+  for (const n of nums) freq.set(n, (freq.get(n) || 0) + 1);
+  
+  return [...freq.entries()]
+    .sort((a, b) => b[1] - a[1])
+    .slice(0, k)
+    .map(([key]) => key);
+}
+
+// Group Anagrams using HashMap
+function groupAnagrams(strs: string[]): string[][] {
+  const map = new Map<string, string[]>();
+  for (const s of strs) {
+    const key = s.split('').sort().join('');
+    if (!map.has(key)) map.set(key, []);
+    map.get(key)!.push(s);
+  }
+  return [...map.values()];
+}
+
+// Set: Find intersection of two arrays
+function intersection(a: number[], b: number[]): number[] {
+  const setA = new Set(a);
+  return [...new Set(b.filter(x => setA.has(x)))];
+}
+
+// Longest Consecutive Sequence — O(n) with Set
+function longestConsecutive(nums: number[]): number {
+  const set = new Set(nums);
+  let maxLen = 0;
+  for (const n of set) {
+    if (!set.has(n - 1)) { // start of a sequence
+      let len = 1;
+      while (set.has(n + len)) len++;
+      maxLen = Math.max(maxLen, len);
+    }
+  }
+  return maxLen;
+}
+```
+
+<QA question="When should you use Map vs Object in JavaScript?">
+
+Use Map when: keys can be any type (not just strings), you need to preserve insertion order, you frequently add/remove entries, or you need the size property. Use objects for JSON-compatible data, when you need prototype chain features, or for simple string-keyed configuration.
+
+</QA>

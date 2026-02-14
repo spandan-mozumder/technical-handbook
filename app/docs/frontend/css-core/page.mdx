@@ -1,0 +1,52 @@
+# CSS Core Concepts
+
+Cascading Style Sheets fundamentals — how styles work
+
+## What is CSS?
+
+CSS (Cascading Style Sheets) controls the visual presentation of HTML elements — colors, layouts, fonts, animations. The 'cascade' determines which styles win when multiple rules target the same element.
+
+```css
+// CSS Fundamentals
+/* Specificity: inline > ID > class > element */
+/* Specificity scores: (0,0,0,0) → (inline, id, class, element) */
+
+body {
+  font-family: 'Inter', system-ui, sans-serif;
+  line-height: 1.6;
+  color: #1a1a2e;
+  background: #fafafa;
+}
+
+/* CSS Custom Properties (Variables) */
+:root {
+  --primary: #3b82f6;
+  --radius: 8px;
+  --shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+.card {
+  padding: 1.5rem;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  background: white;
+}
+
+/* Cascade order: (lowest to highest priority) */
+/* 1. Browser defaults  2. External stylesheets  3. Internal <style>
+   4. Inline styles  5. !important (avoid if possible) */
+```
+
+## Interview Q&A
+
+<QA question="How does CSS specificity work?">
+
+Specificity is calculated as (inline, IDs, classes/attributes/pseudo-classes, elements). Higher specificity wins. If equal, last defined rule wins. Example: #nav .link = (0,1,1,0) beats .nav .link = (0,0,2,0).
+
+</QA>
+
+<QA question="What is the difference between em, rem, px, and %?">
+
+px = absolute pixels. em = relative to parent's font-size. rem = relative to root font-size (predictable). % = relative to parent's dimension. Use rem for typography, px for borders, % or viewport units for layouts.
+
+</QA>

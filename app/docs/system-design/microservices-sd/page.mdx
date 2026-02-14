@@ -1,0 +1,34 @@
+# Microservices & API Gateway
+
+Distributed service architecture patterns
+
+## Microservices Architecture
+
+**Microservices with API Gateway**
+
+```mermaid
+graph TD
+  C["Client"] --> GW["API Gateway<br/>(Auth, Rate Limit, Routing)"]
+  GW --> US["User Service"]
+  GW --> OS["Order Service"]
+  GW --> PS["Payment Service"]
+  GW --> NS["Notification Service"]
+  US --> UDB["User DB"]
+  OS --> ODB["Order DB"]
+  PS --> PDB["Payment DB"]
+  OS -->|"event"| MQ["Message Queue"]
+  MQ --> NS
+  MQ --> PS
+  style GW fill:#f97316,color:#fff
+  style MQ fill:#8b5cf6,color:#fff
+```
+
+### Key Patterns
+
+- API Gateway: Single entry point — auth, rate limiting, routing, protocol translation
+- Service Discovery: How services find each other (Consul, K8s DNS)
+- Circuit Breaker: Prevent cascade failures — fail fast when downstream is unhealthy
+- Saga Pattern: Distributed transactions across services using compensating actions
+- CQRS: Separate read and write models for different optimization
+- Event Sourcing: Store events instead of current state — full audit trail
+- Sidecar Pattern: Attach utility containers (logging, proxy) alongside main container

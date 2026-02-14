@@ -1,0 +1,49 @@
+# CRUD Operations
+
+Create, Read, Update, Delete with the MongoDB driver
+
+## MongoDB CRUD
+
+MongoDB is a document database — data is stored as flexible JSON-like documents (BSON) in collections, not rows in tables.
+
+```typescript
+// CRUD Examples
+import { MongoClient } from 'mongodb';
+
+const client = new MongoClient('mongodb://localhost:27017');
+const db = client.db('myapp');
+const users = db.collection('users');
+
+// CREATE
+await users.insertOne({ name: 'Alice', email: 'alice@ex.com', age: 28 });
+await users.insertMany([{ name: 'Bob', age: 32 }, { name: 'Carol', age: 25 }]);
+
+// READ
+const user = await users.findOne({ email: 'alice@ex.com' });
+const adults = await users.find({ age: { $gte: 18 } })
+  .sort({ name: 1 }).limit(10).toArray();
+
+// UPDATE
+await users.updateOne(
+  { email: 'alice@ex.com' },
+  { $set: { age: 29 }, $inc: { loginCount: 1 } }
+);
+await users.updateMany({ status: 'inactive' }, { $set: { archived: true } });
+
+// DELETE
+await users.deleteOne({ email: 'alice@ex.com' });
+await users.deleteMany({ status: 'inactive' });
+
+// UPSERT
+await users.updateOne(
+  { email: 'alice@ex.com' },
+  { $set: { lastLogin: new Date() } },
+  { upsert: true }
+);
+```
+
+<QA question="When to use MongoDB vs SQL?">
+
+MongoDB: flexible/evolving schemas, nested data, horizontal scaling, rapid prototyping. SQL: strict data integrity, complex relationships, transactions across tables, reporting. Many apps use both.
+
+</QA>

@@ -1,0 +1,40 @@
+# Video Streaming (Netflix-like)
+
+Design a large-scale video streaming platform
+
+## Design: Video Streaming Platform
+
+**Netflix-like Architecture**
+
+```mermaid
+graph TD
+  U["User"] --> CDN["CDN<br/>(Edge Servers)"]
+  CDN --> ORIGIN["Origin Servers<br/>(Video Files)"]
+  U --> API["API Gateway"]
+  API --> CATALOG["Catalog Service"]
+  API --> REC["Recommendation<br/>Engine"]
+  API --> AUTH["Auth Service"]
+  UPLOAD["Content Upload"] --> TRANS["Transcoding Pipeline<br/>(Multiple qualities)"]
+  TRANS --> S3["Object Storage<br/>(S3)"]
+  S3 --> CDN
+  CATALOG --> DB["Metadata DB"]
+  REC --> ML["ML Pipeline<br/>(User behavior)"]
+  style CDN fill:#22c55e,color:#fff
+  style TRANS fill:#f97316,color:#fff
+  style S3 fill:#3b82f6,color:#fff
+  style REC fill:#8b5cf6,color:#fff
+```
+
+### Key Components
+
+- Video Transcoding: Convert uploaded video to multiple resolutions (1080p, 720p, 480p) and codecs (H.264, H.265, AV1)
+- Adaptive Bitrate Streaming: HLS/DASH — client adjusts quality based on bandwidth
+- CDN: Edge servers cache popular content close to users — reduces latency and origin load
+- Content Delivery: Pre-position popular content at edge locations based on predictions
+- Metadata Service: Movie info, categories, user profiles — PostgreSQL with Redis cache
+- Recommendation Engine: Collaborative filtering + content-based ML models
+- DRM: Digital Rights Management to protect content (Widevine, FairPlay)
+
+### Scale Considerations
+
+Netflix serves 250M+ subscribers. Key scaling strategies: 1) CDN handles 95%+ of bandwidth, 2) Microservices architecture with 1000+ services, 3) Chaos engineering (Chaos Monkey) for resilience, 4) Data-driven A/B testing for everything, 5) Open Connect — Netflix's custom CDN appliances placed in ISP networks.

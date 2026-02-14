@@ -1,0 +1,60 @@
+# HTML Core Concepts
+
+HyperText Markup Language fundamentals and document structure
+
+## What is HTML?
+
+HyperText Markup Language (HTML) is the standard markup language for structuring web content. It defines the meaning and structure of content using elements represented by tags.
+
+```html
+// Basic HTML Document
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>My Page</title>
+  </head>
+  <body>
+    <h1>Hello World</h1>
+    <p>Welcome to my website.</p>
+  </body>
+</html>
+```
+
+## How HTML Works
+
+**HTML Request → Render Flow**
+
+```mermaid
+flowchart TD
+    Request["Browser Request"] --> Server["Web Server"]
+    Server --> HTML["HTML Document"]
+    HTML --> Browser["Browser Parser"]
+    Browser --> DOM["DOM Tree"]
+    DOM --> Render["Render Tree"]
+    Render --> Paint["Pixels on Screen"]
+    style Request fill:#3b82f6,color:#fff
+    style DOM fill:#8b5cf6,color:#fff
+    style Paint fill:#22c55e,color:#fff
+```
+
+## Interview Q&A
+
+<QA question="What does DOCTYPE do?">
+
+`<!DOCTYPE html>` tells the browser to use HTML5 standards mode. Without it, browsers may use 'quirks mode' which emulates legacy behavior and can cause inconsistent rendering.
+
+</QA>
+
+<QA question="Difference between HTML and XHTML?">
+
+XHTML is stricter — all tags must be closed, lowercase, and properly nested. HTML5 is more forgiving. XHTML uses XML syntax rules while HTML5 uses its own parser.
+
+</QA>
+
+<QA question="What is the DOM?">
+
+The Document Object Model is a tree-like representation of HTML that JavaScript can manipulate. Each HTML element becomes a node in the tree. The browser builds this from the parsed HTML.
+
+</QA>

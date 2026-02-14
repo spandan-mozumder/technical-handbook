@@ -1,0 +1,61 @@
+# Two Pointers
+
+Solve array problems with two indices
+
+## Two Pointer Technique
+
+Two pointers technique uses two indices to traverse data from different ends or at different speeds. It's especially effective for sorted arrays and linked lists, reducing O(n²) solutions to O(n).
+
+```typescript
+// Two Pointer Problems
+// Container with most water
+function maxArea(height: number[]): number {
+  let left = 0, right = height.length - 1, max = 0;
+  while (left < right) {
+    const area = Math.min(height[left], height[right]) * (right - left);
+    max = Math.max(max, area);
+    if (height[left] < height[right]) left++;
+    else right--;
+  }
+  return max;
+}
+
+// 3Sum — find all triplets that sum to zero
+function threeSum(nums: number[]): number[][] {
+  nums.sort((a, b) => a - b);
+  const result: number[][] = [];
+  for (let i = 0; i < nums.length - 2; i++) {
+    if (i > 0 && nums[i] === nums[i - 1]) continue;
+    let lo = i + 1, hi = nums.length - 1;
+    while (lo < hi) {
+      const sum = nums[i] + nums[lo] + nums[hi];
+      if (sum === 0) {
+        result.push([nums[i], nums[lo], nums[hi]]);
+        while (lo < hi && nums[lo] === nums[lo + 1]) lo++;
+        while (lo < hi && nums[hi] === nums[hi - 1]) hi--;
+        lo++; hi--;
+      } else if (sum < 0) lo++;
+      else hi--;
+    }
+  }
+  return result;
+}
+
+// Trapping rain water
+function trap(height: number[]): number {
+  let left = 0, right = height.length - 1;
+  let leftMax = 0, rightMax = 0, water = 0;
+  while (left < right) {
+    if (height[left] < height[right]) {
+      leftMax = Math.max(leftMax, height[left]);
+      water += leftMax - height[left];
+      left++;
+    } else {
+      rightMax = Math.max(rightMax, height[right]);
+      water += rightMax - height[right];
+      right--;
+    }
+  }
+  return water;
+}
+```

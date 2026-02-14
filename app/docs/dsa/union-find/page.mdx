@@ -1,0 +1,41 @@
+# Union Find (Disjoint Set)
+
+Efficiently track connected components
+
+## Union Find
+
+Union Find (Disjoint Set Union) efficiently tracks elements partitioned into non-overlapping sets. With path compression and union by rank, both find and union operations approach O(α(n)) ≈ O(1) amortized. It's essential for connectivity problems and Kruskal's MST.
+
+```typescript
+// Union Find with Path Compression & Union by Rank
+class UnionFind {
+  private parent: number[];
+  private rank: number[];
+
+  constructor(n: number) {
+    this.parent = Array.from({ length: n }, (_, i) => i);
+    this.rank = new Array(n).fill(0);
+  }
+
+  find(x: number): number {
+    if (this.parent[x] !== x) {
+      this.parent[x] = this.find(this.parent[x]); // path compression
+    }
+    return this.parent[x];
+  }
+
+  union(x: number, y: number): boolean {
+    const px = this.find(x), py = this.find(y);
+    if (px === py) return false; // already connected
+    // union by rank
+    if (this.rank[px] < this.rank[py]) this.parent[px] = py;
+    else if (this.rank[px] > this.rank[py]) this.parent[py] = px;
+    else { this.parent[py] = px; this.rank[px]++; }
+    return true;
+  }
+
+  connected(x: number, y: number): boolean {
+    return this.find(x) === this.find(y);
+  }
+}
+```

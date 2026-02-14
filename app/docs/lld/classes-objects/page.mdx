@@ -1,0 +1,113 @@
+# Classes & Objects
+
+Templates, instances, constructors, and methods
+
+## Classes & Objects
+
+A class is a blueprint/template for creating objects. It defines attributes (state) and methods (behavior). An object is an instance of a class — it has its own state but shares the behavior defined in the class.
+
+### Key Concepts
+
+- Class: Template/blueprint for creating objects. Defines attributes and methods. Encapsulates related data and functions.
+- Object: Instance of a class. Has its own state. Shares behavior defined in the class. Created using constructors.
+- Constructor: Special method for initializing objects. Same name as the class. Can be overloaded. No return type.
+- Instance Variables: Represent object state. Unique to each instance. Access level can be controlled.
+- Methods: Define object behavior. Can access instance variables. Can be public/private/protected. Can be static or instance.
+
+### Class Definition Examples
+
+```java
+// Java — Class Definition
+public class Car {
+    // Instance variables
+    private String brand;
+    private String model;
+    private int year;
+
+    // Constructor
+    public Car(String brand, String model, int year) {
+        this.brand = brand;
+        this.model = model;
+        this.year = year;
+    }
+
+    // Methods
+    public void startEngine() {
+        System.out.println("Engine started!");
+    }
+
+    public String getInfo() {
+        return year + " " + brand + " " + model;
+    }
+}
+
+// Creating and Using Objects
+Car myCar = new Car("Toyota", "Camry", 2022);
+Car anotherCar = new Car("Honda", "Civic", 2023);
+myCar.startEngine();
+System.out.println(myCar.getInfo());
+```
+
+```python
+// Python — Class Definition
+class Car:
+    # Constructor
+    def __init__(self, brand: str, model: str, year: int):
+        # Instance variables
+        self._brand = brand
+        self._model = model
+        self._year = year
+
+    # Methods
+    def start_engine(self) -> None:
+        print("Engine started!")
+
+    def get_info(self) -> str:
+        return f"{self._year} {self._brand} {self._model}"
+
+# Creating and Using Objects
+my_car = Car("Toyota", "Camry", 2022)
+another_car = Car("Honda", "Civic", 2023)
+my_car.start_engine()
+print(my_car.get_info())
+```
+
+```cpp
+// C++ — Class Definition
+class Car {
+private:
+    std::string brand;
+    std::string model;
+    int year;
+
+public:
+    // Constructor with initializer list
+    Car(const std::string& brand, const std::string& model, int year)
+        : brand(brand), model(model), year(year) {}
+
+    void startEngine() {
+        std::cout << "Engine started!" << std::endl;
+    }
+
+    std::string getInfo() const {
+        return std::to_string(year) + " " + brand + " " + model;
+    }
+};
+
+// Creating and Using Objects
+Car myCar("Toyota", "Camry", 2022);
+myCar.startEngine();
+std::cout << myCar.getInfo() << std::endl;
+```
+
+<QA question="What's the difference between a class and an object?">
+
+A class is a blueprint or template that defines the structure and behavior. An object is a concrete instance of that class with its own state. Think of a class like an architectural blueprint and an object like an actual building constructed from that blueprint. You can create multiple objects from a single class.
+
+</QA>
+
+<QA question="What is the 'this' keyword used for?">
+
+The 'this' keyword refers to the current instance of the class. It's used to distinguish instance variables from local variables/parameters with the same name, to pass the current object as an argument, and to call other constructors (constructor chaining).
+
+</QA>

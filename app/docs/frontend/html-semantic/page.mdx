@@ -1,0 +1,63 @@
+# Semantic HTML
+
+Meaningful elements that improve accessibility, SEO, and code clarity
+
+## Semantic Elements
+
+Semantic tags describe the purpose of content, not just its appearance. They help screen readers, search engines, and developers understand page structure.
+
+```html
+// Semantic Page Layout
+<header>
+  <nav aria-label="Main navigation">
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main>
+  <article>
+    <h1>Blog Post Title</h1>
+    <time datetime="2025-01-15">January 15, 2025</time>
+    <section>
+      <h2>Introduction</h2>
+      <p>Content here...</p>
+    </section>
+    <figure>
+      <img src="chart.png" alt="Sales chart showing 20% growth" />
+      <figcaption>Q4 2024 Sales Growth</figcaption>
+    </figure>
+  </article>
+
+  <aside>
+    <h2>Related Articles</h2>
+    <ul>
+      <li><a href="/post-2">Another Post</a></li>
+    </ul>
+  </aside>
+</main>
+
+<footer>
+  <p>&copy; 2025 My Site</p>
+</footer>
+```
+
+## Tag Reference
+
+- `<header>` — Introductory content or navigation links
+- `<nav>` — Major navigation blocks. Use aria-label for multiple navs.
+- `<main>` — Primary content unique to this page. Only one per page.
+- `<section>` — Thematic grouping of content with a heading
+- `<article>` — Self-contained content (blog post, comment, widget)
+- `<aside>` — Tangentially related content (sidebar, pull quote)
+- `<footer>` — Footer for nearest section or document
+- `<figure>` / `<figcaption>` — Self-contained media with caption
+- `<time>` — Machine-readable date/time with datetime attribute
+
+<QA question="Why use semantic HTML over divs?">
+
+Semantic HTML improves: (1) Accessibility — screen readers can navigate by landmarks, (2) SEO — search engines understand content structure, (3) Maintainability — code is self-documenting, (4) Default behaviors — forms submit, buttons are focusable.
+
+</QA>

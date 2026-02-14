@@ -1,0 +1,91 @@
+# Kubernetes Core
+
+Pods, Deployments, Services, Ingress, ConfigMaps, Secrets, and Helm
+
+## Core Objects
+
+**Kubernetes Architecture**
+
+```mermaid
+flowchart TD
+    U["Users"] --> I["Ingress"]
+    I --> S["Service (ClusterIP/NodePort/LoadBalancer)"]
+    S --> D["Deployment (manages ReplicaSet)"]
+    D --> P1["Pod 1"]
+    D --> P2["Pod 2"]
+    D --> P3["Pod 3"]
+    P1 --> C["Container"]
+    CM["ConfigMap"] -.-> P1
+    SEC["Secret"] -.-> P1
+    style I fill:#3b82f6,color:#fff
+    style S fill:#8b5cf6,color:#fff
+    style D fill:#22c55e,color:#fff
+```
+
+```yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: myapp
+spec:
+  replicas: 3
+  selector:
+    matchLabels: { app: myapp }
+  template:
+    metadata:
+      labels: { app: myapp }
+    spec:
+      containers:
+        - name: myapp
+          image: myapp:1.0.0
+          ports: [{ containerPort: 3000 }]
+          resources:
+            requests: { cpu: "100m", memory: "128Mi" }
+            limits: { cpu: "500m", memory: "256Mi" }
+          readinessProbe:
+            httpGet: { path: /health, port: 3000 }
+            initialDelaySeconds: 5
+          env:
+            - name: DB_URL
+              valueFrom:
+                secretKeyRef: { name: db-secret, key: url }
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: myapp-svc
+spec:
+  selector: { app: myapp }
+  ports: [{ port: 80, targetPort: 3000 }]
+  type: ClusterIP
+```
+
+## Key Concepts
+
+- Pod — smallest deployable unit. One or more containers sharing network/storage.
+- Deployment — declarative updates for pods. Handles rolling updates and rollbacks.
+- Service — stable network endpoint for pods. ClusterIP (internal), NodePort, LoadBalancer.
+- Ingress — HTTP routing rules. Maps domains/paths to services.
+- ConfigMap — non-sensitive configuration as key-value pairs.
+- Secret — sensitive data (passwords, tokens). Base64 encoded.
+- Helm — package manager. Charts = reusable K8s manifests with templating.
+
+## kubectl Commands
+
+```bash
+kubectl get pods                    # list pods
+kubectl get deployments             # list deployments
+kubectl describe pod myapp-xxx      # detailed pod info
+kubectl logs -f myapp-xxx           # follow pod logs
+kubectl exec -it myapp-xxx -- sh    # shell into pod
+kubectl apply -f manifest.yaml      # apply config
+kubectl rollout restart deploy/myapp # restart deployment
+kubectl scale deploy/myapp --replicas=5  # scale up
+kubectl rollout undo deploy/myapp   # rollback
+```
+
+<QA question="Difference between Deployment and StatefulSet?">
+
+Deployment: stateless apps. Pods are interchangeable, random names (myapp-abc123). StatefulSet: stateful apps (databases). Pods have stable names (myapp-0, myapp-1), persistent storage, and ordered startup/shutdown.
+
+</QA>

@@ -1,0 +1,50 @@
+# Branching, Merge & Rebase
+
+Branch operations, merge strategies, and rebase workflows
+
+## Branch Operations
+
+```bash
+# Create & switch
+git branch feature/login           # create branch
+git checkout -b feature/login      # create + switch (classic)
+git switch -c feature/login        # create + switch (modern)
+
+# Merge
+git checkout main
+git merge feature/login            # merge (creates merge commit if diverged)
+git merge --squash feature/login   # squash all commits into one
+
+# Rebase — replay commits on top of another branch
+git checkout feature/login
+git rebase main                    # replay feature commits onto main
+# Then: git checkout main && git merge feature/login (fast-forward)
+
+# Interactive rebase — rewrite history
+git rebase -i HEAD~5               # edit last 5 commits
+# pick  = keep, squash = merge into previous, reword = change message
+# edit  = pause for changes, drop = remove commit
+```
+
+## Merge vs Rebase
+
+**Merge vs Rebase**
+
+```mermaid
+flowchart LR
+    subgraph Merge
+    M1["main"] --> M2["A"]
+    M2 --> M3["B"]
+    F1["feature"] --> F2["C"]
+    F2 --> F3["D"]
+    M3 --> MC["Merge Commit"]
+    F3 --> MC
+    end
+    style MC fill:#22c55e,color:#fff
+```
+
+<QA question="Merge vs Rebase — when to use which?">
+
+Merge: preserves complete history, safe for shared branches, creates merge commits. Rebase: creates linear history, cleaner git log, but rewrites commits. Rule: rebase local/feature branches, merge into shared branches. Never rebase commits that others have pulled.
+
+</QA>

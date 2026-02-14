@@ -1,0 +1,37 @@
+# Sharding & Partitioning
+
+Distributing data across multiple databases
+
+## Database Sharding
+
+Sharding splits data across multiple database instances. Each shard holds a subset of data. This enables horizontal scaling of storage and throughput, but adds complexity around cross-shard queries, rebalancing, and transactions.
+
+**Sharding Strategies**
+
+```mermaid
+graph TD
+  A["User Request"] --> R["Router / Shard Key"]
+  R --> S1["Shard 1<br/>Users A-H"]
+  R --> S2["Shard 2<br/>Users I-P"]
+  R --> S3["Shard 3<br/>Users Q-Z"]
+  S1 --> R1["Replica"]
+  S2 --> R2["Replica"]
+  S3 --> R3["Replica"]
+  style R fill:#f97316,color:#fff
+  style S1 fill:#3b82f6,color:#fff
+  style S2 fill:#8b5cf6,color:#fff
+  style S3 fill:#22c55e,color:#fff
+```
+
+### Sharding Strategies
+
+- Range-based: Shard by ranges (A-H, I-P, Q-Z) — simple but can create hotspots
+- Hash-based: Hash the shard key → distribute evenly — good distribution but range queries are hard
+- Directory-based: Lookup table maps data to shards — flexible but lookup is a bottleneck
+- Geographic: Shard by region — reduces latency for geo-specific data
+
+<Callout variant="warning">
+
+Avoid sharding as long as possible. First try: read replicas, caching, query optimization, and vertical scaling. Sharding adds significant operational complexity.
+
+</Callout>

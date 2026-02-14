@@ -1,0 +1,48 @@
+# IAM, Cognito & KMS
+
+Identity management, user authentication, and encryption
+
+## IAM (Identity and Access Management)
+
+IAM controls who (authentication) can do what (authorization) on which resources. Follow the principle of least privilege — grant only the permissions needed.
+
+- Users — individual people/apps with credentials
+- Groups — collection of users sharing permissions
+- Roles — assumed by services/users. No permanent credentials. Best for EC2, Lambda, ECS.
+- Policies — JSON documents defining allowed/denied actions on resources
+
+```json
+// IAM Policy Example
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "s3:GetObject",
+        "s3:PutObject"
+      ],
+      "Resource": "arn:aws:s3:::my-bucket/*"
+    },
+    {
+      "Effect": "Deny",
+      "Action": "s3:DeleteObject",
+      "Resource": "*"
+    }
+  ]
+}
+```
+
+## Cognito & KMS
+
+- Cognito User Pools — managed user directory with signup, login, MFA, social auth
+- Cognito Identity Pools — temporary AWS credentials for authenticated/guest users
+- KMS (Key Management Service) — create and manage encryption keys
+- KMS integrates with S3, EBS, RDS for encryption at rest
+- AWS Secrets Manager — securely store and rotate API keys, database credentials
+
+<QA question="What is the principle of least privilege?">
+
+Grant only the minimum permissions required to perform a task. Start with zero permissions and add only what's needed. Use IAM Access Analyzer to identify unused permissions. Never use root account for daily operations.
+
+</QA>

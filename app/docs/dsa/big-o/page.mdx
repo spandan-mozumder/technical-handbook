@@ -1,0 +1,96 @@
+# Big O Notation
+
+Understanding time and space complexity analysis
+
+## What is Big O?
+
+Big O notation describes the upper bound of an algorithm's growth rate. It tells us how the runtime or space requirements grow as the input size increases. This is the most critical concept in algorithm analysis and comes up in virtually every technical interview.
+
+**Common Complexity Classes**
+
+```mermaid
+graph LR
+  A["O(1)"] -->|slower| B["O(log n)"]
+  B -->|slower| C["O(n)"]
+  C -->|slower| D["O(n log n)"]
+  D -->|slower| E["O(n²)"]
+  E -->|slower| F["O(2ⁿ)"]
+  F -->|slower| G["O(n!)"]
+  style A fill:#22c55e,color:#fff
+  style B fill:#84cc16,color:#fff
+  style C fill:#eab308,color:#fff
+  style D fill:#f97316,color:#fff
+  style E fill:#ef4444,color:#fff
+  style F fill:#dc2626,color:#fff
+  style G fill:#991b1b,color:#fff
+```
+
+### Common Complexities
+
+- O(1) — Constant: Array access, hash map lookup
+- O(log n) — Logarithmic: Binary search, balanced BST operations
+- O(n) — Linear: Single loop, linear search
+- O(n log n) — Linearithmic: Merge sort, heap sort
+- O(n²) — Quadratic: Nested loops, bubble sort
+- O(2ⁿ) — Exponential: Recursive Fibonacci (naive), power set
+- O(n!) — Factorial: Generating all permutations
+
+### Analyzing Complexity
+
+```typescript
+// Examples of Different Complexities
+// O(1) - Constant time
+function getFirst(arr: number[]): number {
+  return arr[0];
+}
+
+// O(log n) - Logarithmic
+function binarySearch(arr: number[], target: number): number {
+  let lo = 0, hi = arr.length - 1;
+  while (lo <= hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (arr[mid] === target) return mid;
+    if (arr[mid] < target) lo = mid + 1;
+    else hi = mid - 1;
+  }
+  return -1;
+}
+
+// O(n) - Linear
+function sum(arr: number[]): number {
+  let total = 0;
+  for (const num of arr) total += num;
+  return total;
+}
+
+// O(n²) - Quadratic
+function bubbleSort(arr: number[]): number[] {
+  const n = arr.length;
+  for (let i = 0; i < n; i++) {
+    for (let j = 0; j < n - i - 1; j++) {
+      if (arr[j] > arr[j + 1]) {
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]];
+      }
+    }
+  }
+  return arr;
+}
+```
+
+<QA question="What's the difference between Big O, Big Theta, and Big Omega?">
+
+Big O describes the upper bound (worst case), Big Omega (Ω) describes the lower bound (best case), and Big Theta (Θ) describes the tight bound (average case). In interviews, Big O is used most often because we typically care about worst-case guarantees.
+
+</QA>
+
+<QA question="Why do we drop constants and lower-order terms?">
+
+Big O describes asymptotic behavior — how the algorithm scales as n approaches infinity. Constants and lower-order terms become insignificant at large scales. O(2n + 5) simplifies to O(n) because the factor of 2 and constant 5 don't change the fundamental growth rate.
+
+</QA>
+
+<Callout variant="tip">
+
+In interviews, always state both time AND space complexity. Many interviewers expect this without being asked.
+
+</Callout>

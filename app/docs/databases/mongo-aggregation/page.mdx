@@ -1,0 +1,53 @@
+# Aggregation Pipeline
+
+Complex data transformations and analytics
+
+## Aggregation Pipeline
+
+**Pipeline Flow**
+
+```mermaid
+flowchart LR
+    A["$match (filter)"] --> B["$group (aggregate)"]
+    B --> C["$sort (order)"]
+    C --> D["$project (shape)"]
+    D --> E["$limit (cap results)"]
+    style A fill:#3b82f6,color:#fff
+    style B fill:#8b5cf6,color:#fff
+    style C fill:#22c55e,color:#fff
+```
+
+```typescript
+// Aggregation Examples
+// Sales by category with average
+const salesByCategory = await orders.aggregate([
+  { $match: { status: 'completed', date: { $gte: new Date('2025-01-01') } } },
+  { $unwind: '$items' },
+  { $group: {
+    _id: '$items.category',
+    totalRevenue: { $sum: '$items.price' },
+    avgPrice: { $avg: '$items.price' },
+    count: { $sum: 1 },
+  }},
+  { $sort: { totalRevenue: -1 } },
+  { $limit: 10 },
+]).toArray();
+
+// Lookup (JOIN equivalent)
+const usersWithPosts = await users.aggregate([
+  { $lookup: {
+    from: 'posts',
+    localField: '_id',
+    foreignField: 'authorId',
+    as: 'posts',
+  }},
+  { $addFields: { postCount: { $size: '$posts' } } },
+  { $sort: { postCount: -1 } },
+]).toArray();
+```
+
+<QA question="What is $unwind?">
+
+$unwind deconstructs an array field — if a document has items: [A, B, C], $unwind creates 3 documents, each with one item. Essential before grouping on array elements.
+
+</QA>

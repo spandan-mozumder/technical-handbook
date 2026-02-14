@@ -1,0 +1,37 @@
+# CAP Theorem
+
+Understanding tradeoffs in distributed systems
+
+## CAP Theorem
+
+CAP theorem states that a distributed system can only guarantee two of three properties: Consistency (all nodes see the same data), Availability (every request gets a response), and Partition Tolerance (system works despite network failures). Since network partitions are inevitable, you're really choosing between CP and AP.
+
+**CAP Theorem**
+
+```mermaid
+graph TD
+  C["Consistency<br/>All nodes see same data"]
+  A["Availability<br/>Every request gets response"]
+  P["Partition Tolerance<br/>Works despite network splits"]
+  CP["CP Systems<br/>MongoDB, HBase, Redis"]
+  AP["AP Systems<br/>Cassandra, DynamoDB, CouchDB"]
+  C --- CP
+  P --- CP
+  A --- AP
+  P --- AP
+  style CP fill:#3b82f6,color:#fff
+  style AP fill:#22c55e,color:#fff
+```
+
+### Consistency Models
+
+- Strong Consistency: Read always returns the latest write (like a single-node DB)
+- Eventual Consistency: Reads may return stale data temporarily, but converge
+- Causal Consistency: If A causes B, everyone sees A before B
+- Read-Your-Writes: A user always sees their own writes immediately
+
+<QA question="Is CAP theorem still relevant?">
+
+Yes, but it's often misunderstood. In reality, partitions are rare, so the choice is more nuanced. PACELC theorem extends CAP: during Partitions choose AP or CP; Else (normal operation) choose Latency or Consistency. Systems like Spanner achieve near-global consistency using GPS/atomic clocks.
+
+</QA>

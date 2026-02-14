@@ -1,0 +1,63 @@
+# Open/Closed Principle
+
+Open for extension, closed for modification
+
+## Open/Closed Principle (OCP)
+
+Software entities should be open for extension but closed for modification. You should be able to add new functionality without changing existing code. This is achieved through abstractions and polymorphism.
+
+```java
+// ❌ OCP Violation
+// BAD: Must modify this class every time a new payment method is added
+public class PaymentProcessor {
+    public void processPayment(String type, double amount) {
+        if (type.equals("credit_card")) {
+            // process credit card
+        } else if (type.equals("paypal")) {
+            // process PayPal
+        } else if (type.equals("crypto")) {
+            // process crypto — requires modifying existing code!
+        }
+    }
+}
+```
+
+```java
+// ✅ OCP Applied
+// GOOD: Add new payment methods without changing existing code
+interface PaymentMethod {
+    void processPayment(double amount);
+    boolean validate();
+}
+
+class CreditCardPayment implements PaymentMethod {
+    public void processPayment(double amount) {
+        System.out.println("Processing credit card: $" + amount);
+    }
+    public boolean validate() { return true; }
+}
+
+class PayPalPayment implements PaymentMethod {
+    public void processPayment(double amount) {
+        System.out.println("Processing PayPal: $" + amount);
+    }
+    public boolean validate() { return true; }
+}
+
+// NEW payment method — NO modification needed!
+class CryptoPayment implements PaymentMethod {
+    public void processPayment(double amount) {
+        System.out.println("Processing crypto: $" + amount);
+    }
+    public boolean validate() { return true; }
+}
+
+// PaymentProcessor is closed for modification
+class PaymentProcessor {
+    public void process(PaymentMethod method, double amount) {
+        if (method.validate()) {
+            method.processPayment(amount);
+        }
+    }
+}
+```

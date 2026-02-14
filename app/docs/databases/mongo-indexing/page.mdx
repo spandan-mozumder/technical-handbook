@@ -1,0 +1,67 @@
+# Indexing & Schema Design
+
+Optimizing queries and designing effective document schemas
+
+## Index Types
+
+```typescript
+// Index Examples
+// Single field index
+await users.createIndex({ email: 1 }); // 1 = ascending
+
+// Compound index (order matters!)
+await orders.createIndex({ userId: 1, createdAt: -1 });
+
+// Unique index
+await users.createIndex({ email: 1 }, { unique: true });
+
+// Text index for full-text search
+await posts.createIndex({ title: 'text', content: 'text' });
+await posts.find({ $text: { $search: 'mongodb indexing' } });
+
+// TTL index — auto-delete after time
+await sessions.createIndex({ createdAt: 1 }, { expireAfterSeconds: 86400 });
+
+// Partial index — index only matching documents
+await orders.createIndex(
+  { customerId: 1 },
+  { partialFilterExpression: { status: 'pending' } }
+);
+
+// Check query performance
+const plan = await users
+  .find({ email: 'alice@ex.com' })
+  .explain('executionStats');
+// Look for: IXSCAN (good) vs COLLSCAN (bad)
+```
+
+## Schema Design Patterns
+
+- Embed: data accessed together (user + address). Faster reads, atomic writes.
+- Reference: independent entities or large/growing arrays. More flexible, requires $lookup.
+- Subset pattern: embed frequently-accessed subset, full data in separate collection.
+- Bucket pattern: group time-series or IoT data into fixed-size documents.
+
+## Transactions
+
+```typescript
+// Multi-Document Transactions
+const session = client.startSession();
+try {
+  session.startTransaction();
+  await accounts.updateOne({ _id: from }, { $inc: { balance: -amount } }, { session });
+  await accounts.updateOne({ _id: to }, { $inc: { balance: amount } }, { session });
+  await session.commitTransaction();
+} catch (err) {
+  await session.abortTransaction();
+  throw err;
+} finally {
+  session.endSession();
+}
+```
+
+<QA question="When should you embed vs reference?">
+
+Embed when: data is always accessed together, doesn't grow unboundedly, and you need atomic updates. Reference when: data is shared across documents, arrays grow large, or you need independent access. Rule of thumb: if you always need it together, embed it.
+
+</QA>

@@ -1,0 +1,27 @@
+# Grafana
+
+Dashboards, panels, alerts, and data sources
+
+## Grafana
+
+Grafana is a visualization platform for monitoring data. It connects to data sources (Prometheus, Loki, PostgreSQL, etc.) and displays metrics as beautiful, interactive dashboards.
+
+## Key Concepts
+
+- Dashboard — collection of panels displaying related metrics
+- Panel — individual visualization (graph, gauge, table, heatmap, stat)
+- Data Source — backend to query (Prometheus, InfluxDB, MySQL, Loki, Elasticsearch)
+- Variables — template variables for dynamic dashboards ($namespace, $pod)
+- Alerts — threshold-based notifications sent to contact points
+
+## Common Dashboard Patterns
+
+- RED Method (services): Rate, Errors, Duration — for request-driven services
+- USE Method (resources): Utilization, Saturation, Errors — for infrastructure
+- The Four Golden Signals (Google SRE): Latency, Traffic, Errors, Saturation
+
+<QA question="RED vs USE method — when to use which?">
+
+RED Method: for services/endpoints — how many requests, how many errors, how long they take. USE Method: for infrastructure resources (CPU, memory, disk, network) — how utilized, how saturated, any errors. Use both together for complete observability.
+
+</QA>

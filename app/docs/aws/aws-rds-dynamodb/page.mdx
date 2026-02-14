@@ -1,0 +1,50 @@
+# RDS & DynamoDB
+
+Managed relational and NoSQL databases
+
+## RDS (Relational Database Service)
+
+RDS provides managed SQL databases — AWS handles backups, patching, replication, and failover. Supports PostgreSQL, MySQL, MariaDB, Oracle, SQL Server, and Aurora.
+
+- Multi-AZ: automatic failover to standby in another availability zone
+- Read Replicas: scale read traffic (up to 15 replicas)
+- Aurora: AWS-built, up to 5x faster than MySQL, 3x faster than PostgreSQL
+- Automated backups: point-in-time recovery within retention period
+
+## DynamoDB
+
+DynamoDB is a fully managed NoSQL key-value and document database. Single-digit millisecond latency at any scale. Serverless — no capacity planning needed with on-demand mode.
+
+```typescript
+// DynamoDB Operations
+import { DynamoDBClient, PutItemCommand, QueryCommand } from '@aws-sdk/client-dynamodb';
+
+const client = new DynamoDBClient({ region: 'us-east-1' });
+
+// Put item
+await client.send(new PutItemCommand({
+  TableName: 'Users',
+  Item: {
+    pk: { S: 'USER#123' },
+    sk: { S: 'PROFILE' },
+    name: { S: 'Alice' },
+    email: { S: 'alice@ex.com' },
+  },
+}));
+
+// Query by partition key
+const result = await client.send(new QueryCommand({
+  TableName: 'Users',
+  KeyConditionExpression: 'pk = :pk AND begins_with(sk, :prefix)',
+  ExpressionAttributeValues: {
+    ':pk': { S: 'USER#123' },
+    ':prefix': { S: 'ORDER#' },
+  },
+}));
+```
+
+<QA question="RDS vs DynamoDB — when to use which?">
+
+RDS: complex queries, JOINs, transactions, relationships, existing SQL applications. DynamoDB: simple access patterns, massive scale, sub-10ms latency, key-value/document data, serverless. DynamoDB requires careful key design upfront.
+
+</QA>
