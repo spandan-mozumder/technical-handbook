@@ -43,8 +43,3 @@ const result = await client.send(new QueryCommand({
 }));
 ```
 
-<QA question="RDS vs DynamoDB — when to use which?">
-
-RDS: complex queries, JOINs, transactions, relationships, existing SQL applications. DynamoDB: simple access patterns, massive scale, sub-10ms latency, key-value/document data, serverless. DynamoDB requires careful key design upfront.
-
-</QA>

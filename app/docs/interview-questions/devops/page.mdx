@@ -1,0 +1,411 @@
+# Devops Interview Questions
+
+import { QA } from "@/components/QA";
+
+## Linux
+
+<QA question="Difference between hard and soft links?">
+
+Hard link: another name for the same inode (same file data). Deleting the original doesn't affect it. Cannot cross filesystems. Soft (symbolic) link: pointer to a file path. Breaks if the target is deleted. Can cross filesystems and link to directories.
+
+</QA>
+
+<QA question="What is the command to check profile consistency in Linux?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Linux, and how do you add new commands to the system?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is your knowledge of Windows and Linux-based servers?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you create an archive file (tar/zip) in Linux?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What happens when you delete files in Linux? (Inodes and recovery)">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the differences between UNIX and LINUX?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the Linux boot process (BIOS, MBR, GRUB, Kernel, Init).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How would you monitor file changes in Linux?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Tell us about your technical knowledge of Linux Networking.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are hard links and soft links in Linux?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do Linux permissions (chmod/chown) work?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to configure and work with DNS in Linux?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the maximum size (in bytes) of a filename in Linux?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you kill a process in RHEL / CentOS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the meaning and use of the 'sed' stream editor?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Linux shell and what are its types?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the use of the grep command with examples (grep -i, grep -v, grep -e).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between a process and a thread in Linux.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Why can only four primary partitions be created in Linux?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the Find command in Linux and how is it used?">
+
+Asked in interviews.
+
+</QA>
+
+## Docker
+
+<QA question="Why multi-stage builds?">
+
+Multi-stage builds create smaller production images. Build stage has dev dependencies (compilers, build tools). Production stage copies only the compiled output. Results in images that are 10-50x smaller and more secure.
+
+</QA>
+
+<QA question="What is Docker, and how can I create a Docker Compose file and a Dockerfile for my Node.js application?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is docker and difference b/w docker attach and docker exec?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Docker and its advantages? Which is the most secure docker image?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Docker and what is its purpose?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the use of docker and kubernetes?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the basic commands of docker?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between an image and a container?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain Docker and Docker Hub.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Docker Swarm and how is it different from Kubernetes?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you optimize Docker images for production?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between COPY and ADD in a Dockerfile?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the Docker container lifecycle.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Docker volume and why is it preferred over bind mounts?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you monitor Docker containers in a production environment?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the different Docker networking modes (Bridge, Host, None)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the concept of 'Dockerizing' an application.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the role of Docker Daemon?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you handle secrets and sensitive data in Docker?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the purpose of .dockerignore file?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain how Docker helps in a CI/CD pipeline.">
+
+Asked in interviews.
+
+</QA>
+
+## Kubernetes
+
+<QA question="Difference between Deployment and StatefulSet?">
+
+Deployment: stateless apps. Pods are interchangeable, random names (myapp-abc123). StatefulSet: stateful apps (databases). Pods have stable names (myapp-0, myapp-1), persistent storage, and ordered startup/shutdown.
+
+</QA>
+
+<QA question="What is Kubernetes, and what are its primary use cases?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the fundamentals of Kubernetes (K8s)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Kubernetes? why it is required? how it is different from Docker Swarm?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you deploy a web application into Kubernetes?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe the architecture of Kubernetes.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the components of the Kubernetes Control Plane.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Pod in Kubernetes and why is it the smallest unit?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between a Deployment and a StatefulSet.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is an Ingress controller and how does it work?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How does service discovery and load balancing work in Kubernetes?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are ConfigMaps and Secrets, and how are they used?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the role and functionality of Kube-proxy.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Horizontal Pod Autoscaling (HPA) and how do you configure it?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are Kubernetes namespaces and when should you use them?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain Role-Based Access Control (RBAC) in Kubernetes.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Sidecar container pattern?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between ClusterIP, NodePort, and LoadBalancer services.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Liveness probe vs a Readiness probe?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you manage persistent storage in Kubernetes?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is ETCD and why is it important in a Kubernetes cluster?">
+
+Asked in interviews.
+
+</QA>
+
+## From: Docker Compose
+
+<QA question="What are Docker volumes used for?">
+
+Volumes persist data beyond container lifecycle. Without volumes, all data inside a container is lost when it's removed. Named volumes (pgdata:) are managed by Docker. Bind mounts (./src:/app/src) map host paths for development.
+
+</QA>
+
+## From: Grafana
+
+<QA question="RED vs USE method — when to use which?">
+
+RED Method: for services/endpoints — how many requests, how many errors, how long they take. USE Method: for infrastructure resources (CPU, memory, disk, network) — how utilized, how saturated, any errors. Use both together for complete observability.
+
+</QA>
+
+## From: Prometheus
+
+<QA question="Counter vs Gauge — when to use which?">
+
+Counter: for things that only go up — requests served, errors occurred, bytes sent. Always use rate() to get useful per-second values. Gauge: for things that fluctuate — temperature, queue depth, active users. Can be used directly.
+
+</QA>

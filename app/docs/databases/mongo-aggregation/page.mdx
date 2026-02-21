@@ -46,8 +46,3 @@ const usersWithPosts = await users.aggregate([
 ]).toArray();
 ```
 
-<QA question="What is $unwind?">
-
-$unwind deconstructs an array field — if a document has items: [A, B, C], $unwind creates 3 documents, each with one item. Essential before grouping on array elements.
-
-</QA>

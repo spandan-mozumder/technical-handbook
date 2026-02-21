@@ -65,8 +65,3 @@ Transitions, keyframes, transforms, and performance
 - Prefer CSS animations over JS for simple transitions
 - Use prefers-reduced-motion to respect user preferences
 
-<QA question="Why is transform better than top/left for animation?">
-
-transform uses GPU compositing — it doesn't trigger layout or paint. Animating top/left triggers layout recalculation for every frame, causing jank. transform: translate() achieves the same visual effect at 60fps.
-
-</QA>

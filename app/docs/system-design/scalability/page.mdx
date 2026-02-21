@@ -39,9 +39,3 @@ graph TD
 ### Statelessness
 
 For horizontal scaling, servers must be stateless — no local session data. Store sessions in Redis/DynamoDB and use JWT tokens. Any server should handle any request.
-
-<QA question="How would you handle 10x traffic increase overnight?">
-
-1) Enable auto-scaling groups with cloud provider, 2) Add read replicas for database, 3) Implement caching layer (Redis/CDN), 4) Queue non-critical operations (email, analytics), 5) Optimize hot paths in code, 6) Set up CDN for static assets, 7) Monitor and set alerts for bottlenecks.
-
-</QA>

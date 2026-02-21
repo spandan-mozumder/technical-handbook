@@ -75,15 +75,3 @@ function isAnagram(s: string, t: string): boolean {
   return true;
 }
 ```
-
-<QA question="What's the difference between Array.slice() and Array.splice()?">
-
-slice(start, end) returns a new array with elements from start to end (non-destructive). splice(start, deleteCount, ...items) modifies the original array by removing/replacing/adding elements (destructive). slice is O(k) where k is the slice size; splice is O(n) due to shifting.
-
-</QA>
-
-<QA question="How do JavaScript arrays differ from arrays in C/Java?">
-
-JS arrays are dynamic (auto-resize), heterogeneous (can store mixed types), and are actually hash maps under the hood. They lack true O(1) guarantee for access in all engines, though V8 optimizes dense arrays to use contiguous memory.
-
-</QA>

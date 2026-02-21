@@ -92,8 +92,3 @@ app.use((err: AppError, req: Request, res: Response, next: NextFunction) => {
 });
 ```
 
-<QA question="Where should you store JWT tokens on the client?">
-
-HttpOnly cookies are safest — they can't be accessed by JavaScript (prevents XSS theft). Avoid localStorage (vulnerable to XSS). If using cookies, add SameSite=Strict and Secure flags. For SPAs, httpOnly cookies with CSRF tokens is the gold standard.
-
-</QA>

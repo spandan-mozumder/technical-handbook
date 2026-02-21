@@ -60,8 +60,3 @@ async function processCSV(path: string) {
 - Buffer.allocUnsafe(1024) — faster but uninitialized (may contain old data)
 - buf.toString('utf-8') — convert back to string
 
-<QA question="When should you use streams vs reading the whole file?">
-
-Use streams for large files (>100MB), real-time data, or when you need backpressure control. Use fs.readFile for small files where simplicity matters. Streams use O(1) memory regardless of file size.
-
-</QA>

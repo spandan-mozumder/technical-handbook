@@ -85,9 +85,3 @@ server {
     }
 }
 ```
-
-<QA question="When should you scale vertically vs horizontally?">
-
-Scale vertically when: you need quick improvements, application is stateful, or database needs more RAM/CPU. Scale horizontally when: you need high availability (no single point of failure), expect continued growth beyond hardware limits, or can design stateless services. Most real systems use both — scale up the database, scale out the application tier.
-
-</QA>

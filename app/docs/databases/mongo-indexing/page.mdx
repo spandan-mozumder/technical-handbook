@@ -60,8 +60,3 @@ try {
 }
 ```
 
-<QA question="When should you embed vs reference?">
-
-Embed when: data is always accessed together, doesn't grow unboundedly, and you need atomic updates. Reference when: data is shared across documents, arrays grow large, or you need independent access. Rule of thumb: if you always need it together, embed it.
-
-</QA>

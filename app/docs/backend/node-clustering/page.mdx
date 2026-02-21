@@ -72,8 +72,3 @@ path.extname('file.ts');                  // '.ts'
 path.basename('/a/b/file.ts', '.ts');     // 'file'
 ```
 
-<QA question="Cluster vs Worker Threads — when to use which?">
-
-Cluster: multiple processes, each with own memory, ideal for scaling HTTP servers across cores. Worker Threads: threads within one process, share memory via SharedArrayBuffer, ideal for CPU-intensive tasks (parsing, crypto, image processing) without blocking the event loop.
-
-</QA>

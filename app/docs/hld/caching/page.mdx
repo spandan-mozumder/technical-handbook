@@ -60,8 +60,3 @@ async function updateUserAsync(userId: string, data: Partial<User>) {
 - FIFO (First In First Out): Evicts oldest items first. Simplest but often least effective.
 - Random Replacement: Randomly selects item to evict. Surprisingly effective in some cases.
 
-<QA question="What is cache stampede and how to prevent it?">
-
-Cache stampede occurs when many requests simultaneously find a cache miss (e.g., after TTL expiry) and all hit the database at once. Prevention: 1) Lock/mutex — only one request refreshes cache, others wait. 2) Jittered TTL — add random offset to expiry times. 3) Early refresh — repopulate before expiry. 4) Stale-while-revalidate — serve stale data while refreshing.
-
-</QA>

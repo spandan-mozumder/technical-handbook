@@ -52,9 +52,3 @@ ss -tlnp                    # listening ports
 df -h                       # disk usage
 free -h                     # memory usage
 ```
-
-<QA question="Difference between hard and soft links?">
-
-Hard link: another name for the same inode (same file data). Deleting the original doesn't affect it. Cannot cross filesystems. Soft (symbolic) link: pointer to a file path. Breaks if the target is deleted. Can cross filesystems and link to directories.
-
-</QA>

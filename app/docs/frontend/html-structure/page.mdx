@@ -43,16 +43,6 @@ Every HTML document follows a specific structure. These tags form the skeleton t
 - `<script>` — Embeds or links JavaScript. Use defer or async for performance.
 - `<base>` — Sets base URL for all relative links in the document.
 
-## Interview Q&A
 
-<QA question="What is the difference between defer and async on script tags?">
 
-defer downloads in parallel and executes after HTML parsing in order. async downloads in parallel and executes immediately when ready (order not guaranteed). Use defer for scripts that depend on DOM; async for independent analytics/tracking scripts.
 
-</QA>
-
-<QA question="Why is the viewport meta tag important?">
-
-Without it, mobile browsers render pages at desktop width (~980px) then scale down. The viewport meta tag tells browsers to use the device width, enabling responsive design.
-
-</QA>

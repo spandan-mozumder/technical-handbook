@@ -1,0 +1,263 @@
+# System Design Interview Questions
+
+import { QA } from "@/components/QA";
+
+## Scalability
+
+<QA question="How would you handle 10x traffic increase overnight?">
+
+1) Enable auto-scaling groups with cloud provider, 2) Add read replicas for database, 3) Implement caching layer (Redis/CDN), 4) Queue non-critical operations (email, analytics), 5) Optimize hot paths in code, 6) Set up CDN for static assets, 7) Monitor and set alerts for bottlenecks.
+
+</QA>
+
+<QA question="Describe how you would build a system for College Fest Management.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design the High-Level Design (HLD) for a rider management system.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the low-level design for storing contacts in a phone book?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design a system where users can claim 6 million burgers in 10 minutes.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How would you design a system where users can subscribe to specific topics, and receive messages whenever a new message is posted related to those topics?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design the High-Level Design (HLD) and Low-Level Design (LLD) of Zomato.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Can you explain framework designs and their architecture?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How would you design a distributed system?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design a system for messaging multiple teams simultaneously.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design a system for publishing newspapers using classes and functions.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design YouTube as a microservice.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design a URL shortener with a database and all necessary components.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe the system design for a platform like BookMyShow.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you improve the QPS of a production system?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="System design around microservices.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How would you design a parking lot system?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How did you scale the system and what was the capacity planning?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design a notification system which supports immediate, delayed, and repeated notifications.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the architecture of a real-time tracking system.">
+
+Asked in interviews.
+
+</QA>
+
+## From: Caching Strategies
+
+<QA question="What is cache stampede and how to prevent it?">
+
+Cache stampede (thundering herd) occurs when a popular cache key expires and hundreds of requests simultaneously hit the database. Solutions: 1) Lock/mutex — only one request fetches from DB, others wait, 2) Stale-while-revalidate — serve stale data while refreshing in background, 3) Probabilistic early expiration — some requests refresh before TTL.
+
+</QA>
+
+## From: CAP Theorem
+
+<QA question="Is CAP theorem still relevant?">
+
+Yes, but it's often misunderstood. In reality, partitions are rare, so the choice is more nuanced. PACELC theorem extends CAP: during Partitions choose AP or CP; Else (normal operation) choose Latency or Consistency. Systems like Spanner achieve near-global consistency using GPS/atomic clocks.
+
+</QA>
+
+## From: GFG System Design Interview Questions
+
+<QA question="How would you design a URL shortening service like TinyURL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design a web crawler?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design Facebook's news feed?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design a social media platform like Instagram?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design an API rate limiter?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design Twitter search?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design a chat application like WhatsApp?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design a file sharing system like Dropbox or Google Drive?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design a ride-sharing service like Uber or Lyft?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to design a video streaming platform like YouTube or Netflix?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the key components of High-Level Design (HLD)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the key components of Low-Level Design (LLD)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How does Low-Level Design differ from High-Level Design?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you handle scalability in system design?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the concept of load balancing and its importance in system design.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is database sharding and when should you use it?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you design for fault tolerance and high availability?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the role of message queues in system design?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the concept of CDN and caching in system design.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How would you design a notification system?">
+
+Asked in interviews.
+
+</QA>

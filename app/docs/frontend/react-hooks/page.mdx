@@ -69,8 +69,3 @@ function DeepChild() {
 - Custom hooks must start with 'use' prefix
 - Dependencies array: [] = run once, [dep] = run when dep changes, no array = every render
 
-<QA question="When to use useMemo vs useCallback?">
-
-useMemo memoizes a computed value (e.g., filtered/sorted list). useCallback memoizes a function reference. Use useCallback when passing functions to child components to prevent unnecessary re-renders. Both take a dependency array.
-
-</QA>

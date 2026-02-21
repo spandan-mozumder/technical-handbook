@@ -44,9 +44,3 @@ export const handler = async (event: APIGatewayProxyEvent) => {
 - EKS (Elastic Kubernetes Service) — managed Kubernetes. Full K8s compatibility.
 - Fargate — serverless compute for ECS/EKS. No EC2 instances to manage.
 - Use ECS for simpler deployments, EKS for K8s ecosystem compatibility.
-
-<QA question="EC2 vs Lambda — when to use which?">
-
-Lambda: event-driven, short tasks (under 15min), variable traffic, pay-per-use. EC2: long-running processes, consistent high traffic, need OS access, specialized hardware. Lambda has cold starts; EC2 is always warm.
-
-</QA>

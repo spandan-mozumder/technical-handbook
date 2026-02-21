@@ -66,14 +66,5 @@ function SearchPage() {
 - Client Components ('use client') handle interactivity
 - Default in Next.js App Router — components are server by default
 
-<QA question="What is reconciliation?">
 
-Reconciliation is React's diffing algorithm that compares the new VDOM tree with the previous one. It uses heuristics: (1) Different element types = destroy and rebuild, (2) Same type = update attributes, (3) Keys help identify moved items in lists. This makes updates O(n) instead of O(n³).
 
-</QA>
-
-<QA question="When does a component re-render?">
-
-A component re-renders when: (1) Its state changes, (2) Its parent re-renders (unless wrapped in memo), (3) Context it consumes changes. Props changing alone doesn't cause re-render — the parent re-rendering does.
-
-</QA>

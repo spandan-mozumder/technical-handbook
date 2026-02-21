@@ -29,8 +29,3 @@ flowchart TD
 - Route53 — managed DNS service. Routes users to the optimal endpoint.
 - Routing policies: Simple, Weighted, Latency-based, Failover, Geolocation
 
-<QA question="Security Groups vs Network ACLs?">
-
-Security Groups: instance-level firewall, stateful (return traffic auto-allowed), allow rules only. NACLs: subnet-level firewall, stateless (must allow return traffic explicitly), allow AND deny rules. Use SGs for instance control, NACLs for subnet-level defense in depth.
-
-</QA>

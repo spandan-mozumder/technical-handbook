@@ -103,8 +103,3 @@ const [user1, user2] = await prisma.$transaction([
 - npx prisma generate — regenerate the client after schema changes
 - npx prisma studio — visual database browser
 
-<QA question="Prisma vs raw SQL — when to use which?">
-
-Prisma: type-safe queries, auto-completion, schema migrations, rapid development. Raw SQL: complex queries (CTEs, window functions), performance-critical operations, vendor-specific features. Prisma supports $queryRaw for escape hatches.
-
-</QA>

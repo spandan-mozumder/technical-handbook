@@ -58,9 +58,3 @@ COMMIT;
 - FULL OUTER JOIN — all rows from both tables
 - CROSS JOIN — cartesian product (every combination)
 - Self JOIN — table joined with itself (e.g., employee → manager)
-
-<QA question="What is the difference between WHERE and HAVING?">
-
-WHERE filters rows BEFORE grouping (can't use aggregate functions). HAVING filters groups AFTER GROUP BY (can use COUNT, SUM, AVG, etc.). Example: WHERE age > 18 ... GROUP BY city HAVING COUNT(*) > 10.
-
-</QA>

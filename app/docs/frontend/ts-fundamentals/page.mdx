@@ -90,17 +90,3 @@ function area(shape: Shape): number {
   }
 }
 ```
-
-## Interview Q&A
-
-<QA question="Interface vs Type — when to use which?">
-
-Interfaces are best for object shapes and can be extended/merged. Types are more flexible — unions, intersections, primitives, tuples. Use interfaces for public APIs (extendable), types for everything else.
-
-</QA>
-
-<QA question="What is type narrowing?">
-
-Type narrowing is when TypeScript reduces a union type to a more specific type based on control flow checks (typeof, instanceof, in operator, discriminated unions). It lets TS infer the correct type in each branch.
-
-</QA>

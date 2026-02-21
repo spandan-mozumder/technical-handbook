@@ -49,8 +49,3 @@ const results = await Promise.allSettled([p1, p2, p3]);
 // results: [{ status: "fulfilled", value }, { status: "rejected", reason }]
 ```
 
-<QA question="Difference between Promise.all and Promise.allSettled?">
-
-Promise.all rejects immediately if ANY promise rejects (fail-fast). Promise.allSettled waits for ALL to complete and returns results for each (fulfilled or rejected). Use allSettled when you need all results regardless of failures.
-
-</QA>

@@ -1,0 +1,759 @@
+# Databases Interview Questions
+
+import { QA } from "@/components/QA";
+
+## MongoDB
+
+<QA question="When to use MongoDB vs SQL?">
+
+MongoDB: flexible/evolving schemas, nested data, horizontal scaling, rapid prototyping. SQL: strict data integrity, complex relationships, transactions across tables, reporting. Many apps use both.
+
+</QA>
+
+<QA question="What is the difference between normal collection and bucket collection?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Why would you use MongoDB instead of MySQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Given a collection of user details, write a MongoDB query to increase the age by 20% for documents where the age field exists.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Why would you choose Mongoose over the MongoDB driver?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are indexes in MongoDB?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to manage database, difference between mongoDB and SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is sharding in MongoDB and how does it work?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is indexing in MongoDB?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the $shared operator in MongoDB?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the best way to save large files (e.g., photos) into a MongoDB database?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Create a Dockerfile to make MongoDB available for developers.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What types of joins are available in MongoDB?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How can we connect to MongoDB using Javascript?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How can we optimize a MongoDB database?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the MongoDB code to connect from a NodeJS backend?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How does over-indexing affect MongoDB performance, and how can it be prevented?">
+
+Asked in interviews.
+
+</QA>
+
+## SQL
+
+<QA question="What is the difference between WHERE and HAVING?">
+
+WHERE filters rows BEFORE grouping (can't use aggregate functions). HAVING filters groups AFTER GROUP BY (can use COUNT, SUM, AVG, etc.). Example: WHERE age > 18 ... GROUP BY city HAVING COUNT(*) > 10.
+
+</QA>
+
+<QA question="What is your understanding of clauses and phrases?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Write a query to get the customer with the highest total order value for each year and month.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe the different types of joins (Inner, Left, Right, Full).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How many columns can be created in a table?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you join three different tables in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between inner and outer joins.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you insert or update data in a table?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the trigger point in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the common types of SQL views?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the definition of a UNION?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Why SQL and not NoSQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between DENSE_RANK, RANK, and ROW_NUMBER in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What do you mean by an SQL injection attack?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Tell me about the functions used in SQL (Aggregate, Scalar).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is RDBMS and why we use SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the order of execution of SQL clauses?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Write a query to find the 2nd highest salary using a window function.">
+
+Asked in interviews.
+
+</QA>
+
+## PostgreSQL
+
+<QA question="When to use GIN vs GiST vs B-Tree index?">
+
+B-Tree (default): equality, range, sorting — most common. GIN: contains/overlap queries — JSONB, arrays, full-text. GiST: proximity queries — geometry, ranges, nearest-neighbor. Use B-Tree unless you have a specific need for GIN/GiST.
+
+</QA>
+
+<QA question="What is PostgreSQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between SQL and PostgreSQL.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What backup tools have you used in your company for PostgreSQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you optimize PostgreSQL queries?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe your experience with PostgreSQL administration and DBA tasks.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the different data types and constraints in PostgreSQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the concept of WAL (Write Ahead Logging) in PostgreSQL.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you handle replication and high availability in PostgreSQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the use of EXPLAIN command in PostgreSQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Compare PostgreSQL with MySQL in terms of features and performance.">
+
+Asked in interviews.
+
+</QA>
+
+## From: Drizzle ORM
+
+<QA question="Drizzle vs Prisma — key differences?">
+
+Drizzle: TypeScript schemas, SQL-like API, thinner abstraction, smaller bundle, no code generation step. Prisma: custom schema language, higher-level API, auto-generated client, better for rapid prototyping. Drizzle is closer to SQL; Prisma is more ORM-like.
+
+</QA>
+
+## From: Aggregation Pipeline
+
+<QA question="What is $unwind?">
+
+$unwind deconstructs an array field — if a document has items: [A, B, C], $unwind creates 3 documents, each with one item. Essential before grouping on array elements.
+
+</QA>
+
+## From: Indexing & Schema Design
+
+<QA question="When should you embed vs reference?">
+
+Embed when: data is always accessed together, doesn't grow unboundedly, and you need atomic updates. Reference when: data is shared across documents, arrays grow large, or you need independent access. Rule of thumb: if you always need it together, embed it.
+
+</QA>
+
+## From: Prisma ORM
+
+<QA question="Prisma vs raw SQL — when to use which?">
+
+Prisma: type-safe queries, auto-completion, schema migrations, rapid development. Raw SQL: complex queries (CTEs, window functions), performance-critical operations, vendor-specific features. Prisma supports $queryRaw for escape hatches.
+
+</QA>
+
+## From: GFG SQL Interview Questions
+
+<QA question="What is SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the differences between SQL and MySQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are tables and fields in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are constraints in SQL? List common types.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Primary Key?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Unique Constraint?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Foreign Key?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a JOIN in SQL? What are the different types of JOINs?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a self-join?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a cross-join in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is an Index in SQL? Explain different types of indexes.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between clustered and non-clustered indexes?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is data integrity?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a subquery? What are its types?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a correlated subquery?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the SELECT statement?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are some common clauses used with SELECT in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are UNION, MINUS, and INTERSECT commands?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a cursor in SQL? How do you use one?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are entities and relationships in ER diagrams?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="List the different types of relationships in SQL.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is an alias in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a view in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Normalization? What are the different forms of normalization?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is denormalization?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between DROP and TRUNCATE?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between DELETE and TRUNCATE statements?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the different types of SQL commands? (DDL, DML, DCL, TCL)">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are aggregate and scalar functions in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a stored procedure?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain triggers in SQL.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between HAVING and WHERE clause?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is ACID property in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a transaction in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are OLTP and OLAP?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you create empty tables with the same structure as another table?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is collation? What are the different collation sensitivity types?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are user-defined functions in SQL? What are the different types?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a live lock?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a case manipulation function in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Name different types of case manipulation functions from SQL.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How can you fetch common records from two tables?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the advantages and disadvantages of views in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a schema in SQL?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How to get the Nth highest salary from a table?">
+
+Asked in interviews.
+
+</QA>
+
+## From: GFG DBMS Interview Questions
+
+<QA question="What is DBMS and what is its utility?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Database?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a Database System?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain a few advantages of a DBMS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What type of data abstraction are there in a DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a checkpoint in DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the ACID properties in DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How are data and information different?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Define a DBMS. What are its different types?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a DFD and how is it related to DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are super, primary, candidate, and foreign keys?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between a 2-tier and 3-tier database architecture?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is ER Modeling?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a functional dependency?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the different levels of normalization?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between a shared lock and an exclusive lock?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is meant by transparent DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is hashing and what are the different types of hashing?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Database Partitioning?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="When does a deadlock occur in DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Differentiate between OLAP and OLTP.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Proactive, Retroactive, and Simultaneous updates?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are B-trees and B+ trees in DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the different types of Normalization (1NF, 2NF, 3NF, BCNF).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Concurrency Control in DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a query optimizer in DBMS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between physical and logical data independence?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a database schema?">
+
+Asked in interviews.
+
+</QA>

@@ -30,8 +30,3 @@ graph TD
 - Causal Consistency: If A causes B, everyone sees A before B
 - Read-Your-Writes: A user always sees their own writes immediately
 
-<QA question="Is CAP theorem still relevant?">
-
-Yes, but it's often misunderstood. In reality, partitions are rare, so the choice is more nuanced. PACELC theorem extends CAP: during Partitions choose AP or CP; Else (normal operation) choose Latency or Consistency. Systems like Spanner achieve near-global consistency using GPS/atomic clocks.
-
-</QA>

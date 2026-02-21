@@ -54,9 +54,3 @@ docker compose down                # stop and remove
 docker compose logs -f app         # follow app logs
 docker compose exec app sh         # shell into app
 ```
-
-<QA question="Why multi-stage builds?">
-
-Multi-stage builds create smaller production images. Build stage has dev dependencies (compilers, build tools). Production stage copies only the compiled output. Results in images that are 10-50x smaller and more secure.
-
-</QA>

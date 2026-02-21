@@ -36,17 +36,3 @@ body {
 /* 1. Browser defaults  2. External stylesheets  3. Internal <style>
    4. Inline styles  5. !important (avoid if possible) */
 ```
-
-## Interview Q&A
-
-<QA question="How does CSS specificity work?">
-
-Specificity is calculated as (inline, IDs, classes/attributes/pseudo-classes, elements). Higher specificity wins. If equal, last defined rule wins. Example: #nav .link = (0,1,1,0) beats .nav .link = (0,0,2,0).
-
-</QA>
-
-<QA question="What is the difference between em, rem, px, and %?">
-
-px = absolute pixels. em = relative to parent's font-size. rem = relative to root font-size (predictable). % = relative to parent's dimension. Use rem for typography, px for borders, % or viewport units for layouts.
-
-</QA>

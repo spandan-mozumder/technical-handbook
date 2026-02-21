@@ -42,8 +42,3 @@ volumes:
   redisdata:
 ```
 
-<QA question="What are Docker volumes used for?">
-
-Volumes persist data beyond container lifecycle. Without volumes, all data inside a container is lost when it's removed. Named volumes (pgdata:) are managed by Docker. Bind mounts (./src:/app/src) map host paths for development.
-
-</QA>

@@ -54,9 +54,3 @@ function TodoList({ items }: { items: Todo[] }) {
   );
 }
 ```
-
-<QA question="Why do lists need a key prop?">
-
-Keys help React identify which items changed, were added, or removed during re-renders. Without stable keys, React re-renders all items. Use unique IDs — never use array index as key if the list can be reordered.
-
-</QA>

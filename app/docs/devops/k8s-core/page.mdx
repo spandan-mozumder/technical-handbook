@@ -83,9 +83,3 @@ kubectl rollout restart deploy/myapp # restart deployment
 kubectl scale deploy/myapp --replicas=5  # scale up
 kubectl rollout undo deploy/myapp   # rollback
 ```
-
-<QA question="Difference between Deployment and StatefulSet?">
-
-Deployment: stateless apps. Pods are interchangeable, random names (myapp-abc123). StatefulSet: stateful apps (databases). Pods have stable names (myapp-0, myapp-1), persistent storage, and ordered startup/shutdown.
-
-</QA>

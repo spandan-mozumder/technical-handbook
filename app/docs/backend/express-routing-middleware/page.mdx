@@ -66,9 +66,3 @@ flowchart LR
     style H fill:#22c55e,color:#fff
     style Res fill:#8b5cf6,color:#fff
 ```
-
-<QA question="What happens if you forget next() in middleware?">
-
-The request hangs indefinitely — the next middleware/handler never runs and the client gets no response (eventually times out). Always call next() to pass control, or send a response to end the cycle.
-
-</QA>

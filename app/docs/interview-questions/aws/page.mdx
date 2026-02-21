@@ -1,0 +1,163 @@
+# Aws Interview Questions
+
+import { QA } from "@/components/QA";
+
+## AWS
+
+<QA question="EC2 vs Lambda — when to use which?">
+
+Lambda: event-driven, short tasks (under 15min), variable traffic, pay-per-use. EC2: long-running processes, consistent high traffic, need OS access, specialized hardware. Lambda has cold starts; EC2 is always warm.
+
+</QA>
+
+<QA question="What is AWS and which services are you most familiar with?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe the global architecture of AWS (Regions, Availability Zones).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How have you implemented Autoscaling groups with a Load Balancer?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the differences between AWS Lambda and AWS Glue?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Can you explain the foundational services of Amazon Web Services (EC2, S3, RDS)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the AWS equivalent of Azure Data Factory or similar tools?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="In what scenarios should you choose AWS Lambda over EC2?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the features and storage classes of Amazon S3.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the core responsibilities of an AWS Administrator?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Definition of Cloud Computing and the service models (IaaS, PaaS, SaaS) in AWS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between EBS (Elastic Block Store) and S3.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is an IAM role and how is it different from an IAM user?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe a VPC (Virtual Private Cloud) and its components (Subnets, Route Tables, IGW).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Amazon Route 53 and what are its routing policies?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between EBS and EFS (Elastic File System)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the shared responsibility model in AWS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is AWS CloudFormation and how does it support Infrastructure as Code?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the purpose of AWS CloudWatch and CloudTrail.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a NAT Gateway and why is it used in private subnets?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How does AWS Shield and WAF provide security?">
+
+Asked in interviews.
+
+</QA>
+
+## From: IAM, Cognito & KMS
+
+<QA question="What is the principle of least privilege?">
+
+Grant only the minimum permissions required to perform a task. Start with zero permissions and add only what's needed. Use IAM Access Analyzer to identify unused permissions. Never use root account for daily operations.
+
+</QA>
+
+## From: RDS & DynamoDB
+
+<QA question="RDS vs DynamoDB — when to use which?">
+
+RDS: complex queries, JOINs, transactions, relationships, existing SQL applications. DynamoDB: simple access patterns, massive scale, sub-10ms latency, key-value/document data, serverless. DynamoDB requires careful key design upfront.
+
+</QA>
+
+## From: S3 & EBS
+
+<QA question="S3 vs EBS vs EFS — when to use which?">
+
+S3: object storage (files, images, backups, static sites). EBS: block storage attached to one EC2 (databases, OS). EFS: shared file system across multiple EC2 instances. S3 is cheapest, EBS is fastest, EFS is shared.
+
+</QA>
+
+## From: VPC, CloudFront & Route53
+
+<QA question="Security Groups vs Network ACLs?">
+
+Security Groups: instance-level firewall, stateful (return traffic auto-allowed), allow rules only. NACLs: subnet-level firewall, stateless (must allow return traffic explicitly), allow AND deny rules. Use SGs for instance control, NACLs for subnet-level defense in depth.
+
+</QA>

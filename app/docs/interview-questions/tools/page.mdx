@@ -1,0 +1,283 @@
+# Tools Interview Questions
+
+import { QA } from "@/components/QA";
+
+## Git
+
+<QA question="Difference between git add . and git add -A?">
+
+In the repo root they're identical (stage all changes). git add . only stages changes in the current directory and below. git add -A always stages everything in the repo regardless of current directory.
+
+</QA>
+
+<QA question="What is Git and GitHub, and how do you use them together?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Git, and can GitHub work without Git?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between Git and Ansible in a DevOps workflow?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the most important Git commands (push, pull, clone, commit, etc.)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between Git and build tools like Gradle?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Can you explain how Git works internally (data structures)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between git fetch and git pull?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is git rebase and when should it be used over git merge?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the standard Git workflow (Gitflow, Feature Branching).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a merge conflict and what are the steps to resolve it?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the purpose and usage of git stash.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between git reset (soft, mixed, hard) and git revert?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you rename a local and remote branch in Git?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are Git submodules and why would you use them?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain git cherry-pick and its use cases.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you fix a commit message that has already been pushed?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the purpose of the .gitignore file?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the concept of 'Head' in Git.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you find a bug-introducing commit using Git bisect?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between a Fork and a Clone?">
+
+Asked in interviews.
+
+</QA>
+
+## Bash
+
+<QA question="What does set -euo pipefail do?">
+
+-e: exit immediately on error. -u: treat undefined variables as errors. -o pipefail: a pipe fails if ANY command fails (not just the last one). Together they make scripts safer and bugs easier to catch.
+
+</QA>
+
+<QA question="What is Bash and what are its key features?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you execute a script in Bash (different methods)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the functionality and structure of a shell script.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you schedule a Bash script to run using crontab?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the Bash command to suppress all output and errors (> /dev/null 2>&1)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you pass and handle command-line arguments in a Bash script?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a shebang (#! /bin/bash) and why is it used?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between a Shell and Bash specifically?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you check if a directory or file exists in a Bash script?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between single quotes ('') and double quotes in Bash?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you implement loops (for, while) in Bash?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the use of tools like awk, sed, and grep in Bash scripting.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you debug a Bash script (set -x, set -e)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between $? (exit status) and $# (argument count)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you read user input during script execution?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are environment variables and how do you set them?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between 'exec' and 'source' commands.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you perform arithmetic operations in Bash?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a pipe (|) and how does it work?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain how to handle errors in Bash using traps.">
+
+Asked in interviews.
+
+</QA>
+
+## From: Pipes, Redirection & Processes
+
+<QA question="Difference between > and >> redirection?">
+
+> overwrites the file completely. >> appends to the end of the file. Use > when you want a fresh file each time, >> when you want to accumulate (logs, append to configs).
+
+</QA>
+
+## From: Branching, Merge & Rebase
+
+<QA question="Merge vs Rebase — when to use which?">
+
+Merge: preserves complete history, safe for shared branches, creates merge commits. Rebase: creates linear history, cleaner git log, but rewrites commits. Rule: rebase local/feature branches, merge into shared branches. Never rebase commits that others have pulled.
+
+</QA>
+
+## From: Stash, Reset & Recovery
+
+<QA question="Reset vs Revert — when to use which?">
+
+Reset: rewrites history, use on local branches only. Revert: creates a new commit that undoes changes, safe for shared branches. Never reset commits that others have pulled — use revert instead.
+
+</QA>

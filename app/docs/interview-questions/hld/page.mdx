@@ -1,0 +1,109 @@
+# Hld Interview Questions
+
+import { QA } from "@/components/QA";
+
+## Scalability
+
+<QA question="When should you scale vertically vs horizontally?">
+
+Scale vertically when: you need quick improvements, application is stateful, or database needs more RAM/CPU. Scale horizontally when: you need high availability (no single point of failure), expect continued growth beyond hardware limits, or can design stateless services. Most real systems use both — scale up the database, scale out the application tier.
+
+</QA>
+
+<QA question="Describe a High-Level Design (HLD) problem you faced during project implementation.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design a fare splitting app, including both HLD and LLD.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design the High-Level Design (HLD) for a rider management system.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe a typical high-level design for a scalable system.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How would you manage data on a large scale (HLD)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design a high-level architecture for a Housing Society application.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain how you would design a high-level architecture for an IoT-based system.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Current Project architecture and high level design discussion.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What modernizations have you suggested in HLD?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the role of a Load Balancer in HLD.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you ensure high availability in your architecture?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design the HLD for a distributed logging system.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between HLD and LLD with examples.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you handle database sharding in high level design?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Design the architecture for a global video streaming platform.">
+
+Asked in interviews.
+
+</QA>
+
+## From: Caching Strategies
+
+<QA question="What is cache stampede and how to prevent it?">
+
+Cache stampede occurs when many requests simultaneously find a cache miss (e.g., after TTL expiry) and all hit the database at once. Prevention: 1) Lock/mutex — only one request refreshes cache, others wait. 2) Jittered TTL — add random offset to expiry times. 3) Early refresh — repopulate before expiry. 4) Stale-while-revalidate — serve stale data while refreshing.
+
+</QA>

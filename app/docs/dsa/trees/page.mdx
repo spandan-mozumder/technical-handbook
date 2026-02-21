@@ -86,8 +86,3 @@ function isValidBST(
 }
 ```
 
-<QA question="Why do we need balanced BSTs like AVL and Red-Black trees?">
-
-An unbalanced BST can degenerate into a linked list (e.g., inserting sorted data), making operations O(n). AVL trees maintain strict balance (height diff ≤ 1), giving guaranteed O(log n). Red-Black trees are slightly less strict but faster for insertions. Java's TreeMap uses Red-Black; many databases use B-trees (a generalization).
-
-</QA>

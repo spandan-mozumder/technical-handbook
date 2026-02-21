@@ -39,8 +39,3 @@ console.log("5: sync");
 // Even setTimeout(fn, 0) waits for all microtasks to drain
 ```
 
-<QA question="Why do Promises execute before setTimeout(fn, 0)?">
-
-Promises go into the microtask queue, setTimeout goes into the macrotask queue. After each macrotask, the event loop drains ALL microtasks before picking the next macrotask. So microtasks always have higher priority.
-
-</QA>

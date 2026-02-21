@@ -82,8 +82,3 @@ class LRUCache {
 }
 ```
 
-<QA question="Can you implement LRU Cache using JavaScript's built-in Map?">
-
-Yes! JavaScript's Map maintains insertion order. You can delete and re-insert a key to move it to the end (most recent). To evict, use map.keys().next().value to get the oldest key. This gives you O(1) operations without implementing a doubly linked list.
-
-</QA>

@@ -36,9 +36,3 @@ console.log('6: sync end');
 // Output: 1, 6, 4, 5, 2, 3
 // nextTick > microtasks > macrotasks
 ```
-
-<QA question="Why is Node.js single-threaded but still fast?">
-
-Node delegates I/O operations (file reads, network requests, DNS) to libuv's thread pool (default 4 threads). The main thread never blocks — it registers callbacks and processes them when I/O completes. This is efficient for I/O-heavy workloads but NOT for CPU-heavy tasks.
-
-</QA>

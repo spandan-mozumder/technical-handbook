@@ -51,8 +51,3 @@ container_memory_usage_bytes{pod=~"myapp.*"} / 1024 / 1024
 - Blackbox Exporter — probe endpoints (HTTP, DNS, TCP)
 - App-level — instrument code with client libraries (prom-client for Node.js)
 
-<QA question="Counter vs Gauge — when to use which?">
-
-Counter: for things that only go up — requests served, errors occurred, bytes sent. Always use rate() to get useful per-second values. Gauge: for things that fluctuate — temperature, queue depth, active users. Can be used directly.
-
-</QA>

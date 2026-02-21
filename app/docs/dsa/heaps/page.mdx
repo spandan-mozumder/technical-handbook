@@ -78,8 +78,3 @@ function findKthLargest(nums: number[], k: number): number {
 }
 ```
 
-<QA question="Why is heap sort not commonly used despite being O(n log n)?">
-
-Heap sort has poor cache locality (jumping around in memory), isn't stable, and has higher constant factors than quicksort. In practice, quicksort and mergesort outperform it. However, heaps shine for priority queues and streaming top-K problems.
-
-</QA>

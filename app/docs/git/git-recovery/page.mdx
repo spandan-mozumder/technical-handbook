@@ -42,8 +42,3 @@ git cherry-pick abc..def           # apply range
 - Undo a pushed commit safely: `git revert <hash>`
 - Recover deleted branch: `git reflog` → find hash → `git branch <name> <hash>`
 
-<QA question="Reset vs Revert — when to use which?">
-
-Reset: rewrites history, use on local branches only. Revert: creates a new commit that undoes changes, safe for shared branches. Never reset commits that others have pulled — use revert instead.
-
-</QA>

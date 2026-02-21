@@ -1,0 +1,569 @@
+# Backend Interview Questions
+
+import { QA } from "@/components/QA";
+
+## Node.js
+
+<QA question="Why is Node.js single-threaded but still fast?">
+
+Node delegates I/O operations (file reads, network requests, DNS) to libuv's thread pool (default 4 threads). The main thread never blocks — it registers callbacks and processes them when I/O completes. This is efficient for I/O-heavy workloads but NOT for CPU-heavy tasks.
+
+</QA>
+
+<QA question="What are the main modules of Node.js? Explain in detail.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you deploy a Node.js application?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain how you follow SDLC (Agile, Waterfall)?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe your JavaScript proficiency and experience with data structures and algorithms (DSA).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between cluster and thread?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is an error-first callback function?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is NodeJS? Why do we use it?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Node.js, and how does it differ from traditional JavaScript execution environments?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Node.js and how does it handle concurrency?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is NodeJS and its event loop?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the concept of Streams in Node.js.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the steps involved in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Can you describe best practices for handling large CSV datasets in data processing workflows?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Write a JavaScript function that takes input from a user, calculates the sum of the inputs, and returns the result.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the output of the setTimeout JavaScript function?">
+
+Asked in interviews.
+
+</QA>
+
+## Express.js
+
+<QA question="What happens if you forget next() in middleware?">
+
+The request hangs indefinitely — the next middleware/handler never runs and the client gets no response (eventually times out). Always call next() to pass control, or send a response to end the cycle.
+
+</QA>
+
+<QA question="What is express js and why it is used in web apps?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the purpose of ExpressJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is Express.js?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Tell us about the working manner of Express.js.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain about angular, nodejs, expressjs integration.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the differences between Express and Node.js?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Describe the process of creating a RESTful API using Node.js and Express.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Build a sample app server with Express.js.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is meant by express?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="You are building an Express.js middleware to authenticate API requests...">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you handle routing in Express?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the concept of Middleware in Express.js.">
+
+Asked in interviews.
+
+</QA>
+
+## From: Authentication & Security
+
+<QA question="Where should you store JWT tokens on the client?">
+
+HttpOnly cookies are safest — they can't be accessed by JavaScript (prevents XSS theft). Avoid localStorage (vulnerable to XSS). If using cookies, add SameSite=Strict and Secure flags. For SPAs, httpOnly cookies with CSRF tokens is the gold standard.
+
+</QA>
+
+## From: Clustering & Worker Threads
+
+<QA question="Cluster vs Worker Threads — when to use which?">
+
+Cluster: multiple processes, each with own memory, ideal for scaling HTTP servers across cores. Worker Threads: threads within one process, share memory via SharedArrayBuffer, ideal for CPU-intensive tasks (parsing, crypto, image processing) without blocking the event loop.
+
+</QA>
+
+## From: Streams & Buffers
+
+<QA question="When should you use streams vs reading the whole file?">
+
+Use streams for large files (>100MB), real-time data, or when you need backpressure control. Use fs.readFile for small files where simplicity matters. Streams use O(1) memory regardless of file size.
+
+</QA>
+
+## From: GFG Node.js Interview Questions
+
+<QA question="How does Node.js work?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is NPM?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Why is NodeJS single-threaded?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="If NodeJS is single-threaded, how does it handle concurrency?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Why is NodeJS preferred over other backend technologies like Java and PHP?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between Synchronous and Asynchronous functions?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the modules in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the purpose of the 'require' keyword in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the V8 engine in Node.js?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you handle environment variables in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is control flow in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What do you mean by the event loop in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the order in which control flow statements get executed?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the main disadvantages of NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is REPL in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you import a module in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between NodeJS and Angular?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is package.json in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you create a simple HTTP server in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the most commonly used libraries in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are promises in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you install, update, and delete a dependency?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is event-driven programming in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a buffer in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are streams in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the crypto module in NodeJS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is callback hell?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the use of the timers module in NodeJS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between setImmediate() and process.nextTick()?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the different types of HTTP requests?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between spawn() and fork() methods?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the use of the passport module in NodeJS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a fork in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the three methods to avoid callback hell?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is body-parser in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is CORS in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the TLS module in NodeJS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Can you access the DOM in Node?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you manage packages in your NodeJS project?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the purpose of NODE_ENV?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a test pyramid in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is piping in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a cluster in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain some of the cluster methods in NodeJS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you manage sessions in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How many types of API functions are there in Node.js?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How can we implement authentication and authorization in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the packages used for file uploading in NodeJS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the difference between NodeJS and server-side scripting languages like Python.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you connect NodeJS to a MongoDB database?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you read command line arguments in NodeJS?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the NodeJS Redis module.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a web socket?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the util module in NodeJS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the DNS module in NodeJS.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is the difference between setImmediate() and setTimeout()?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is an Event Emitter in Node.js?">
+
+Asked in interviews.
+
+</QA>
+
+## From: MongoDB Backend Interview Experience
+
+<QA question="Describe your experience as a backend developer working with MongoDB. What challenges did you face?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you handle schema design for a backend application using MongoDB?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the best practices for MongoDB performance tuning in a Node.js backend?">
+
+Asked in interviews.
+
+</QA>

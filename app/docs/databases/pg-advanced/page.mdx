@@ -75,9 +75,3 @@ CREATE TABLE orders_2025 PARTITION OF orders
 - Use connection pooling (PgBouncer / built-in)
 - VACUUM and ANALYZE regularly
 - Partition large tables (>10M rows) by date or ID range
-
-<QA question="When to use GIN vs GiST vs B-Tree index?">
-
-B-Tree (default): equality, range, sorting — most common. GIN: contains/overlap queries — JSONB, arrays, full-text. GiST: proximity queries — geometry, ranges, nearest-neighbor. Use B-Tree unless you have a specific need for GIN/GiST.
-
-</QA>

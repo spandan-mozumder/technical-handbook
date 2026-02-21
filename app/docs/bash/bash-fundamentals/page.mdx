@@ -69,9 +69,3 @@ echo ${FRUITS[@]}        # all elements
 echo ${#FRUITS[@]}       # length: 3
 FRUITS+=("date")         # append
 ```
-
-<QA question="What does set -euo pipefail do?">
-
--e: exit immediately on error. -u: treat undefined variables as errors. -o pipefail: a pipe fails if ANY command fails (not just the last one). Together they make scripts safer and bugs easier to catch.
-
-</QA>

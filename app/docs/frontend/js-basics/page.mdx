@@ -71,17 +71,3 @@ const doubled = [1, 2, 3].map(n => n * 2);
 const adults = users.filter(u => u.age >= 18);
 const total = prices.reduce((sum, p) => sum + p, 0);
 ```
-
-## Interview Q&A
-
-<QA question="What is a closure?">
-
-A closure is a function that retains access to variables from its outer (enclosing) scope, even after the outer function has returned. This is how JavaScript implements data privacy and stateful functions.
-
-</QA>
-
-<QA question="Explain hoisting">
-
-JavaScript moves declarations to the top of their scope during compilation. var declarations are initialized as undefined. let/const are hoisted but NOT initialized (temporal dead zone). Function declarations are fully hoisted; function expressions are NOT.
-
-</QA>

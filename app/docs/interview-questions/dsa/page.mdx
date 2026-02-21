@@ -1,0 +1,457 @@
+# Dsa Interview Questions
+
+import { QA } from "@/components/QA";
+
+## Data Structures
+
+<QA question="What's the difference between Array.slice() and Array.splice()?">
+
+slice(start, end) returns a new array with elements from start to end (non-destructive). splice(start, deleteCount, ...items) modifies the original array by removing/replacing/adding elements (destructive). slice is O(k) where k is the slice size; splice is O(n) due to shifting.
+
+</QA>
+
+<QA question="How do JavaScript arrays differ from arrays in C/Java?">
+
+JS arrays are dynamic (auto-resize), heterogeneous (can store mixed types), and are actually hash maps under the hood. They lack true O(1) guarantee for access in all engines, though V8 optimizes dense arrays to use contiguous memory.
+
+</QA>
+
+<QA question="Determine if a singly linked list is a palindrome.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How would you keep track of top 10 trending words in a dynamically changing file?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Write a function to remove duplicate elements from an array.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Given a Binary Search Tree (BST), find the nearest greater value of a given value.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is a hashmap? Where is it used and what is its complexity?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the differences between a Stack and a Queue with real-time examples?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What data structure uses a Tree? Give examples.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the algorithm for tree traversal (DFS/BFS).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="How do you create a custom read-only list?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What data structure would you use for a dictionary?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Squares of a Sorted Array Problem: Generate sorted squares of elements.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Count the number of triplets in a sorted doubly linked list that sum to X.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Which data structure allows insertion and deletion in O(1) time?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What is FIFO and LIFO and where have you implemented them?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the implementation of a Priority Queue.">
+
+Asked in interviews.
+
+</QA>
+
+## Algorithms
+
+<QA question="What's the difference between Big O, Big Theta, and Big Omega?">
+
+Big O describes the upper bound (worst case), Big Omega (Ω) describes the lower bound (best case), and Big Theta (Θ) describes the tight bound (average case). In interviews, Big O is used most often because we typically care about worst-case guarantees.
+
+</QA>
+
+<QA question="Why do we drop constants and lower-order terms?">
+
+Big O describes asymptotic behavior — how the algorithm scales as n approaches infinity. Constants and lower-order terms become insignificant at large scales. O(2n + 5) simplifies to O(n) because the factor of 2 and constant 5 don't change the fundamental growth rate.
+
+</QA>
+
+<QA question="Sorting a list of people belonging to different cities and states.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Find the second largest element in an array with the least time complexity.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Print two strings in an alternating sequence by indices.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Find the length of the longest increasing subsequence (LIS).">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Remove duplicates from a sorted integer array and return the new length.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Search for an element in a sorted but rotated array.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Minimum number of characters to insert to convert a string into a palindrome.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Find the largest cycle in a maze represented by N cells.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Identify the K-th smallest element of two merged sorted arrays.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Find even and odd numbers using lambda expressions.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="What are the differences between Merge Sort and Heap Sort?">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Constellation Identification: Identify patterns in a matrix.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Determine the number of mismatching bits between two integers.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Find the maximum distance for every 0-cell to its nearest 1-cell in a binary matrix.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Write code to generate the Fibonacci sequence up to 10.">
+
+Asked in interviews.
+
+</QA>
+
+<QA question="Explain the time complexity of Quick Sort in the best and worst cases.">
+
+Asked in interviews.
+
+</QA>
+
+## From: Dynamic Programming
+
+<QA question="How do you identify a problem as a DP problem?">
+
+Look for: 1) Optimization (min/max/count), 2) Choices at each step, 3) Overlapping subproblems (same subproblem solved multiple times), 4) Optimal substructure (optimal solution contains optimal solutions to subproblems). Keywords: 'minimum cost', 'number of ways', 'is it possible', 'longest/shortest'.
+
+</QA>
+
+## From: Graphs
+
+<QA question="When do you use BFS vs DFS?">
+
+Use BFS for shortest path in unweighted graphs, level-order traversal, and when the solution is close to the root. Use DFS for topological sorting, cycle detection, path finding, and when you need to explore all possibilities (backtracking). BFS uses more memory (queue) while DFS uses the call stack.
+
+</QA>
+
+## From: HashMap & Set
+
+<QA question="When should you use Map vs Object in JavaScript?">
+
+Use Map when: keys can be any type (not just strings), you need to preserve insertion order, you frequently add/remove entries, or you need the size property. Use objects for JSON-compatible data, when you need prototype chain features, or for simple string-keyed configuration.
+
+</QA>
+
+## From: Heaps & Priority Queues
+
+<QA question="Why is heap sort not commonly used despite being O(n log n)?">
+
+Heap sort has poor cache locality (jumping around in memory), isn't stable, and has higher constant factors than quicksort. In practice, quicksort and mergesort outperform it. However, heaps shine for priority queues and streaming top-K problems.
+
+</QA>
+
+## From: Linked Lists
+
+<QA question="When would you use a linked list instead of an array?">
+
+Use linked lists when you need frequent insertions/deletions at arbitrary positions, don't need random access, or need a dynamically sized structure without resizing overhead. Common use cases: implementing queues, undo functionality, and LRU caches.
+
+</QA>
+
+## From: LRU Cache
+
+<QA question="Can you implement LRU Cache using JavaScript's built-in Map?">
+
+Yes! JavaScript's Map maintains insertion order. You can delete and re-insert a key to move it to the end (most recent). To evict, use map.keys().next().value to get the oldest key. This gives you O(1) operations without implementing a doubly linked list.
+
+</QA>
+
+## From: Space vs Time Tradeoffs
+
+<QA question="When should you prefer saving space over time?">
+
+When dealing with very large datasets that don't fit in memory, embedded systems with limited RAM, or when the time savings from using extra space are marginal. In streaming scenarios, you often can't store all data.
+
+</QA>
+
+## From: Stack & Queue
+
+<QA question="How is a call stack related to the Stack data structure?">
+
+The call stack is literally a stack. Each function call pushes a frame onto the stack; when a function returns, its frame is popped. This is why recursive calls can cause Stack Overflow — too many frames pushed without popping. Understanding this helps debug recursion issues.
+
+</QA>
+
+## From: Trees (BST, AVL, Red-Black)
+
+<QA question="Why do we need balanced BSTs like AVL and Red-Black trees?">
+
+An unbalanced BST can degenerate into a linked list (e.g., inserting sorted data), making operations O(n). AVL trees maintain strict balance (height diff ≤ 1), giving guaranteed O(log n). Red-Black trees are slightly less strict but faster for insertions. Java's TreeMap uses Red-Black; many databases use B-trees (a generalization).
+
+</QA>
+
+## From: Trie (Prefix Tree)
+
+<QA question="What is the time and space complexity of a Trie?">
+
+Insert/search/delete are all O(m) where m is the word length — independent of the number of words stored. Space is O(ALPHABET_SIZE × m × n) in the worst case, where n is the number of words. This space cost is the main tradeoff versus hash maps.
+
+</QA>
+
+## From: GFG Commonly Asked Data Structure Questions
+
+<QA question="What are the key characteristics and common interview problems for Arrays?">
+
+Efficient access and modification using indices. Operations like insertion, deletion, and traversal have varying time complexities (e.g., O(n) for deletion). Common interview problems: maximum subarray, dynamic arrays, finding the missing number.
+
+</QA>
+
+<QA question="What are common interview topics for Matrix (2D arrays)?">
+
+Representing data in 2D format with efficient element access via row and column indices. Key problems include matrix traversal, multiplication, transposition, and finding the largest submatrix. DP and graph problems often require optimized matrix manipulation.
+
+</QA>
+
+<QA question="When are Linked Lists commonly asked and what problems to expect?">
+
+Dynamic structure with nodes connected by pointers/references, ideal for frequent additions/removals. Common problems: reversing a list, detecting cycles, merging sorted lists. Understanding recursion and pointer manipulation is key.
+
+</QA>
+
+<QA question="What are the key interview topics for Hashing?">
+
+Hashing maps data to fixed-size tables using hash functions for fast lookups. Interview questions cover hash functions, collision handling (chaining, open addressing), and applications like anagram detection and LRU cache. Also involves set operations, subarray sum, and frequency counting.
+
+</QA>
+
+<QA question="What Searching algorithms are commonly asked in interviews?">
+
+Linear search, binary search, and hash-based methods. Questions often involve binary search variations (e.g., searching in rotated sorted arrays). Understanding time complexities (O(log n) for binary search, O(n) for linear) is key.
+
+</QA>
+
+<QA question="What Sorting algorithms should you know for interviews?">
+
+Quick Sort, Merge Sort, Heap Sort with focus on time and space complexities. Advanced techniques like Counting Sort and Radix Sort are useful for specific input types.
+
+</QA>
+
+<QA question="What String problems are commonly asked in interviews?">
+
+Pattern matching, palindrome checks, substring search (KMP, Rabin-Karp). String reversal, manipulation techniques crucial for optimizing algorithms.
+
+</QA>
+
+<QA question="What Stack problems are common in interviews?">
+
+LIFO principle, useful for parsing expressions and managing function calls. Common problems: balanced parentheses, next greater element (and variations like stock span, trapping rain water), evaluating postfix expressions.
+
+</QA>
+
+<QA question="What Queue topics come up in interviews?">
+
+FIFO principle. Interview topics: circular queue implementation, priority queues, deque implementations. Queue operations are crucial for BFS.
+
+</QA>
+
+<QA question="How is Recursion tested in interviews?">
+
+Function calling itself to break down problems into subproblems. Problems include factorial, Fibonacci, tree/graph traversals. Attention to base cases and recursion depth. Recognizing overlapping subproblems for DP.
+
+</QA>
+
+<QA question="What Backtracking problems should you prepare?">
+
+Find all possible solutions by exploring candidates and rejecting infeasible ones. Common problems: Sudoku, permutations/combinations, N-Queens. Optimization involves pruning the search space.
+
+</QA>
+
+<QA question="What Tree topics are covered in interviews?">
+
+Traversal techniques (in-order, pre-order, post-order), height balancing, BSTs. Advanced topics: AVL trees, segment trees, tree-based DP.
+
+</QA>
+
+<QA question="What Heap problems should you prepare?">
+
+Complete binary tree for priority queues with efficient insert and extract-min/max. Topics: implementing heaps, heap sort, maintaining heaps during dynamic updates.
+
+</QA>
+
+<QA question="What Graph topics are tested in interviews?">
+
+BFS, DFS, shortest path (Dijkstra, Bellman-Ford), cycle detection. Advanced: topological sorting, minimum spanning tree (Prim's, Kruskal's).
+
+</QA>
+
+<QA question="What Dynamic Programming patterns are commonly asked?">
+
+Breaking problems into subproblems, storing results to avoid redundant work. Common problems: Fibonacci, knapsack, longest common subsequences. Optimization through memoization and tabulation.
+
+</QA>
+
+<QA question="What Bit Manipulation problems should you know?">
+
+Finding single non-repeated elements, counting set bits, checking power of two. Understanding bitwise operators (AND, OR, XOR) is critical for optimizing memory and performance.
+
+</QA>
+
+## From: GFG Top 10 Algorithms in Interviews
+
+<QA question="What are the top array algorithm problems for interviews?">
+
+Maximum Subarray Sum, Find the Missing Number, Trapping Rain Water, Maximum Product Subarray, Equilibrium Index, Leaders in an Array, Minimum Platforms, Rotate Array, Kth Smallest/Largest Element, Maximum Length Bitonic Subarray.
+
+</QA>
+
+<QA question="What are the top string algorithm problems for interviews?">
+
+Longest Palindromic Substring, Wildcard Pattern Matching, Edit Distance, Longest Repeating Subsequence, Count Distinct Substrings, Reverse Words, Rotated Palindrome Check, KMP Algorithm, Minimum Characters for Palindrome.
+
+</QA>
+
+<QA question="What are the top sorting algorithms for interviews?">
+
+QuickSort, MergeSort, HeapSort, Counting Sort, Radix Sort, Bubble Sort, Selection Sort, Insertion Sort, Shell Sort, Bucket Sort. Know their time and space complexities.
+
+</QA>
+
+<QA question="What are the top searching algorithms for interviews?">
+
+Linear Search, Binary Search, Ternary Search, DFS, BFS, Fibonacci Search. Understand when to use each and their complexities.
+
+</QA>
+
+<QA question="What are the top recursion/backtracking problems for interviews?">
+
+N-Queens, Sudoku Solver, Rat in a Maze, Word Break, Subset Sum, Permutations, Combination Sum, IP Address Generation.
+
+</QA>
+
+<QA question="What are the top greedy algorithm problems for interviews?">
+
+Fractional Knapsack, Huffman Coding, Job Sequencing, Activity Selection, Minimum Coins, Minimum Platforms, Maximum Chain of Pairs, Cash Flow Minimization, Connect Ropes, Prim's MST.
+
+</QA>
+
+<QA question="What are the top tree algorithm problems for interviews?">
+
+LCA, Diameter of Binary Tree, Level Order Traversal, Serialize/Deserialize, BST Validation, Inorder Without Recursion, Binary Tree to DLL, Identical Trees, Maximum Width, Mirror Tree.
+
+</QA>
+
+<QA question="What are the top DP problems for interviews?">
+
+LCS, 0/1 Knapsack, Matrix Chain Multiplication, LIS, Maximum Sum Increasing Subsequence, Coin Change, Longest Palindromic Subsequence, Edit Distance, Largest Sum Contiguous Subarray, Longest Common Substring.
+
+</QA>
+
+<QA question="What are the top graph algorithm problems for interviews?">
+
+Dijkstra's, Kruskal's, Topological Sort, Bellman-Ford, Floyd Warshall, Prim's, DFS, BFS, Cycle Detection, Articulation Points.
+
+</QA>
+
+<QA question="What are the top bit manipulation problems for interviews?">
+
+Find Non-Repeating Element, Count Set Bits, Maximum XOR, Two Non-Repeating Elements, Sparse Number Check, Maximum Subarray XOR, Sum of XOR of Subarrays, Element Appearing Once, Power of Two Check.
+
+</QA>

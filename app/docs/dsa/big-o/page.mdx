@@ -77,17 +77,9 @@ function bubbleSort(arr: number[]): number[] {
 }
 ```
 
-<QA question="What's the difference between Big O, Big Theta, and Big Omega?">
 
-Big O describes the upper bound (worst case), Big Omega (Ω) describes the lower bound (best case), and Big Theta (Θ) describes the tight bound (average case). In interviews, Big O is used most often because we typically care about worst-case guarantees.
 
-</QA>
 
-<QA question="Why do we drop constants and lower-order terms?">
-
-Big O describes asymptotic behavior — how the algorithm scales as n approaches infinity. Constants and lower-order terms become insignificant at large scales. O(2n + 5) simplifies to O(n) because the factor of 2 and constant 5 don't change the fundamental growth rate.
-
-</QA>
 
 <Callout variant="tip">
 

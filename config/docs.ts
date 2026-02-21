@@ -167,5 +167,20 @@ export const docsConfig: DocsConfig = {
                 { title: "IAM & Security", href: "/docs/aws/aws-iam-security" },
             ],
         },
+        {
+            title: "12. Interview Questions",
+            items: [
+                { title: "DSA", href: "/docs/interview-questions/dsa" },
+                { title: "Frontend", href: "/docs/interview-questions/frontend" },
+                { title: "Backend", href: "/docs/interview-questions/backend" },
+                { title: "Databases", href: "/docs/interview-questions/databases" },
+                { title: "System Design", href: "/docs/interview-questions/system-design" },
+                { title: "LLD & OOPs", href: "/docs/interview-questions/lld" },
+                { title: "Operating Systems", href: "/docs/interview-questions/os" },
+                { title: "Networking & TCP/IP", href: "/docs/interview-questions/networking" },
+                { title: "Software Engineering", href: "/docs/interview-questions/software-engineering" },
+                { title: "Company Experiences", href: "/docs/interview-questions/company-experiences" },
+            ],
+        },
     ],
 };

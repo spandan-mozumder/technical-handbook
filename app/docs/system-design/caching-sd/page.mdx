@@ -30,8 +30,3 @@ graph LR
 
 "There are only two hard things in CS: cache invalidation and naming things." Strategies: TTL (time-to-live), event-based invalidation (publish changes), and versioned keys.
 
-<QA question="What is cache stampede and how to prevent it?">
-
-Cache stampede (thundering herd) occurs when a popular cache key expires and hundreds of requests simultaneously hit the database. Solutions: 1) Lock/mutex — only one request fetches from DB, others wait, 2) Stale-while-revalidate — serve stale data while refreshing in background, 3) Probabilistic early expiration — some requests refresh before TTL.
-
-</QA>
