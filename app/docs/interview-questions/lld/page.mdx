@@ -18,91 +18,91 @@ The 'this' keyword refers to the current instance of the class. It's used to dis
 
 <QA question="Tell me about the principles of OOPs.">
 
-Asked in interviews.
+The four core principles are: 1) **Encapsulation** — bundling data and methods together, hiding internal state behind public methods (getters/setters). 2) **Abstraction** — showing only essential features, hiding implementation details using abstract classes/interfaces. 3) **Inheritance** — creating new classes from existing ones, promoting code reuse (parent-child relationship). 4) **Polymorphism** — same interface, different implementations. Compile-time (overloading) and runtime (overriding). Together they enable modular, reusable, maintainable code.
 
 </QA>
 
 <QA question="What is OOP? Explain all the OOP concepts with real-life examples.">
 
-Asked in interviews.
+**OOP** organizes code around objects rather than functions. **Encapsulation**: a car's engine is hidden behind pedals and steering — you interact through an interface without knowing internals. **Abstraction**: a TV remote abstracts complex circuitry into simple buttons (power, volume). **Inheritance**: a Tesla IS-A Car, inheriting properties (wheels, engine) while adding its own (autopilot). **Polymorphism**: a `draw()` method behaves differently for Circle vs Rectangle — same action name, different behavior. OOP mirrors how we think about the real world — entities with properties and behaviors.
 
 </QA>
 
 <QA question="Explain abstraction, encapsulation, inheritance with practical code.">
 
-Asked in interviews.
+**Abstraction**: `abstract class Payment { abstract pay(amount); }` — defines WHAT, not HOW. `class CreditCardPayment extends Payment { pay(amount) { /* Stripe API */ } }`. **Encapsulation**: `class BankAccount { private balance; getBalance() { return balance; } deposit(amount) { if (amount greater than 0) balance += amount; } }` — balance is protected, accessed only through methods with validation. **Inheritance**: `class Animal { eat() {} }` → `class Dog extends Animal { bark() {} }` — Dog reuses eat() and adds bark(). Dog IS-A Animal.
 
 </QA>
 
 <QA question="What are some basic technical questions about OOPS concepts?">
 
-Asked in interviews.
+Common OOP interview questions include: What are the 4 pillars? (Encapsulation, Abstraction, Inheritance, Polymorphism). Difference between overloading vs overriding? (Compile-time vs runtime). Abstract class vs interface? (Shared code vs contract). What is method resolution order? (How language determines which method to call in inheritance chains). What is the diamond problem? (Ambiguity in multiple inheritance). Difference between composition and inheritance? (HAS-A vs IS-A). What is SOLID? (5 design principles for maintainable OOP code). These test understanding of core concepts and design thinking.
 
 </QA>
 
 <QA question="Are you familiar with OOPS principles?">
 
-Asked in interviews.
+Yes — OOP is built on four pillars: **Encapsulation** (data hiding — private fields with public methods), **Abstraction** (expose only necessary details — abstract classes, interfaces), **Inheritance** (code reuse through parent-child relationships), and **Polymorphism** (one interface, multiple implementations — method overloading and overriding). Additionally, **SOLID principles** guide good OOP design: Single Responsibility, Open/Closed, Liskov Substitution, Interface Segregation, and Dependency Inversion. These principles together enable building modular, testable, and maintainable software systems.
 
 </QA>
 
 <QA question="Explain the four pillars of OOPS with code examples.">
 
-Asked in interviews.
+1) **Encapsulation**: `class User { private email; setEmail(e) { if (validate(e)) this.email = e; } }` — data protected behind methods. 2) **Abstraction**: `interface Logger { log(msg); }` — hides whether logging goes to file, console, or cloud. 3) **Inheritance**: `class Employee extends Person { constructor(name, salary) { super(name); this.salary = salary; } }` — reuses Person's properties. 4) **Polymorphism**: `shapes.forEach(s => s.area())` — Circle.area() uses πr², Rectangle.area() uses l×w. Same method call, different behavior based on object type.
 
 </QA>
 
 <QA question="What is the difference between abstraction and encapsulation?">
 
-Asked in interviews.
+**Abstraction** hides complexity by showing only the relevant interface — WHAT something does. Example: `drive()` method hides engine mechanics. Achieved through abstract classes and interfaces. Design-level concept. **Encapsulation** hides internal state by bundling data with methods that control access — HOW data is protected. Example: `private balance` with `getBalance()` method. Achieved through access modifiers (private, protected, public). Implementation-level concept. Abstraction says "you don't need to know the details"; Encapsulation says "you CAN'T access the internals directly."
 
 </QA>
 
 <QA question="How do you implement polymorphism in Java?">
 
-Asked in interviews.
+**Compile-time (Overloading)**: same method name, different parameters. `int add(int a, int b)` and `double add(double a, double b)`. Resolved at compile time. **Runtime (Overriding)**: child class redefines parent's method. `class Animal { void sound() {} }` → `class Dog extends Animal { @Override void sound() { System.out.println("Bark"); } }`. Resolved at runtime based on actual object type: `Animal a = new Dog(); a.sound();` → prints "Bark". **Interfaces**: `ListString list = new ArrayListfragment()` — polymorphism through interface reference. Enables writing code against abstractions, not implementations.
 
 </QA>
 
 <QA question="Discuss the use of interfaces vs abstract classes in OOPS.">
 
-Asked in interviews.
+**Interface**: pure contract — only method signatures (Java 8+ allows default methods). A class can implement MULTIPLE interfaces. No constructor, no state. Use for: defining capabilities (Serializable, Comparable, Iterable), achieving multiple inheritance, loose coupling. **Abstract class**: partial implementation — can have concrete methods, fields, constructors. Single inheritance only. Use for: sharing code among related classes, providing base behavior. **Rule of thumb**: use interfaces for "can-do" (Flyable, Swimmable), abstract classes for "is-a" with shared code (Animal → Dog/Cat). Modern trend: prefer interfaces + composition over deep inheritance.
 
 </QA>
 
 <QA question="What is a class and an object in OOPS?">
 
-Asked in interviews.
+A **class** is a blueprint/template that defines: attributes (data/fields) and methods (behavior/functions). It defines the structure but doesn't occupy memory for its data. Example: `class Car { color, speed, accelerate(), brake() }`. An **object** is a specific instance of a class with actual values. Example: `myCar = new Car(); myCar.color = "red"`. Multiple objects from same class: `car1 = new Car()`, `car2 = new Car()` — each has independent state. Class = recipe; Object = the actual cake baked from that recipe.
 
 </QA>
 
 <QA question="Explain the concept of 'Super' and 'This' keywords.">
 
-Asked in interviews.
+**`this`**: refers to the CURRENT object instance. Uses: 1) Disambiguate between field and parameter: `this.name = name`. 2) Call another constructor: `this(defaultValue)`. 3) Pass current object as argument: `method(this)`. 4) Return current object: `return this` (method chaining). **`super`**: refers to the PARENT class. Uses: 1) Call parent constructor: `super(name)` (must be first line). 2) Call parent method: `super.display()` (when overriding, still access parent's version). 3) Access parent field: `super.field` (if hidden by child's field with same name).
 
 </QA>
 
 <QA question="What are the different types of inheritance?">
 
-Asked in interviews.
+1) **Single** — one child, one parent: `Dog extends Animal`. 2) **Multilevel** — chain: `Puppy extends Dog extends Animal`. 3) **Hierarchical** — multiple children, one parent: `Dog extends Animal`, `Cat extends Animal`. 4) **Multiple** — one child, multiple parents: `class C extends A, B` (supported in C++, Python; NOT in Java — use interfaces instead). 5) **Hybrid** — combination of above types. **Diamond Problem**: in multiple inheritance, if both parents have the same method, which does the child use? Solved by: virtual inheritance (C++), interfaces (Java), MRO/C3 linearization (Python).
 
 </QA>
 
 <QA question="How does OOPS help in software development?">
 
-Asked in interviews.
+1) **Modularity** — code organized into self-contained classes, easier to develop/debug. 2) **Reusability** — inheritance and composition let you reuse existing code. 3) **Maintainability** — encapsulation isolates changes; modifying internals doesn't break external code. 4) **Scalability** — polymorphism allows adding new types without changing existing code (Open/Closed Principle). 5) **Real-world modeling** — objects map naturally to real entities (User, Order, Product). 6) **Team collaboration** — interfaces define contracts so teams work independently. 7) **Testing** — dependency injection and interfaces enable mocking and unit testing.
 
 </QA>
 
 <QA question="Can you give a real-life example of inheritance?">
 
-Asked in interviews.
+**Vehicle hierarchy**: `Vehicle` (base class: wheels, engine, drive(), stop()) → `Car` extends Vehicle (seats=5, openTrunk()) → `ElectricCar` extends Car (batteryCapacity, charge()). Each level inherits from parent and adds specialization. Another example: `Person` (name, age) → `Employee` extends Person (salary, department, work()) → `Manager` extends Employee (teamSize, conductReview()). Manager IS-A Employee IS-A Person — has all properties of each plus its own. This mirrors real-world classification taxonomies.
 
 </QA>
 
 <QA question="Explaining OOPS and its properties.">
 
-Asked in interviews.
+OOP is a programming paradigm centered on objects — entities with state (attributes) and behavior (methods). **Properties**: 1) **Encapsulation** — bundle data + methods, restrict direct access via access modifiers. Reduces complexity. 2) **Abstraction** — expose only what's necessary through interfaces/abstract classes. Manages complexity. 3) **Inheritance** — derive new classes from existing ones. Promotes reuse. 4) **Polymorphism** — objects of different types respond differently to the same method call. Enables flexibility. **Supporting concepts**: composition (HAS-A), association, aggregation, SOLID principles, design patterns. OOP is the dominant paradigm used in Java, C++, Python, C#, TypeScript.
 
 </QA>
 
@@ -110,109 +110,109 @@ Asked in interviews.
 
 <QA question="What is the singleton design pattern and how do you create a singleton class?">
 
-Asked in interviews.
+Singleton ensures a class has exactly ONE instance and provides global access. **Implementation**: 1) Private constructor (prevent external instantiation). 2) Private static instance variable. 3) Public static method (`getInstance()`) that creates instance on first call or returns existing one. **Thread-safe approaches**: double-checked locking, enum-based (Java), or module-level variable (Python/JS). **Use cases**: database connection pool, logger, configuration manager, caches. **Caution**: singletons can become hidden global state, making testing difficult. Consider dependency injection instead.
 
 </QA>
 
 <QA question="What is the difference between a factory and a service?">
 
-Asked in interviews.
+**Factory** is a creational design pattern — its ONLY job is creating objects. It encapsulates object creation logic so client code doesn't need to know concrete classes. Example: `ShapeFactory.create("circle")` returns a Circle object. **Service** is a business logic component that performs operations/orchestrates workflows. Example: `PaymentService.processPayment(order)` handles validation, charging, and confirmation. Key difference: Factory creates things; Service does things. A Service might USE a Factory to create objects it needs. Factory has no business logic; Service encapsulates business logic.
 
 </QA>
 
 <QA question="What is the factory design pattern and how do you implement it?">
 
-Asked in interviews.
+Factory Pattern creates objects without exposing instantiation logic. **Simple Factory**: `class NotificationFactory { create(type) { if (type === "email") return new EmailNotification(); if (type === "sms") return new SMSNotification(); } }`. **Factory Method**: abstract method in base class, subclasses decide which class to instantiate. **Abstract Factory**: creates families of related objects. `UIFactory.createButton()` → `WindowsButton` or `MacButton` depending on factory implementation. **Benefits**: loose coupling (client doesn't depend on concrete classes), easy to add new types, centralizes creation logic. Use when you have multiple implementations of an interface.
 
 </QA>
 
 <QA question="How does the MVVM structure work?">
 
-Asked in interviews.
+**MVVM** (Model-View-ViewModel): **Model** — data and business logic (database, API calls, domain objects). **View** — UI layer (HTML/SwiftUI/React components). Displays data, captures user input. **ViewModel** — bridge between Model and View. Holds UI state, transforms Model data for display, handles user actions. Key feature: **data binding** — View automatically updates when ViewModel changes (reactive). Example: React component (View) → custom hook/state (ViewModel) → API/service layer (Model). Benefits: testable (test ViewModel without UI), separates concerns, enables UI designers and developers to work independently. Used in React (with hooks), Angular, SwiftUI, WPF.
 
 </QA>
 
 <QA question="Design a Snake game using design patterns.">
 
-Asked in interviews.
+**Patterns**: 1) **State Pattern**: `GameState` interface → `PlayingState`, `PausedState`, `GameOverState`. Controls game behavior based on current state. 2) **Strategy Pattern**: `MovementStrategy` → `NormalMovement`, `SpeedBoostMovement`. Swap algorithms at runtime. 3) **Observer Pattern**: `GameBoard` notifies `ScoreDisplay`, `SoundManager` on events (food eaten, collision). **Classes**: `Snake` (body: LinkedList of positions, direction, grow()), `Food` (position, value, spawn()), `GameBoard` (grid, checkCollision(), checkFoodEaten()), `GameEngine` (gameLoop, tick(), handleInput()). The game loop runs tick() every N ms: move snake → check collision → check food → update score → render.
 
 </QA>
 
 <QA question="What design patterns are available in Microservices?">
 
-Asked in interviews.
+1) **API Gateway** — single entry point for all clients. 2) **Service Discovery** — services register and find each other (Consul, Eureka). 3) **Circuit Breaker** — stop calling failing services (Hystrix pattern). 4) **Saga** — manage distributed transactions via choreography or orchestration. 5) **CQRS** — separate read and write models. 6) **Event Sourcing** — store events instead of current state. 7) **Sidecar** — attach helper container for logging, monitoring (service mesh). 8) **Strangler Fig** — gradually migrate monolith to microservices. 9) **Bulkhead** — isolate failures to prevent cascade. 10) **Database per Service** — each service owns its data.
 
 </QA>
 
 <QA question="Which design pattern would you use for a complex design?">
 
-Asked in interviews.
+Depends on the complexity type: **Object creation complexity** → Factory/Abstract Factory/Builder. Builder is excellent for objects with many optional parameters. **Behavioral complexity** → Strategy (swap algorithms), State (complex state machines), Chain of Responsibility (process through handlers). **Structural complexity** → Composite (tree structures), Decorator (add features dynamically), Facade (simplify complex subsystems). **Event handling** → Observer/Pub-Sub. **Cross-cutting concerns** → Proxy (add logging/caching transparently). Often you combine patterns: a Factory that creates Strategies, observed by an Observer. Start with the simplest solution and introduce patterns only when complexity warrants it.
 
 </QA>
 
 <QA question="Design a cab booking system using object-oriented programming principles.">
 
-Asked in interviews.
+**Classes**: `User` (id, name, location), `Driver` extends `User` (cab: Cab, isAvailable, rating). `Cab` (licensePlate, type: MINI|SEDAN|SUV, currentLocation). `Ride` (id, rider, driver, source, destination, status: REQUESTED|CONFIRMED|IN_PROGRESS|COMPLETED|CANCELLED, fare). `RideService` (requestRide, cancelRide, completeRide). `MatchingStrategy` interface → `NearestDriverStrategy`, `RatingBasedStrategy`. `PricingStrategy` interface → `BasePricing`, `SurgePricing`. `PaymentService` (processPayment). **Patterns used**: Strategy (matching, pricing), Observer (notify driver of new ride), State (ride lifecycle), Singleton (RideService). SOLID: Interface Segregation for different strategies, Dependency Inversion for strategy injection.
 
 </QA>
 
 <QA question="LRU Cache Implementation using appropriate data structures.">
 
-Asked in interviews.
+**Data structures**: **HashMap** (O(1) lookup by key) + **Doubly Linked List** (O(1) insertion/deletion for ordering). **How it works**: HashMap maps key → node in linked list. Most recently used items at the head; least recently at the tail. **Operations**: `get(key)`: find in HashMap → move node to head → return value. O(1). `put(key, value)`: if key exists, update value and move to head. If new and capacity full, remove tail node (LRU), delete from HashMap, add new node at head. O(1). **Key insight**: the doubly linked list maintains access order, HashMap provides O(1) access. Java has `LinkedHashMap`; Python has `OrderedDict`.
 
 </QA>
 
 <QA question="What are the different microservices patterns?">
 
-Asked in interviews.
+**Communication**: Synchronous (REST, gRPC), Asynchronous (Event-driven, Message Queue). **Data**: Database per Service, Saga (distributed transactions), CQRS, Event Sourcing. **Reliability**: Circuit Breaker, Retry, Bulkhead, Timeout. **Infrastructure**: Service Discovery, API Gateway, Sidecar/Service Mesh, Configuration Server. **Deployment**: Blue-Green, Canary, Rolling Update. **Migration**: Strangler Fig (gradual monolith decomposition). **Observability**: Log Aggregation, Distributed Tracing, Health Check. **Security**: Access Token (JWT), mTLS between services. Choose patterns based on your specific challenges — don't adopt everything at once.
 
 </QA>
 
 <QA question="What is the difference between MVC and Factory pattern?">
 
-Asked in interviews.
+**MVC** (Model-View-Controller) is an **architectural pattern** — it structures the ENTIRE application into three layers. Model (data + logic), View (UI), Controller (handles input, coordinates Model and View). Applies to the whole app structure. **Factory** is a **design pattern** — it solves a specific problem: creating objects without coupling to concrete classes. Applies within a single component. They operate at different levels and can coexist: your MVC Controller might use a Factory to create the right Service or Strategy. MVC = how to organize the application; Factory = how to create objects cleanly.
 
 </QA>
 
 <QA question="What is the use of a relay in Dependency Injection (DI)?">
 
-Asked in interviews.
+In DI, a relay (or delegating injector) acts as an intermediary that forwards dependency resolution requests. It's used in hierarchical DI systems (like Angular) where: child injectors delegate to parent injectors if they can't resolve a dependency. **Purpose**: 1) Scope management — create different instances at different levels (singleton at root, per-component at child). 2) Override dependencies in sub-trees without affecting the rest. 3) Lazy loading — modules loaded on demand get their own injector that relays to the root for shared services. In Angular: each lazy-loaded module gets its own injector that relays unresolved tokens to the root injector.
 
 </QA>
 
 <QA question="LFU Cache Design Problem and implementation.">
 
-Asked in interviews.
+**LFU** (Least Frequently Used): evicts the item with the lowest access frequency. If tie, evict least recently used among those. **Data structures**: HashMap (key → value + freq), HashMap (freq → doubly linked list of keys at that frequency), variable `minFreq`. **Operations**: `get(key)`: increment key's frequency, move from freq list to freq+1 list, update minFreq. O(1). `put(key, val)`: if full, remove tail of minFreq list (LFU + LRU among ties). Add new key with freq=1, set minFreq=1. O(1). **vs LRU**: LRU evicts by recency; LFU by frequency. LFU is better for workloads with frequently accessed hot items but can suffer from "cache pollution" — items with historically high counts that are no longer relevant.
 
 </QA>
 
 <QA question="Explain the Observer design pattern.">
 
-Asked in interviews.
+Observer defines a one-to-many dependency where when one object (Subject) changes state, all its dependents (Observers) are notified automatically. **Components**: `Subject` (maintains observer list, notify()), `Observer` interface (update() method), Concrete Observers implement update(). **Example**: `StockPrice` (Subject) notifies `DashboardWidget`, `AlertService`, `LogService` (Observers) when price changes. **Real-world uses**: Event listeners, React state → re-render, Pub/Sub messaging, MVC (Model notifies View). **Benefits**: loose coupling — subject doesn't know concrete observers. **Drawback**: can cause cascading updates; observer must unsubscribe to avoid memory leaks.
 
 </QA>
 
 <QA question="What is the Decorator pattern and when would you use it?">
 
-Asked in interviews.
+Decorator dynamically adds responsibilities to an object WITHOUT modifying its class. Wraps the original object with decorator classes that implement the same interface. **Example**: `Coffee` interface with `cost()`. `BasicCoffee` (cost=5). `MilkDecorator` wraps Coffee, adds 2 to cost. `SugarDecorator` adds 1. `new SugarDecorator(new MilkDecorator(new BasicCoffee())).cost()` = 8. **Use when**: 1) Adding features dynamically at runtime. 2) Subclassing would create explosion of classes. 3) Adding responsibilities that can be combined in various ways. **Real-world**: Java I/O streams (`BufferedReader(new FileReader())`), middleware in Express.js, Python decorators (`@login_required`).
 
 </QA>
 
 <QA question="Explain the Strategy pattern with an example.">
 
-Asked in interviews.
+Strategy defines a family of interchangeable algorithms encapsulated in separate classes. The client chooses which algorithm to use at runtime. **Example**: Payment processing — `PaymentStrategy` interface with `pay(amount)`. Implementations: `CreditCardPayment`, `PayPalPayment`, `CryptoPayment`. `OrderService` has a `paymentStrategy` field, and `checkout()` calls `strategy.pay(total)`. Change strategy without modifying OrderService. **Other examples**: sorting algorithms, compression algorithms, routing strategies in navigation apps. **Benefits**: Open/Closed Principle (add new strategies without changing existing code), eliminates conditional statements, easy to test strategies in isolation.
 
 </QA>
 
 <QA question="What is the difference between Creational and Structural design patterns?">
 
-Asked in interviews.
+**Creational patterns** deal with OBJECT CREATION — controlling HOW objects are instantiated. Includes: Singleton (one instance), Factory Method (subclass decides), Abstract Factory (families of objects), Builder (complex construction), Prototype (clone existing). **Structural patterns** deal with OBJECT COMPOSITION — organizing HOW classes and objects are combined into larger structures. Includes: Adapter (incompatible interfaces), Decorator (add behavior), Facade (simplify interface), Proxy (surrogate), Composite (tree structures), Bridge (separate abstraction from implementation). Creational = "how to make it"; Structural = "how to compose it." A third category, Behavioral, deals with "how objects interact."
 
 </QA>
 
 <QA question="How do design patterns improve code maintainability?">
 
-Asked in interviews.
+1) **Common vocabulary** — team communicates efficiently ("use Observer pattern" instead of explaining the concept). 2) **Proven solutions** — avoid reinventing solutions to common problems. 3) **Loose coupling** — patterns like Strategy, Observer, Factory reduce dependencies between classes. 4) **Open/Closed Principle** — add new behavior without modifying existing code (Strategy, Decorator). 5) **Single Responsibility** — each class has one focused purpose. 6) **Testability** — interfaces and dependency injection enable mocking. 7) **Readability** — recognizable structure helps new developers understand the codebase. 8) **Flexibility** — easy to swap implementations (Strategy), add features (Decorator), or change creation logic (Factory).
 
 </QA>
 
@@ -236,180 +236,284 @@ Overloading (compile-time): Same method name, different parameter lists, in the 
 
 <QA question="What is Object-Oriented Programming?">
 
-Asked in interviews.
+OOP is a programming paradigm that organizes software around **objects** — instances of classes that combine data (attributes/fields) and behavior (methods/functions). Instead of writing procedural code (step-by-step instructions), you model real-world entities as objects that interact via messages (method calls). Core concepts: classes (blueprints), objects (instances), encapsulation, abstraction, inheritance, and polymorphism. Languages: Java, C++, Python, C#, TypeScript, Swift. OOP enables modular, reusable, maintainable code by mirroring how we naturally think about systems.
 
 </QA>
 
 <QA question="Why do we use OOP?">
 
-Asked in interviews.
+1) **Modularity** — break complex systems into manageable objects/classes. 2) **Reusability** — inherit and reuse existing code, create libraries. 3) **Maintainability** — encapsulation isolates changes. 4) **Scalability** — polymorphism enables extending without modifying existing code. 5) **Real-world modeling** — objects naturally represent entities (User, Product, Order). 6) **Testability** — interfaces enable dependency injection and mocking. 7) **Team collaboration** — teams work on different classes independently via clear interfaces. 8) **Design patterns** — proven OOP-based solutions to common problems. Procedural code becomes unmaintainable as complexity grows; OOP manages that complexity.
 
 </QA>
 
 <QA question="What are the main features of OOP?">
 
-Asked in interviews.
+1) **Classes and Objects** — blueprints and instances. 2) **Encapsulation** — data hiding via access modifiers (private/protected/public). 3) **Abstraction** — hide complexity, show only essential interface. 4) **Inheritance** — create specialized classes from general ones (IS-A relationship). 5) **Polymorphism** — same interface, different behaviors (overloading + overriding). 6) **Association** — relationships between objects (HAS-A). 7) **Composition/Aggregation** — strong/weak ownership relationships. 8) **Message passing** — objects communicate by calling methods on each other. These features together make code organized, reusable, and extensible.
 
 </QA>
 
 <QA question="What is Encapsulation?">
 
-Asked in interviews.
+Encapsulation bundles data (attributes) and methods (behavior) into a single unit (class), and controls access to the internal state through access modifiers. **Private** fields can only be accessed through **public** methods (getters/setters) that include validation logic. Example: `class Account { private balance; deposit(amount) { if (amount greater than 0) balance += amount; } getBalance() { return balance; } }`. External code can't set `balance = -1000` directly. **Benefits**: data integrity, reduces coupling, enables internal changes without breaking external code. Think: medicine capsule — contents protected inside.
 
 </QA>
 
 <QA question="What is Abstraction?">
 
-Asked in interviews.
+Abstraction hides complex implementation details and shows only the essential features to the user. **Implementation**: via abstract classes (partial implementation) and interfaces (pure contract). Example: `interface Database { connect(); query(sql); disconnect(); }`. The user of this interface doesn't know if it's MySQL, PostgreSQL, or MongoDB underneath. A car's steering wheel is an abstraction — you turn it without understanding the rack-and-pinion mechanism. **vs Encapsulation**: Abstraction is about HIDING unnecessary details (design level); Encapsulation is about PROTECTING data access (implementation level).
 
 </QA>
 
 <QA question="What is Polymorphism?">
 
-Asked in interviews.
+Polymorphism means "many forms" — the ability of different objects to respond differently to the same method call. **Compile-time (Static)**: method overloading — same name, different parameters: `add(int, int)` and `add(double, double)`. **Runtime (Dynamic)**: method overriding — child class provides specific implementation of parent's method: `Animal.sound()` → `Dog.sound()` says "Bark", `Cat.sound()` says "Meow". `animals.forEach(a => a.sound())` calls the correct version based on actual object type. **Benefits**: write generic code that works with any subtype, extensible without modification (Open/Closed Principle).
 
 </QA>
 
 <QA question="What is Inheritance?">
 
-Asked in interviews.
+Inheritance allows a class (child/subclass) to acquire properties and methods from another class (parent/superclass). Creates an IS-A relationship. Example: `class Dog extends Animal` — Dog inherits eat(), sleep() from Animal and adds bark(). **Benefits**: code reuse, establishes type hierarchies, enables polymorphism. **Types**: Single, Multilevel, Hierarchical, Multiple (via interfaces in Java), Hybrid. **Keywords**: `extends` (class inheritance), `implements` (interface implementation), `super` (access parent). **Best practice**: favor composition over inheritance for flexibility. Inheritance creates tight coupling; use it for genuine IS-A relationships.
 
 </QA>
 
 <QA question="What is the difference between Structured and Object-Oriented Programming?">
 
-Asked in interviews.
+**Structured Programming**: top-down approach, based on functions/procedures. Data and functions are separate. Uses sequence, selection, iteration. Examples: C, Pascal. **Object-Oriented Programming**: organizes around objects that combine data and behavior. Uses classes, inheritance, polymorphism. Examples: Java, C++, Python. **Key differences**: Structured has global data (less security); OOP has encapsulated data (more security). Structured reuses functions; OOP reuses through inheritance. Structured is harder to maintain for large systems; OOP scales better. OOP supports design patterns; Structured relies on procedural design. Modern languages (Python, C++) support both paradigms.
 
 </QA>
 
 <QA question="What are access specifiers and what is their significance?">
 
-Asked in interviews.
+Access specifiers control the visibility and accessibility of class members. **Private**: accessible only within the same class — maximum data hiding. **Protected**: accessible within the class and its subclasses (and same package in Java). **Public**: accessible from anywhere — no restrictions. **Default/Package** (Java): accessible within the same package. **Significance**: enforce encapsulation, prevent unauthorized data modification, define clear public APIs, reduce coupling between classes. Best practice: make fields private, expose only necessary methods as public, use protected sparingly for inheritance scenarios.
 
 </QA>
 
 <QA question="What is the difference between Private and Protected access specifiers?">
 
-Asked in interviews.
+**Private**: accessible ONLY within the declaring class. Not visible to subclasses or any external code. Strongest encapsulation. Use for internal implementation details. **Protected**: accessible within the declaring class AND its subclasses (children). In Java, also accessible within the same package. Use for members that subclasses need to access or override. Example: private helper methods stay private; a template method that children customize should be protected. **When to choose**: default to private (most restrictive), use protected only when subclasses genuinely need access. Avoid protected fields — use protected methods instead.
 
 </QA>
 
 <QA question="What is a constructor?">
 
-Asked in interviews.
+A constructor is a special method that initializes an object when it's created with `new`. Same name as the class, no return type. Called automatically during object creation. **Purpose**: set initial values, allocate resources, enforce required parameters. Example: `class User { constructor(name, email) { this.name = name; this.email = email; } }`. If you don't define one, the compiler provides a default no-arg constructor. Constructors can be overloaded (multiple with different parameters). Constructor chaining: one constructor calls another using `this()` (same class) or `super()` (parent class).
 
 </QA>
 
 <QA question="What are the types of constructors?">
 
-Asked in interviews.
+1) **Default Constructor**: no parameters, provided by compiler if none defined. Initializes fields to default values (0, null, false). 2) **Parameterized Constructor**: accepts arguments to initialize object with specific values. `User(name, email)`. 3) **Copy Constructor**: creates a new object as a copy of an existing one. `User(User other) { this.name = other.name; }`. Common in C++, done manually in Java. 4) **Private Constructor**: prevents external instantiation — used in Singleton pattern and utility classes. 5) **Static Constructor** (C#): initializes static members, called once automatically.
 
 </QA>
 
 <QA question="What is a copy constructor?">
 
-Asked in interviews.
+A copy constructor creates a new object by copying the values from an existing object of the same class. **C++**: `MyClass(const MyClass& other) { this->data = other.data; }`. Compiler generates a default one (shallow copy). **Java**: No built-in copy constructor — implement manually: `User(User other) { this.name = other.name; this.age = other.age; }`. Or use `clone()`. **Shallow vs Deep copy**: shallow copies reference values (both objects point to same nested objects). Deep copy creates new copies of nested objects too. Essential for avoiding shared mutable state bugs.
 
 </QA>
 
 <QA question="What is a destructor?">
 
-Asked in interviews.
+A destructor is a special method called automatically when an object is destroyed/goes out of scope. Used to release resources (close files, database connections, free memory). **C++**: `~ClassName() { delete[] data; }`. Called deterministically when object goes out of scope or `delete` is called. **Java/Python**: no destructors — use garbage collection. Java has `finalize()` (deprecated) or `try-with-resources` for cleanup. Python has `__del__()` but it's unreliable. **Modern practice**: use RAII (C++ — Resource Acquisition Is Initialization), try-with-resources (Java), context managers (Python `with`) for deterministic cleanup.
 
 </QA>
 
 <QA question="What is the difference between a class and a structure?">
 
-Asked in interviews.
+In **C++**: **Class**: members are private by default, supports inheritance. Used for complex objects with behavior. **Struct**: members are public by default, supports inheritance. Traditionally used for simple data containers (POD). Functionally almost identical in C++. In **C#**: **Class**: reference type (stored on heap, passed by reference). Supports inheritance. **Struct**: value type (stored on stack, passed by value). No inheritance. Better performance for small data objects (Point, Color). In **C**: structs are just data containers — no methods, no access modifiers, no inheritance. In Java/JS/Python: no struct concept — only classes.
 
 </QA>
 
 <QA question="What is the difference between a class and an object?">
 
-Asked in interviews.
+**Class**: template/blueprint — defines attributes and methods. No memory allocated for data. Example code definition: `class Car { color; speed; drive() {} }`. **Object**: instance of a class — concrete entity with actual values in memory. Created using `new`: `myCar = new Car(); myCar.color = "blue"`. You can create multiple objects from one class, each with independent state. Class is like a cookie cutter; objects are the cookies. Class exists in code; objects exist at runtime in memory. `typeof Car === "function"` (the class); `typeof myCar === "object"` (the instance).
 
 </QA>
 
 <QA question="When should we use Polymorphism?">
 
-Asked in interviews.
+Use polymorphism when: 1) **Multiple related types**: processing a list of different shapes — `shapes.forEach(s => s.draw())`. 2) **Plugin/extension architecture**: define interface, add new implementations without changing core. 3) **Eliminating switch/if-else chains**: replace `if (type === "credit") ... else if (type === "paypal") ...` with `payment.process()`. 4) **Framework design**: callback interfaces, event handlers, middleware. 5) **Testing**: mock objects implement same interface as real ones. **Rule of thumb**: if you find yourself checking `instanceof` or type codes to decide behavior, you probably need polymorphism instead.
 
 </QA>
 
 <QA question="What is the difference between overloading and overriding?">
 
-Asked in interviews.
+**Overloading** (compile-time polymorphism): same method name, DIFFERENT parameters (type, number, or order) in the SAME class. Example: `add(int, int)` and `add(double, double)`. Resolved at compile time. Return type alone doesn't distinguish overloaded methods. **Overriding** (runtime polymorphism): same method name AND same parameters in PARENT and CHILD classes. Child provides its specific implementation. Resolved at runtime based on actual object type. Requires inheritance. Use `@Override` annotation (Java) for safety. Overriding enables polymorphism; overloading is convenience for similar operations.
 
 </QA>
 
 <QA question="What is the difference between compile-time and run-time polymorphism?">
 
-Asked in interviews.
+**Compile-time (Static binding)**: method to call is determined at compile time. Achieved through: method overloading, operator overloading. Faster (no runtime lookup). Example: `print(int)` vs `print(string)` — compiler picks based on argument type. **Runtime (Dynamic binding)**: method to call is determined at runtime based on actual object type. Achieved through: method overriding with inheritance. Uses virtual method table (vtable) for dispatch. Example: `Animal a = new Dog(); a.sound()` — calls Dog's sound() even though reference type is Animal. Runtime polymorphism is more powerful — enables extensibility and loose coupling.
 
 </QA>
 
 <QA question="Can we call the parent constructor from a child constructor?">
 
-Asked in interviews.
+Yes. In most OOP languages, the child constructor can (and often must) call the parent constructor. **Java**: `super(args)` — must be the FIRST statement in the child constructor. If not called explicitly, `super()` (no-arg) is called automatically. If parent has no no-arg constructor, you MUST call `super(args)` explicitly. **C++**: use initializer list: `Child(int x) : Parent(x) { }`. **Python**: `super().__init__(args)`. **TypeScript/JS**: `super(args)` — required before accessing `this` in child constructor. This ensures the parent's state is initialized before the child adds its own.
 
 </QA>
 
 <QA question="What are virtual functions?">
 
-Asked in interviews.
+Virtual functions enable runtime polymorphism — the correct overridden method is called based on the actual object type, not the reference type. **C++**: declared with `virtual` keyword: `virtual void sound() { }`. Without virtual, the base class version is always called (static binding). **Java**: ALL non-static methods are virtual by default (no keyword needed). **How it works**: compiler creates a Virtual Method Table (vtable) for each class. Each object has a pointer to its class's vtable. At runtime, the vtable is used to look up the correct method implementation. Slight performance cost due to indirection.
 
 </QA>
 
 <QA question="What is a pure virtual function?">
 
-Asked in interviews.
+A pure virtual function has no implementation in the base class and MUST be overridden by any concrete subclass. Makes the class abstract — you can't instantiate it. **C++**: `virtual void sound() = 0;` — the `= 0` makes it pure. **Java equivalent**: `abstract void sound();` in an abstract class. **Purpose**: define a contract that all subclasses must fulfill while allowing no default behavior. Example: `abstract class Shape { abstract double area(); }` — every Shape MUST implement area(). If a derived class doesn't override all pure virtual functions, it's also abstract.
 
 </QA>
 
 <QA question="What is an abstract class?">
 
-Asked in interviews.
+An abstract class is a class that CANNOT be instantiated directly — it serves as a base for other classes. Contains: abstract methods (no body — subclasses MUST implement) and concrete methods (with body — shared code). **Use cases**: provide a template with some shared behavior and some that subclasses customize. Example: `abstract class Vehicle { void startEngine() { /* common */ } abstract void fuelType(); }` → `class ElectricCar extends Vehicle { fuelType() { return "Electric"; } }`. **vs Interface**: abstract class can have state (fields), constructors, and concrete methods; interface is purely a contract (until Java 8 default methods).
 
 </QA>
 
 <QA question="What is an interface?">
 
-Asked in interviews.
+An interface is a contract that defines WHAT methods a class must implement without specifying HOW. Contains only method signatures (and constants). A class `implements` an interface. **Key features**: no state/fields (Java 8+ allows default methods), a class can implement MULTIPLE interfaces, enables polymorphism without inheritance. Example: `interface Sortable { compareTo(other); }` — any class implementing Sortable can be sorted. `interface Serializable {}` — marker interface. **Benefits**: loose coupling, multiple inheritance of behavior, testability (mock interfaces). Modern trend: "program to an interface, not an implementation."
 
 </QA>
 
 <QA question="What is a friend function?">
 
-Asked in interviews.
+A **friend function** (C++ concept) is a function that is NOT a member of a class but has access to its private and protected members. Declared with `friend` keyword inside the class: `class MyClass { friend void display(MyClass& obj); private: int data; };`. **Use cases**: operator overloading (e.g., `<<` for cout), utility functions that need internal access, two classes that need tight cooperation. **Caution**: breaks encapsulation — use sparingly. Friend functions are not inherited by child classes. Java and Python don't have friend functions — they use package-private access or name mangling instead.
 
 </QA>
 
 <QA question="What is a ternary operator?">
 
-Asked in interviews.
+The ternary operator (`? :`) is a concise conditional expression: `condition ? valueIfTrue : valueIfFalse`. Example: `let status = age >= 18 ? "adult" : "minor"`. Equivalent to: `if (age >= 18) status = "adult"; else status = "minor";`. **Benefits**: concise for simple conditions, can be used inline (in return statements, assignments, template literals). **Nested** (avoid): `a ? b : (c ? d : e)` — hard to read. **Best practice**: use for simple conditions with short expressions. Use if-else for complex logic, side effects, or multiple statements. Available in most languages: Java, C++, JavaScript, Python (`value_if_true if condition else value_if_false`).
 
 </QA>
 
 <QA question="What is an exception and how is exception handling done?">
 
-Asked in interviews.
+An **exception** is an event that disrupts normal program flow — a runtime error (division by zero, null pointer, file not found). **Exception handling** uses try-catch blocks: `try { riskyCode(); } catch (SpecificError e) { handleError(e); } finally { cleanup(); }`. **Hierarchy** (Java): `Throwable` → `Error` (unrecoverable: OutOfMemoryError) and `Exception` → `Checked` (must handle: IOException) and `Unchecked/Runtime` (NullPointerException). **Best practices**: catch specific exceptions (not generic), don't swallow exceptions silently, use custom exceptions for domain errors, throw early and catch late, use finally/try-with-resources for cleanup.
 
 </QA>
 
 <QA question="What is garbage collection in OOP?">
 
-Asked in interviews.
+Garbage Collection (GC) automatically frees memory occupied by objects that are no longer reachable/referenced by the program. **How it works**: GC identifies unreachable objects (no references pointing to them), reclaims their memory, and compacts the heap. **Algorithms**: Reference Counting (simple, can't handle cycles), Mark-and-Sweep (marks reachable objects, sweeps unmarked), Generational (young/old gen — most objects die young). **Languages**: Java (JVM GC), Python (reference counting + cyclic GC), C# (.NET GC), JavaScript (V8 GC). **Not in C/C++** — manual memory management (malloc/free, new/delete). GC prevents memory leaks but can cause unpredictable pauses (stop-the-world).
 
 </QA>
 
 <QA question="What is method resolution order (MRO)?">
 
-Asked in interviews.
+MRO determines the order in which methods are searched in the class hierarchy when a method is called — especially important with multiple inheritance. **Python** uses **C3 Linearization** algorithm: `class D(B, C)` → MRO might be D → B → C → A. Check with `D.__mro__` or `D.mro()`. **Rules**: child before parent, order of parents preserved, common ancestor last. **C++**: uses virtual inheritance to resolve diamond problem. **Java**: no multiple class inheritance — uses interfaces, so MRO is simple (class chain + interfaces). MRO prevents ambiguity: when Dog inherits from both Pet and Animal, MRO determines which `sound()` to call.
 
 </QA>
 
 <QA question="What is a template?">
 
-Asked in interviews.
+Templates (C++) or Generics (Java, C#, TypeScript) allow writing code that works with ANY data type without sacrificing type safety. **C++ template**: `templatetypename T T max(T a, T b) { return (a > b) ? a : b; }` — works for int, double, string. **Java generic**: `class BoxT { T value; T get() { return value; } }` → `BoxString`, `BoxInteger`. **Benefits**: code reuse without duplication, type safety at compile time (vs void*/Object which lose type info), no runtime casting needed. **Examples**: `std::vectorint`, `ListString`, `Map<K, V>`, `PromiseT`. Templates are resolved at compile time (C++) or use type erasure (Java).
+
+</QA>
+
+## OOPs (from InterviewBit)
+
+<QA question="What is the need for OOPs?">
+
+Procedural programming becomes unmanageable as systems grow — global data is insecure, functions are hard to reuse, and changes cascade unpredictably. OOP addresses these issues: 1) **Encapsulation** protects data integrity. 2) **Inheritance** enables code reuse without copy-paste. 3) **Polymorphism** allows extensibility without modifying existing code. 4) **Abstraction** manages complexity by hiding details. 5) **Modularity** enables parallel development by teams. 6) Real-world modeling feels natural. 7) Design patterns provide proven solutions. Software engineering shifted to OOP because it makes large, complex systems maintainable and scalable.
+
+</QA>
+
+<QA question="What are some advantages of using OOPs?">
+
+1) **Modularity** — self-contained objects reduce complexity. 2) **Reusability** — inheritance + composition = reuse without rewrite. 3) **Flexibility** — polymorphism enables changing behavior without modifying code. 4) **Maintainability** — encapsulated changes don't ripple. 5) **Security** — access modifiers protect data. 6) **Scalability** — independent components scale independently. 7) **Testability** — interfaces enable mocking and unit testing. 8) **Real-world mapping** — natural modeling reduces cognitive gap. 9) **Design patterns** — proven solutions to recurring problems. 10) **Team productivity** — clear interfaces allow parallel development.
+
+</QA>
+
+<QA question="What are access specifiers and what is their significance?">
+
+Access specifiers control visibility: **Public** — accessible everywhere. **Private** — accessible only within the declaring class. **Protected** — accessible within the class and subclasses. **Default/Package** (Java) — accessible within the same package. **Significance**: enforce encapsulation (prevent unauthorized access), define clear public APIs, minimize dependencies between classes, enable internal implementation changes without breaking external code. **Best practice**: make everything as restrictive as possible (private first), only widen access when necessary.
+
+</QA>
+
+<QA question="Are there any limitations of Inheritance?">
+
+1) **Tight coupling** — child is tightly bound to parent; parent changes can break children. 2) **Fragile base class problem** — modifying base class may unintentionally affect subclasses. 3) **Single inheritance limitation** — most languages (Java, C#) allow inheriting from only one class. 4) **Increased complexity** — deep hierarchies are hard to understand and debug. 5) **Exposes internals** — child can access protected members, weakening encapsulation. 6) **Not always natural** — some relationships are better modeled with composition (HAS-A) than inheritance (IS-A). **Best practice**: "Favor composition over inheritance" (Gang of Four).
+
+</QA>
+
+<QA question="What are the various types of inheritance?">
+
+1) **Single**: `B extends A` — one parent, one child. 2) **Multilevel**: `C extends B extends A` — chain of inheritance. 3) **Hierarchical**: `B extends A`, `C extends A` — multiple children, one parent. 4) **Multiple**: `C extends A, B` — one child, multiple parents. Supported in C++, Python; Java uses interfaces instead. 5) **Hybrid**: combination of multiple types. **Diamond Problem**: `D extends B, C` where both B and C extend A — which A's method does D use? Solved by: virtual inheritance (C++), interface-based inheritance (Java), C3 linearization / MRO (Python).
+
+</QA>
+
+<QA question="What is the difference between overloading and overriding?">
+
+**Overloading**: same method name, DIFFERENT parameter types/count, in the SAME class. Resolved at compile time (static polymorphism). `calculate(int)` and `calculate(int, int)`. Can differ in return type only if parameters differ. **Overriding**: same method name AND same parameters, in PARENT and CHILD classes. Resolved at runtime (dynamic polymorphism). `@Override void draw()` in child replaces parent's `draw()`. Requires inheritance. Cannot reduce the access modifier. The overridden method can call parent's version with `super.draw()`.
+
+</QA>
+
+<QA question="How is data abstraction accomplished?">
+
+Data abstraction is accomplished through: 1) **Abstract classes** — define abstract methods (no body) that subclasses must implement. Can contain concrete methods too. Used for IS-A relationships. 2) **Interfaces** — pure contract defining method signatures. Class implements the interface. Used for capability contracts. 3) **Access modifiers** — hide internal implementation (private fields), expose only necessary public methods. 4) **Header files** (C/C++) — declare function signatures without exposing implementation. The key idea: separate WHAT (public interface) from HOW (private implementation). Users interact with the abstraction without knowing implementation details.
+
+</QA>
+
+<QA question="How is an abstract class different from an interface?">
+
+**Abstract class**: can have constructors, instance fields, concrete methods, and abstract methods. Single inheritance only. Represents IS-A relationship. Used when classes share common code. **Interface**: no constructors, no instance fields (Java 8+ allows default methods and static methods). Multiple implementation allowed. Represents CAN-DO capability. Used for contracts. **Java 8+ blur**: interfaces can now have default and static methods. **Key decision**: if subclasses share significant code → abstract class. If unrelated classes need the same capability → interface. **Modern best practice**: prefer interfaces for flexibility, abstract classes for shared implementation.
+
+</QA>
+
+<QA question="What is meant by exception handling?">
+
+Exception handling is a mechanism to gracefully handle runtime errors without crashing the program. **Structure**: `try` (code that might throw), `catch` (handle specific exceptions), `finally` (cleanup that always runs), `throw` (raise an exception). **Example**: `try { file.read(); } catch (FileNotFoundException e) { log(e); useDefault(); } finally { file.close(); }`. **Best practices**: handle specific exceptions, don't use exceptions for control flow, throw custom exceptions for business errors (`InsufficientFundsException`), always clean up resources, log exceptions with context for debugging.
+
+</QA>
+
+<QA question="What is meant by Garbage Collection in OOPs world?">
+
+Garbage Collection (GC) automatically reclaims memory from objects that are no longer referenced by the program. **How it works**: the GC identifies objects with no reachable references, marks them for collection, and frees their memory. **Types**: Reference Counting (track reference count per object, free when 0 — can't handle circular references), Mark-and-Sweep (traverse from roots, mark reachable, sweep unmarked), Generational (divide heap into young/old generations — most objects die young). **Languages with GC**: Java, Python, C#, JavaScript, Go. **Without GC**: C, C++ (manual memory management). GC eliminates most memory leaks but may cause pause times.
+
+</QA>
+
+<QA question="What is Compile time Polymorphism and how is it different from Runtime Polymorphism?">
+
+**Compile-time**: method to call is resolved by the compiler before execution. Achieved through method OVERLOADING (same name, different parameters) and operator overloading. Faster execution (direct call). **Runtime**: method to call is resolved during execution based on the actual object type. Achieved through method OVERRIDING (child redefines parent's method). `Animal a = new Dog(); a.speak()` → resovled at runtime to Dog's speak(). Uses vtable/dynamic dispatch. Slightly slower (indirect lookup). **Key difference**: compile-time uses static binding (fixed at compile); runtime uses dynamic binding (determined at execution). Runtime polymorphism is the foundation of extensible, pluggable designs.
+
+</QA>
+
+<QA question="What is encapsulation?">
+
+Encapsulation wraps data (fields) and methods (behavior) into a single unit (class) and restricts direct access to internal state. **Implementation**: use `private` fields with `public` getter/setter methods. **Example**: `class Temperature { private celsius; setCelsius(c) { if (c >= -273.15) this.celsius = c; } getCelsius() { return this.celsius; } getFahrenheit() { return celsius * 9/5 + 32; } }`. External code can't set invalid values. **Benefits**: data validation, change internal representation without affecting users, reduced coupling, improved security. It's the most practical of OOP's four pillars — used in every well-designed class.
+
+</QA>
+
+<QA question="How much memory does a class occupy?">
+
+A **class definition itself** doesn't occupy memory for instances — it's just a blueprint stored once in the method area (Java) or code segment. Memory is allocated when you create **objects** (instances). Each object occupies: **instance variables** (fields) + **object header** (metadata: class pointer, hash code, GC info, lock). In Java, object header is typically 12-16 bytes. References are 4 bytes (compressed) or 8 bytes. Memory is aligned to 8-byte boundaries. A class with no instance fields still occupies ~16 bytes per object (header + padding). **Static members** are stored once, not per-object.
+
+</QA>
+
+<QA question="What are the various types of constructors in C++?">
+
+1) **Default Constructor**: no parameters. `MyClass() { }`. Compiler-generated if none defined. 2) **Parameterized Constructor**: accepts arguments. `MyClass(int x, string s) { }`. 3) **Copy Constructor**: initializes from another object. `MyClass(const MyClass& other) { }`. Default does shallow copy. 4) **Move Constructor** (C++11): transfers resources from a temporary. `MyClass(MyClass&& other) noexcept { }`. Avoids expensive copies. 5) **Delegating Constructor** (C++11): one constructor calls another. `MyClass(int x) : MyClass(x, "default") { }`. 6) **Converting Constructor**: single argument, allows implicit conversion. Prevent with `explicit` keyword.
+
+</QA>
+
+<QA question="What is a copy constructor?">
+
+A copy constructor creates a new object as a copy of an existing object. **C++ syntax**: `MyClass(const MyClass& other)`. Called when: passing by value, returning by value, initializing with `=` (`MyClass b = a;`). **Shallow copy** (default): copies values including pointer addresses — both objects point to same memory (dangerous). **Deep copy** (manual): creates new copies of dynamically allocated data. Example: `MyClass(const MyClass& other) { data = new int(*other.data); }`. **Rule of Three** (C++): if you define a copy constructor, also define destructor and copy assignment operator. **Rule of Five** adds move constructor and move assignment.
+
+</QA>
+
+<QA question="What is a destructor?">
+
+A destructor cleans up resources when an object is destroyed. **C++**: `~ClassName() { delete[] buffer; fclose(file); }`. Called automatically when: object goes out of scope, `delete` is used, program exits. **Virtual destructor**: always make base class destructor virtual if using inheritance — prevents resource leaks when deleting through base pointer: `virtual ~Base() {}`. **Java/C#**: no destructors — use garbage collection. Java has `try-with-resources` + `AutoCloseable`; C# has `IDisposable` + `using`. **Python**: `__del__()` exists but unreliable — use context managers (`with`). **RAII** (C++): tie resource lifetime to object lifetime — the gold standard for resource management.
+
+</QA>
+
+<QA question="Are class and structure the same? If not, what's the difference?">
+
+**In C++**: nearly identical, but class members default to **private**, struct members default to **public**. Both support inheritance, methods, constructors. Convention: struct for simple data (POD), class for complex objects. **In C#**: class is **reference type** (heap, passed by reference); struct is **value type** (stack, passed by copy). Structs can't inherit other structs/classes. Use struct for small, immutable data (Point, Color). **In C**: struct is just a data container — no methods, no access control, no inheritance. **In Java/Python/JS**: no struct — only class. Each language has its own semantics around this distinction.
 
 </QA>

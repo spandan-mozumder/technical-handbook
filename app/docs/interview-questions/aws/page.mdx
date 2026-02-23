@@ -12,121 +12,121 @@ Lambda: event-driven, short tasks (under 15min), variable traffic, pay-per-use. 
 
 <QA question="What is AWS and which services are you most familiar with?">
 
-Asked in interviews.
+AWS (Amazon Web Services) is the world's largest cloud platform offering 200+ services. Core services include: **Compute** (EC2, Lambda, ECS), **Storage** (S3, EBS, EFS), **Database** (RDS, DynamoDB, ElastiCache), **Networking** (VPC, Route 53, CloudFront), **Security** (IAM, KMS, WAF), and **Developer Tools** (CodePipeline, CloudFormation). Most teams rely heavily on EC2/Lambda for compute, S3 for storage, RDS/DynamoDB for databases, and CloudWatch for monitoring.
 
 </QA>
 
 <QA question="Describe the global architecture of AWS (Regions, Availability Zones).">
 
-Asked in interviews.
+AWS is organized into **Regions** (30+ geographic areas like us-east-1, ap-south-1), each containing **Availability Zones** (2-6 isolated data centers with independent power, cooling, networking). AZs within a region are connected via low-latency (under 2ms) private fiber. **Edge Locations** (400+) serve CloudFront CDN content. Deploy across multiple AZs for high availability; across regions for disaster recovery. Each region is fully independent — data doesn't replicate between regions unless you configure it.
 
 </QA>
 
 <QA question="How have you implemented Autoscaling groups with a Load Balancer?">
 
-Asked in interviews.
+Create a **Launch Template** specifying AMI, instance type, security groups, and user data script. Create an **Auto Scaling Group (ASG)** referencing the template with min/max/desired capacity. Attach an **Application Load Balancer (ALB)** with a target group pointing to the ASG. Configure **scaling policies**: target tracking (e.g., keep CPU at 60%), step scaling, or scheduled scaling. The ALB health check ensures unhealthy instances are replaced. ASG handles launching/terminating instances; ALB distributes traffic only to healthy targets.
 
 </QA>
 
 <QA question="What are the differences between AWS Lambda and AWS Glue?">
 
-Asked in interviews.
+**Lambda**: general-purpose serverless compute — runs any code in response to events (API calls, S3 uploads, SQS messages). 15-minute timeout, 10GB memory max. **AWS Glue**: purpose-built serverless ETL (Extract, Transform, Load) service — crawls data sources, generates schema catalog, runs Spark/Python ETL jobs on large datasets. Use Lambda for lightweight event-driven tasks; use Glue for heavy data transformation, catalog management, and batch ETL pipelines working with S3, Redshift, or RDS.
 
 </QA>
 
 <QA question="Can you explain the foundational services of Amazon Web Services (EC2, S3, RDS)?">
 
-Asked in interviews.
+**EC2** (Elastic Compute Cloud): virtual servers in the cloud. Choose instance type (CPU, memory, GPU), OS, and storage. Supports auto-scaling and load balancing. **S3** (Simple Storage Service): object storage with 99.999999999% (11 nines) durability. Store unlimited files up to 5TB each. Supports versioning, lifecycle policies, encryption, and static website hosting. **RDS** (Relational Database Service): managed SQL databases (MySQL, PostgreSQL, Oracle, SQL Server, Aurora). Handles backups, patching, replication, failover automatically. Multi-AZ for HA, read replicas for read scaling.
 
 </QA>
 
 <QA question="What is the AWS equivalent of Azure Data Factory or similar tools?">
 
-Asked in interviews.
+**AWS Glue** is the closest equivalent — both are managed ETL services for data pipelines. Additional AWS alternatives: **AWS Step Functions** (workflow orchestration, like ADF pipelines), **Amazon MWAA** (Managed Apache Airflow — complex DAG-based workflows), **AWS Data Pipeline** (older, simpler ETL service), and **Amazon EMR** (managed Hadoop/Spark for big data processing). For real-time streaming, use **Amazon Kinesis** (equivalent to Azure Stream Analytics).
 
 </QA>
 
 <QA question="In what scenarios should you choose AWS Lambda over EC2?">
 
-Asked in interviews.
+Choose Lambda when: 1) **Event-driven** — responding to S3 uploads, API Gateway requests, DynamoDB streams. 2) **Intermittent traffic** — pay only when code runs, not for idle time. 3) **Quick tasks** — execution under 15 minutes. 4) **No server management** — zero ops overhead. 5) **Auto-scaling built-in** — from 0 to thousands of concurrent executions instantly. Avoid Lambda when you need: persistent connections (WebSockets), long-running processes, GPU access, or predictable high-volume workloads (EC2 Reserved Instances are cheaper at scale).
 
 </QA>
 
 <QA question="Explain the features and storage classes of Amazon S3.">
 
-Asked in interviews.
+**Features**: unlimited storage, 99.999999999% durability, versioning, lifecycle policies, encryption (SSE-S3, SSE-KMS), cross-region replication, event notifications, static website hosting, pre-signed URLs. **Storage Classes**: 1) **S3 Standard** — frequent access, low latency. 2) **S3 Intelligent-Tiering** — auto-moves objects between tiers. 3) **S3 Standard-IA** — infrequent access, lower cost, retrieval fee. 4) **S3 One Zone-IA** — single AZ, cheaper. 5) **S3 Glacier Instant** — archive with millisecond retrieval. 6) **S3 Glacier Flexible** — archive, minutes-to-hours retrieval. 7) **S3 Glacier Deep Archive** — cheapest, 12-hour retrieval.
 
 </QA>
 
 <QA question="What are the core responsibilities of an AWS Administrator?">
 
-Asked in interviews.
+1) **Infrastructure management** — provision and manage EC2, VPC, S3, RDS resources. 2) **Security** — configure IAM policies, security groups, encryption, MFA, audit with CloudTrail. 3) **Monitoring** — set up CloudWatch alarms, dashboards, log analysis. 4) **Cost optimization** — right-sizing instances, Reserved Instances, spot usage, S3 lifecycle policies. 5) **Backup & DR** — automated backups, cross-region replication, disaster recovery plans. 6) **Networking** — VPC design, subnets, route tables, VPN/Direct Connect. 7) **Automation** — CloudFormation/Terraform for IaC, Lambda for automation scripts.
 
 </QA>
 
 <QA question="Definition of Cloud Computing and the service models (IaaS, PaaS, SaaS) in AWS.">
 
-Asked in interviews.
+**Cloud Computing**: on-demand delivery of compute, storage, and networking over the internet with pay-as-you-go pricing. **IaaS** (Infrastructure as a Service): you manage OS upward — EC2, VPC, EBS. Maximum control, most management overhead. **PaaS** (Platform as a Service): you manage application and data — Elastic Beanstalk, RDS, Lambda. Cloud manages infrastructure. **SaaS** (Software as a Service): fully managed applications — Amazon WorkMail, Chime, QuickSight. You just use the software. AWS spans all three models; most teams use a mix.
 
 </QA>
 
 <QA question="Explain the difference between EBS (Elastic Block Store) and S3.">
 
-Asked in interviews.
+**EBS**: block storage attached to a single EC2 instance (like a hard drive). Low-latency, high IOPS, supports file systems. Ideal for databases, OS volumes. Cannot be accessed directly over the internet. Provisioned in a single AZ. **S3**: object storage accessed via HTTP API. Stores files as objects with metadata. Unlimited capacity, 11 nines durability. Ideal for backups, static assets, data lakes. Accessible from anywhere with proper permissions. EBS is for compute-attached workloads; S3 is for standalone storage and sharing.
 
 </QA>
 
 <QA question="What is an IAM role and how is it different from an IAM user?">
 
-Asked in interviews.
+**IAM User**: a permanent identity with long-term credentials (access keys, password) for a specific person or application. **IAM Role**: a temporary identity that can be assumed by users, services, or applications. No permanent credentials — provides temporary security tokens via STS. Key differences: roles are assumed (not logged into), provide temporary credentials (auto-rotate), and can be used by AWS services (e.g., EC2 instance role, Lambda execution role). Best practice: use roles over users for services; use roles for cross-account access.
 
 </QA>
 
 <QA question="Describe a VPC (Virtual Private Cloud) and its components (Subnets, Route Tables, IGW).">
 
-Asked in interviews.
+A **VPC** is your isolated virtual network in AWS with a defined CIDR block (e.g., 10.0.0.0/16). **Subnets**: subdivisions of VPC CIDR within a single AZ — public subnets (have route to Internet Gateway) and private subnets (no direct internet access). **Route Tables**: rules determining where traffic is directed — each subnet associates with one. **Internet Gateway (IGW)**: allows public subnet resources to communicate with the internet. **NAT Gateway**: allows private subnet resources to access the internet (outbound only). **Security Groups**: instance-level firewalls. **NACLs**: subnet-level firewalls.
 
 </QA>
 
 <QA question="What is Amazon Route 53 and what are its routing policies?">
 
-Asked in interviews.
+Route 53 is AWS's scalable DNS service. **Routing policies**: 1) **Simple** — single resource, no health checks. 2) **Weighted** — distribute traffic by percentage (e.g., 70/30 for A/B testing). 3) **Latency-based** — route to the region with lowest latency. 4) **Failover** — active-passive; routes to standby if primary fails health check. 5) **Geolocation** — route based on user's geographic location. 6) **Geoproximity** — route based on geographic distance with bias. 7) **Multi-value answer** — returns multiple healthy IPs (simple load balancing). Supports domain registration, DNS hosting, and health checking.
 
 </QA>
 
 <QA question="What is the difference between EBS and EFS (Elastic File System)?">
 
-Asked in interviews.
+**EBS**: block storage attached to a single EC2 instance in one AZ. High performance (up to 256K IOPS with io2). Must snapshot to move across AZs. Like a dedicated hard drive. **EFS**: managed NFS file system that can be mounted by multiple EC2 instances simultaneously across AZs. Auto-scales capacity. Lower IOPS than EBS but shared access. Use EBS for single-instance databases and boot volumes. Use EFS for shared application data, CMS content, home directories, or containers needing shared storage.
 
 </QA>
 
 <QA question="Explain the shared responsibility model in AWS.">
 
-Asked in interviews.
+**AWS is responsible for security OF the cloud** — physical data centers, hardware, networking, hypervisor, and managed service infrastructure. **Customer is responsible for security IN the cloud** — data encryption, IAM configuration, OS patching (on EC2), network/firewall rules, application code security. The line shifts by service type: with EC2 (IaaS), you manage everything from OS up; with RDS (PaaS), AWS manages OS/patching; with Lambda (serverless), AWS manages almost everything; you just manage code and IAM.
 
 </QA>
 
 <QA question="What is AWS CloudFormation and how does it support Infrastructure as Code?">
 
-Asked in interviews.
+CloudFormation lets you define AWS infrastructure in JSON/YAML templates and provision it automatically. **IaC benefits**: 1) **Version control** — templates stored in Git, reviewed like code. 2) **Reproducibility** — create identical environments (dev/staging/prod) from same template. 3) **Drift detection** — identify manual changes. 4) **Rollback** — automatic rollback on failed deployments. 5) **Dependency management** — CloudFormation handles resource creation order. A template defines resources (EC2, RDS, S3, IAM), parameters (configurable inputs), outputs (exported values), and mappings. Stacks can be nested for modularity.
 
 </QA>
 
 <QA question="Explain the purpose of AWS CloudWatch and CloudTrail.">
 
-Asked in interviews.
+**CloudWatch**: monitoring and observability service. Collects metrics (CPU, memory, custom), creates alarms (SNS notifications), stores logs (application, flow logs), creates dashboards. Supports anomaly detection and contributor insights. Use for operational monitoring. **CloudTrail**: governance and audit service. Records ALL API calls made in your AWS account — who did what, when, from where. Logs to S3, queryable via Athena. Essential for security audits, compliance, and incident investigation. CloudWatch = "what's happening now"; CloudTrail = "what happened and who did it."
 
 </QA>
 
 <QA question="What is a NAT Gateway and why is it used in private subnets?">
 
-Asked in interviews.
+A **NAT (Network Address Translation) Gateway** enables instances in private subnets to access the internet (for software updates, API calls) while preventing inbound connections from the internet. It sits in a public subnet, has an Elastic IP, and translates private IPs to its public IP for outbound traffic. Private subnet route table: `0.0.0.0/0 → NAT Gateway`. This maintains security — instances aren't directly reachable from the internet. NAT Gateway is managed, highly available within an AZ (deploy one per AZ for HA), and scales automatically up to 45 Gbps.
 
 </QA>
 
 <QA question="How does AWS Shield and WAF provide security?">
 
-Asked in interviews.
+**AWS Shield**: DDoS protection. Shield Standard (free, automatic) protects against common L3/L4 attacks. Shield Advanced (paid) adds enhanced detection, 24/7 DDoS Response Team, cost protection during attacks, real-time metrics. **AWS WAF** (Web Application Firewall): protects against L7 attacks. Define rules to block/allow traffic based on: IP addresses, HTTP headers, request body, URI strings, SQL injection patterns, XSS patterns. Integrates with CloudFront, ALB, API Gateway. Use WAF for application-layer attacks (OWASP Top 10); Shield for volumetric/network-layer DDoS.
 
 </QA>
 
@@ -159,5 +159,115 @@ S3: object storage (files, images, backups, static sites). EBS: block storage at
 <QA question="Security Groups vs Network ACLs?">
 
 Security Groups: instance-level firewall, stateful (return traffic auto-allowed), allow rules only. NACLs: subnet-level firewall, stateless (must allow return traffic explicitly), allow AND deny rules. Use SGs for instance control, NACLs for subnet-level defense in depth.
+
+</QA>
+
+## AWS (from InterviewBit)
+
+<QA question="What is SnowBall in AWS?">
+
+AWS Snowball is a petabyte-scale data transport solution that uses physical devices to transfer large amounts of data into and out of AWS. A Snowball device (50TB or 80TB) is shipped to you, you load your data, and ship it back to AWS where it's uploaded to S3. **Use cases**: migrating large datasets to cloud (faster than internet transfer), disaster recovery, data center decommission. Snowball Edge adds compute capability for local processing. AWS Snowmobile is a 100PB truck-sized container for exabyte-scale transfers.
+
+</QA>
+
+<QA question="What is CloudWatch?">
+
+Amazon CloudWatch is AWS's monitoring and observability service. It collects and tracks **metrics** (CPU, network, custom metrics), collects and monitors **log files**, sets **alarms** that trigger actions (SNS, Auto Scaling, Lambda), and provides **dashboards** for visualization. Key features: CloudWatch Logs (centralized logging), CloudWatch Events/EventBridge (react to AWS resource changes), CloudWatch Insights (query logs), Synthetics (canary monitoring), and Container Insights (ECS/EKS monitoring). Essential for operational health and performance monitoring.
+
+</QA>
+
+<QA question="What is Elastic Transcoder?">
+
+Amazon Elastic Transcoder is a cloud-based media transcoding service. It converts media files from their source format into versions that will play on devices like smartphones, tablets, and PCs. You create a **pipeline** (input S3 bucket → transcoding → output S3 bucket), define **presets** (output format, codec, resolution, bitrate), and create **jobs**. It supports HLS for adaptive bitrate streaming. Pay only for the duration of content transcoded. Note: AWS now recommends **MediaConvert** as the newer, more feature-rich alternative for video processing workflows.
+
+</QA>
+
+<QA question="What are the Storage Classes available in Amazon S3?">
+
+1) **S3 Standard** — frequent access, multi-AZ, lowest latency. 2) **S3 Intelligent-Tiering** — auto-moves objects between access tiers based on usage patterns. 3) **S3 Standard-IA** (Infrequent Access) — cheaper storage, retrieval fee, multi-AZ. 4) **S3 One Zone-IA** — single AZ, 20% cheaper than Standard-IA. 5) **S3 Glacier Instant Retrieval** — archive with millisecond access. 6) **S3 Glacier Flexible Retrieval** — minutes to 12-hour retrieval. 7) **S3 Glacier Deep Archive** — cheapest, 12-48 hour retrieval. Use lifecycle policies to automatically transition objects between classes.
+
+</QA>
+
+<QA question="Explain what T2 instances are.">
+
+T2 instances are **burstable performance** EC2 instances designed for workloads that don't need consistently high CPU but occasionally need to burst. They earn **CPU credits** when idle and spend credits when bursting above baseline. **Baseline**: T2.micro = 10% CPU, T2.small = 20%. When credits are exhausted, performance is throttled to baseline. Cost-effective for: dev/test environments, small web servers, microservices, code repositories. T3 instances are the newer generation with better pricing, unlimited burst mode (pay for extra CPU), and Nitro hypervisor.
+
+</QA>
+
+<QA question="What are Key-Pairs in AWS?">
+
+Key pairs are used for secure SSH access to EC2 instances. A key pair consists of a **public key** (stored by AWS on the instance) and a **private key** (downloaded by you, stored securely locally — `.pem` file). When you SSH to an instance, the private key authenticates you against the public key. AWS never stores your private key — if lost, you cannot recover it. Best practices: use different key pairs per environment, rotate regularly, use AWS Systems Manager Session Manager as an alternative (no SSH keys needed, auditable via CloudTrail).
+
+</QA>
+
+<QA question="How does Amazon Route 53 provide high availability and low latency?">
+
+**High availability**: Route 53 runs on AWS's globally distributed DNS servers with a 100% availability SLA. Health checks monitor endpoints every 10-30 seconds and automatically remove unhealthy records from DNS responses. Failover routing routes traffic to standby resources. **Low latency**: Route 53 uses a global anycast network — DNS queries are answered by the nearest edge location. Latency-based routing directs users to the AWS region with lowest network latency. DNS TTL caching reduces repeat lookups. Alias records resolve within AWS without extra DNS hops.
+
+</QA>
+
+<QA question="What does AMI include?">
+
+An **AMI (Amazon Machine Image)** is a template for creating EC2 instances. It includes: 1) **Root volume template** — OS, application server, applications. 2) **Launch permissions** — which AWS accounts can use the AMI. 3) **Block device mapping** — specifies EBS volumes to attach at launch. AMIs can be public, shared with specific accounts, or private. You can create custom AMIs from existing instances (snapshot approach) for consistent deployments. AMIs are region-specific but can be copied across regions. AWS Marketplace offers pre-built AMIs with licensed software.
+
+</QA>
+
+<QA question="What are the different types of Instances?">
+
+EC2 instance families: 1) **General Purpose** (T3, M5) — balanced compute/memory/networking, web servers. 2) **Compute Optimized** (C5, C6g) — high-performance processors, batch processing, ML inference. 3) **Memory Optimized** (R5, X1) — large in-memory datasets, databases, Redis. 4) **Storage Optimized** (I3, D2) — high sequential read/write, data warehouses, HDFS. 5) **Accelerated Computing** (P4, G5, Inf1) — GPUs/FPGAs for ML training, video rendering, HPC. Instance name format: `m5.xlarge` = family(m) + generation(5) + size(xlarge).
+
+</QA>
+
+<QA question="What is the relation between the Availability Zone and Region?">
+
+A **Region** is a geographic area (e.g., us-east-1 = N. Virginia) containing multiple **Availability Zones**. Each AZ is one or more discrete data centers with independent power, cooling, and networking. AZs within a region are connected via low-latency (under 2ms) private links. Typically 3-6 AZs per region. AZ naming is randomized per account (your us-east-1a may map to a different physical location than another account's us-east-1a). Deploy across AZs for high availability — if one AZ fails, others continue operating. Deploy across regions for disaster recovery and low-latency global access.
+
+</QA>
+
+<QA question="How do you monitor Amazon VPC?">
+
+1) **VPC Flow Logs** — capture IP traffic going to/from network interfaces. Publish to CloudWatch Logs or S3. Shows accepted/rejected traffic, source/destination IPs, ports. 2) **CloudWatch Metrics** — NAT Gateway bytes, packets, connections, errors. 3) **CloudTrail** — logs all VPC API calls (CreateVpc, ModifySubnet, etc.) for audit. 4) **Traffic Mirroring** — copy network traffic for deep packet inspection. 5) **AWS Network Firewall** — stateful inspection logging. 6) **Reachability Analyzer** — tests connectivity between resources without sending packets. 7) **VPC Network Access Analyzer** — identifies unintended network access.
+
+</QA>
+
+<QA question="What are the different types of EC2 instances based on their costs?">
+
+1) **On-Demand** — pay by the second/hour, no commitment, full flexibility. Most expensive but simplest. 2) **Reserved Instances** — 1 or 3-year commitment, up to 72% discount. Standard (fixed instance type) or Convertible (can change type). 3) **Spot Instances** — bid on unused capacity, up to 90% discount. Can be interrupted with 2-min notice. Good for fault-tolerant workloads. 4) **Savings Plans** — commit to $/hour usage for 1-3 years, flexible across instance families. 5) **Dedicated Hosts** — physical server dedicated to you, for compliance/licensing requirements.
+
+</QA>
+
+<QA question="What is Geo-Targeting in CloudFront?">
+
+Geo-targeting (geo-restriction) in CloudFront lets you control which countries can access your content. Two modes: **Allowlist** — only specified countries can access; **Denylist** — all countries except specified ones can access. CloudFront uses a GeoIP database to determine the viewer's location from their IP address. When a restricted user requests content, CloudFront returns a 403 Forbidden. Use cases: licensing agreements (streaming content available only in certain regions), regulatory compliance (data residency), or blocking traffic from high-risk countries.
+
+</QA>
+
+<QA question="What are the advantages of AWS IAM?">
+
+1) **Granular permissions** — control access at the API action and resource level. 2) **Free** — IAM is included at no additional cost. 3) **Multi-factor authentication (MFA)** — extra security layer for sensitive operations. 4) **Identity federation** — integrate with corporate directories (SAML, OIDC). 5) **Temporary credentials** — STS provides short-lived tokens via roles. 6) **Policy conditions** — restrict access by IP, time, MFA status, tags. 7) **Service control policies** — organizational-level guardrails. 8) **Access Analyzer** — automatically identifies resources shared externally. 9) **Credential reports** — audit user access keys and passwords.
+
+</QA>
+
+<QA question="What are Spot Instances and On-Demand Instances?">
+
+**On-Demand**: pay by the second with no long-term commitment. Guaranteed availability once launched. Use for unpredictable workloads, development, or applications that can't be interrupted. **Spot Instances**: request unused EC2 capacity at up to 90% discount. AWS can reclaim with 2-minute notice when capacity is needed. Use for stateless, fault-tolerant workloads: batch processing, data analysis, CI/CD builds, containerized microservices, testing. Strategies: diversify across instance types/AZs, use Spot Fleet for automatic replacement, combine with On-Demand for a base + burst model.
+
+</QA>
+
+<QA question="What is a Stateful and a Stateless Firewall?">
+
+**Stateful firewall** (e.g., AWS Security Groups): tracks the state of network connections. If you allow inbound traffic on port 80, the return traffic is automatically allowed without a separate outbound rule. Remembers the conversation. **Stateless firewall** (e.g., AWS NACLs): evaluates each packet independently without connection context. You must explicitly allow both inbound AND outbound traffic (including ephemeral port range for return traffic). Stateful is easier to manage; stateless gives more granular control but requires more rules. In AWS, use Security Groups (stateful) as primary defense and NACLs (stateless) as secondary.
+
+</QA>
+
+<QA question="What is an Instance Store Volume and an EBS Volume?">
+
+**Instance Store**: physically attached to the host machine. Extremely high IOPS (millions), lowest latency. Data is **ephemeral** — lost when instance stops, restarts, or terminates. No cost beyond instance price. Use for temporary data, buffers, caches, scratch data. **EBS**: network-attached block storage. Data persists independently of instance lifecycle. Supports snapshots, encryption, different volume types (gp3, io2, st1). Can be detached and reattached to another instance (same AZ). Use for databases, OS volumes, any data that must persist. EBS is slightly higher latency due to network but is durable.
+
+</QA>
+
+<QA question="What is the use of lifecycle hooks in Autoscaling?">
+
+Lifecycle hooks pause an EC2 instance during Auto Scaling launch or terminate events, giving you time to perform custom actions. **Launch hook**: instance enters `Pending:Wait` state — use for bootstrapping, pulling config from S3, registering with a service discovery, running health checks. **Terminate hook**: instance enters `Terminating:Wait` state — use for deregistering from load balancer, draining connections, backing up logs, sending notifications. You complete the hook via API call or it times out (default 1 hour). Hooks integrate with EventBridge, SNS, or SQS to trigger Lambda functions or other workflows.
 
 </QA>

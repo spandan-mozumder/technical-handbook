@@ -6,121 +6,121 @@ import { QA } from "@/components/QA";
 
 <QA question="Name two technologies by which you would connect two offices in remote locations.">
 
-Asked in interviews.
+1) **VPN** (Virtual Private Network) — creates an encrypted tunnel over the public internet, connecting remote offices securely. Cost-effective, uses existing internet infrastructure. Types: site-to-site VPN (IPsec). 2) **MPLS** (Multiprotocol Label Switching) / **Leased Line** — dedicated private WAN connection between offices. Higher cost but guaranteed bandwidth, low latency, and reliability. Also: SD-WAN is a modern alternative that combines multiple connection types.
 
 </QA>
 
 <QA question="What is internetworking?">
 
-Asked in interviews.
+**Internetworking** is the process of connecting two or more distinct computer networks together to form an internetwork (e.g., the Internet). It enables communication between networks using different technologies, protocols, and architectures. Achieved through routers and gateways that translate between network protocols. The Internet Protocol (IP) is the primary protocol enabling internetworking. Key devices: routers (Layer 3), gateways.
 
 </QA>
 
 <QA question="Name the software layers (User support layers) in the OSI model.">
 
-Asked in interviews.
+The **upper layers** (user support layers) in the OSI model are: **Layer 5 — Session** (manages sessions/dialogs between applications), **Layer 6 — Presentation** (data format translation, encryption, compression), **Layer 7 — Application** (user-facing services like HTTP, FTP, SMTP, DNS). These layers handle data representation, inter-host communication, and application interfaces. They are closer to the user and further from the physical network.
 
 </QA>
 
 <QA question="Name the hardware layers (Network support layers) in the OSI model.">
 
-Asked in interviews.
+The **lower layers** (network support layers) in the OSI model are: **Layer 1 — Physical** (bits on the wire, electrical/optical signals, cables), **Layer 2 — Data Link** (frames, MAC addresses, error detection, switches), **Layer 3 — Network** (packets, IP addresses, routing, routers). These handle the actual movement of data across the network. **Layer 4 — Transport** (segments, TCP/UDP, end-to-end delivery) bridges user and network support layers.
 
 </QA>
 
 <QA question="Define the HTTPS protocol.">
 
-Asked in interviews.
+**HTTPS** (HyperText Transfer Protocol Secure) is HTTP over TLS/SSL encryption. Port 443 (vs HTTP port 80). Provides: **confidentiality** (encrypted data), **integrity** (data can't be tampered in transit), **authentication** (server identity verified via SSL/TLS certificate). The TLS handshake establishes a secure connection before data exchange. Required for sensitive data (login, payments). Google ranks HTTPS sites higher. Uses asymmetric cryptography for key exchange, symmetric for data encryption.
 
 </QA>
 
 <QA question="Name some services provided by the application layer in the Internet model.">
 
-Asked in interviews.
+Application layer services: 1) **HTTP/HTTPS** — web browsing. 2) **FTP** — file transfer. 3) **SMTP** — sending email. 4) **POP3/IMAP** — receiving email. 5) **DNS** — domain name resolution. 6) **DHCP** — dynamic IP assignment. 7) **SSH** — secure remote login. 8) **Telnet** — unsecure remote login. 9) **SNMP** — network management. 10) **NTP** — time synchronization. These protocols define how applications communicate over the network.
 
 </QA>
 
 <QA question="In which OSI layer is the header and trailer added?">
 
-Asked in interviews.
+The **Data Link Layer** (Layer 2) adds both a **header** (containing source/destination MAC addresses, protocol type) AND a **trailer** (containing Frame Check Sequence/CRC for error detection) to the data received from the Network layer. This creates a **frame**. No other layer adds a trailer — other layers only add headers during encapsulation.
 
 </QA>
 
 <QA question="What happens in the OSI model as a data packet moves from the lower to upper layers?">
 
-Asked in interviews.
+As a data packet moves from **lower to upper layers** (receiving side), **de-encapsulation** occurs. Each layer strips off (removes) its corresponding header (and trailer at Layer 2) and passes the payload to the next upper layer. Bits → Frames → Packets → Segments → Data. The process reveals the original application data by removing each layer's control information.
 
 </QA>
 
 <QA question="What happens in the OSI model as a data packet moves from the upper to lower layers?">
 
-Asked in interviews.
+As a data packet moves from **upper to lower layers** (sending side), **encapsulation** occurs. Each layer adds its own header (and Layer 2 adds a trailer) wrapping the data from the layer above. Data → Segments (Transport adds port numbers) → Packets (Network adds IP addresses) → Frames (Data Link adds MAC addresses + trailer) → Bits (Physical converts to signals). Each layer's header contains control information for that layer's protocol.
 
 </QA>
 
 <QA question="What is a zone-based firewall?">
 
-Asked in interviews.
+A **zone-based firewall** groups network interfaces into **zones** (e.g., Inside, Outside, DMZ) and applies security policies between zones rather than on individual interfaces. Traffic within the same zone is allowed by default; traffic between zones is denied unless explicitly permitted by a policy. **Benefits**: simpler configuration than per-interface ACLs, more intuitive security model, easier to manage in complex topologies. Used in Cisco IOS zone-based policy firewall (ZPF/ZBFW).
 
 </QA>
 
 <QA question="What is a server farm?">
 
-Asked in interviews.
+A **server farm** is a collection of servers in a centralized location that provides services or resources (web hosting, applications, databases). Servers are networked, share resources, and provide redundancy. **Benefits**: centralized management, load balancing across servers, high availability (if one fails, others take over), scalability (add more servers). Modern equivalent: data centers and cloud infrastructure (AWS, Azure, GCP). May include load balancers, storage arrays, and network equipment.
 
 </QA>
 
 <QA question="Name the three means of user authentication.">
 
-Asked in interviews.
+Three means of user authentication ("factors"): 1) **Something you know** — passwords, PINs, security questions. 2) **Something you have** — smart card, hardware token (YubiKey), mobile phone (TOTP app). 3) **Something you are** — biometrics (fingerprint, face recognition, iris scan, voice). **MFA** (Multi-Factor Authentication) uses two or more of these factors for stronger security. Example: password (knowledge) + TOTP code from phone (possession).
 
 </QA>
 
 <QA question="What is Confidentiality, Integrity & Availability (CIA triad)?">
 
-Asked in interviews.
+The **CIA triad** is the foundation of information security: **Confidentiality** — only authorized users can access data (achieved via encryption, access control). **Integrity** — data is accurate and hasn't been tampered with (achieved via hashing, checksums, digital signatures). **Availability** — systems and data are accessible when needed (achieved via redundancy, backups, DDoS protection). Every security measure addresses one or more of these pillars.
 
 </QA>
 
 <QA question="What is a VPN?">
 
-Asked in interviews.
+A **VPN** (Virtual Private Network) creates an encrypted tunnel over a public network (internet), allowing secure remote access to a private network. **Types**: 1) **Remote Access VPN** — individual user connects to corporate network. 2) **Site-to-Site VPN** — connects two offices/networks permanently. **Protocols**: IPsec, OpenVPN, WireGuard, L2TP. Benefits: encryption, privacy, bypass geo-restrictions, secure remote work. Encrypts all traffic between endpoints.
 
 </QA>
 
 <QA question="What is Symmetric and Asymmetric Encryption?">
 
-Asked in interviews.
+**Symmetric encryption**: same key for encryption and decryption. Fast, used for bulk data. Both parties must share the secret key securely. Examples: AES (standard), DES (legacy), ChaCha20. **Asymmetric encryption**: uses a key pair — public key (encrypt/verify) and private key (decrypt/sign). Slower but solves key distribution problem. Examples: RSA, ECC, Diffie-Hellman. In practice: asymmetric is used to exchange a symmetric key (TLS handshake), then symmetric encrypts the data.
 
 </QA>
 
 <QA question="At what layer does IPsec work?">
 
-Asked in interviews.
+**IPsec** operates at the **Network Layer** (Layer 3) of the OSI model. It secures IP packets directly, making it transparent to applications above. Works with both IPv4 and IPv6. **Protocols**: AH (Authentication Header — integrity only) and ESP (Encapsulating Security Payload — encryption + integrity). Because it operates at Layer 3, it can secure all upper-layer protocols (TCP, UDP, ICMP) without modification.
 
 </QA>
 
 <QA question="What is Tunnel mode?">
 
-Asked in interviews.
+**Tunnel mode** in IPsec encapsulates the ENTIRE original IP packet (including its header) inside a new IP packet with a new header. The original packet is encrypted completely — hiding source/destination IPs from intermediate routers. Used for **site-to-site VPNs** between gateways. Contrast with **Transport mode** which only encrypts the payload, leaving the original IP header visible — used for host-to-host communication.
 
 </QA>
 
 <QA question="Define Digital Signatures.">
 
-Asked in interviews.
+A **digital signature** is a cryptographic mechanism that provides authentication, integrity, and non-repudiation. **Process**: sender hashes the message, encrypts the hash with their private key (this is the signature). Receiver decrypts with sender's public key and compares hashes. If they match: message is authentic and unmodified. **Non-repudiation**: sender can't deny sending the message (only their private key could create the signature). Used in: SSL/TLS certificates, code signing, legal documents.
 
 </QA>
 
 <QA question="What is Authorization?">
 
-Asked in interviews.
+**Authorization** determines what an authenticated user is ALLOWED to do — their permissions, access rights, and privileges. Comes AFTER authentication (verifying identity). Example: a user is authenticated (logged in), but only authorized to read files in their own directory, not modify system files. Implementations: ACLs (Access Control Lists), RBAC (Role-Based Access Control), ABAC (Attribute-Based). OAuth handles delegated authorization. AuthZ ≠ AuthN (authentication).
 
 </QA>
 
 <QA question="What is the difference between IPS and a firewall?">
 
-Asked in interviews.
+**Firewall**: controls traffic flow based on rules (allow/deny based on IP, port, protocol). Operates at network boundary. Stateful or stateless. Prevents unauthorized access. **IPS** (Intrusion Prevention System): inspects packet CONTENTS for known attack signatures, anomalies, and malicious patterns — then blocks them. Sits inline with traffic. Key difference: firewalls filter based on headers (who can talk); IPS analyzes payload (what they're saying). IPS is deeper inspection. Modern next-gen firewalls (NGFW) include IPS functionality.
 
 </QA>
 
@@ -128,121 +128,121 @@ Asked in interviews.
 
 <QA question="What is IP Spoofing?">
 
-Asked in interviews.
+**IP Spoofing** is forging the source IP address in a packet to disguise the sender's identity or impersonate another system. Used in: **DDoS attacks** (hide attacker, amplification), **man-in-the-middle attacks**, bypassing IP-based authentication. **Mitigation**: ingress filtering (BCP38 — routers drop packets with spoofed source IPs), egress filtering, using encrypted/authenticated protocols (TLS), anti-spoofing ACLs, reverse path forwarding (RPF) checks.
 
 </QA>
 
 <QA question="What is the meaning of threat, vulnerability, and risk?">
 
-Asked in interviews.
+**Threat**: any potential danger that can exploit a vulnerability (e.g., a hacker, malware, natural disaster). **Vulnerability**: a weakness in a system that can be exploited (e.g., unpatched software, misconfigured firewall, weak password). **Risk**: the probability that a threat will exploit a vulnerability and the impact it would have. Risk = Threat × Vulnerability × Impact. Security aims to minimize risk by addressing threats and vulnerabilities.
 
 </QA>
 
 <QA question="What is the main purpose of a DNS server?">
 
-Asked in interviews.
+A **DNS server** resolves domain names to IP addresses (and vice versa). When you type `google.com`, DNS translates it to `142.250.x.x`. **Hierarchy**: Root servers → TLD servers (.com, .org) → Authoritative nameservers (specific domain). Uses caching at every level for speed. **Record types**: A (IPv4), AAAA (IPv6), CNAME (alias), MX (mail), NS (nameserver), TXT (text). Without DNS, you'd need to remember IP addresses for every website.
 
 </QA>
 
 <QA question="What is the protocol and port number of DNS?">
 
-Asked in interviews.
+DNS primarily uses **UDP** on **port 53** for standard queries (fast, small responses). Falls back to **TCP** on **port 53** for responses larger than 512 bytes (or 4096 with EDNS0), zone transfers (AXFR/IXFR between servers), and when reliability is needed. UDP is preferred for normal lookups because DNS queries are small and the overhead of TCP's handshake is unnecessary.
 
 </QA>
 
 <QA question="What is the position of the transmission media in the OSI model?">
 
-Asked in interviews.
+Transmission media (cables, wireless) exist **below Layer 1** (Physical layer) of the OSI model — sometimes called "Layer 0." The Physical layer DEFINES the specifications for the transmission media (voltage levels, data rates, cable lengths, connector types) but the actual cable or wireless medium is the physical pathway. The Physical layer interfaces with the medium but the medium itself is not a layer.
 
 </QA>
 
 <QA question="What is the importance of twisting in twisted-pair cable?">
 
-Asked in interviews.
+Twisting in twisted-pair cable reduces **electromagnetic interference (EMI)** and **crosstalk** between adjacent wire pairs. When wires are twisted, the noise picked up by one loop is cancelled by the opposite polarity in the next loop (balanced transmission). Tighter twists = better noise rejection. **UTP** (Unshielded Twisted Pair, Cat5e/Cat6) and **STP** (Shielded Twisted Pair) are the main types. Used in Ethernet networks.
 
 </QA>
 
 <QA question="What kind of error is undetectable by checksum?">
 
-Asked in interviews.
+Checksum can fail to detect errors where **two or more bits change in a way that the sum remains the same** — compensating errors. For example, if one data unit increases by a value and another decreases by the same value, the checksum is unchanged. Also struggles with: bit reordering within a word, and some burst errors. CRC (Cyclic Redundancy Check) is stronger than simple checksum for detecting these types of errors.
 
 </QA>
 
 <QA question="Which multiplexing technique is used in fiber-optic links?">
 
-Asked in interviews.
+**WDM** (Wavelength Division Multiplexing) is used in fiber-optic links. It combines multiple optical signals at different wavelengths (colors of light) onto a single fiber. **Types**: CWDM (Coarse WDM — fewer channels, cheaper) and DWDM (Dense WDM — 80+ channels, long distances). Each wavelength carries an independent data stream simultaneously, massively increasing fiber capacity.
 
 </QA>
 
 <QA question="What are the advantages of Fiber Optics?">
 
-Asked in interviews.
+1) **Extremely high bandwidth** (terabits/sec). 2) **Low attenuation** — signals travel long distances without repeaters. 3) **Immunity to electromagnetic interference** (EMI/RFI). 4) **Security** — very difficult to tap. 5) **Small size and weight** — thinner than copper cables. 6) **Low error rate**. **Disadvantages**: expensive installation, fragile (bending can break), requires specialized equipment and skills for termination.
 
 </QA>
 
 <QA question="Which multiplexing techniques are used to combine analog signals?">
 
-Asked in interviews.
+**FDM** (Frequency Division Multiplexing) is used to combine analog signals. Each signal is modulated onto a different carrier frequency, and all are transmitted simultaneously over the same medium. Guard bands separate frequencies to prevent interference. Examples: radio broadcasting (each station gets a frequency), cable TV (each channel gets a frequency band). The combined signal occupies a wider bandwidth equal to the sum of all individual bandwidths plus guard bands.
 
 </QA>
 
 <QA question="Which multiplexing technique is used to combine digital signals?">
 
-Asked in interviews.
+**TDM** (Time Division Multiplexing) is used to combine digital signals. Each signal gets a time slot in a repeating frame. Two types: **Synchronous TDM** — fixed time slots assigned to each source (may waste slots if source has no data). **Statistical TDM** (async) — time slots dynamically allocated only to sources with data (more efficient). Example: T1 line uses synchronous TDM with 24 time slots per frame.
 
 </QA>
 
 <QA question="Can IP Multicast be load-balanced?">
 
-Asked in interviews.
+Yes, IP multicast CAN be load-balanced, but it requires special techniques: 1) **ECMP** (Equal-Cost Multi-Path) routing with multicast support. 2) **PIM** (Protocol Independent Multicast) with multiple paths. 3) **IGMP snooping** on switches. However, traditional IP multicast is replicated by network devices (routers create distribution trees), which inherently distributes load. True load balancing across multiple sources or receivers requires careful network design.
 
 </QA>
 
 <QA question="What is CGMP (Cisco Group Management Protocol)?">
 
-Asked in interviews.
+**CGMP** (Cisco Group Management Protocol) is a Cisco-proprietary protocol that restricts IP multicast traffic to only those switch ports that have interested receivers. Routers inform switches (via CGMP messages) which ports have joined multicast groups. Without CGMP (or IGMP snooping), switches flood multicast to all ports. CGMP is largely replaced by **IGMP snooping** in modern networks, which is vendor-neutral.
 
 </QA>
 
 <QA question="What is Multicast?">
 
-Asked in interviews.
+**Multicast** is one-to-many communication where a single source sends data to multiple specific receivers simultaneously. The network replicates packets only where necessary (not flooding to everyone). Uses Class D IP addresses (224.0.0.0 — 239.255.255.255). **Protocols**: IGMP (group membership), PIM (routing). **Examples**: live video streaming, stock market feeds, software updates. More efficient than unicast (one copy per receiver) and broadcast (all hosts).
 
 </QA>
 
 <QA question="What is the difference between Bluetooth and Wi-Fi?">
 
-Asked in interviews.
+**Bluetooth**: short-range (10-100m), low power, personal area network (PAN). Used for: headphones, keyboards, IoT devices, file transfer between nearby devices. Frequency: 2.4GHz. Speed: up to 3Mbps. **Wi-Fi**: medium range (30-100m indoors), higher power, local area network (LAN). Used for: internet access, streaming, browsing. Frequency: 2.4GHz and 5GHz (Wi-Fi 6E adds 6GHz). Speed: up to 9.6Gbps (Wi-Fi 6). Wi-Fi connects devices to a network; Bluetooth connects devices to each other.
 
 </QA>
 
 <QA question="What is a reverse proxy?">
 
-Asked in interviews.
+A **reverse proxy** sits in front of backend servers and forwards client requests to them. Clients talk to the reverse proxy, not the servers directly. **Benefits**: load balancing (distribute requests), SSL termination (offload encryption), caching (serve cached responses), security (hide server IPs, WAF), compression. Examples: Nginx, HAProxy, Traefik, Cloudflare. Contrast with **forward proxy** which sits in front of clients (e.g., corporate proxy for internet access).
 
 </QA>
 
 <QA question="What is the role of an address in a packet traveling through a datagram network?">
 
-Asked in interviews.
+In a **datagram network** (like IP), each packet carries the full destination address. Routers independently route each packet based on their routing tables — different packets of the same message may take different paths. The destination address is used at EVERY router to make forwarding decisions. Contrast with virtual circuit networks where a connection is established first and packets follow a pre-determined path using circuit identifiers.
 
 </QA>
 
 <QA question="Can a routing table in a datagram network have two entries with the same destination address?">
 
-Asked in interviews.
+No, a routing table in a datagram network should NOT have two entries with the exact same destination address (and same prefix length). If they exist, one would shadow the other. However, there can be multiple entries for the same destination network with different **next hops** for load balancing (ECMP) or with different metrics (backup routes). Also, overlapping entries with different prefix lengths are common (longest prefix match determines which entry is used).
 
 </QA>
 
 <QA question="What kind of arithmetic is used to add data items in checksum calculation?">
 
-Asked in interviews.
+Checksum calculation uses **one's complement arithmetic** (also called end-around carry). Process: 1) Divide data into 16-bit words. 2) Add all words using one's complement addition (any carry-out is added back to the sum). 3) Take the one's complement of the final sum (flip all bits) — this is the checksum. The receiver adds all words including the checksum; if the result is all 1s (no error) the data is intact.
 
 </QA>
 
 <QA question="Define piggybacking.">
 
-Asked in interviews.
+**Piggybacking** is a technique where the acknowledgment (ACK) for a received frame is attached to ("piggybacks" on) the next outgoing data frame instead of being sent in a separate frame. This reduces network traffic and overhead. Used in bidirectional communication where both sides send data. Example: instead of sending a pure ACK, the receiver waits briefly for outgoing data and includes the ACK in that data frame's header.
 
 </QA>
 
@@ -250,91 +250,91 @@ Asked in interviews.
 
 <QA question="What are the advantages and disadvantages of piggybacking?">
 
-Asked in interviews.
+**Advantages**: 1) Better bandwidth utilization — fewer frames sent. 2) Reduced overhead — no separate ACK frames needed. 3) Improved efficiency in bidirectional communication. **Disadvantages**: 1) Added complexity in implementation. 2) Delay — if no outgoing data is ready, ACK must be sent separately after a timeout (adds latency). 3) If used, a timer is needed to ensure ACKs aren't delayed too long.
 
 </QA>
 
 <QA question="Which technique is used in byte-oriented protocols?">
 
-Asked in interviews.
+**Byte stuffing** (character stuffing) is used in byte-oriented protocols like HDLC, PPP, and SLIP. When the data contains the same byte pattern as the flag/delimiter (e.g., `0x7E`), an escape byte (e.g., `0x7D`) is inserted before it and the flag byte is XORed. This ensures the receiver can distinguish actual data from frame delimiters. If the escape byte itself appears in data, it's also escaped.
 
 </QA>
 
 <QA question="Define the term OFDM (Orthogonal Frequency Division Multiplexing).">
 
-Asked in interviews.
+**OFDM** divides a wideband channel into many narrow subcarriers, each modulated at a low data rate in parallel. **Benefits**: robust against multipath fading and interference, spectral efficiency (subcarriers overlap but are orthogonal). Used in: **Wi-Fi** (802.11a/g/n/ac/ax), **4G LTE**, **5G NR**, **DVB-T** (digital TV). Orthogonality means subcarrier peaks align with adjacent nulls, eliminating inter-channel interference without guard bands.
 
 </QA>
 
 <QA question="What is a transparent bridge?">
 
-Asked in interviews.
+A **transparent bridge** is a Layer 2 device that learns MAC addresses and forwards frames between LAN segments without any configuration from end devices. "Transparent" means hosts are unaware of the bridge. It builds a MAC address table by examining source addresses of incoming frames, then forwards frames based on destination MAC. Uses **Spanning Tree Protocol (STP)** to prevent loops. Standard Ethernet switches are transparent bridges.
 
 </QA>
 
 <QA question="What is the minimum and maximum size of an ICMPv4 packet?">
 
-Asked in interviews.
+**Minimum size**: 8 bytes (8-byte header: type, code, checksum, and header-specific data; no data payload). **Maximum size**: limited by the MTU of the network minus the IP header. For standard Ethernet (MTU 1500 bytes) with a 20-byte IP header: maximum ICMPv4 packet = 1480 bytes. Typical ping uses 64 bytes total (8 bytes ICMP header + 56 bytes data). ICMP messages are encapsulated within IP packets.
 
 </QA>
 
 <QA question="Why is OSPF faster than RIP?">
 
-Asked in interviews.
+**OSPF** (Open Shortest Path First) is faster than **RIP** because: 1) OSPF uses link-state algorithm — every router has a complete network topology map and computes shortest paths (Dijkstra). RIP uses distance-vector — only knows distances from neighbors. 2) OSPF converges faster (updates immediately on link changes). RIP converges slowly (periodic updates every 30 seconds). 3) OSPF has no hop count limit. RIP max = 15 hops. 4) OSPF supports hierarchical areas for scalability.
 
 </QA>
 
 <QA question="What are the two main categories of DNS messages?">
 
-Asked in interviews.
+Two main DNS message categories: 1) **Query** — a request from a client (recursive resolver) to a DNS server asking for a record (e.g., "What is the IP of google.com?"). Contains: question section (domain name, type, class). 2) **Response** — reply from the DNS server containing the answer (the requested record), additional authority records, and glue records. Both use the same message format — distinguished by the QR flag (0 = query, 1 = response).
 
 </QA>
 
 <QA question="Why do we need the POP3 protocol for email?">
 
-Asked in interviews.
+**POP3** (Post Office Protocol v3) downloads emails from the mail server to the client device and typically deletes them from the server. Needed because: SMTP only handles sending/relaying mail; users need a protocol to retrieve/read mail. POP3 allows offline access — read mail without a connection. Port 110 (995 with SSL). Alternative: **IMAP** (Internet Message Access Protocol) — keeps mail on server, syncs across devices, better for modern multi-device use.
 
 </QA>
 
 <QA question="Define the term Jitter.">
 
-Asked in interviews.
+**Jitter** is the variation in delay (latency) between packets in a network stream. Even if average latency is acceptable, inconsistent packet arrival times cause jitter. **Impact**: audio/video calls become choppy, VoIP quality degrades, video buffering. **Causes**: network congestion, route changes, queuing delays. **Mitigation**: jitter buffers (hold packets briefly to smooth out arrival times), QoS (Quality of Service) prioritization, dedicated bandwidth.
 
 </QA>
 
 <QA question="Why is Bandwidth important to network performance?">
 
-Asked in interviews.
+**Bandwidth** is the maximum data transfer rate of a network link (measured in bps — bits per second). It determines: 1) How much data can flow simultaneously. 2) Maximum throughput. 3) User experience (streaming needs high bandwidth). **Bandwidth vs latency**: bandwidth is the width of the pipe; latency is the length. High bandwidth with high latency = good for large transfers but poor for interactive apps. Both matter for network performance.
 
 </QA>
 
 <QA question="How do you identify whether an IP address is Private or Public?">
 
-Asked in interviews.
+**Private IP ranges** (RFC 1918): 10.0.0.0 – 10.255.255.255 (10.0.0.0/8), 172.16.0.0 – 172.31.255.255 (172.16.0.0/12), 192.168.0.0 – 192.168.255.255 (192.168.0.0/16). Any IP within these ranges is private (not routable on the internet). All other IPs are public (routable). Also: 127.0.0.0/8 is loopback, 169.254.0.0/16 is link-local (APIPA). NAT translates private IPs to public for internet access.
 
 </QA>
 
 <QA question="How to get an IP address from a domain name?">
 
-Asked in interviews.
+DNS resolves domain names to IP addresses. **Methods**: 1) `nslookup google.com` — queries DNS server. 2) `dig google.com` — more detailed DNS query tool. 3) `host google.com` — simple DNS lookup. 4) `ping google.com` — shows IP in output. 5) **Programmatically**: `socket.getaddrinfo()` (Python), `dns.resolve()` (Node.js). The OS checks: local hosts file (`/etc/hosts`) → DNS cache → configured DNS server (recursive resolver).
 
 </QA>
 
 <QA question="Which Diffie-Hellman Group is most secure?">
 
-Asked in interviews.
+Higher Diffie-Hellman groups provide stronger key exchange security. **Group 14** (2048-bit MODP) is the minimum recommended. **Group 19/20** (256/384-bit ECC — Elliptic Curve) are preferred for modern use — same security as much larger MODP groups with less computation. **Group 21** (521-bit ECC) is the most secure standard group. Groups 1 (768-bit) and 2 (1024-bit) are deprecated/insecure. NIST recommends Group 14+ or ECC groups.
 
 </QA>
 
 <QA question="How is Flow Control achieved in TCP?">
 
-Asked in interviews.
+TCP uses a **sliding window** mechanism for flow control. The receiver advertises a **window size** in each ACK — how many bytes it can buffer. The sender limits unacknowledged data to the receiver's window size. If the receiver is overwhelmed, it reduces window size (or sets to 0 = stop sending). **Window scaling** option (RFC 7323) allows windows up to 1GB (16-bit window field × scale factor). This prevents the sender from overwhelming the receiver.
 
 </QA>
 
 <QA question="How do you find your port number?">
 
-Asked in interviews.
+**On Linux/Mac**: `ss -tuln` or `netstat -tuln` shows listening ports. `lsof -i -P -n | grep LISTEN`. **On Windows**: `netstat -an` shows all connections and ports. **To check a specific port**: `ss -tulnp | grep :8080` (Linux), `lsof -i :8080` (Mac). **Port ranges**: Well-known (0-1023), Registered (1024-49151), Dynamic/Private (49152-65535). Your system assigns ephemeral ports from the dynamic range for outgoing connections.
 
 </QA>
 
@@ -342,258 +342,427 @@ Asked in interviews.
 
 <QA question="What is TCP/IP?">
 
-Asked in interviews.
+**TCP/IP** (Transmission Control Protocol / Internet Protocol) is the foundational protocol suite of the Internet. A 4-layer model: **Application** (HTTP, DNS, FTP), **Transport** (TCP, UDP), **Internet** (IP, ICMP, ARP), **Network Access** (Ethernet, Wi-Fi). IP handles addressing and routing; TCP provides reliable, ordered delivery. Together they enable end-to-end communication across heterogeneous networks. All internet communication uses TCP/IP.
 
 </QA>
 
 <QA question="What are Private IP addresses?">
 
-Asked in interviews.
+**Private IPs** are reserved for internal/local networks and NOT routable on the public internet. **Ranges** (RFC 1918): **10.0.0.0/8** (10.0.0.0 – 10.255.255.255), **172.16.0.0/12** (172.16.0.0 – 172.31.255.255), **192.168.0.0/16** (192.168.0.0 – 192.168.255.255). Used for LAN addressing. NAT (Network Address Translation) translates private to public IPs for internet access. Benefits: conserves public IP addresses, provides a layer of security.
 
 </QA>
 
 <QA question="How does IP protect data on the network?">
 
-Asked in interviews.
+IP itself does NOT protect data — it's a best-effort, connectionless protocol. Data protection is provided by protocols layered on top: **IPsec** (encryption + authentication at Layer 3), **TLS/SSL** (encryption at Layer 4+, used by HTTPS), **SSH** (secure remote access). IP provides addressing and routing, not security. For network-layer protection, IPsec provides AH (authentication) and ESP (encryption + authentication).
 
 </QA>
 
 <QA question="What is a MAC address?">
 
-Asked in interviews.
+A **MAC address** (Media Access Control) is a 48-bit hardware address uniquely identifying a Network Interface Card (NIC). Format: `AA:BB:CC:DD:EE:FF` (6 hex pairs). First 3 bytes = OUI (manufacturer). Last 3 bytes = device-specific. Works at **Layer 2** (Data Link). Used for local network delivery (within a LAN segment). ARP maps IP addresses to MAC addresses. MAC is "burned in" but can be spoofed in software.
 
 </QA>
 
 <QA question="What is the difference between TCP and UDP protocols?">
 
-Asked in interviews.
+**TCP** (Transmission Control Protocol): connection-oriented, reliable delivery (ACKs, retransmission), ordered, flow control, congestion control. Used for: HTTP, FTP, SSH, email. **UDP** (User Datagram Protocol): connectionless, unreliable (no ACKs), unordered, no flow control. Fast, low overhead. Used for: DNS, video streaming, VoIP, gaming, IoT. TCP prioritizes reliability; UDP prioritizes speed. Choose based on application requirements.
 
 </QA>
 
 <QA question="Explain the concept of routing in TCP/IP.">
 
-Asked in interviews.
+**Routing** determines the path packets take from source to destination across networks. **Process**: 1) Host sends packet to default gateway (local router). 2) Router examines destination IP, consults routing table. 3) Uses **longest prefix match** to find best route. 4) Forwards packet to next-hop router. 5) Repeated at each router until destination. **Routing protocols**: static routes (manual), dynamic: RIP, OSPF (interior), BGP (exterior/internet). Routing tables contain: destination network, next hop, metric, interface.
 
 </QA>
 
 <QA question="What services are provided by TCP?">
 
-Asked in interviews.
+TCP services: 1) **Connection-oriented** — three-way handshake. 2) **Reliable delivery** — ACKs, retransmission of lost segments. 3) **Ordered delivery** — sequence numbers ensure correct order. 4) **Flow control** — sliding window prevents receiver overload. 5) **Congestion control** — slow start, congestion avoidance. 6) **Error detection** — checksum. 7) **Full-duplex** — simultaneous bidirectional data flow. 8) **Multiplexing** via port numbers.
 
 </QA>
 
 <QA question="Explain the TCP protocol header format.">
 
-Asked in interviews.
+TCP header (20-60 bytes): **Source Port** (16 bits), **Destination Port** (16 bits), **Sequence Number** (32 bits — byte position), **Acknowledgment Number** (32 bits — next expected byte), **Data Offset** (4 bits — header length), **Reserved** (3 bits), **Flags** (9 bits — SYN, ACK, FIN, RST, etc.), **Window Size** (16 bits — flow control), **Checksum** (16 bits — error detection), **Urgent Pointer** (16 bits), **Options** (variable, 0-40 bytes).
 
 </QA>
 
 <QA question="Name all TCP flags.">
 
-Asked in interviews.
+TCP flags (9 bits): **SYN** (synchronize — initiate connection), **ACK** (acknowledgment — confirm receipt), **FIN** (finish — close connection), **RST** (reset — abort connection), **PSH** (push — deliver data immediately), **URG** (urgent — prioritize data), **ECE** (ECN-Echo — congestion notification), **CWR** (Congestion Window Reduced), **NS** (Nonce Sum — ECN protection). Most used: SYN, ACK, FIN, RST, PSH.
 
 </QA>
 
 <QA question="What is the role of the TCP checksum field?">
 
-Asked in interviews.
+The TCP **checksum** provides error detection for the entire TCP segment (header + data + pseudo-header containing source/destination IP). Calculated using one's complement arithmetic. The sender computes the checksum and places it in the header; the receiver recomputes it. If they don't match, the segment is discarded (corrupted in transit). Note: the checksum is NOT strong enough for security (use TLS for that) — it catches transmission errors only.
 
 </QA>
 
 <QA question="What is a PORT?">
 
-Asked in interviews.
+A **port** is a 16-bit number (0-65535) that identifies a specific process or service on a host. Ports enable multiplexing — multiple services on one IP address. Combined with an IP address, it forms a **socket** (IP:port). **Well-known ports**: 0-1023 (HTTP=80, HTTPS=443, SSH=22). **Registered**: 1024-49151. **Dynamic/ephemeral**: 49152-65535 (assigned by OS for client connections).
 
 </QA>
 
 <QA question="Name the well-known ports used by TCP.">
 
-Asked in interviews.
+Well-known TCP ports: **20/21** (FTP data/control), **22** (SSH), **23** (Telnet), **25** (SMTP), **53** (DNS), **80** (HTTP), **110** (POP3), **143** (IMAP), **443** (HTTPS), **993** (IMAPS), **995** (POP3S), **3306** (MySQL), **5432** (PostgreSQL), **3389** (RDP), **8080** (HTTP alternate). These are standardized by IANA.
 
 </QA>
 
 <QA question="What is the purpose of a DNS server?">
 
-Asked in interviews.
+A **DNS server** translates human-readable domain names into IP addresses. **Process**: client queries DNS resolver → resolver checks cache → if miss, queries root server → TLD server → authoritative nameserver → returns IP. **Types**: recursive resolver (does full lookup), authoritative server (has definitive records for a domain), root server (13 root server clusters worldwide). DNS is critical infrastructure — without it, you'd navigate by IP address.
 
 </QA>
 
 <QA question="Define the term Endpoint in TCP.">
 
-Asked in interviews.
+A TCP **endpoint** is the combination of an IP address and a port number. Written as `IP:port` (e.g., `192.168.1.5:8080`). A TCP connection is uniquely identified by a pair of endpoints: (source IP, source port) and (destination IP, destination port) — this 4-tuple uniquely identifies every TCP connection. Multiple connections can share the same server endpoint (same destination IP:port) because they differ by source endpoint.
 
 </QA>
 
 <QA question="Explain the error control mechanism in TCP.">
 
-Asked in interviews.
+TCP error control ensures reliable delivery: 1) **Checksum** — detects corrupted segments (discarded silently). 2) **Sequence numbers** — detect missing, duplicate, or out-of-order segments. 3) **Acknowledgments (ACKs)** — receiver confirms receipt (cumulative ACKs). 4) **Retransmission** — sender retransmits if ACK not received within timeout (RTO). 5) **Duplicate ACKs** — 3 duplicate ACKs trigger fast retransmit (before timeout). Together these guarantee reliable, in-order delivery.
 
 </QA>
 
 <QA question="Explain congestion control in TCP.">
 
-Asked in interviews.
+TCP congestion control prevents overwhelming the network: 1) **Slow Start** — start with small congestion window (cwnd), double each RTT (exponential growth). 2) **Congestion Avoidance** — after reaching threshold (ssthresh), grow cwnd linearly (additive increase). 3) **Fast Retransmit** — 3 duplicate ACKs trigger immediate retransmission. 4) **Fast Recovery** — after fast retransmit, halve cwnd and continue (don't restart from slow start). Variants: Reno, Cubic (Linux default), BBR (Google).
 
 </QA>
 
 <QA question="What is the difference between stop-and-wait protocol and sliding window protocol?">
 
-Asked in interviews.
+**Stop-and-Wait**: sender sends ONE frame, waits for ACK before sending the next. Simple but inefficient — channel idle while waiting. Utilization = frame_time / (frame_time + 2 × propagation_delay). **Sliding Window**: sender can have MULTIPLE unacknowledged frames in flight (window size N). Much better utilization. Receiver ACKs allow the window to "slide" forward. Go-Back-N and Selective Repeat are sliding window variants. Modern TCP uses sliding window.
 
 </QA>
 
 <QA question="What is round trip time (RTT)?">
 
-Asked in interviews.
+**RTT** (Round Trip Time) is the time for a packet to travel from sender to receiver AND back (ACK returns). Measured in milliseconds. RTT determines timeout values for retransmission (RTO). TCP dynamically estimates RTT using smoothed RTT (SRTT) and RTT variance (RTTVAR). High RTT = slow interactive response. Factors: physical distance, network congestion, router processing, queueing delays. `ping` measures RTT. Typical: LAN less than 1ms, same city ~10ms, cross-continent ~100-200ms.
 
 </QA>
 
 <QA question="What is the significance of TCP acknowledgments?">
 
-Asked in interviews.
+TCP ACKs serve multiple purposes: 1) **Confirm receipt** — tell sender data was received successfully. 2) **Flow control** — advertise receiver window size. 3) **Drive retransmission** — missing ACKs trigger timeout retransmission. 4) **Drive congestion control** — ACK rate determines sending rate. 5) **Ordering** — ACK number indicates next expected byte. **Cumulative ACKs**: ACK number N means all bytes before N have been received. **Selective ACKs (SACK)**: explicitly list received ranges.
 
 </QA>
 
 <QA question="What is retransmission in TCP?">
 
-Asked in interviews.
+**Retransmission** is TCP's mechanism for handling lost segments. Two triggers: 1) **Timeout** (RTO — Retransmission Timeout): if ACK isn't received within the calculated timeout, retransmit. RTO is dynamically calculated from RTT measurements. 2) **Fast Retransmit**: 3 duplicate ACKs for the same sequence number indicate a lost segment — retransmit immediately without waiting for timeout. Faster recovery. TCP also uses exponential backoff (double RTO on each timeout).
 
 </QA>
 
 <QA question="What are the features of TCP?">
 
-Asked in interviews.
+TCP features: 1) **Connection-oriented** (3-way handshake). 2) **Reliable** (ACKs, retransmission). 3) **Ordered** (sequence numbers). 4) **Flow control** (sliding window). 5) **Congestion control** (slow start, AIMD). 6) **Full-duplex** (bidirectional). 7) **Error detection** (checksum). 8) **Stream-oriented** (byte stream, not messages). 9) **Multiplexing** (port numbers). 10) **Graceful close** (4-way FIN handshake).
 
 </QA>
 
 <QA question="What is the SCTP protocol?">
 
-Asked in interviews.
+**SCTP** (Stream Control Transmission Protocol) combines features of TCP and UDP. **Key features**: 1) **Multi-streaming** — multiple independent streams in one connection (no head-of-line blocking). 2) **Multi-homing** — one connection across multiple IP addresses (failover). 3) **Message-oriented** (like UDP, preserves message boundaries). 4) **Reliable** (like TCP). 5) **4-way handshake** (more secure than TCP's 3-way). Used in: telecom signaling (SS7 over IP), WebRTC.
 
 </QA>
 
 <QA question="Explain the three-way handshake protocol.">
 
-Asked in interviews.
+**Three-way handshake** establishes a TCP connection: 1) **SYN**: client sends SYN segment with initial sequence number (ISN). 2) **SYN-ACK**: server responds with SYN+ACK, its own ISN, and acknowledges client's ISN+1. 3) **ACK**: client sends ACK acknowledging server's ISN+1. Connection is now ESTABLISHED. Both sides agree on sequence numbers and window sizes. Prevents old duplicate connections from being accepted (stale SYN protection).
 
 </QA>
 
 <QA question="What is the difference between Leaky Bucket and Token Bucket algorithm?">
 
-Asked in interviews.
+**Leaky Bucket**: outputs data at a CONSTANT rate regardless of input burst. Smooths traffic. If bucket overflows, packets are dropped. Enforces a strict output rate. **Token Bucket**: tokens accumulate at a fixed rate. Each packet needs tokens to transmit. If tokens available, packets sent immediately (burst allowed). More flexible — allows short bursts up to bucket capacity while maintaining an average rate. Token bucket is more commonly used for traffic shaping.
 
 </QA>
 
 <QA question="What are the advantages of the Token Bucket over the Leaky Bucket algorithm?">
 
-Asked in interviews.
+**Advantages of Token Bucket**: 1) Allows **bursty traffic** — accumulated tokens enable sending at higher than average rate temporarily. 2) More flexible — doesn't force a rigid output rate. 3) Better for real-world traffic patterns (inherently bursty). 4) Higher throughput for applications that alternate between idle and active periods. Leaky bucket forces constant rate even when network has capacity for bursts.
 
 </QA>
 
 <QA question="What is the difference between connection-oriented and connectionless service?">
 
-Asked in interviews.
+**Connection-oriented** (TCP): establishes connection BEFORE sending data (handshake). Reliable, ordered, error-checked. Higher overhead. Like a phone call — setup, talk, hangup. **Connectionless** (UDP): sends data WITHOUT prior connection. No handshake, no ACKs. Fast, low overhead, unreliable. Like postal mail — just send. Connection-oriented: guaranteed delivery. Connectionless: best effort.
 
 </QA>
 
 <QA question="What are the TCP connection phases?">
 
-Asked in interviews.
+TCP connection has 3 phases: 1) **Connection Establishment** — three-way handshake (SYN → SYN-ACK → ACK). State: ESTABLISHED. 2) **Data Transfer** — bidirectional data flow with flow control, congestion control, error handling, ACKs. 3) **Connection Termination** — four-way handshake (FIN → ACK → FIN → ACK). Half-close is possible (one side FINs while other continues). States: FIN_WAIT, CLOSE_WAIT, TIME_WAIT, CLOSED.
 
 </QA>
 
 <QA question="What are the features of the TCP sliding window?">
 
-Asked in interviews.
+TCP sliding window features: 1) **Variable size** — receiver advertises available buffer space. 2) **Bidirectional** — both sender and receiver have windows. 3) **Cumulative ACKs** — ACK N acknowledges all bytes up to N. 4) **Window can shrink** to 0 (receiver full — zero window). 5) **Window scaling** option allows windows greater than 64KB. 6) Enables **pipelining** — multiple segments in flight. 7) **Self-clocking** — ACKs drive the sending rate.
 
 </QA>
 
 <QA question="What is the maximum and minimum size of the TCP header?">
 
-Asked in interviews.
+**Minimum TCP header size**: 20 bytes (5 × 32-bit words, no options). **Maximum TCP header size**: 60 bytes (15 × 32-bit words, with 40 bytes of options). The **data offset** field (4 bits) specifies the header length in 32-bit words. Values: 5 (minimum) to 15 (maximum). Common options: MSS (Maximum Segment Size), Window Scale, Timestamps, SACK.
 
 </QA>
 
 <QA question="Do port addresses need to be unique? Why are port addresses shorter than IP addresses?">
 
-Asked in interviews.
+Port addresses must be **unique per host** (per IP address) — two different services on the same host can't use the same port simultaneously. Port addresses are **16 bits** (65,536 possible) vs IP addresses at **32 bits (IPv4)** because: ports only need to be unique WITHIN a single host (limited number of services per machine), while IP addresses must be unique across the ENTIRE internet (billions of devices). A socket (IP:port) combines both for global uniqueness.
 
 </QA>
 
 <QA question="Are both UDP and IP unreliable to the same degree? Why or why not?">
 
-Asked in interviews.
+No, UDP and IP are NOT unreliable to the same degree. **IP** is unreliable at the network layer — no guarantee of packet delivery, ordering, or duplication prevention. **UDP** adds port-based multiplexing and an optional checksum on top of IP, but no reliability mechanisms. However, UDP at least detects corruption (checksum). IP provides no error detection on payload. Both lack retransmission and ordering, but UDP operates at a higher layer with application-level addressing (ports).
 
 </QA>
 
 <QA question="Define the term Datagram.">
 
-Asked in interviews.
+A **datagram** is a self-contained, independent message that contains all the information needed for routing from source to destination. Carries the full destination address in its header. No prior setup required (connectionless). Each datagram is routed independently — different datagrams of the same message may take different paths. IP packets are datagrams. UDP transmits datagrams. Contrast with "segments" (TCP) and "frames" (Layer 2).
 
 </QA>
 
 <QA question="What are Registered Ports and Dynamic Ports?">
 
-Asked in interviews.
+**Registered Ports** (1024–49151): assigned by IANA for specific services but usable by anyone. Examples: 3306 (MySQL), 5432 (PostgreSQL), 8080 (HTTP proxy), 27017 (MongoDB). **Dynamic/Ephemeral Ports** (49152–65535): temporarily assigned by the OS for client-side connections. When you make an HTTP request, your OS assigns a random ephemeral port as the source. Released after connection closes.
 
 </QA>
 
 <QA question="What is the importance of the TTL field?">
 
-Asked in interviews.
+**TTL** (Time To Live) in the IP header limits a packet's lifetime. Each router decrements TTL by 1. When TTL reaches 0, the packet is discarded and an ICMP "Time Exceeded" message is sent to the source. **Purpose**: prevents packets from looping infinitely in the network (routing loops). Also used by `traceroute` — sends packets with increasing TTL to discover each router in the path. Default TTL: Linux=64, Windows=128, macOS=64.
 
 </QA>
 
 <QA question="What are open-loop and closed-loop congestion control techniques?">
 
-Asked in interviews.
+**Open-loop** congestion control: policies applied BEFORE congestion occurs to prevent it. Static, proactive. Examples: traffic shaping (leaky/token bucket), admission control (reject new connections), scheduling. **Closed-loop** congestion control: reactive — detects congestion and takes corrective action. Feedback-based. Examples: TCP congestion control (slow start, AIMD), ECN (Explicit Congestion Notification), backpressure, choke packets. Modern TCP uses closed-loop.
 
 </QA>
 
 <QA question="Which fields of the IPv4 header change from router to router?">
 
-Asked in interviews.
+IPv4 header fields that change at each router: 1) **TTL** (Time To Live) — decremented by 1 at each hop. 2) **Header Checksum** — recomputed because TTL changed. 3) Potentially **Source/Destination IP** — if NAT is performed. 4) **Options** fields if router adds/modifies options (rare). 5) **Fragment offset and flags** if the router fragments the packet. The most common changes are TTL decrement and checksum recalculation.
 
 </QA>
 
 <QA question="What is a firewall?">
 
-Asked in interviews.
+A **firewall** is a network security device that monitors and controls incoming/outgoing network traffic based on predefined security rules. **Types**: 1) **Packet-filtering** — checks headers (IP, port, protocol). Stateless. 2) **Stateful** — tracks connection state (allow replies to outbound requests). 3) **Application-layer (proxy)** — inspects content. 4) **NGFW** (Next-Gen) — combines stateful + IPS + application awareness. Can be hardware (enterprise) or software (iptables, UFW).
 
 </QA>
 
 <QA question="Explain the concept of NAT (Network Address Translation).">
 
-Asked in interviews.
+**NAT** translates private IP addresses to public IP addresses (and vice versa) as traffic crosses a router. **Types**: 1) **Static NAT** — 1:1 mapping (one public per private). 2) **Dynamic NAT** — pool of public IPs assigned on demand. 3) **PAT/NAPT** (Port Address Translation) — many private IPs share ONE public IP using different port numbers (most common, used in home routers). Benefits: conserves IPv4 addresses, hides internal network. Drawback: breaks end-to-end connectivity.
 
 </QA>
 
 <QA question="Explain the reason for the elimination of the checksum in the IPv6 header.">
 
-Asked in interviews.
+IPv6 eliminated the header checksum because: 1) **Performance** — routers had to recompute checksum at every hop (TTL changes), adding processing overhead. 2) **Redundancy** — Layer 2 (Ethernet CRC) and Layer 4 (TCP/UDP checksum) already check for errors. IPv6 makes the transport-layer checksum MANDATORY (optional in IPv4 UDP). 3) **Simplification** — simplifies the IPv6 header for faster processing and forwarding.
 
 </QA>
 
 <QA question="Name three strategies used to handle the transition from IPv4 to IPv6.">
 
-Asked in interviews.
+Three IPv4 to IPv6 transition strategies: 1) **Dual Stack** — devices run both IPv4 and IPv6 simultaneously, choosing based on destination. Most common approach. 2) **Tunneling** — IPv6 packets encapsulated inside IPv4 packets to traverse IPv4 networks (6to4, Teredo, ISATAP). 3) **Translation** (NAT64/DNS64) — translates between IPv4 and IPv6 at the boundary, allowing IPv6-only hosts to communicate with IPv4 servers.
 
 </QA>
 
 <QA question="What is Tunneling in networking?">
 
-Asked in interviews.
+**Tunneling** encapsulates one protocol's packets inside another protocol's packets for transport across an incompatible network. The encapsulated packet is the "passenger"; the outer protocol is the "carrier." Examples: IPv6 inside IPv4 (6to4), VPN tunnels (IPsec, GRE, WireGuard), SSH tunnels. The encapsulated packet is unwrapped at the tunnel endpoint. Used for: protocol transition, VPNs, bypassing firewalls, overlaying virtual networks.
 
 </QA>
 
 <QA question="What is the purpose of the ARP protocol?">
 
-Asked in interviews.
+**ARP** (Address Resolution Protocol) maps a known IP address to a MAC address on a local network (Layer 3 → Layer 2). Process: host broadcasts "Who has IP 192.168.1.1?" (ARP request). The owner replies with its MAC address (ARP reply, unicast). The result is cached in the ARP table/cache (`arp -a` to view). ARP works within a single broadcast domain (LAN). **RARP** does the reverse (MAC → IP, largely replaced by DHCP).
 
 </QA>
 
 <QA question="What is fragmentation in networking?">
 
-Asked in interviews.
+**Fragmentation** is splitting a large IP packet into smaller pieces (fragments) when it exceeds the MTU (Maximum Transmission Unit) of the next network link. Each fragment has the same source/destination IP but different fragment offset. Fragments are reassembled at the DESTINATION host (not intermediate routers). **Don't Fragment (DF) flag**: if set, router drops the packet and sends ICMP "Fragmentation Needed." IPv6 doesn't allow router fragmentation — source must discover path MTU.
 
 </QA>
+
+## Linux Networking (from InterviewBit)
+
+<QA question="What is tcpdump and how do you capture traffic for a specific host or port?">
+
+**tcpdump** is a command-line packet analyzer for capturing and inspecting network traffic. Capture traffic for a specific host: `tcpdump -i eth0 host 192.168.1.100`. For a specific port: `tcpdump -i eth0 port 443`. Combine: `tcpdump -i eth0 host 192.168.1.100 and port 80`. Save to file: `tcpdump -w capture.pcap`. Read file: `tcpdump -r capture.pcap`. Show ASCII: `-A`. Show hex: `-X`. Verbose: `-v`. Count packets: `-c 100`.
+
+</QA>
+
+<QA question="What is the Linux routing table and how do you add a static route temporarily?">
+
+The Linux routing table shows how the kernel routes IP packets. View with: `ip route show` or `route -n`. Add a static route temporarily: `ip route add 10.0.0.0/24 via 192.168.1.1 dev eth0`. This is lost on reboot. For persistence: add to `/etc/network/interfaces`, `/etc/netplan/*.yaml`, or create a script in `/etc/network/if-up.d/`. Delete route: `ip route del 10.0.0.0/24`. Default route: `ip route add default via 192.168.1.1`.
+
+</QA>
+
+<QA question="What is MTU and how do you debug MTU-related issues?">
+
+**MTU** (Maximum Transmission Unit) is the largest packet size (in bytes) a network interface can transmit. Default Ethernet MTU = 1500 bytes. **Debug MTU issues**: 1) `ping -M do -s 1472 destination` (test if packets are fragmented/dropped). 2) `tracepath destination` (discovers path MTU). 3) Check interface MTU: `ip link show eth0`. 4) Change MTU: `ip link set eth0 mtu 9000` (jumbo frames). MTU mismatches cause: packet drops, slow transfers, "black hole" connections.
+
+</QA>
+
+<QA question="Explain bridging vs bonding vs VLANs in Linux.">
+
+**Bridging**: connects two or more network segments at Layer 2 (like a virtual switch). All interfaces share one broadcast domain. `ip link add br0 type bridge`. **Bonding**: combines multiple NICs into one logical interface for redundancy/throughput. Modes: 0 (round-robin), 1 (active-backup), 4 (802.3ad LACP). **VLANs**: virtually segment a physical network into isolated broadcast domains at Layer 2. `ip link add link eth0 name eth0.100 type vlan id 100`. VLANs use 802.1Q tags.
+
+</QA>
+
+<QA question="What is a Linux network namespace and why is it useful?">
+
+A **network namespace** provides an isolated copy of the network stack — its own interfaces, routing tables, firewall rules, and sockets. Processes inside a namespace can't see or interact with network resources in other namespaces. **Use cases**: containerization (Docker uses namespaces), testing network configurations in isolation, running multiple services on the same port. Create: `ip netns add ns1`. Execute in: `ip netns exec ns1 ip addr`. Connect namespaces with veth pairs.
+
+</QA>
+
+<QA question="How do you list and interpret firewall rules on Linux?">
+
+**iptables**: `iptables -L -n -v` (list rules with packet counts). **nftables**: `nft list ruleset`. **Interpretation**: Rules are organized in chains (INPUT, OUTPUT, FORWARD) within tables (filter, nat, mangle). Each rule has: match criteria (source/dest IP, port, protocol) and a target/action (ACCEPT, DROP, REJECT, LOG). Rules are evaluated top-to-bottom; first match wins. Default policy (shown at chain header) applies if no rule matches. `iptables -S` shows rules in command format.
+
+</QA>
+
+<QA question="What is the difference between iptables and nftables?">
+
+**iptables**: legacy Linux firewall, uses chains/tables, rule-by-rule evaluation. Slower with many rules (linear traversal). Still widely used. **nftables**: successor to iptables (Linux 3.13+). Uses sets and maps for efficient matching, single framework replacing iptables/ip6tables/arptables/ebtables, better syntax (`nft` command), faster rule evaluation. Most modern distros use nftables backend with iptables compatibility layer (`iptables-nft`). Prefer nftables for new configurations.
+
+</QA>
+
+<QA question="What is the difference between traceroute and mtr? When do you use each?">
+
+**traceroute**: sends packets with incrementing TTL; shows each hop's IP and RTT (3 probes per hop). Single snapshot. Uses UDP (Linux) or ICMP (Windows `tracert`). **mtr** (My Traceroute): combines traceroute + ping — continuously probes and shows LIVE statistics (packet loss %, average/min/max/stddev latency per hop). Use **traceroute** for a quick path check. Use **mtr** for diagnosing intermittent issues, packet loss, and jitter (run for several minutes for accurate stats).
+
+</QA>
+
+<QA question="What is /etc/resolv.conf and what can override it?">
+
+`/etc/resolv.conf` specifies DNS servers for the system. Contains `nameserver` entries (up to 3), `search` domains, and options. **Can be overridden by**: 1) **NetworkManager** — regenerates resolv.conf on connection changes. 2) **systemd-resolved** — uses `/etc/systemd/resolved.conf` and may create a stub resolver at 127.0.0.53. 3) **DHCP client** — may update resolv.conf with DHCP-provided DNS. 4) **resolvconf** utility. To prevent overwriting: `chattr +i /etc/resolv.conf` or configure the appropriate service.
+
+</QA>
+
+<QA question="What is the difference between netstat and ss?">
+
+**netstat** (legacy): shows network connections, routing tables, interface stats. `netstat -tulnp`. Depends on `/proc/net/*`. Slower with many connections. Part of `net-tools` (no longer maintained). **ss** (socket statistics): modern replacement. Faster (uses netlink sockets, kernel API directly). More information, better filtering. `ss -tulnp`. Part of `iproute2`. Preferred on modern Linux. Both show: listening ports, established connections, protocol, local/remote address, PID.
+
+</QA>
+
+<QA question="How do you find which process is using a port?">
+
+**Linux**: `ss -tulnp | grep :PORT` or `lsof -i :PORT`. `fuser PORT/tcp` shows PID. **macOS**: `lsof -i :PORT -P -n`. **Windows**: `netstat -aon | findstr :PORT` then `tasklist /fi "pid eq PID"`. Example: `ss -tulnp | grep :8080` shows the process name and PID using port 8080. `lsof -i :443` shows all processes on port 443.
+
+</QA>
+
+<QA question="What is the difference between ip and ifconfig? Which one is preferred?">
+
+**ifconfig** (legacy, `net-tools` package): configures and displays network interfaces. Limited functionality, no longer maintained. **ip** (`iproute2` package): modern replacement. More powerful, consistent syntax, supports advanced features (namespaces, tunnels, VRF). **Preferred**: `ip` is the standard on all modern Linux. Examples: `ip addr show` (vs `ifconfig`), `ip route show` (vs `route`), `ip link set eth0 up` (vs `ifconfig eth0 up`). `ifconfig` is deprecated on many distributions.
+
+</QA>
+
+## Advanced Networking (from InterviewBit)
+
+<QA question="What is the MAC address and how is it related to NIC?">
+
+A **MAC address** (Media Access Control) is a 48-bit (6-byte) hardware address uniquely identifying a NIC (Network Interface Card). Format: `AA:BB:CC:DD:EE:FF`. First 3 bytes = **OUI** (Organizationally Unique Identifier — manufacturer). Last 3 bytes = device-specific serial. **Relation to NIC**: burned into the NIC's firmware by the manufacturer. Each NIC has a unique MAC. Used at Layer 2 for local frame delivery. ARP resolves IP → MAC on LANs.
+
+</QA>
+
+<QA question="What happens when you enter google.com in the web browser?">
+
+1) Browser parses URL (protocol, domain, path). 2) Checks browser DNS cache → OS cache → router cache → ISP DNS → recursive DNS resolution (root → TLD → authoritative). 3) Gets IP address. 4) TCP three-way handshake (SYN → SYN-ACK → ACK). 5) TLS handshake (if HTTPS — certificate exchange, key negotiation). 6) HTTP GET request sent. 7) Server processes request, returns HTTP response (HTML). 8) Browser parses HTML, requests CSS/JS/images. 9) DOM built, page rendered. 10) TCP connection closed (or kept alive).
+
+</QA>
+
+<QA question="What are Unicasting, Anycasting, Multicasting and Broadcasting?">
+
+**Unicasting**: one-to-one communication. Single sender to single receiver. Most internet traffic (HTTP, SSH). **Anycasting**: one-to-nearest. Packet sent to the nearest node in a group sharing the same IP. Used by DNS root servers, CDNs. **Multicasting**: one-to-many. Single sender to a group of interested receivers. Uses IGMP. Used for video streaming, stock feeds. **Broadcasting**: one-to-all. Packet sent to ALL hosts on the network. Uses broadcast address (e.g., 255.255.255.255). Limited to LAN. IPv6 replaced broadcast with multicast.
+
+</QA>
+
+<QA question="What is a subnet?">
+
+A **subnet** is a logical subdivision of an IP network. Subnetting divides a large network into smaller, manageable segments. Created using a **subnet mask** (e.g., 255.255.255.0 or /24). Benefits: 1) Reduces broadcast domain size. 2) Improves security (isolated segments). 3) Better IP address management. 4) Reduces network congestion. Example: 192.168.1.0/24 has 254 usable hosts (192.168.1.1 – 192.168.1.254). CIDR notation simplifies subnetting.
+
+</QA>
+
+<QA question="What is the DHCP Protocol?">
+
+**DHCP** (Dynamic Host Configuration Protocol) automatically assigns IP addresses and network configuration to devices. Uses UDP ports 67 (server) and 68 (client). **DORA process**: 1) **Discover** — client broadcasts looking for DHCP server. 2) **Offer** — server offers an IP address. 3) **Request** — client requests the offered IP. 4) **Acknowledge** — server confirms the assignment. Also provides: subnet mask, default gateway, DNS servers, lease duration.
+
+</QA>
+
+<QA question="What is the ICMP protocol?">
+
+**ICMP** (Internet Control Message Protocol) is a network-layer protocol used for error reporting and diagnostic functions. NOT used for data transfer. **Common messages**: Echo Request/Reply (ping), Destination Unreachable, Time Exceeded (TTL=0, used by traceroute), Redirect, Source Quench (deprecated). ICMP is encapsulated within IP packets. Used by: `ping` (connectivity test), `traceroute` (path discovery). ICMPv6 adds neighbor discovery and path MTU discovery.
+
+</QA>
+
+## Scenario-Based Networking (from InterviewBit)
+
+<QA question="You can ping an IP but cannot open the website by domain. What do you check?">
+
+DNS resolution issue. Check: 1) `ping IP` works → network is fine. 2) `nslookup domain` or `dig domain` — does DNS resolve? 3) Check `/etc/resolv.conf` for correct DNS servers. 4) Try a different DNS: `dig @8.8.8.8 domain`. 5) Check `/etc/hosts` for incorrect manual entries. 6) Flush DNS cache: `systemd-resolve --flush-caches` or `dscacheutil -flushcache` (macOS). 7) Check if DNS port 53 is blocked by firewall. Most likely: misconfigured DNS server or stale DNS cache.
+
+</QA>
+
+<QA question="Clients receive IP addresses but have no internet access. What's broken?">
+
+Check: 1) **Default gateway** — `ip route show` — is a default route configured? DHCP may provide IPs but wrong/missing gateway. 2) **DNS** — can clients resolve? Check `/etc/resolv.conf`. 3) **NAT** — is the router performing NAT? Check iptables masquerade rules. 4) **Firewall** on router — FORWARD chain blocking? 5) **ISP link** — is the WAN interface up? Can the router itself ping 8.8.8.8? Most common: missing default gateway or broken NAT configuration.
+
+</QA>
+
+<QA question="In Kubernetes or Docker, container-to-container networking fails. How do you debug?">
+
+Debug steps: 1) `kubectl exec pod -- ping other-pod-ip` — basic connectivity. 2) Check **CNI plugin** (Calico, Flannel, Weave) — `kubectl get pods -n kube-system`. 3) Check **network policies** — `kubectl get networkpolicy`. 4) For Docker: inspect bridge network `docker network inspect bridge`. 5) Check **iptables/nftables** rules — container networking uses NAT rules. 6) DNS: `kubectl exec pod -- nslookup service-name`. 7) Check `kube-proxy` logs. 8) `tcpdump` on the node's `veth`/bridge interfaces.
+
+</QA>
+
+<QA question="TLS handshake fails but TCP connects. What does that indicate?">
+
+TCP connects (port reachable) but TLS fails. Possible causes: 1) **Certificate issues** — expired, self-signed, wrong CN/SAN, untrusted CA. Check: `openssl s_client -connect host:443`. 2) **Protocol mismatch** — client requires TLS 1.3, server only supports TLS 1.2. 3) **Cipher suite mismatch** — no common ciphers. 4) **SNI issue** — server uses SNI but client doesn't send hostname. 5) **Firewall/proxy** intercepting TLS (MITM). 6) **Certificate revoked** (CRL/OCSP check fails).
+
+</QA>
+
+<QA question="A host can reach external IPs but not a specific subnet. Why?">
+
+A host can reach external IPs but not a specific subnet. Check: 1) **Routing table** — `ip route show` — is there a route to the target subnet? Missing route = packets go to default gateway which may not know the path. 2) **Firewall rules** — iptables/nftables blocking that subnet. 3) **ACLs on switches/routers** between the subnets. 4) **VLAN configuration** — are the subnets on different VLANs without inter-VLAN routing? 5) **Return path** — the remote subnet may not have a route back. Most common: missing static route.
+
+</QA>
+
+<QA question="'Connection refused' vs 'Connection timed out' — what's the difference in diagnosis?">
+
+**"Connection refused"**: the host is reachable, port is not listening (RST sent back). The service is down, wrong port, or service not bound to that interface. Fix: start the service, check `ss -tlnp | grep PORT`. **"Connection timed out"**: no response at all — packets are being dropped. Causes: firewall dropping packets (iptables DROP), host unreachable, routing issue, network congestion. Key difference: refused = host alive, service down. Timed out = host/port unreachable or packets dropped.
+
+</QA>
+
+<QA question="Two servers in different VLANs can't communicate. Where can it break?">
+
+Possible failure points: 1) **No inter-VLAN routing** — need a Layer 3 switch or router with sub-interfaces. 2) **Router/switch ACLs** blocking traffic between VLANs. 3) **Incorrect VLAN tagging** — trunk port misconfiguration (allowed VLANs). 4) **Wrong gateway** — devices in each VLAN need the correct default gateway (the router's interface in their VLAN). 5) **SVI (Switch Virtual Interface)** not created or not up. Debug: `show vlan brief`, `show ip route`, `show running-config interface`.
+
+</QA>
+
+<QA question="A service is reachable internally but not externally. What do you check?">
+
+Check: 1) **Firewall/Security Group** — is the external port open? `iptables -L`, cloud security groups (AWS SG, GCP firewall). 2) **NAT/Port forwarding** — is external port mapped to internal service? 3) **Listener binding** — service bound to `0.0.0.0` (all interfaces) or only `127.0.0.1` (localhost)? Check: `ss -tlnp`. 4) **DNS** — external DNS pointing to correct public IP? 5) **Load balancer/reverse proxy** — misconfigured upstream. 6) **ISP blocking** the port (port 25 often blocked).
+
+</QA>
+
+<QA question="Intermittent packet loss to a remote server. How do you isolate where the loss happens?">
+
+Use **mtr** (combines traceroute + continuous ping): `mtr --report remote-server`. Run for 5+ minutes. Look for hops where **packet loss % increases and stays high** for all subsequent hops (indicates the problem hop). If loss appears at one hop but recovers at the next, it's likely ICMP rate-limiting (not real loss). Also: `tcpdump` on both ends to correlate. Check for patterns (time-based = congestion, constant = hardware issue). Compare forward and reverse paths.
+
+</QA>
+

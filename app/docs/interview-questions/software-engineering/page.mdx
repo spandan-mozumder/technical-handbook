@@ -6,97 +6,97 @@ import { QA } from "@/components/QA";
 
 <QA question="What are the characteristics of software?">
 
-Asked in interviews.
+1) **Functionality** — performs intended tasks correctly. 2) **Reliability** — operates without failure under stated conditions. 3) **Usability** — easy to learn and use. 4) **Efficiency** — optimal use of resources (CPU, memory). 5) **Maintainability** — easy to modify, fix, and extend. 6) **Portability** — runs across different platforms. Software is developed, not manufactured; it doesn't wear out (but degrades with changes); and most software is custom-built rather than assembled from components.
 
 </QA>
 
 <QA question="What are the various categories of software?">
 
-Asked in interviews.
+1) **System Software** — OS, drivers, compilers, utilities. 2) **Application Software** — business apps, word processors, browsers. 3) **Engineering/Scientific Software** — CAD, simulation, data analysis. 4) **Embedded Software** — runs in hardware devices (IoT, automotive, medical). 5) **Web Applications** — SaaS, e-commerce, social media. 6) **AI Software** — machine learning, NLP, robotics. 7) **Mobile Applications** — native (iOS/Android) and cross-platform apps. 8) **Middleware** — software that connects applications (message brokers, API gateways).
 
 </QA>
 
 <QA question="Explain SDLC and its phases.">
 
-Asked in interviews.
+**SDLC** (Software Development Life Cycle) is a structured process for building software. **Phases**: 1) **Planning** — feasibility study, scope definition, resource estimation. 2) **Requirements Analysis** — gather and document functional/non-functional requirements (SRS). 3) **Design** — HLD (architecture, tech stack) and LLD (class diagrams, DB schema). 4) **Implementation** — actual coding. 5) **Testing** — unit, integration, system, UAT testing. 6) **Deployment** — release to production (staged rollout). 7) **Maintenance** — bug fixes, enhancements, performance optimization. Each phase produces deliverables that feed into the next.
 
 </QA>
 
 <QA question="What are the different SDLC models available?">
 
-Asked in interviews.
+1) **Waterfall** — sequential phases, no going back. 2) **V-Model** — testing paired with each development phase. 3) **Iterative** — build in repeated cycles, refining each iteration. 4) **Spiral** — combines iterative with risk analysis at each loop. 5) **Agile** — short sprints (2-4 weeks), continuous delivery, customer collaboration. 6) **Scrum** — Agile framework with roles (PO, SM, team), ceremonies (standup, retrospective). 7) **Kanban** — visual workflow, continuous flow, WIP limits. 8) **RAD** — Rapid Application Development with prototyping. 9) **DevOps** — integrates development and operations with CI/CD. Choose based on requirements stability, team size, and risk tolerance.
 
 </QA>
 
 <QA question="What is the Waterfall Method and what are its use cases?">
 
-Asked in interviews.
+Waterfall is a linear, sequential SDLC model where each phase must complete before the next begins. **Phases flow downward**: Requirements → Design → Implementation → Testing → Deployment → Maintenance. **Use cases**: well-understood requirements that won't change, regulatory/compliance projects (defense, healthcare), short simple projects, projects requiring extensive documentation. **Advantages**: simple, well-documented, clear milestones. **Disadvantages**: no working software until late, difficult to accommodate changes, high risk of learning about problems late. Not suitable for complex, evolving projects.
 
 </QA>
 
 <QA question="What is Black Box Testing?">
 
-Asked in interviews.
+Black Box Testing tests software functionality WITHOUT knowledge of internal code, structure, or implementation. Tester provides inputs and verifies outputs against expected behavior. **Techniques**: Equivalence Partitioning (group inputs into valid/invalid classes), Boundary Value Analysis (test at limits), Decision Table Testing, State Transition Testing. **Types**: Functional testing, regression testing, UAT. Performed by QA engineers who don't need programming knowledge. Tests WHAT the software does, not HOW it does it. Complements White Box Testing for comprehensive coverage.
 
 </QA>
 
 <QA question="What is White Box Testing?">
 
-Asked in interviews.
+White Box Testing (also called Clear Box or Glass Box Testing) tests internal code structure, logic, and implementation details. Tester has full access to source code. **Techniques**: Statement Coverage (every line executed), Branch Coverage (every if/else path), Path Coverage (every possible execution path), Condition Coverage (every boolean condition). **Types**: Unit testing, code reviews, static analysis. Requires programming knowledge. Tests HOW the software works internally. Helps find logical errors, dead code, and untested paths. Used alongside Black Box Testing for thorough quality assurance.
 
 </QA>
 
 <QA question="Distinguish between Alpha and Beta Testing.">
 
-Asked in interviews.
+**Alpha Testing**: performed by internal team (developers/QA) at the development site BEFORE release to external users. Goal: catch bugs before external exposure. In a controlled lab environment with simulated scenarios. **Beta Testing**: performed by real end users at their own sites AFTER alpha testing. Goal: get real-world feedback, discover issues not found internally. Users provide feedback on usability, performance, and bugs. **Key differences**: Alpha = internal, controlled; Beta = external, real-world. Alpha finds functional bugs; Beta validates user experience, compatibility, and scalability. Beta often serves marketing purposes too (early access).
 
 </QA>
 
 <QA question="What is Debugging?">
 
-Asked in interviews.
+Debugging is the process of finding and fixing bugs (defects/errors) in software. **Steps**: 1) **Reproduce** — reliably trigger the bug. 2) **Isolate** — narrow down the cause (bisect code, check recent changes). 3) **Identify root cause** — use debugger (breakpoints, step-through), logging, stack traces. 4) **Fix** — modify code to resolve the issue. 5) **Verify** — confirm fix works and doesn't introduce regressions. 6) **Write test** — prevent recurrence. **Tools**: IDE debuggers, console.log/print statements, profilers, memory leak detectors, `git bisect`. Debugging differs from testing — testing finds bugs, debugging fixes them.
 
 </QA>
 
 <QA question="What is a Feasibility Study?">
 
-Asked in interviews.
+A Feasibility Study evaluates whether a proposed project is viable before committing resources. **Types**: 1) **Technical Feasibility** — is the technology available? Can the team build it? 2) **Economic Feasibility** — cost-benefit analysis, ROI. Will it be profitable? 3) **Operational Feasibility** — will users adopt it? Does it fit existing workflows? 4) **Schedule Feasibility** — can it be completed within the timeline? 5) **Legal Feasibility** — compliance, licensing, intellectual property concerns. Output is a feasibility report with recommendation: proceed, modify scope, or abandon. Performed early in SDLC to avoid wasting resources on non-viable projects.
 
 </QA>
 
 <QA question="What is a Use Case Diagram?">
 
-Asked in interviews.
+A Use Case Diagram is a UML (Unified Modeling Language) diagram showing how users (actors) interact with a system. **Components**: **Actors** (stick figures — users or external systems), **Use Cases** (ovals — system functions/features), **System Boundary** (rectangle — scope of the system), **Relationships** (lines connecting actors to use cases, include/extend between use cases). Example for an ATM: actors = Customer, Bank; use cases = Withdraw Cash, Check Balance, Transfer Funds. `include` = mandatory sub-behavior; `extend` = optional behavior. Used in requirements analysis to capture functional scope.
 
 </QA>
 
 <QA question="What is the difference between Verification and Validation?">
 
-Asked in interviews.
+**Verification** — "Are we building the product RIGHT?" Checks if software conforms to specifications. Done by developers during development. Static activities: reviews, walkthroughs, inspections, static analysis. No code execution needed. **Validation** — "Are we building the RIGHT product?" Checks if software meets user needs and expectations. Done by QA/testers/users. Dynamic activities: testing, demos, UAT. Requires running the software. Verification catches defects early (cheaper to fix); Validation catches requirement mismatches. Both are essential — a system can be verified (code matches spec) but not validated (spec was wrong).
 
 </QA>
 
 <QA question="What is a Baseline in software engineering?">
 
-Asked in interviews.
+A baseline is a formally reviewed and agreed-upon version of a work product (document, code, design) that serves as a reference point for future changes. Once baselined, any modification requires a formal change control process. **Types**: Requirements Baseline (approved SRS), Design Baseline (approved architecture), Code Baseline (released version). **Purpose**: provides a stable foundation for development, enables controlled changes, supports configuration management, allows progress measurement. Changes to a baseline must go through a Change Control Board (CCB) for approval. Think of it as a "checkpoint save" in a game.
 
 </QA>
 
 <QA question="What is Cohesion and Coupling?">
 
-Asked in interviews.
+**Cohesion** — how closely related the responsibilities within a single module are. HIGH cohesion = good (module does one thing well). Types (best to worst): Functional > Sequential > Communicational > Procedural > Temporal > Logical > Coincidental. **Coupling** — how much one module depends on another. LOW coupling = good (modules are independent). Types (best to worst): Data > Stamp > Control > External > Common > Content coupling. **Goal**: HIGH cohesion + LOW coupling = maintainable, testable, reusable modules. Example: a `UserAuth` module handling ONLY authentication = high cohesion. If it also formats reports = low cohesion.
 
 </QA>
 
 <QA question="What is the Agile software development model?">
 
-Asked in interviews.
+Agile is an iterative, incremental approach that delivers working software in short cycles (sprints, usually 2-4 weeks). **Core values** (Agile Manifesto): Individuals over processes, Working software over documentation, Customer collaboration over contracts, Responding to change over following a plan. **Key practices**: short iterations, continuous feedback, daily standups, retrospectives, user stories, adaptive planning. **Frameworks**: Scrum, Kanban, XP, SAFe. **Benefits**: faster time-to-market, adaptable to changing requirements, continuous improvement, higher customer satisfaction. **Best for**: projects with evolving requirements, cross-functional teams, products needing frequent releases.
 
 </QA>
 
 <QA question="What is the difference between Quality Assurance and Quality Control?">
 
-Asked in interviews.
+**Quality Assurance (QA)** — process-oriented, preventive. Focuses on PREVENTING defects by improving development processes. Activities: process audits, standards definition, training, code reviews, best practices. Proactive — done DURING development. **Quality Control (QC)** — product-oriented, detective. Focuses on FINDING defects in the finished product. Activities: testing (manual/automated), inspections, bug tracking. Reactive — done AFTER development. **Analogy**: QA = building a road with proper engineering standards; QC = inspecting the finished road for potholes. Both are needed — QA reduces defects overall; QC catches those that slip through.
 
 </QA>
 
@@ -104,67 +104,67 @@ Asked in interviews.
 
 <QA question="What is the Spiral Model and what are its disadvantages?">
 
-Asked in interviews.
+The Spiral Model combines iterative development with systematic risk analysis. Each loop has 4 quadrants: 1) Determine objectives, 2) Identify and resolve risks, 3) Develop and test, 4) Plan next iteration. **Advantages**: risk-driven, suitable for large/complex projects, produces working prototypes early. **Disadvantages**: 1) Expensive — risk analysis at each spiral requires specialized expertise. 2) Complex to manage. 3) Not suitable for small projects (overhead not justified). 4) Process is complicated and hard to follow. 5) Too much risk analysis can kill the project. 6) Success depends heavily on risk identification skills.
 
 </QA>
 
 <QA question="What is the RAD Model and its limitations?">
 
-Asked in interviews.
+**RAD** (Rapid Application Development) emphasizes rapid prototyping and iterative delivery over rigid planning. **Phases**: Business Modeling → Data Modeling → Process Modeling → Application Generation → Testing. Uses code generators, CASE tools, reusable components. **Limitations**: 1) Requires highly skilled developers and domain experts. 2) Not suitable for projects with unclear requirements. 3) Difficult for large-scale projects. 4) Depends on strong customer involvement. 5) Not suitable for projects with high technical risk. 6) May produce inconsistent designs. Best for: business applications with well-understood domains and need for quick delivery.
 
 </QA>
 
 <QA question="What is Regression Testing?">
 
-Asked in interviews.
+Regression Testing verifies that recent code changes haven't broken existing functionality. After a bug fix, new feature, or refactoring, run existing test suites to ensure nothing that previously worked is now failing. **Types**: Corrective (no code change, same test), Progressive (code changed, tests updated), Selective (run only tests related to changes), Complete (run entire test suite). **Best practices**: automate regression tests (saves time), maintain a regression suite, integrate into CI/CD pipeline (run on every commit), prioritize by risk. Tools: Selenium, Cypress, Jest, JUnit. Critical for maintaining software quality over time.
 
 </QA>
 
 <QA question="What are CASE Tools?">
 
-Asked in interviews.
+**CASE** (Computer-Aided Software Engineering) tools are software applications that support SDLC activities. **Upper CASE**: requirements analysis and design — UML tools (Enterprise Architect), wireframing (Figma), requirements management (Jira, Confluence). **Lower CASE**: implementation and testing — IDEs (VS Code), debuggers, testing frameworks (JUnit, Cypress), code generators. **Integrated CASE**: support entire lifecycle — IBM Rational, Microsoft Azure DevOps. **Benefits**: increased productivity, consistent documentation, automated code generation, better quality. Modern equivalents include GitHub (version control + CI/CD), Figma (design), and Jira (project management).
 
 </QA>
 
 <QA question="What is Physical and Logical DFD (Data Flow Diagram)?">
 
-Asked in interviews.
+**Logical DFD** describes WHAT the system does — data flows, processes, and stores without specifying HOW or WHERE. Technology-independent. Example: "Customer submits order" → "Validate order" → "order_store". **Physical DFD** describes HOW the system is implemented — specifies hardware, software, files, databases, and networks. Example: "Customer fills React form" → "Express API validates using Joi" → "PostgreSQL orders table". **Levels**: Level 0 (context diagram — single process), Level 1 (major sub-processes), Level 2+ (further decomposition). Create logical DFD first (understand the problem), then physical DFD (plan the solution).
 
 </QA>
 
 <QA question="What is Software Re-engineering?">
 
-Asked in interviews.
+Software Re-engineering is the process of restructuring or rewriting an existing system to improve maintainability, performance, or adaptability WITHOUT changing its external behavior. **Steps**: 1) Inventory analysis — identify candidates. 2) Document restructuring — update/create documentation. 3) Reverse engineering — understand current design. 4) Code restructuring — refactor without changing functionality. 5) Data restructuring — normalize databases, update schemas. 6) Forward engineering — implement improvements. **Why**: legacy systems become expensive to maintain, hard to extend, use obsolete technology. Different from maintenance (which adds/fixes features) — re-engineering fundamentally improves the internal structure.
 
 </QA>
 
 <QA question="What is Reverse Engineering?">
 
-Asked in interviews.
+Reverse Engineering is analyzing a system to understand its components, function, and behavior — working backward from code to design. **Purpose**: understand legacy systems with no documentation, create documentation for existing code, discover design patterns used, analyze competitor products, migrate to new platforms. **Levels**: Implementation (code → algorithm understanding), Design (code → class/architecture diagrams), Requirements (code → functional specification). **Tools**: decompilers, disassemblers, UML extraction tools, code analysis tools. **Legal note**: reverse engineering for interoperability is generally legal; for copying is usually not.
 
 </QA>
 
 <QA question="What are the available software project estimation techniques?">
 
-Asked in interviews.
+1) **Expert Judgment** — experienced developers estimate based on past projects. Quick but subjective. 2) **Analogous Estimation** — compare with similar completed projects. 3) **COCOMO** — Constructive Cost Model using lines of code (LOC) with formulas for effort/time. 4) **Function Point Analysis** — estimate size based on functional requirements (inputs, outputs, inquiries, files). 5) **Planning Poker** — team consensus through card-based voting (Agile). 6) **Three-Point Estimation** — (Optimistic + 4×Most Likely + Pessimistic) / 6. 7) **Story Points** — relative sizing in Agile using Fibonacci sequence. Best practice: use multiple techniques and compare results.
 
 </QA>
 
 <QA question="How do you measure the complexity of software?">
 
-Asked in interviews.
+1) **Cyclomatic Complexity** (McCabe) — V(G) = E - N + 2P (edges - nodes + 2×connected components in control flow graph). Higher = more complex. Aim for less than 10 per function. 2) **Lines of Code (LOC)** — simple but crude metric. 3) **Halstead Metrics** — uses operators and operands count to derive volume, difficulty, effort. 4) **Function Points** — measures functionality from user perspective. 5) **Cognitive Complexity** (SonarQube) — measures how hard code is to understand (weights nesting, breaks in flow). 6) **Code Churn** — frequency of changes. 7) **Dependency metrics** — coupling between modules. Tools: SonarQube, CodeClimate, ESLint complexity rules.
 
 </QA>
 
 <QA question="Name some software analysis and design tools.">
 
-Asked in interviews.
+**Requirements**: Jira (user stories, backlog), Confluence (documentation), Notion. **UML/Diagrams**: Lucidchart, Draw.io, PlantUML, Mermaid, Enterprise Architect, StarUML. **Wireframing/UI**: Figma, Sketch, Adobe XD, Balsamiq. **Database Design**: dbdiagram.io, MySQL Workbench, pgModeler, ERDPlus. **API Design**: Swagger/OpenAPI, Postman, Insomnia. **Architecture**: C4 model tools, Structurizr, Archi (ArchiMate). **Code Analysis**: SonarQube, CodeClimate, ESLint. **Prototyping**: InVision, Proto.io, Axure.
 
 </QA>
 
 <QA question="What is SRS (Software Requirements Specification)?">
 
-Asked in interviews.
+An SRS is a comprehensive document describing WHAT the software should do. **Contents**: 1) **Introduction** — purpose, scope, definitions. 2) **Overall Description** — product perspective, user classes, constraints, assumptions. 3) **Functional Requirements** — detailed feature descriptions with inputs, processing, outputs. 4) **Non-Functional Requirements** — performance (response time less than 200ms), security, scalability, reliability, usability. 5) **Interface Requirements** — UI, API, hardware, software interfaces. 6) **Appendices** — glossary, references, data models. **IEEE 830** standard provides the format. Good SRS is unambiguous, complete, consistent, verifiable, and traceable. It's the contract between stakeholders and developers.
 
 </QA>
 
@@ -172,55 +172,55 @@ Asked in interviews.
 
 <QA question="What is a level-0 DFD?">
 
-Asked in interviews.
+A **Level-0 DFD** (also called a Context Diagram) is the highest-level view of a system. It shows the ENTIRE system as a single process (circle) with its interactions with external entities (rectangles) through data flows (arrows). No internal details — just what goes in and out. Example for an e-commerce system: External entities = Customer, Payment Gateway, Warehouse. Data flows = Order, Payment, Shipping Info. The single process = "E-Commerce System". Level-1 DFD then decomposes this into sub-processes; Level-2 further decomposes each sub-process. Each level adds more detail.
 
 </QA>
 
 <QA question="What is a Function Point?">
 
-Asked in interviews.
+Function Points measure software size based on functionality delivered to the user, independent of technology or language. **Count 5 types**: 1) **External Inputs** (EI) — data entering system (forms, uploads). 2) **External Outputs** (EO) — data leaving system (reports, exports). 3) **External Inquiries** (EQ) — input/output pairs (search queries). 4) **Internal Logical Files** (ILF) — data maintained by system (database tables). 5) **External Interface Files** (EIF) — data referenced from other systems. Each is classified as Low/Average/High complexity and given a weight. Total = sum of weighted counts, adjusted by Value Adjustment Factor (14 general system characteristics). Used for estimation, productivity measurement, and benchmarking.
 
 </QA>
 
 <QA question="What is the formula to calculate Cyclomatic Complexity?">
 
-Asked in interviews.
+**V(G) = E - N + 2P** where: E = number of edges (connections), N = number of nodes (statements/blocks), P = number of connected components (usually 1 for a single function). **Alternative formulas**: V(G) = number of decision points + 1 (for a single function), or V(G) = number of regions in the planar graph. **Interpretation**: V(G) = 1-10 (simple, low risk), 11-20 (moderate complexity), 21-50 (complex, high risk), 50+ (untestable, refactor immediately). Cyclomatic complexity equals the minimum number of test cases needed for full branch coverage.
 
 </QA>
 
 <QA question="What is the Cyclomatic Complexity of a module that has 17 edges and 13 nodes?">
 
-Asked in interviews.
+Using the formula V(G) = E - N + 2P (where P = 1 for a single module): V(G) = 17 - 13 + 2(1) = **6**. This means: 1) The module has moderate complexity. 2) You need a minimum of 6 independent test cases for full branch coverage. 3) There are 6 linearly independent paths through the code. A complexity of 6 is acceptable — it's within the recommended range of 1-10.
 
 </QA>
 
 <QA question="What is the COCOMO Model?">
 
-Asked in interviews.
+**COCOMO** (Constructive Cost Model) by Barry Boehm estimates software development effort from Lines of Code (LOC). **Three levels**: 1) **Basic COCOMO**: Effort = a × (KLOC)^b person-months. 2) **Intermediate COCOMO**: adds 15 cost drivers (product reliability, team experience, platform constraints). 3) **Detailed COCOMO**: phase-level estimation with cost drivers per phase. **Project types**: Organic (small team, familiar domain, a=2.4, b=1.05), Semi-detached (medium, mixed experience, a=3.0, b=1.12), Embedded (tight constraints, hardware, a=3.6, b=1.20). **COCOMO II** is the modern version adapted for iterative development, reuse, and OOP.
 
 </QA>
 
 <QA question="Define the estimation of software development effort for organic software in the basic COCOMO Model.">
 
-Asked in interviews.
+For **Organic** type software in Basic COCOMO: **Effort** = 2.4 × (KLOC)^1.05 person-months. **Development Time** = 2.5 × (Effort)^0.38 months. Organic projects have: small teams (2-5 people), good domain experience, flexible requirements, small-to-medium size (up to 50 KLOC). Example: 10 KLOC project → Effort = 2.4 × (10)^1.05 = 2.4 × 11.22 = ~27 person-months. Time = 2.5 × (27)^0.38 = 2.5 × 3.56 = ~8.9 months. Average staff = 27/8.9 ≈ 3 people.
 
 </QA>
 
 <QA question="What activities come under Umbrella Activities?">
 
-Asked in interviews.
+Umbrella Activities span across the entire SDLC, supporting all phases: 1) **Software Project Management** — planning, monitoring, controlling. 2) **Formal Technical Reviews** — code reviews, design reviews. 3) **Software Quality Assurance (SQA)** — audits, standards compliance. 4) **Software Configuration Management (SCM)** — version control, change management. 5) **Document Preparation** — user manuals, technical docs. 6) **Reusability Management** — identifying reusable components. 7) **Measurement** — metrics collection (LOC, defect density, productivity). 8) **Risk Management** — identification, analysis, mitigation. They provide infrastructure and support for the core development activities.
 
 </QA>
 
 <QA question="Which SDLC model is the best?">
 
-Asked in interviews.
+There is NO single "best" model — the choice depends on project context. **Use Waterfall** for: well-defined, stable requirements, compliance-heavy projects. **Use Agile/Scrum** for: evolving requirements, continuous delivery, startups. **Use Spiral** for: large, high-risk projects needing iterative risk analysis. **Use V-Model** for: safety-critical systems (medical, aerospace) with rigorous testing. **Use Kanban** for: maintenance teams, continuous flow work. **Use DevOps** for: cloud-native applications needing rapid deployment. Modern trend: most teams use Agile (Scrum/Kanban) because requirements rarely stay fixed and continuous delivery is expected.
 
 </QA>
 
 <QA question="What is the Black Hole concept in DFD?">
 
-Asked in interviews.
+A **Black Hole** in a Data Flow Diagram is a process that has input data flows but NO output data flows — data enters the process but nothing comes out. This is a DFD error because every process must produce some output or transform data in some way. Similarly, a **Miracle** (or White Hole) is a process with outputs but no inputs — producing data from nothing. Both are logical errors that must be fixed. Another common DFD error is a **Grey Hole** — a process whose outputs are greater than its inputs, suggesting missing input data flows.
 
 </QA>
 
@@ -228,78 +228,202 @@ Asked in interviews.
 
 <QA question="Which testing technique is used for fault simulation?">
 
-Asked in interviews.
+**Mutation Testing** is used for fault simulation. It introduces deliberate small changes (mutations) into the source code — changing `+` to `-`, `>` to `>=`, removing statements. Each mutated version is a "mutant." Test suites are then run against mutants. If tests catch the change (fail), the mutant is "killed" — tests are effective. If tests still pass, they missed the mutation — tests are weak and need improvement. **Mutation Score** = (killed mutants / total mutants) × 100%. Tools: PITest (Java), Stryker (JavaScript), mutmut (Python). Computationally expensive but highly effective for evaluating test quality.
 
 </QA>
 
 <QA question="Which model is used to check software reliability?">
 
-Asked in interviews.
+The **Reliability Growth Model** is used to measure and predict software reliability over time. Specific models: 1) **Jelinski-Moranda Model** — assumes equal failure probability for each remaining fault, reliability increases as faults are fixed. 2) **Musa's Basic Model** — relates failure intensity to execution time and failures experienced. 3) **Goel-Okumoto NHPP Model** — uses Non-Homogeneous Poisson Process to model failure occurrence. **Key metrics**: MTTF (Mean Time To Failure), MTBF (Mean Time Between Failures), Failure Rate, Availability = MTTF / (MTTF + MTTR). These models help decide when software is reliable enough to release.
 
 </QA>
 
 <QA question="What is the difference between Risk and Uncertainty?">
 
-Asked in interviews.
+**Risk**: known unknowns — you know what COULD go wrong and can estimate probability and impact. Can be managed through mitigation strategies, contingency plans, and monitoring. Example: "There's a 30% chance the API vendor increases prices." **Uncertainty**: unknown unknowns — you don't know what might happen, can't estimate probability. Can only be addressed through flexibility, adaptability, and reserves. Example: a completely unforeseen technology disruption. In project management: risks are identified, assessed (probability × impact), prioritized (risk matrix), and mitigated. Uncertainty is handled through buffers, agile methods, and iterative development.
 
 </QA>
 
 <QA question="What is CMM (Capability Maturity Model)?">
 
-Asked in interviews.
+CMM is a framework by SEI (Carnegie Mellon) that measures an organization's software development process maturity. **5 Levels**: 1) **Initial** — chaotic, ad-hoc processes, success depends on individuals. 2) **Repeatable** — basic project management, can repeat earlier successes. 3) **Defined** — standardized processes documented and followed organization-wide. 4) **Managed** — processes are measured with quantitative metrics, controlled. 5) **Optimizing** — continuous process improvement using feedback and innovation. **Successor**: CMMI (Capability Maturity Model Integration) covers software, systems, acquisition, and services. Used for vendor evaluation, process improvement, and organizational benchmarking.
 
 </QA>
 
 <QA question="Software does not wear out in the traditional sense, but it does tend to deteriorate as it evolves. Why?">
 
-Asked in interviews.
+Software deterioration happens due to: 1) **Side effects of changes** — each modification can introduce new bugs (regression). 2) **Increasing complexity** — as features accumulate, the codebase becomes harder to understand and maintain. 3) **Technical debt** — quick fixes and shortcuts accumulate over time. 4) **Environment changes** — OS updates, library deprecations, security vulnerabilities. 5) **Knowledge loss** — original developers leave, documentation becomes outdated. 6) **Architecture erosion** — original design principles are violated during rapid changes. Unlike hardware wear (physical degradation), software deterioration is caused by human changes. Solution: regular refactoring, comprehensive testing, documentation, and managing technical debt.
 
 </QA>
 
 <QA question="What are the elements to be considered in System Model Construction?">
 
-Asked in interviews.
+1) **Architecture Design** — overall system structure, components, and their relationships. 2) **Data Design** — data structures, database schema, data flow. 3) **Interface Design** — UI design, API contracts, system-to-system interfaces. 4) **Component-Level Design** — algorithms, data structures within each module. 5) **Deployment Design** — hardware, network topology, cloud infrastructure. 6) **Behavioral Modeling** — state diagrams, activity diagrams, sequence diagrams showing system behavior. 7) **Constraints** — performance requirements, security, scalability targets. 8) **Trade-offs** — documented decisions and rationale. Models should be abstract enough to communicate intent but detailed enough to guide implementation.
 
 </QA>
 
 <QA question="Define Adaptive Maintenance.">
 
-Asked in interviews.
+**Adaptive Maintenance** modifies software to work in a changed environment WITHOUT changing functionality. **Triggers**: new OS version, database migration (MySQL to PostgreSQL), cloud platform changes, new hardware, updated third-party APIs, new regulations requiring format changes, browser updates. Example: updating a web app from Angular 14 to Angular 17, migrating from Python 2 to Python 3, moving from on-premise to AWS. **Other maintenance types**: Corrective (fixing bugs), Perfective (adding features/improvements), Preventive (refactoring to prevent future problems). Adaptive maintenance typically accounts for ~20-25% of total maintenance effort.
 
 </QA>
 
 <QA question="Define the term WBS (Work Breakdown Structure).">
 
-Asked in interviews.
+A **WBS** is a hierarchical decomposition of a project into smaller, manageable work packages. It breaks the project scope into deliverables, then into tasks. **Structure**: Level 1 = Project, Level 2 = Major Deliverables/Phases, Level 3 = Sub-deliverables, Level 4 = Work Packages (smallest assignable units). **Rules**: 100% rule (WBS covers ALL project work), no overlap between items, deliverable-oriented (nouns, not verbs). Example: E-commerce Project → Frontend (ProductPage, Cart, Checkout) → Backend (Auth API, Order API, Payment API) → Database (Schema, Migration, Seeding). Used for estimation, scheduling, resource allocation, and progress tracking.
 
 </QA>
 
 <QA question="How to find the size of a software product?">
 
-Asked in interviews.
+1) **Lines of Code (LOC / KLOC)** — count executable lines. Simple but language-dependent. 2) **Function Points (FP)** — measure functionality from user perspective (inputs, outputs, files, inquiries). Language-independent. 3) **Story Points** — relative sizing in Agile using Fibonacci (1, 2, 3, 5, 8, 13). 4) **Use Case Points** — weight actors and use cases by complexity. 5) **Object Points** — count screens, reports, and 3GL components. 6) **Feature Points** — modified FP for real-time and embedded systems. **Best practice**: Function Points for estimation accuracy, Story Points for sprint planning. LOC is best used after development for measuring actual size.
 
 </QA>
 
 <QA question="What is Concurrency and how to achieve it?">
 
-Asked in interviews.
+**Concurrency** means multiple computations executing during overlapping time periods — not necessarily simultaneously (that's parallelism). **Achieving concurrency**: 1) **Multithreading** — multiple threads within a process sharing memory. 2) **Multiprocessing** — separate processes with isolated memory. 3) **Asynchronous I/O** — non-blocking operations (Node.js event loop, Python asyncio). 4) **Actor Model** — isolated actors communicating via messages (Akka, Erlang). **Challenges**: race conditions, deadlocks, starvation, priority inversion. **Solutions**: mutexes/locks, semaphores, monitors, message passing, immutable data structures, lock-free algorithms. In distributed systems: use message queues, event sourcing, CRDTs.
 
 </QA>
 
 <QA question="Why is Modularization important in Software Engineering?">
 
-Asked in interviews.
+Modularization decomposes a system into independent, self-contained modules. **Benefits**: 1) **Maintainability** — change one module without affecting others. 2) **Reusability** — modules can be used in other projects. 3) **Testability** — test modules in isolation (unit testing). 4) **Parallel Development** — different teams work on different modules simultaneously. 5) **Readability** — smaller, focused code is easier to understand. 6) **Fault Isolation** — bugs are contained within modules. 7) **Scalability** — scale individual modules independently (microservices). **Principles**: Single Responsibility, high cohesion, low coupling, well-defined interfaces. Examples: npm packages, Java packages, microservices architecture.
 
 </QA>
 
 <QA question="Which process model removes defects before software gets into trouble?">
 
-Asked in interviews.
+The **Cleanroom Software Engineering** model focuses on defect PREVENTION rather than defect removal. Based on: 1) **Incremental development** — build in small verified increments. 2) **Formal specification** — mathematically specify behavior. 3) **Correctness verification** — prove code correctness through team reviews and formal methods (no unit testing by developers). 4) **Statistical testing** — independent team tests based on usage profiles and statistical models. Result: very low defect rates (near-zero for critical systems). Used in aerospace, medical, and defense. The philosophy: don't put bugs in, rather than finding and fixing them later.
 
 </QA>
 
 <QA question="What is the difference between an EXE and a DLL?">
 
-Asked in interviews.
+**EXE** (Executable): a standalone program that runs independently. Has its own memory space and entry point (main function). Double-click to run. One EXE per process. **DLL** (Dynamic Link Library): a shared library that CANNOT run on its own — must be loaded by an EXE. Multiple programs can share a single DLL in memory (saves resources). No entry point for standalone execution. **Key differences**: EXE creates a new process; DLL runs within the calling process's address space. EXE has its own memory; DLL shares memory with the host process. A single EXE can load multiple DLLs. DLLs enable code reuse, modularity, and smaller executables.
+
+</QA>
+
+## Agile & Scrum (from InterviewBit)
+
+<QA question="What do you mean by Daily Stand-Up meeting?">
+
+A Daily Stand-Up (or Daily Scrum) is a 15-minute time-boxed meeting where each team member answers three questions: 1) What did I do yesterday? 2) What will I do today? 3) Are there any blockers? **Purpose**: synchronize the team, identify impediments early, promote accountability. **Rules**: same time/place daily, standing (to keep it short), no problem-solving during the meeting (take offline). The Scrum Master facilitates and helps remove blockers. It's NOT a status report to management — it's peer-to-peer coordination. Keep it focused and under 15 minutes.
+
+</QA>
+
+<QA question="What's the difference between sprint backlog and product backlog?">
+
+**Product Backlog**: the complete, prioritized list of ALL features, requirements, enhancements, and bug fixes for the entire product. Owned and prioritized by the Product Owner. Continuously refined (backlog grooming). Items are User Stories or Epics. Lives for the product's lifetime. **Sprint Backlog**: the subset of Product Backlog items selected for the current sprint PLUS the plan for delivering them. Owned by the Development Team. Created during Sprint Planning. Only contains work for the 2-4 week sprint. Updated daily. Items are broken into tasks with estimates. Sprint Backlog is a commitment; Product Backlog is a wishlist.
+
+</QA>
+
+<QA question="What is Spike and Zero Sprint in Agile?">
+
+**Spike**: a time-boxed investigation (research story) to answer a question or reduce risk. Used when the team needs to: explore a new technology, prototype a solution, estimate a complex story, or investigate a bug. Output is knowledge, not shippable code. Has a fixed time box (e.g., 2 days). Example: "Investigate whether GraphQL can replace our REST API — 1 day spike." **Zero Sprint** (Sprint 0): the initial sprint before "real" sprints begin. Used for: setting up development environment, creating initial architecture, configuring CI/CD, establishing coding standards, writing initial backlog. Not part of all Agile frameworks — some consider it an anti-pattern.
+
+</QA>
+
+<QA question="What do you mean by the term 'velocity' in Agile?">
+
+**Velocity** is the amount of work a team completes in a single sprint, measured in Story Points (or any consistent unit). Calculated by summing the story points of all COMPLETED user stories in a sprint. **Uses**: 1) Sprint planning — predict how much work can fit in the next sprint. 2) Release planning — estimate how many sprints to complete remaining backlog. 3) Track team capacity trends over time. **Important**: velocity is a planning tool, NOT a performance metric. Don't compare velocities between teams (different scales). Takes 3-5 sprints to stabilize. Example: Sprint 1 = 21 points, Sprint 2 = 26, Sprint 3 = 23 → average velocity ≈ 23 points/sprint.
+
+</QA>
+
+<QA question="What is 'Planning Poker' technique?">
+
+Planning Poker is a consensus-based estimation technique in Agile. **Process**: 1) Product Owner presents a user story. 2) Team discusses scope and clarifies. 3) Each member privately selects a card from a modified Fibonacci sequence (1, 2, 3, 5, 8, 13, 21, ∞). 4) All reveal cards simultaneously. 5) If estimates differ significantly, the highest and lowest estimators explain their reasoning. 6) Re-vote until consensus. **Benefits**: avoids anchoring bias (simultaneous reveal), surfaces different perspectives, enables discussion on complexity. Uses relative sizing (comparing stories to each other). Tools: PlanningPoker.com, Jira's estimation feature.
+
+</QA>
+
+<QA question="What is the difference between Agile and Scrum?">
+
+**Agile** is a philosophy/mindset defined by the Agile Manifesto — it values individuals, working software, customer collaboration, and responding to change. It's NOT a framework or methodology. **Scrum** is a specific FRAMEWORK that implements Agile principles. It prescribes: roles (Product Owner, Scrum Master, Dev Team), events (Sprint Planning, Daily Standup, Sprint Review, Retrospective), and artifacts (Product Backlog, Sprint Backlog, Increment). Agile = the "why"; Scrum = one "how." Other Agile frameworks: Kanban, XP, SAFe, Crystal. You can be Agile without using Scrum, but Scrum always follows Agile principles.
+
+</QA>
+
+<QA question="What is Agile Manifesto? What are its values and principles?">
+
+The Agile Manifesto (2001, 17 software developers) defines 4 values and 12 principles. **Values**: 1) Individuals and interactions OVER processes and tools. 2) Working software OVER comprehensive documentation. 3) Customer collaboration OVER contract negotiation. 4) Responding to change OVER following a plan. **Key principles**: deliver working software frequently, welcome changing requirements, business and developers collaborate daily, build projects around motivated individuals, face-to-face conversation is best, simplicity — maximize work NOT done, self-organizing teams, regular reflection and adjustment. Note: "over" doesn't mean the right side has no value — both matter, but the left is prioritized.
+
+</QA>
+
+<QA question="Explain the terms User story, Epic, and Tasks in Scrum.">
+
+**User Story**: a short, simple description of a feature from the user's perspective. Format: "As a [role], I want [feature], so that [benefit]." Example: "As a shopper, I want to filter products by price, so I can find items in my budget." Small enough to complete in one sprint. **Epic**: a large user story too big for one sprint — broken down into multiple user stories. Example: "User account management" epic → stories for registration, login, profile editing, password reset. **Task**: a technical work item needed to complete a story. Example: for the filter story — tasks: "Create price range UI component", "Add filter API endpoint", "Write unit tests." Hierarchy: Epic > Story > Task.
+
+</QA>
+
+<QA question="Explain TimeBoxing in Scrum.">
+
+TimeBoxing is setting a fixed maximum time for an activity — when time expires, the activity ends regardless of completion. **Scrum timeboxes**: Sprint (2-4 weeks), Sprint Planning (8 hours for 4-week sprint), Daily Standup (15 minutes), Sprint Review (4 hours), Sprint Retrospective (3 hours). **Benefits**: 1) Prevents over-analysis ("analysis paralysis"). 2) Creates urgency and focus. 3) Forces prioritization — most important work first. 4) Makes progress predictable. 5) Prevents meetings from dragging on. **Key**: when the timebox expires, STOP. Review what was accomplished, adjust plans if needed. The sprint itself is the most important timebox — scope is negotiable, but the end date is not.
+
+</QA>
+
+<QA question="What do you mean by Scrum of Scrums (SoS)?">
+
+**Scrum of Scrums** is a scaled Agile technique for coordinating multiple Scrum teams working on the same product. One representative from each team (usually a tech lead) attends the SoS meeting. **Format**: similar to daily standup but broader — each rep shares: what their team accomplished, what they'll do next, and any cross-team blockers or dependencies. **Frequency**: typically 2-3 times per week (not necessarily daily). **Purpose**: identify inter-team dependencies, resolve integration issues, coordinate shared resources, align on common goals. Frameworks like SAFe, LeSS, and Nexus provide more structured approaches for scaling Scrum beyond 3-4 teams.
+
+</QA>
+
+## Software Testing (from InterviewBit)
+
+<QA question="What is regression testing in software testing?">
+
+Regression testing re-runs existing test cases after code changes (bug fixes, new features, refactoring) to ensure nothing previously working is now broken. **Types**: Full regression (run all tests), Partial regression (run tests related to changed areas), Progressive regression (update tests alongside changed requirements). **Best practices**: automate regression suites, integrate into CI/CD pipeline, prioritize tests by business impact, maintain and prune test suite regularly. **Tools**: Selenium, Cypress, Jest, JUnit, TestNG. A well-maintained regression suite is the safety net that allows teams to deploy with confidence.
+
+</QA>
+
+<QA question="What is exploratory testing?">
+
+Exploratory testing is simultaneous learning, test design, and test execution — the tester explores the application without pre-defined test cases. **Key aspects**: tester uses domain knowledge, intuition, and experience to guide testing. Sessions are time-boxed (60-90 min) with a charter (focus area). Findings are documented during testing. **Benefits**: finds bugs that scripted tests miss, adapts to evolving software, valuable for new features with unclear requirements. **Best for**: usability issues, edge cases, integration problems, and UX flows. Complements (doesn't replace) scripted automated testing. Highly effective when done by experienced testers who think like users AND developers.
+
+</QA>
+
+<QA question="What is end-to-end testing?">
+
+End-to-end (E2E) testing validates the entire application flow from start to finish, simulating real user behavior. It tests ALL layers: UI → API → Database → External Services. **Example**: User registers → logs in → searches product → adds to cart → checks out → receives confirmation email. **Tools**: Cypress, Playwright, Selenium, Puppeteer. **Benefits**: catches integration issues, validates business workflows, tests real user scenarios. **Challenges**: slow, flaky (dependent on external services), expensive to maintain. **Best practices**: test critical paths only (not every flow), use test environments with seeded data, implement retry logic for flaky tests. E2E sits at the top of the testing pyramid (few but important).
+
+</QA>
+
+<QA question="Explain black-box testing, white-box testing, and grey-box testing.">
+
+**Black-box**: test based on requirements and functionality WITHOUT seeing internal code. Techniques: equivalence partitioning, boundary values, decision tables. Done by QA testers. Tests WHAT it does. **White-box**: test based on internal code structure, logic, and paths. Techniques: statement coverage, branch coverage, path coverage. Done by developers. Tests HOW it works. **Grey-box**: combination — tester has partial knowledge of internals (architecture, data structures) but tests from external interface. Used in integration testing, security testing, and database testing. Tester knows the database schema but tests through the UI/API. Provides balance between thoroughness of white-box and realistic scenarios of black-box.
+
+</QA>
+
+<QA question="Explain test scenarios, test scripts, and test cases in software testing.">
+
+**Test Scenario**: a high-level description of WHAT to test. One-liner. Example: "Verify user login functionality." **Test Case**: a detailed document specifying HOW to test a scenario — preconditions, test steps, test data, expected result, actual result, status (pass/fail). Example: "Enter valid email and password, click Login, verify redirect to dashboard." **Test Script**: automated code that executes test cases programmatically. Example: Cypress/Selenium code that opens browser, fills form, clicks button, asserts result. Hierarchy: Scenario (what) → Test Cases (how, manual) → Test Scripts (how, automated). One scenario can have many test cases (positive, negative, edge cases).
+
+</QA>
+
+<QA question="What is A/B testing?">
+
+A/B testing (split testing) compares two versions of a webpage, feature, or UI element by randomly showing each version to different user groups and measuring which performs better. **Process**: 1) Hypothesis: "Changing the button color to green will increase clicks." 2) Create variant A (control — current) and variant B (test — green button). 3) Split traffic randomly (usually 50/50). 4) Measure key metric (click-through rate, conversion). 5) Run until statistically significant. 6) Pick the winner. **Tools**: Google Optimize, Optimizely, LaunchDarkly, Statsig. **Best practices**: test one variable at a time, ensure sufficient sample size, account for statistical significance (p less than 0.05). Used heavily in product, marketing, and UX teams.
+
+</QA>
+
+<QA question="What is Test-Driven Development?">
+
+**TDD** follows a Red-Green-Refactor cycle: 1) **Red** — write a failing test for the desired behavior BEFORE writing any code. 2) **Green** — write the MINIMUM code to make the test pass. 3) **Refactor** — improve the code while keeping tests green. Repeat. **Benefits**: ensures high test coverage, drives clean design (testable = well-designed), documentation through tests, confidence in refactoring, catches regressions immediately. **Rules**: never write code without a failing test, write only enough code to pass the test, refactor continuously. **Challenges**: learning curve, slower initial development, maintaining test suite. Popularized by Kent Beck. Works especially well for domain logic and algorithms.
+
+</QA>
+
+<QA question="What is boundary value analysis in software testing?">
+
+Boundary Value Analysis (BVA) tests values at the boundaries/edges of valid input ranges, where bugs are most likely to occur. **Technique**: for a range [1, 100], test: 0 (just below), 1 (lower boundary), 2 (just above lower), 99 (just below upper), 100 (upper boundary), 101 (just above). **Why**: off-by-one errors are extremely common — `<` vs `<=`, `>` vs `>=`. **Extended BVA**: also test min-1, min, min+1, typical, max-1, max, max+1 for each input. Combined with Equivalence Partitioning (test one value from each valid/invalid class), BVA provides efficient and effective test coverage with fewer test cases.
+
+</QA>
+
+<QA question="What is cross-browser testing?">
+
+Cross-browser testing verifies that a web application works correctly across different browsers (Chrome, Firefox, Safari, Edge), browser versions, operating systems (Windows, macOS, Linux, iOS, Android), and devices (desktop, tablet, mobile). **What to test**: layout/rendering, CSS compatibility, JavaScript functionality, form behavior, responsive design, media playback. **Tools**: BrowserStack, Sauce Labs, LambdaTest (cloud-based real devices), Playwright/Selenium (automated). **Common issues**: CSS flexbox/grid inconsistencies, vendor-specific prefixes, JavaScript API availability, font rendering differences. **Best practices**: use a browser compatibility matrix, test on most-used browsers first, use CSS feature queries (`@supports`) for progressive enhancement.
+
+</QA>
+
+<QA question="What is the defect life cycle?">
+
+The defect life cycle tracks a bug from discovery to closure. **States**: 1) **New** — defect reported by tester. 2) **Assigned** — assigned to developer by lead. 3) **Open** — developer analyzing/working on fix. 4) **Fixed** — developer has made the fix. 5) **Retest** — tester verifies the fix. 6) **Verified** — fix confirmed working. 7) **Closed** — defect fully resolved. **Alternative paths**: **Rejected** (not a bug), **Deferred** (fix later, low priority), **Duplicate** (already reported), **Reopened** (fix didn't work or regressed). **Defect report contains**: ID, title, description, steps to reproduce, expected vs actual, severity (Critical/Major/Minor/Trivial), priority (High/Medium/Low), screenshots, environment details.
 
 </QA>

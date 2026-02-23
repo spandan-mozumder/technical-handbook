@@ -6,7 +6,7 @@ import { QA } from "@/components/QA";
 
 <QA question="What does DOCTYPE do?">
 
-`<!DOCTYPE html>` tells the browser to use HTML5 standards mode. Without it, browsers may use 'quirks mode' which emulates legacy behavior and can cause inconsistent rendering.
+`!DOCTYPE html` tells the browser to use HTML5 standards mode. Without it, browsers may use 'quirks mode' which emulates legacy behavior and can cause inconsistent rendering.
 
 </QA>
 
@@ -24,301 +24,318 @@ The Document Object Model is a tree-like representation of HTML that JavaScript 
 
 <QA question="What is HTML, and what role does it play in web design?">
 
-Asked in interviews.
+**HTML** (HyperText Markup Language) is the standard markup language for creating web pages. It defines the structure and content of web pages using elements (tags). Role in web design: provides the skeleton (headings, paragraphs, images, links, forms), works with CSS (styling) and JavaScript (interactivity) to create complete web experiences. HTML is NOT a programming language — it's a markup language that describes content structure.
 
 </QA>
 
 <QA question="What are the basic concepts of HTML?">
 
-Asked in interviews.
+1) **Elements/Tags**: `tagcontent/tag`. 2) **Attributes**: key-value pairs in opening tags (`a href="..."`, `img src="..."`). 3) **Nesting**: elements inside elements. 4) **Document structure**: `!DOCTYPE`, `html`, `head`, `body`. 5) **Block vs inline** elements. 6) **Semantic elements** (`header`, `nav`, `main`). 7) **Forms** (`form`, `input`). 8) **Links** (`a`). 9) **Lists** (`ul`, `ol`). 10) **Tables** (`table`).
 
 </QA>
 
 <QA question="Explain the definition of an HTML file.">
 
-Asked in interviews.
+An **HTML file** is a text file with `.html` or `.htm` extension containing HTML markup. Structure: starts with `!DOCTYPE html`, then `html` root element containing `head` (metadata, title, links to CSS/scripts) and `body` (visible content). The browser parses HTML to build the DOM tree. HTML files can be opened directly in browsers (file://) or served by web servers (http://). They're plain text — editable in any text editor.
 
 </QA>
 
 <QA question="What is HTML and how can we make an HTML website?">
 
-Asked in interviews.
+HTML is the standard markup language for web pages. To make an HTML website: 1) Create an `index.html` file. 2) Add the basic structure: `!DOCTYPE htmlhtmlheadtitleMy Site/title/headbodyh1Hello/h1/body/html`. 3) Add CSS for styling (`link rel="stylesheet" href="style.css"`). 4) Add JavaScript for interactivity (`script src="app.js"/script`). 5) Create multiple pages and link them with `a` tags. Deploy using a web host.
 
 </QA>
 
 <QA question="What are the key features and purposes of HTML in web development?">
 
-Asked in interviews.
+**Features**: 1) Platform-independent (runs in any browser). 2) Easy to learn. 3) Supports multimedia (images, video, audio). 4) Hyperlinks for navigation. 5) Semantic elements for accessibility. 6) Form elements for user input. 7) Integration with CSS and JavaScript. **Purpose**: defines content structure, provides accessibility semantics (screen readers), enables SEO (search engines read HTML), creates the DOM for JavaScript manipulation.
 
 </QA>
 
 <QA question="What is HTML and how does it differ from a programming language?">
 
-Asked in interviews.
+HTML is a **markup language** — it describes the structure of content using tags. A **programming language** (JavaScript, Python) has logic: variables, loops, conditions, functions. HTML has no logic — you can't write if/else, loops, or functions in HTML. HTML tells the browser WHAT to display; programming languages tell it HOW to behave. HTML is declarative; programming languages are imperative/functional.
 
 </QA>
 
 <QA question="What is HTML and where is it used?">
 
-Asked in interviews.
+HTML is used to create web pages and web applications. **Where used**: websites, web apps, email templates (HTML emails), mobile apps (WebView, React Native uses HTML concepts), desktop apps (Electron), documentation, ebooks, PDF generation (wkhtmltopdf), browser extensions, progressive web apps (PWAs). Every webpage on the internet is built with HTML as its foundation.
 
 </QA>
 
 <QA question="What is HTML? Tell me about your project.">
 
-Asked in interviews.
+HTML is the standard markup language for web page structure. In my project, I use HTML within React/Next.js — JSX compiles to HTML elements. I use semantic elements (main, nav, article) for accessibility, proper heading hierarchy for SEO, and forms for user input. My projects combine HTML structure with CSS for styling and JavaScript/TypeScript for interactivity, following modern web development practices.
 
 </QA>
 
 <QA question="What is the difference between HTML and HTML5?">
 
-Asked in interviews.
+HTML5 added: 1) **Semantic elements** (`header`, `nav`, `main`, `article`, `section`, `footer`). 2) **Multimedia** (`video`, `audio` without plugins). 3) **Canvas** for drawing. 4) **SVG** support. 5) **New form inputs** (date, email, range, color). 6) **APIs** (Geolocation, Web Storage, Web Workers, WebSocket). 7) **Simpler doctype** (`!DOCTYPE html`). 8) Better error handling. Old HTML required plugins (Flash) for multimedia.
 
 </QA>
 
 <QA question="What are tags in HTML?">
 
-Asked in interviews.
+**Tags** are HTML keywords enclosed in angle brackets. **Opening tag**: `p`. **Closing tag**: `/p`. **Self-closing**: `img`, `br`, `input`. Tags define elements — the building blocks of HTML. Common tags: `h1`-`h6` (headings), `p` (paragraph), `a` (link), `img` (image), `div` (division), `span` (inline container), `ul/ol/li` (lists). Tags can have attributes: `a href="url" target="_blank"`.
 
 </QA>
 
 <QA question="What are the common lists in HTML?">
 
-Asked in interviews.
+1) **Ordered list** (`ol`) — numbered items: `olliFirst/liliSecond/li/ol`. 2) **Unordered list** (`ul`) — bulleted items: `ulliItem/li/ul`. 3) **Description list** (`dl`) — term-description pairs: `dldtTerm/dtddDefinition/dd/dl`. Lists can be nested. CSS `list-style-type` changes bullet/number style. Use `ol` for sequences; `ul` for non-ordered items.
 
 </QA>
 
 <QA question="How do you create a hyperlink in HTML?">
 
-Asked in interviews.
+Use the `a` (anchor) tag: `a href="https://example.com"Visit Example/a`. Attributes: `href` (destination URL), `target="_blank"` (open in new tab), `rel="noopener noreferrer"` (security for new tabs), `title` (tooltip text). Internal links: `a href="/about"About/a`. Anchor links: `a href="#section"Jump/a`. Email: `a href="mailto:user@email.com"Email/a`. Phone: `a href="tel:+1234567890"Call/a`.
 
 </QA>
 
 <QA question="What is the significance of the <!DOCTYPE html> declaration?">
 
-Asked in interviews.
+`!DOCTYPE html` tells the browser to render the page in **standards mode** (HTML5). Without it, browsers use **quirks mode** — emulating legacy behavior for backward compatibility, causing inconsistent rendering across browsers. It MUST be the first line in an HTML document. HTML5's doctype is simple (`!DOCTYPE html`) compared to older versions which required DTD references. It's not an HTML tag — it's an instruction to the browser.
 
 </QA>
 
 <QA question="What are the different types of semantic elements in HTML?">
 
-Asked in interviews.
+**Structural**: `header`, `footer`, `main`, `nav`, `aside`, `section`, `article`. **Text**: `h1`-`h6`, `p`, `blockquote`, `cite`, `code`, `pre`, `em`, `strong`, `mark`, `time`. **Media**: `figure`, `figcaption`, `picture`. **Form**: `fieldset`, `legend`, `label`. **Table**: `thead`, `tbody`, `tfoot`, `caption`. Semantic elements convey meaning to browsers and screen readers.
 
 </QA>
 
 <QA question="How do you add an image to a webpage using HTML?">
 
-Asked in interviews.
+Use the `img` tag: `img src="image.jpg" alt="Description of image" width="300" height="200" /`. `src` is the image path (relative or URL). `alt` provides text description (required for accessibility and SEO). `loading="lazy"` for lazy loading. `picture` for responsive images: `picturesource srcset="large.webp" media="(min-width:800px)"img src="small.jpg" alt="..."/picture`. Always include `alt` text.
 
 </QA>
 
 <QA question="What is the purpose of the <head> tag?">
 
-Asked in interviews.
+The `head` tag contains metadata (not visible on page): `title` (tab title, SEO), `meta` (charset, viewport, description, keywords), `link` (CSS stylesheets, favicon), `script` (JavaScript), `style` (inline CSS), `base` (base URL). Example: `headmeta charset="UTF-8"meta name="viewport" content="width=device-width, initial-scale=1.0"titleMy Page/titlelink rel="stylesheet" href="style.css"/head`.
 
 </QA>
 
 <QA question="What is the difference between block-level and inline elements?">
 
-Asked in interviews.
+**Block elements**: start on new line, take full width, can contain other blocks. Examples: `div`, `p`, `h1`, `section`, `ul`, `form`. **Inline elements**: flow within text, only take needed width, can't contain blocks. Examples: `span`, `a`, `strong`, `em`, `img`, `input`. CSS can change this: `display: block`, `display: inline`, `display: inline-block` (inline but with width/height).
 
 </QA>
 
 <QA question="What are the basic building blocks of an HTML document?">
 
-Asked in interviews.
+1) `!DOCTYPE html` — document type declaration. 2) `html` — root element. 3) `head` — metadata container (title, meta tags, links, scripts). 4) `body` — visible content. Within body: **headings** (`h1`-`h6`), **paragraphs** (`p`), **links** (`a`), **images** (`img`), **lists** (`ul`, `ol`), **divisions** (`div`, `section`), **forms** (`form`, `input`). These combine to create any web page structure.
 
 </QA>
 
 <QA question="What is the role of the <body> tag in HTML?">
 
-Asked in interviews.
+The `body` tag contains ALL visible content of the web page — text, images, links, forms, tables, videos, and everything the user sees and interacts with. It's a required element and there can only be one `body` per document. Attributes: `onload` (script on page load), though modern practice uses JavaScript event listeners instead. CSS styling on `body` affects the entire visible page (background, font, margin).
 
 </QA>
 
 <QA question="How can you create a table in HTML?">
 
-Asked in interviews.
+```html
+<table>
+  <thead><tr><th>Name</th><th>Age</th></tr></thead>
+  <tbody>
+    <tr><td>John</td><td>25</td></tr>
+    <tr><td>Jane</td><td>30</td></tr>
+  </tbody>
+</table>
+```
+Use `table` container, `tr` for rows, `th` for headers, `td` for data cells. Use `thead`, `tbody`, `tfoot` for semantic structure. Attributes: `colspan`, `rowspan` to span cells. Use CSS for styling — avoid table-based layouts (use CSS Grid/Flexbox instead).
 
 </QA>
 
 <QA question="What is an iframe in HTML?">
 
-Asked in interviews.
+An `iframe` (inline frame) embeds another HTML page within the current page. `iframe src="https://example.com" width="600" height="400" title="Example"/iframe`. Use cases: embedding YouTube videos, maps, third-party widgets. **Security**: `sandbox` attribute restricts capabilities, `allow` controls permissions. **Risks**: clickjacking, XSS. Use `X-Frame-Options` or `Content-Security-Policy` headers to prevent your page from being framed.
 
 </QA>
 
 <QA question="What are HTML attributes?">
 
-Asked in interviews.
+**Attributes** provide additional information about HTML elements. Placed in the opening tag as key-value pairs: `tag attribute="value"`. Common: `id` (unique identifier), `class` (CSS class), `style` (inline CSS), `src` (source URL for img/script), `href` (link URL), `alt` (image description), `title` (tooltip), `data-*` (custom data). Boolean attributes: `disabled`, `checked`, `required` — presence means true.
 
 </QA>
 
 <QA question="How do you create a form in HTML?">
 
-Asked in interviews.
+```html
+<form action="/submit" method="POST">
+  <label for="email">Email:</label>
+  <input type="email" id="email" name="email" required />
+  <textarea name="message"></textarea>
+  <button type="submit">Send</button>
+</form>
+```
+`action` is where data is sent; `method` is GET or POST. Input types: text, email, password, number, checkbox, radio, file, date. Use `label` for accessibility.
 
 </QA>
 
 <QA question="What is the purpose of the <meta> tag?">
 
-Asked in interviews.
+The `meta` tag provides metadata about the HTML document (in `head`). Key uses: `meta charset="UTF-8"` (character encoding), `meta name="viewport" content="width=device-width, initial-scale=1.0"` (responsive design), `meta name="description" content="..."` (SEO), `meta name="robots" content="index, follow"` (search engine instructions), `meta http-equiv="refresh" content="5"` (auto-refresh). `meta` is a void element (self-closing).
 
 </QA>
 
 <QA question="What are the different types of input tags in HTML?">
 
-Asked in interviews.
+`input type="..."` types: **text** (single line), **password** (hidden input), **email** (validates email), **number** (numeric), **tel** (phone), **url** (URL), **date/time/datetime-local**, **checkbox** (toggle), **radio** (single choice), **file** (upload), **range** (slider), **color** (color picker), **hidden** (invisible data), **submit** (submit button), **reset** (clear form), **search**, **image** (clickable image button).
 
 </QA>
 
 <QA question="How do you comment in HTML?">
 
-Asked in interviews.
+HTML comments: `!-- This is a comment --`. Comments are NOT rendered in the browser but ARE visible in the page source. Use for: documentation, temporarily hiding code, TODO notes. Multi-line comments use the same syntax. Comments cannot be nested. In JSX (React): `{/* comment */}`. Comments should NOT contain sensitive information since they're visible in source code.
 
 </QA>
 
 <QA question="What is the difference between <div> and <span>?">
 
-Asked in interviews.
+`div` is a **block-level** container — starts on a new line, takes full width. Used for grouping sections. `span` is an **inline** container — flows within text, only takes needed width. Used for styling parts of text. Example: `divFull width block/div` vs `pThis is span style="color:red"red/span text/p`. Neither has semantic meaning — use semantic elements (`section`, `article`) when possible.
 
 </QA>
 
 <QA question="What is the purpose of the <title> tag?">
 
-Asked in interviews.
+The `title` tag (inside `head`) sets the page title displayed in: browser tab, bookmarks, search engine results (SERP). Important for SEO — should be descriptive, unique per page, and 50-60 characters. Example: `titleHome | My Website/title`. Only one `title` per page. Screen readers announce the title when page loads. Different from `h1` which is the on-page main heading.
 
 </QA>
 
 <QA question="How do you create an ordered list and unordered list?">
 
-Asked in interviews.
+**Ordered**: `olliFirst/liliSecond/li/ol` — renders as 1. First, 2. Second. Attributes: `type="A"` (letters), `start="5"` (start number), `reversed`. **Unordered**: `ulliApple/liliBanana/li/ul` — renders with bullets. CSS: `list-style-type: disc|circle|square|none`. Both use `li` tags for items. Can nest lists inside `li` elements for sub-lists.
 
 </QA>
 
 <QA question="What are void elements in HTML?">
 
-Asked in interviews.
+**Void elements** have no content and no closing tag. They self-close. Examples: `br` (line break), `hr` (horizontal rule), `img` (image), `input` (form input), `meta` (metadata), `link` (stylesheet), `source`, `area`, `col`, `embed`, `track`, `wbr`. In XHTML/JSX: must use self-closing slash: `br`, `img`. They cannot have child elements.
 
 </QA>
 
 <QA question="What is the use of the <canvas> element?">
 
-Asked in interviews.
+The `canvas` element provides a drawing surface for JavaScript-based 2D/3D graphics. `canvas id="myCanvas" width="500" height="300"/canvas`. Use JavaScript's `getContext('2d')` to draw shapes, text, images, animations. Use cases: charts/graphs, games, image manipulation, data visualization, generative art. For 3D: `getContext('webgl')`. Libraries: Chart.js, Fabric.js, Three.js (WebGL). Canvas is pixel-based (raster); SVG is vector-based.
 
 </QA>
 
 <QA question="What are the new form input types in HTML5?">
 
-Asked in interviews.
+HTML5 added: `date`, `time`, `datetime-local`, `month`, `week` (date pickers), `email` (validates email format), `url` (validates URL), `tel` (telephone), `number` (numeric with spin buttons), `range` (slider), `color` (color picker), `search` (search field with clear button). Benefits: built-in validation, native UI controls (date pickers, sliders), better mobile keyboards. Fallback to text type in older browsers.
 
 </QA>
 
 <QA question="What is SVG in HTML?">
 
-Asked in interviews.
+**SVG** (Scalable Vector Graphics) defines vector-based graphics in XML format. `svg width="100" height="100"circle cx="50" cy="50" r="40" fill="red" //svg`. Benefits: scales without quality loss, small file size for simple shapes, animatable with CSS/JS, accessible. vs Canvas: SVG is declarative/DOM-based/vector; Canvas is imperative/pixel-based/raster. Use SVG for icons, logos, illustrations; Canvas for complex real-time graphics.
 
 </QA>
 
 <QA question="How do you embed video and audio in HTML5?">
 
-Asked in interviews.
+**Video**: `video src="video.mp4" controls width="640" autoplay muted loop poster="thumb.jpg"source src="video.webm" type="video/webm"Fallback text/video`. **Audio**: `audio src="audio.mp3" controls autoplay loopsource src="audio.ogg" type="audio/ogg"Fallback text/audio`. Use multiple `source` for format compatibility. Attributes: `controls` (show player), `autoplay`, `muted`, `loop`, `preload`. No plugins needed (replaced Flash).
 
 </QA>
 
 <QA question="What is the purpose of the <section> and <article> tags?">
 
-Asked in interviews.
+`section` groups related content with a heading — a thematic grouping of content. Example: chapters, tabs. `article` represents a self-contained, independently distributable piece of content. Example: blog post, news article, forum post. Rule: an `article` makes sense on its own (could be in an RSS feed); a `section` is a part of something bigger. Both improve accessibility and SEO over generic `div`.
 
 </QA>
 
 <QA question="What are data attributes in HTML5?">
 
-Asked in interviews.
+**Data attributes** (`data-*`) store custom data on HTML elements. `div data-user-id="123" data-role="admin"User/div`. Access in JavaScript: `element.dataset.userId` (camelCase). Access in CSS: `[data-role="admin"] { color: red; }`. Use for: passing data to JavaScript, styling hooks, storing configuration. Data attributes are valid HTML and don't conflict with standard attributes. Avoid storing sensitive data (visible in source code).
 
 </QA>
 
 <QA question="What is the difference between local storage and session storage?">
 
-Asked in interviews.
+**localStorage**: persists even after browser closes. 5-10MB. Shared across all tabs/windows of same origin. `localStorage.setItem('key', 'value')`. **sessionStorage**: cleared when tab closes. 5MB. Per-tab (not shared). Both store key-value strings (serialize objects with JSON). **vs Cookies**: cookies are sent with every HTTP request, limited to 4KB, have expiration. Use localStorage for preferences; sessionStorage for temporary state; cookies for server-side sessions.
 
 </QA>
 
 <QA question="What is the Geolocation API in HTML5?">
 
-Asked in interviews.
+The **Geolocation API** retrieves the user's geographic location. `navigator.geolocation.getCurrentPosition(success, error, options)`. Returns `Position` with `coords.latitude`, `coords.longitude`, `coords.accuracy`. Requires user permission (browser prompt). Use `watchPosition()` for continuous tracking. Options: `enableHighAccuracy`, `timeout`, `maximumAge`. Works via GPS, WiFi, IP address. HTTPS required. Use for: maps, location-based services, delivery tracking.
 
 </QA>
 
 <QA question="What is the purpose of the <nav> element?">
 
-Asked in interviews.
+The `nav` element represents a section with navigation links. Used for: main site navigation, table of contents, breadcrumbs, pagination. `navullia href="/"Home/a/lilia href="/about"About/a/li/ul/nav`. Benefits: screen readers can identify navigation sections (skip nav), improves SEO. Not every group of links needs `nav` — only major navigation blocks.
 
 </QA>
 
 <QA question="How do you make an HTML document accessible?">
 
-Asked in interviews.
+1) **Semantic HTML** (`nav`, `main`, `article` instead of `div`). 2) **Alt text** on images. 3) **Labels** on form inputs (`label for=".."`). 4) **ARIA attributes** (`aria-label`, `aria-expanded`, `role`). 5) **Keyboard navigation** (tab order, focus management). 6) **Color contrast** (WCAG 4.5:1 ratio). 7) **Heading hierarchy** (`h1`→`h6`). 8) **Skip navigation** links. 9) **lang** attribute on `html`. 10) Test with screen readers.
 
 </QA>
 
 <QA question="What is the use of the <figure> and <figcaption> tags?">
 
-Asked in interviews.
+`figure` wraps self-contained content (images, diagrams, code snippets) that is referenced from main flow. `figcaption` provides a caption. `figureimg src="chart.png" alt="Sales chart"/figcaptionFigure 1: Sales by quarter/figcaption/figure`. Benefits: semantic meaning, accessibility (screen readers associate caption with image), can be moved without affecting document flow.
 
 </QA>
 
 <QA question="What is the role of the <header> and <footer> tags?">
 
-Asked in interviews.
+`header` contains introductory content or navigation: logo, nav, site title. `footer` contains closing content: copyright, links, contact info. Both can appear multiple times — not just for the page. An `article` can have its own header/footer. Semantic meaning helps screen readers and SEO. Common: `headernav.../nav/header` at top; `footerp&copy; 2025/p/footer` at bottom.
 
 </QA>
 
 <QA question="What is the difference between <link> and <a> tags?">
 
-Asked in interviews.
+`link` goes in `head` — links to external resources (stylesheets, favicon, preload). Not visible. `link rel="stylesheet" href="style.css"`. `a` goes in `body` — creates clickable hyperlinks. Visible. `a href="/about"About/a`. `link` is a void element (no closing tag); `a` wraps content. `link` defines relationships between document and resources; `a` enables user navigation.
 
 </QA>
 
 <QA question="How do you group elements together in HTML?">
 
-Asked in interviews.
+Block grouping: `div` (generic), `section` (thematic section), `article` (self-contained), `main` (main content), `aside` (sidebar). Inline grouping: `span` (for styling text). Form grouping: `fieldset` + `legend`. Table grouping: `thead`, `tbody`, `tfoot`. List grouping: `ul`, `ol`, `dl`. Prefer semantic elements over generic `div`/`span` for accessibility and SEO.
 
 </QA>
 
 <QA question="What is the purpose of the <label> tag?">
 
-Asked in interviews.
+The `label` tag associates text with a form control, improving accessibility and usability. `label for="email"Email:/labelinput id="email" type="email"`. Clicking the label focuses/activates the input. `for` attribute must match the input's `id`. Alternative: wrap input inside label: `labelEmail: input type="email"/label`. Screen readers read the label when the input is focused. Always use labels for form inputs.
 
 </QA>
 
 <QA question="How do you specify the character encoding in HTML?">
 
-Asked in interviews.
+`meta charset="UTF-8"` in the `head`, as the first element (before any text content). **UTF-8** supports all Unicode characters (most languages, emojis). Must be within the first 1024 bytes of the document. Without it: browsers may misinterpret characters, causing garbled text (mojibake). Always use UTF-8. Older syntax: `meta http-equiv="Content-Type" content="text/html; charset=UTF-8"`.
 
 </QA>
 
 <QA question="What is the use of the <base> tag?">
 
-Asked in interviews.
+The `base` tag (in `head`) sets the base URL for all relative URLs in the document. `base href="https://example.com/" target="_blank"`. All `a href="page"` will resolve to `https://example.com/page`. `target` attribute sets default target for all links. Only ONE `base` per document. Use cases: sites served from subdirectories, single-page apps. Can cause confusion — use cautiously.
 
 </QA>
 
 <QA question="What are the character entities in HTML?">
 
-Asked in interviews.
+**Character entities** display reserved/special characters in HTML. Format: `&name;` or `&#number;`. Common: `&lt;` (less-than), `&gt;` (greater-than), `&amp;` (&), `&nbsp;` (non-breaking space), `&quot;` ("), `&apos;` ('), `&copy;` (©), `&euro;` (€), `&hearts;` (♥). Used when characters would be interpreted as HTML (like angle brackets in code examples). Unicode: `&#8212;` (— em dash). Always use `&amp;` for literal ampersands in HTML.
 
 </QA>
 
 <QA question="How do you create a dropdown list in HTML?">
 
-Asked in interviews.
+`select name="country"option value="us"United States/optionoption value="uk" selectedUnited Kingdom/optionoption value="in"India/option/select`. Attributes: `multiple` (select multiple), `size` (visible options). `optgroup` groups options: `optgroup label="Asia"optionIndia/option/optgroup`. `disabled` on options makes them unselectable. For accessible dropdowns, wrap with `label`. Custom dropdowns usually need JavaScript + ARIA.
 
 </QA>
 
 <QA question="What is the purpose of the required attribute in HTML5 forms?">
 
-Asked in interviews.
+The `required` attribute prevents form submission if the field is empty. `input type="email" required`. The browser shows a native validation message. Boolean attribute (presence = true). Works on: `input`, `textarea`, `select`. Part of HTML5's built-in form validation (no JavaScript needed). Combine with `pattern` for regex validation, `minlength`/`maxlength` for length limits. Use `novalidate` on `form` to disable built-in validation.
 
 </QA>
 
@@ -338,151 +355,151 @@ px = absolute pixels. em = relative to parent's font-size. rem = relative to roo
 
 <QA question="What is CSS, and what is the use of CSS?">
 
-Asked in interviews.
+**CSS** (Cascading Style Sheets) is a styling language that controls the visual presentation of HTML elements. Uses: colors, fonts, spacing, layout, animations, responsive design. Without CSS, web pages are plain unstyled text. CSS separates content (HTML) from presentation, enabling consistent theming, easier maintenance, and reusable styles across pages.
 
 </QA>
 
 <QA question="What is CSS and what are the different types or methods of applying it?">
 
-Asked in interviews.
+**CSS** styles HTML elements. **Three methods**: 1) **Inline CSS** — `style` attribute on elements: `p style="color: red"`. Highest specificity, hard to maintain. 2) **Internal CSS** — `style` tag in `head`: `stylep { color: red; }/style`. Per-page. 3) **External CSS** — `link rel="stylesheet" href="style.css"`. Best practice — reusable, cacheable, separation of concerns.
 
 </QA>
 
 <QA question="What are CSS elements?">
 
-Asked in interviews.
+CSS has three core components: 1) **Selectors** — target HTML elements (`.class`, `#id`, `element`, `[attr]`). 2) **Properties** — what to style (`color`, `font-size`, `margin`, `display`). 3) **Values** — how to style it (`red`, `16px`, `10px`, `flex`). Together they form a **rule**: `selector { property: value; }`. Example: `.btn { background-color: blue; padding: 10px; border-radius: 4px; }`.
 
 </QA>
 
 <QA question="What are CSS and style?">
 
-Asked in interviews.
+CSS is the language for styling web pages. **Style** refers to the visual properties applied to elements (colors, fonts, spacing, layout). CSS rules define styles. Styles can be applied via CSS files, `style` tags, or `style` attributes. The **cascade** determines which styles take precedence when multiple rules compete. CSS enables consistent design across pages and responsive layouts.
 
 </QA>
 
 <QA question="What is the full form of CSS?">
 
-Asked in interviews.
+**CSS** stands for **Cascading Style Sheets**. "Cascading" refers to the cascade algorithm that determines which style rules apply when multiple rules target the same element. Priority: inline styles > IDs > classes > elements. "Style Sheets" because CSS files are style definitions applied to HTML documents.
 
 </QA>
 
 <QA question="What are the different types of CSS?">
 
-Asked in interviews.
+1) **Inline CSS** — applied directly on elements via `style` attribute. 2) **Internal/Embedded CSS** — placed in `style` tags within `head`. 3) **External CSS** — separate `.css` file linked with `link`. **Priority**: inline > internal > external (for same specificity). External CSS is best practice for production. Also: **CSS-in-JS** (styled-components, Emotion), **Utility CSS** (Tailwind), **CSS Modules** (scoped class names).
 
 </QA>
 
 <QA question="What are the differences between CSS and CSS3?">
 
-Asked in interviews.
+CSS3 is the latest version with major additions: 1) **Flexbox and Grid** layouts. 2) **Animations and transitions** (`@keyframes`, `transition`). 3) **Media queries** (responsive design). 4) **Border radius, shadows, gradients**. 5) **Custom properties** (CSS variables). 6) **Selectors** (`:nth-child`, `:not`, `::before`). 7) **Multi-column layout**. 8) **Transform** (rotate, scale, translate). 9) **@import, @font-face**. CSS3 is modular (individual specs for each feature).
 
 </QA>
 
 <QA question="How many ways can CSS be added to HTML?">
 
-Asked in interviews.
+Three ways: 1) **External** — `link rel="stylesheet" href="style.css"` in `head`. Best practice. 2) **Internal** — `style` tag in `head`: `stylebody { margin: 0; }/style`. 3) **Inline** — `style` attribute: `div style="color: red;"`. Additionally: `@import url('other.css')` inside CSS files, CSS-in-JS in React, and dynamically via JavaScript (`element.style.color = 'red'`).
 
 </QA>
 
 <QA question="How do you create a responsive layout using HTML and CSS?">
 
-Asked in interviews.
+1) **Meta viewport tag**: `meta name="viewport" content="width=device-width, initial-scale=1.0"`. 2) **Media queries**: `@media (max-width: 768px) { ... }`. 3) **Flexbox/Grid** for flexible layouts. 4) **Relative units** (%, rem, vw, vh) instead of px. 5) **Fluid images**: `img { max-width: 100%; height: auto; }`. 6) **Mobile-first** approach. 7) CSS `clamp()` for fluid typography.
 
 </QA>
 
 <QA question="What is CSS, and how is it used to create responsive websites?">
 
-Asked in interviews.
+CSS styles HTML elements visually. For responsive websites: **media queries** (`@media (max-width: 768px) { ... }`) apply different styles at different screen sizes. **Flexbox** and **CSS Grid** create fluid layouts. **Relative units** (rem, %, vw) scale with screen. **Mobile-first** approach: design for mobile, enhance for desktop. `clamp()` for fluid font sizes. Modern CSS makes most responsive designs achievable without JavaScript.
 
 </QA>
 
 <QA question="What is the relationship between HTML, CSS, and JavaScript?">
 
-Asked in interviews.
+**HTML** = structure and content (the skeleton). **CSS** = presentation and visual styling (the skin). **JavaScript** = behavior and interactivity (the muscles). HTML defines WHAT content exists. CSS defines HOW it looks. JavaScript defines WHAT it does. Together they form the frontend triad. Modern frameworks (React) blend these via JSX + CSS-in-JS, but conceptually they serve distinct roles.
 
 </QA>
 
 <QA question="What are the differences between JavaScript and CSS?">
 
-Asked in interviews.
+**CSS**: declarative styling language. Controls appearance (colors, layout, fonts, animations). No logic, variables (CSS custom properties are simple), or data manipulation. **JavaScript**: programming language. Controls behavior (event handling, API calls, data processing, DOM manipulation). Has logic: if/else, loops, functions, classes. CSS paints the page; JavaScript makes it interactive. Both can animate, but CSS handles simple animations more performantly.
 
 </QA>
 
 <QA question="How do you link a CSS file in HTML?">
 
-Asked in interviews.
+`link rel="stylesheet" href="style.css"` in the `head` section. `rel="stylesheet"` tells the browser it's a CSS file. `href` is the path (relative or absolute). Multiple files: add multiple `link` tags. They load and apply in order. For critical CSS: inline in `style` for above-the-fold content, async load the rest. Use `media` attribute for conditional loading: `link rel="stylesheet" href="print.css" media="print"`.
 
 </QA>
 
 <QA question="How do you include external CSS and JavaScript files in an HTML document?">
 
-Asked in interviews.
+CSS: `link rel="stylesheet" href="style.css"` in `head`. JavaScript: `script src="app.js"/script` at bottom of `body` (or in `head` with `defer`). `defer` loads script in parallel, executes after DOM parsing. `async` loads and executes in parallel (unpredictable order). Best practice: CSS in `head` (prevents FOUC), JS at end of `body` or with `defer` (prevents blocking).
 
 </QA>
 
 <QA question="What are the full forms of HTML and CSS?">
 
-Asked in interviews.
+**HTML** = **HyperText Markup Language**. "HyperText" = text with links to other documents. "Markup" = annotating content with tags. "Language" = formal system with syntax rules. **CSS** = **Cascading Style Sheets**. "Cascading" = priority resolution between competing rules. "Style" = visual presentation rules. "Sheets" = separate files defining styles.
 
 </QA>
 
 <QA question="What is the difference between HTML and CSS?">
 
-Asked in interviews.
+**HTML**: defines content and structure (headings, paragraphs, images, links). Markup language using tags. Without it: no content. **CSS**: defines appearance and layout (colors, fonts, spacing, positioning). Styling language using rules. Without it: unstyled, plain content. HTML tells the browser WHAT to show; CSS tells it HOW to show it. Both are required for modern web pages.
 
 </QA>
 
 <QA question="What are the components of CSS?">
 
-Asked in interviews.
+1) **Selectors** — target elements (`.class`, `#id`, `tag`, `[attr]`, `:pseudo-class`, `::pseudo-element`). 2) **Properties** — what to style (`color`, `margin`, `display`, `font-size`). 3) **Values** — the styling value (`blue`, `20px`, `flex`). 4) **Declaration** — property:value pair. 5) **Rule/Ruleset** — selector + declarations. 6) **@rules** — `@media`, `@keyframes`, `@import`, `@font-face`.
 
 </QA>
 
 <QA question="What is CSS and how can we add it with HTML?">
 
-Asked in interviews.
+CSS controls the visual styling of HTML elements. Add via: 1) **External file** — `link rel="stylesheet" href="styles.css"` (best practice). 2) **Internal style** — `style` tag in `head`. 3) **Inline** — `style` attribute on elements. 4) **@import** — inside CSS files: `@import url('other.css')`. External CSS is preferred for separation of concerns, caching, and maintainability.
 
 </QA>
 
 <QA question="What is Tailwind CSS?">
 
-Asked in interviews.
+**Tailwind CSS** is a utility-first CSS framework. Instead of pre-built components, it provides small, single-purpose classes: `button class="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"`. Benefits: rapid prototyping, no context switching to CSS files, tree-shaking removes unused styles, consistent design tokens. Drawbacks: verbose HTML, learning curve, requires build step (PostCSS). Alternative to Bootstrap/Material UI.
 
 </QA>
 
 <QA question="What are selectors in CSS?">
 
-Asked in interviews.
+**CSS selectors** target HTML elements to style. Types: **Element** (`p`, `div`). **Class** (`.btn`). **ID** (`#header`). **Attribute** (`[type="text"]`). **Combinator** (`div > p` child, `div p` descendant, `div + p` adjacent sibling). **Pseudo-class** (`:hover`, `:nth-child(2)`, `:focus`). **Pseudo-element** (`::before`, `::after`, `::first-line`). **Universal** (`*`). **Group** (`h1, h2, h3`).
 
 </QA>
 
 <QA question="What is the CSS acronym and what does it stand for?">
 
-Asked in interviews.
+CSS stands for **Cascading Style Sheets**. "Cascading" — rules flow down, with later/more specific rules overriding earlier ones. Priority order: browser defaults, external, internal, inline styles (increasing specificity), then: element, class, ID, inline, !important. This cascade mechanism determines which styles apply when multiple competing rules target the same element.
 
 </QA>
 
 <QA question="Can you explain what CSS is?">
 
-Asked in interviews.
+CSS (Cascading Style Sheets) is a style sheet language that describes how HTML elements should be displayed. It controls layout (Flexbox, Grid), colors, fonts, spacing, animations, transitions, and responsive behavior (media queries). CSS separates design from content — you change the appearance without touching HTML. Modern CSS includes variables (`--color: blue`), nesting, `clamp()`, container queries, and powerful selectors.
 
 </QA>
 
 <QA question="What is CSS and what is client-side vs server-side?">
 
-Asked in interviews.
+CSS is a client-side technology — the browser (client) downloads and renders CSS styles. **Client-side**: HTML, CSS, JavaScript — runs in the user's browser. Handles UI, styling, interactivity. **Server-side**: Node.js, Python, databases — runs on the server. Handles data processing, authentication, API logic. CSS is always client-side (though CSS-in-JS can be server-rendered). Modern SSR (Next.js) generates HTML+CSS on server, sends to client.
 
 </QA>
 
 <QA question="Explain the use of CSS in an HTML page.">
 
-Asked in interviews.
+CSS styles HTML elements: `body { font-family: 'Inter', sans-serif; }`, `.container { max-width: 1200px; margin: 0 auto; }`, `.btn { background: #3b82f6; color: white; padding: 8px 16px; }`. CSS controls: **typography** (fonts, size, weight), **colors** (text, background, borders), **layout** (Flexbox, Grid, positioning), **spacing** (margin, padding), **animations** (`transition`, `@keyframes`), **responsiveness** (`@media`). Applied via `link` in `head`.
 
 </QA>
 
 <QA question="What's the definition of HTML, CSS, and XML?">
 
-Asked in interviews.
+**HTML** (HyperText Markup Language): standard language for web page structure and content. **CSS** (Cascading Style Sheets): language for styling HTML elements (colors, layout, fonts). **XML** (eXtensible Markup Language): general-purpose markup for storing/transporting data with custom tags. Difference from HTML: XML is for DATA (self-describing), HTML is for DISPLAY. XML requires strict syntax (must close all tags). XML is used in RSS, SOAP, SVG, config files.
 
 </QA>
 
@@ -502,151 +519,160 @@ JavaScript moves declarations to the top of their scope during compilation. var 
 
 <QA question="Explain the difference between JavaScript's `==` and `===` operators.">
 
-Asked in interviews.
+`==` (loose equality): performs type coercion before comparing. `'5' == 5` is true (string converted to number). `null == undefined` is true. `===` (strict equality): no type coercion. Both value AND type must match. `'5' === 5` is false. **Always use `===`** to avoid unexpected coercion bugs. Common gotcha: `0 == ''` is true, `0 === ''` is false.
 
 </QA>
 
 <QA question="Can you explain what callback hell is in JavaScript and how it can be avoided?">
 
-Asked in interviews.
+**Callback hell** is deeply nested callbacks making code hard to read: `getData(a => { getUser(b => { getOrders(c => { ... }) }) })`. **Avoid with**: 1) **Promises**: `.then()` chains flatten callbacks. 2) **async/await**: `const data = await getData(); const user = await getUser(data);` — reads like synchronous code. 3) **Named functions** instead of anonymous callbacks. 4) **Modularization** — break into smaller functions.
 
 </QA>
 
 <QA question="Can you explain how loops operate in JavaScript and provide examples of their usage?">
 
-Asked in interviews.
+**for**: `for (let i = 0; i less than 5; i++) { ... }`. **while**: `while (condition) { ... }`. **do-while**: executes at least once. **for...of**: iterates values: `for (const item of array) { ... }`. **for...in**: iterates keys/properties: `for (const key in object) { ... }`. **Array methods**: `arr.forEach()`, `arr.map()`, `arr.filter()`, `arr.reduce()`. Avoid `for...in` for arrays (iterates prototype chain). Use `for...of` or array methods.
 
 </QA>
 
 <QA question="What are the differences between let, const, and var? Provide code examples.">
 
-Asked in interviews.
+**var**: function-scoped, hoisted (initialized as undefined), can be re-declared. **let**: block-scoped, hoisted but NOT initialized (TDZ), can be reassigned. **const**: block-scoped, hoisted but NOT initialized, CANNOT be reassigned (but objects/arrays are still mutable). Example: `var x = 1; var x = 2;` (OK). `let y = 1; let y = 2;` (Error). `const z = [1]; z.push(2);` (OK — array is mutated, not reassigned). Use `const` by default, `let` when reassignment needed.
 
 </QA>
 
 <QA question="What is the difference between Local Storage and Session Storage?">
 
-Asked in interviews.
+**localStorage**: data persists until explicitly cleared (survives browser close). ~5-10MB. Shared across all tabs of same origin. **sessionStorage**: data cleared when tab/window closes. ~5MB. Per-tab only. Both: synchronous API, store strings only (use `JSON.stringify/parse` for objects), same-origin policy. Neither sends data to server (unlike cookies). `localStorage.setItem('key', 'value')`, `localStorage.getItem('key')`, `localStorage.removeItem('key')`.
 
 </QA>
 
 <QA question="Explain call, apply, and bind with examples.">
 
-Asked in interviews.
+All three set the `this` context. **call**: invokes immediately with args: `fn.call(obj, arg1, arg2)`. **apply**: invokes immediately with args as array: `fn.apply(obj, [arg1, arg2])`. **bind**: returns a NEW function with bound `this` (doesn't invoke): `const bound = fn.bind(obj); bound(arg1)`. Example: `Math.max.apply(null, [1,2,3])` or `Math.max.call(null, 1, 2, 3)`. `bind` is used for event handlers and callbacks.
 
 </QA>
 
 <QA question="What is the return type of the getElementsByClassName method in JavaScript?">
 
-Asked in interviews.
+Returns an **HTMLCollection** — a live, array-like object of elements. "Live" means it updates automatically when the DOM changes. NOT a true array — lacks `forEach`, `map`, `filter`. Convert with: `Array.from(collection)` or `[...collection]`. Alternative: `document.querySelectorAll('.class')` returns a `NodeList` (static, has `forEach`). Example: `const items = document.getElementsByClassName('menu-item');`.
 
 </QA>
 
 <QA question="How would you implement file uploading using Ajax?">
 
-Asked in interviews.
+Use `FormData` with `fetch` or `XMLHttpRequest`: `const formData = new FormData(); formData.append('file', fileInput.files[0]); fetch('/upload', { method: 'POST', body: formData });`. No need to set `Content-Type` header (browser sets it with boundary). For progress tracking: use `XMLHttpRequest` with `upload.onprogress`. Modern approach: `fetch` with `FormData`. For multiple files: `formData.append('files', file)` for each file.
 
 </QA>
 
 <QA question="What is the difference between the map and forEach methods?">
 
-Asked in interviews.
+**map**: returns a NEW array with transformed elements. Doesn't modify original. `const doubled = [1,2,3].map(x => x * 2); // [2,4,6]`. **forEach**: returns `undefined`. Used for side effects (logging, modifying external state). `[1,2,3].forEach(x => console.log(x))`. Key difference: `map` is chainable (`arr.map().filter()`), `forEach` is not. Use `map` when you need a result; `forEach` when you just need to execute something.
 
 </QA>
 
 <QA question="How do promises work in JavaScript?">
 
-Asked in interviews.
+A **Promise** represents a future value. Three states: **pending** (initial), **fulfilled** (resolved with value), **rejected** (failed with reason). `new Promise((resolve, reject) => { ... })`. Consume with: `.then(value => ...)`, `.catch(error => ...)`, `.finally(() => ...)`. Chain: `fetch(url).then(r => r.json()).then(data => ...)`. `Promise.all()` waits for all; `Promise.race()` resolves with first; `Promise.allSettled()` waits for all regardless of success/failure.
 
 </QA>
 
 <QA question="What are web workers and how do they work?">
 
-Asked in interviews.
+**Web Workers** run JavaScript in background threads, preventing UI blocking. Create: `const worker = new Worker('worker.js')`. Communicate via messages: `worker.postMessage(data)`, `worker.onmessage = (e) => e.data`. Workers can't access DOM, `window`, or `document` — they only compute. Use cases: heavy calculations, data processing, image manipulation. Types: **Dedicated** (one page), **Shared** (multiple pages), **Service** (offline, caching, push notifications).
 
 </QA>
 
 <QA question="What is AJAX in JavaScript?">
 
-Asked in interviews.
+**AJAX** (Asynchronous JavaScript and XML) enables making HTTP requests without reloading the page. Originally `XMLHttpRequest`, now `fetch()` API. Example: `fetch('/api/data').then(r => r.json()).then(data => updateUI(data))`. Enables: dynamic content loading, form submission without page reload, infinite scroll, auto-complete. Despite the name, JSON is used instead of XML now. Libraries: Axios, fetch API (native).
 
 </QA>
 
 <QA question="What are the different types of decorators in JavaScript?">
 
-Asked in interviews.
+**Decorators** (Stage 3 proposal / TypeScript) modify classes and members. Types: 1) **Class decorators** — modify/replace a class: `@sealed class Foo {}`. 2) **Method decorators** — modify methods: `@log greet() {}`. 3) **Property decorators** — modify properties. 4) **Parameter decorators** — modify parameters. 5) **Accessor decorators** — modify getters/setters. Widely used in Angular (`@Component`, `@Injectable`), NestJS (`@Controller`, `@Get`). Not yet standard in vanilla JS.
 
 </QA>
 
 <QA question="What is the difference between the spread operator and the rest operator?">
 
-Asked in interviews.
+Same syntax (`...`) but different context. **Spread** (expanding): `const arr2 = [...arr1, 4, 5]`, `const obj2 = {...obj1, key: val}`, `fn(...args)`. Expands elements. **Rest** (collecting): `function fn(...args) {}` — collects remaining arguments into an array. `const { a, ...rest } = obj` — collects remaining properties. Spread is used in calls/literals; rest is used in definitions/destructuring.
 
 </QA>
 
 <QA question="Why are arrow functions used in JavaScript?">
 
-Asked in interviews.
+1) **Lexical `this`** — arrow functions don't have their own `this`, they inherit from parent scope. Solves callback `this` issues. 2) **Shorter syntax** — `const add = (a, b) => a + b`. 3) **Implicit return** for single expressions. 4) **No `arguments` object** (use rest params). 5) **Can't be constructors** (no `new`). Use in: callbacks, array methods (`.map`, `.filter`), event handlers. Don't use for: object methods, prototype methods.
 
 </QA>
 
 <QA question="What is a temporal dead zone?">
 
-Asked in interviews.
+The **Temporal Dead Zone (TDZ)** is the period between entering a scope and the `let`/`const` declaration being reached. Accessing the variable during TDZ throws `ReferenceError`. Example: `console.log(x); let x = 5;` — error! `var` doesn't have TDZ (initialized as `undefined`). TDZ exists to catch bugs from using variables before declaration. The TDZ ends when the declaration line is executed.
 
 </QA>
 
 <QA question="Can you connect directly to a database using JavaScript?">
 
-Asked in interviews.
+**Client-side JS** (browser): NO — browsers can't directly connect to databases for security reasons. You need a backend API. **Server-side JS** (Node.js): YES — using drivers like `pg` (PostgreSQL), `mysql2` (MySQL), `mongoose` (MongoDB). Example: `const { Pool } = require('pg'); const pool = new Pool(); const res = await pool.query('SELECT * FROM users');`. Always use a backend; never expose database credentials to the client.
 
 </QA>
 
 <QA question="How is JavaScript used in HTML?">
 
-Asked in interviews.
+JavaScript adds interactivity to HTML pages. Include via: 1) **External file** — `script src="app.js"/script`. 2) **Inline** — `scriptalert('Hello');/script`. 3) **Event attributes** — `button onclick="handleClick()"` (not recommended). Uses: DOM manipulation (`document.getElementById`), event handling (click, submit, scroll), form validation, API calls (fetch), animations, dynamic content, SPAs. Place `script` at end of `body` or use `defer`.
 
 </QA>
 
 <QA question="What is a class in JS and explain its use case?">
 
-Asked in interviews.
+A **class** is syntactic sugar over prototype-based inheritance. Define with `class User` containing a `constructor(name)`, methods like `greet()`, `static` methods, `extends` for inheritance, `super()`, getters/setters, private fields (`#field`). Use cases: OOP patterns, encapsulation, creating multiple instances. Under the hood, classes still use prototypes. Use for: models, services, complex state objects.
 
 </QA>
 
 <QA question="How can you add styles using JavaScript?">
 
-Asked in interviews.
+1) **Inline**: `element.style.color = 'red'; element.style.backgroundColor = 'blue';`. 2) **Class toggle**: `element.classList.add('active'); element.classList.remove('hidden'); element.classList.toggle('open');`. 3) **cssText**: `element.style.cssText = 'color: red; font-size: 16px';`. 4) **Stylesheet API**: `document.styleSheets[0].insertRule('.btn { color: red }')`. Best practice: use `classList` to toggle CSS classes rather than setting inline styles.
 
 </QA>
 
 <QA question="What is the return type of getElementsByClassName?">
 
-Asked in interviews.
+Returns an **HTMLCollection** — a live, array-like collection. Updates automatically when DOM changes. Convert to array: `Array.from(elements)` or `[...elements]`. Contrast: `querySelectorAll()` returns a static `NodeList` (has `forEach`). `getElementsByTagName()` also returns HTMLCollection. Both lack array methods like `map`, `filter` — always convert first.
 
 </QA>
 
 <QA question="Write a closure and pass it to a function.">
 
-Asked in interviews.
+```javascript
+function createCounter(initial) {
+  let count = initial; // closed-over variable
+  return () => ++count;
+}
+const counter = createCounter(0);
+function runThrice(fn) { console.log(fn(), fn(), fn()); }
+runThrice(counter); // 1, 2, 3
+```
+`createCounter` returns a closure that retains access to `count`. Passing it to `runThrice` demonstrates the closure maintaining state across calls.
 
 </QA>
 
 <QA question="What is async/await in JavaScript?">
 
-Asked in interviews.
+`async/await` is syntactic sugar over Promises for writing asynchronous code that looks synchronous. `async` marks a function as returning a Promise. `await` pauses execution until the Promise resolves. `async function getData() { const res = await fetch('/api'); const data = await res.json(); return data; }`. Error handling: `try/catch` blocks. `await` can only be used inside `async` functions. Makes code more readable than `.then()` chains.
 
 </QA>
 
 <QA question="How can you change the background color of all items in JavaScript?">
 
-Asked in interviews.
+`document.querySelectorAll('.item').forEach(el => el.style.backgroundColor = 'blue');`. Or: `const items = document.getElementsByClassName('item'); Array.from(items).forEach(el => el.style.backgroundColor = 'blue');`. Better approach: add/toggle a CSS class: `.highlight { background-color: blue; }` then `items.forEach(el => el.classList.add('highlight'));`. Using classes is more maintainable than inline styles.
 
 </QA>
 
 <QA question="What are the use cases of Service Workers?">
 
-Asked in interviews.
+1) **Offline support** — cache resources, serve when offline. 2) **Push notifications** — receive push messages even when app is closed. 3) **Background sync** — defer actions until connectivity is restored. 4) **Caching strategies** — cache-first, network-first, stale-while-revalidate. 5) **PWA support** — enable "Add to Home Screen". Service Workers are proxies between browser and network. They run on a separate thread, have no DOM access, and require HTTPS.
 
 </QA>
 
@@ -666,79 +692,79 @@ Type narrowing is when TypeScript reduces a union type to a more specific type b
 
 <QA question="What is void in TypeScript?">
 
-Asked in interviews.
+`void` is a return type for functions that don't return a value (or return `undefined`). `function log(msg: string): void { console.log(msg); }`. Different from `never` (function never returns — throws or infinite loop). `void` variables can only be `undefined`. In callbacks, `void` return type means the return value is ignored: `type Callback = () => void;` — implementations can return anything, but it won't be used.
 
 </QA>
 
 <QA question="What is the difference between an Interface and a Type in TypeScript?">
 
-Asked in interviews.
+**Interface**: for object shapes, can be extended (`extends`), supports declaration merging (same name = merged), better error messages. **Type**: more versatile — unions (`A | B`), intersections (`A & B`), primitives, tuples, mapped types, template literals. Can't be merged. Use **interface** for object contracts and public APIs; **type** for complex type operations, unions, and utilities.
 
 </QA>
 
 <QA question="Describe the use of abstract classes in TypeScript and provide an example.">
 
-Asked in interviews.
+**Abstract classes** can't be instantiated directly — they serve as base classes. Define with `abstract class Shape` containing `abstract area(): number` and concrete methods like `describe()`. Subclasses like `class Circle extends Shape` must implement all abstract methods. Abstract classes can have both abstract (no body) and concrete methods (with implementations). Use when you need shared logic + enforced contracts. Interfaces define only shape; abstract classes provide partial implementations.
 
 </QA>
 
 <QA question="Explain promises in TypeScript.">
 
-Asked in interviews.
+Promises in TypeScript are typed: `PromiseT` where T is the resolved value type. `async function getUser(): PromiseUser { const res = await fetch('/api/user'); return res.json(); }`. TypeScript infers promise types from return values. Generic promises: `new Promisestring((resolve) => resolve('hello'))`. Error handling: `.catch()` or `try/catch` with `await`. TypeScript ensures you handle the correct types in `.then()` and `catch()`.
 
 </QA>
 
 <QA question="What is TypeScript and how does it differ from JavaScript?">
 
-Asked in interviews.
+TypeScript is a **statically typed superset** of JavaScript. It adds: type annotations (`let x: number`), interfaces, generics, enums, union types, and compile-time type checking. TypeScript compiles to JavaScript. **Differences**: TS catches type errors at compile time; JS catches at runtime. TS has explicit types; JS is dynamically typed. TS requires compilation; JS runs directly. TS enables better IDE support (autocomplete, refactoring). All JS is valid TS.
 
 </QA>
 
 <QA question="How do you define the structure of an object in TypeScript?">
 
-Asked in interviews.
+Using **interface**: `interface User { name: string; age: number; email?: string; }`. Using **type**: `type User = { name: string; age: number; }`. Optional properties: `?`. Readonly: `readonly id: number`. Index signatures: `{ [key: string]: any }`. Nested: `interface Order { user: User; items: Item[]; }`. Use `Partial`, `Required`, `Pick`, `Omit` for deriving types.
 
 </QA>
 
 <QA question="Explain the differences between `any` and `unknown` types.">
 
-Asked in interviews.
+`any`: disables type checking entirely. Can do anything without errors. Unsafe. `let x: any; x.foo(); x.bar();` — no errors. `unknown`: type-safe version of `any`. Must be narrowed before use. `let x: unknown; if (typeof x === 'string') { x.toUpperCase(); }` — only works after type guard. **Always prefer `unknown` over `any`** — it forces you to check types before operations.
 
 </QA>
 
 <QA question="What are generics in TypeScript and how are they used?">
 
-Asked in interviews.
+**Generics** create reusable components that work with multiple types. `function identityT(arg: T): T { return arg; }` — T is inferred from usage. `identity(42)` → T is number. `identity('hello')` → T is string. Use in: functions, interfaces, classes. Constraining: `function getLengthT extends { length: number }(item: T)`. Common: `Array`, `Promise`, `Map`. Generics provide type safety without sacrificing flexibility.
 
 </QA>
 
 <QA question="Explain decorators in TypeScript.">
 
-Asked in interviews.
+**Decorators** are special annotations that modify classes and members. Enable with `experimentalDecorators` in tsconfig. `@log class User {}`, `@validate method() {}`. Types: class, method, property, parameter, accessor decorators. Used extensively in **Angular** (`@Component`, `@Injectable`), **NestJS** (`@Controller`, `@Get`). A decorator is a function that receives the target and can modify or replace it. TC39 Stage 3 proposal (becoming standard).
 
 </QA>
 
 <QA question="What are Union and Intersection types in TypeScript?">
 
-Asked in interviews.
+**Union** (`|`): value can be ONE of several types. `type Status = 'active' | 'inactive' | 'pending'`. `function process(input: string | number)` — input is either string OR number. **Intersection** (`&`): value must satisfy ALL types simultaneously. `type AdminUser = User & Admin` — has all properties of both. Unions for "either/or"; intersections for "both". Discriminated unions use a common property for narrowing.
 
 </QA>
 
 <QA question="How do you achieve responsiveness across all screen sizes in a TypeScript/CSS project?">
 
-Asked in interviews.
+TypeScript doesn't affect responsiveness directly — it's about CSS. 1) **Media queries**: `@media (max-width: 768px) { ... }`. 2) **CSS Grid/Flexbox**: flexible layouts. 3) **Relative units**: rem, %, vw, vh. 4) **Viewport meta tag**. 5) In React/TS: custom hooks like `useMediaQuery()` to conditionally render components. 6) CSS frameworks (Tailwind responsive classes: `md:flex`, `lg:grid`). 7) `clamp()` for fluid typography.
 
 </QA>
 
 <QA question="Basic Typescript questions: Difference between Interface & Type?">
 
-Asked in interviews.
+**Interface**: best for object shapes, extendable with `extends`, supports declaration merging (same name merges automatically). **Type**: versatile — supports union types (`A | B`), intersection (`A & B`), mapped types, template literal types, primitive aliases. Types can't be reopened/merged. In practice: use interface for objects/contracts; type for unions, computed types, and utility types. Both work for most cases.
 
 </QA>
 
 <QA question="How is TypeScript a statically typed superset of JavaScript?">
 
-Asked in interviews.
+**Superset**: ALL valid JavaScript is valid TypeScript. TS adds features ON TOP of JS (types, interfaces, generics, enums). **Statically typed**: types are checked at COMPILE time (before code runs), unlike JS which checks at RUNTIME. `let x: number = 'hello'` — TS compile error, JS would allow it. Benefits: catch bugs early, better IDE support (autocomplete, refactoring), self-documenting code. TS compiles to plain JS.
 
 </QA>
 
@@ -752,103 +778,103 @@ Keys help React identify which items changed, were added, or removed during re-r
 
 <QA question="What are Hooks in React? Name the ones you have used in your project.">
 
-Asked in interviews.
+**Hooks** let you use state and lifecycle features in functional components. Common hooks: `useState` (state management), `useEffect` (side effects: API calls, subscriptions), `useContext` (consume context), `useRef` (DOM refs, persist values), `useMemo` (memoize expensive computations), `useCallback` (memoize functions), `useReducer` (complex state logic). In my projects I've used: useState, useEffect, useContext, useRef, useMemo, useCallback.
 
 </QA>
 
 <QA question="How do you avoid re-rendering a component in React?">
 
-Asked in interviews.
+1) **React.memo()** — memoizes functional components (skips re-render if props unchanged). 2) **useMemo** — memoize expensive calculated values. 3) **useCallback** — memoize function references passed as props. 4) **Move state down** — keep state close to where it's used. 5) **Avoid inline objects/functions** in JSX (creates new references). 6) **Context splitting** — separate contexts to avoid unnecessary consumers re-rendering.
 
 </QA>
 
 <QA question="Explain the use of the useEffect second parameter and shouldComponentUpdate.">
 
-Asked in interviews.
+`useEffect` second parameter is the **dependency array**: `useEffect(() => { ... }, [dep1, dep2])`. Runs only when dependencies change. Empty `[]` = run once (mount). No array = run every render. **shouldComponentUpdate** (class components): returns boolean to control re-rendering. `shouldComponentUpdate(nextProps, nextState) { return nextProps.id !== this.props.id; }`. Functional equivalent: `React.memo()` with optional custom comparator.
 
 </QA>
 
 <QA question="What are Higher Order Functions and Higher Order Components (HOC)? Give examples.">
 
-Asked in interviews.
+**HOF**: function that takes or returns a function. `const double = arr.map(x => x * 2)`. `map`, `filter`, `reduce` are HOFs. **HOC**: function that takes a component and returns an enhanced component. `const EnhancedComp = withAuth(MyComp)`. HOCs add behavior (authentication, loading states, data fetching). Modern alternative: custom hooks (`useAuth()`) are preferred over HOCs for most use cases.
 
 </QA>
 
 <QA question="Do reducers need to have an initial state compulsorily in Redux?">
 
-Asked in interviews.
+Yes, reducers must have an **initial state**. If state is `undefined` (first time), the reducer must return the initial state. `function counterReducer(state = { count: 0 }, action) { switch(action.type) { ... } }`. The default parameter (`= { count: 0 }`) handles the initial call. Without initial state, Redux throws an error. `createSlice` in Redux Toolkit handles this automatically with `initialState`.
 
 </QA>
 
 <QA question="What are the best practices for error handling in React applications?">
 
-Asked in interviews.
+1) **Error Boundaries** — catch rendering errors: `componentDidCatch` lifecycle. 2) **try/catch** in event handlers and async functions. 3) **Error states** in components: `if (error) return ErrorMessage;`. 4) **Global error handler**: `window.onerror`, `window.onunhandledrejection`. 5) **API error handling** — consistent error response format. 6) **React Query/SWR** — built-in error handling. 7) **User-friendly messages** (don't show raw errors). 8) **Error monitoring** (Sentry).
 
 </QA>
 
 <QA question="What are the different types of exports in React?">
 
-Asked in interviews.
+**Named export**: `export const Button = () => ...`. Import: `import { Button } from './Button'`. Multiple per file. **Default export**: `export default function App() {}`. Import: `import App from './App'`. One per file. **Re-export**: `export { Button } from './Button'`. Common pattern: named exports for utilities/components, default export for the main component. In Next.js: pages must use default exports.
 
 </QA>
 
 <QA question="Will React re-render the whole page or just a part of it? Explain the Virtual DOM.">
 
-Asked in interviews.
+React re-renders only the CHANGED parts. The **Virtual DOM** (VDOM) is an in-memory JavaScript representation of the actual DOM. When state changes: 1) React creates a new VDOM tree. 2) **Diffing** — compares new VDOM with previous VDOM. 3) Identifies minimal changes. 4) **Batch updates** the real DOM. This is faster than directly manipulating the DOM. React's reconciliation algorithm makes this O(n) using heuristics (element type, keys).
 
 </QA>
 
 <QA question="How can you optimize the performance of a React application (unnecessary re-renders)?">
 
-Asked in interviews.
+1) `React.memo()` for pure components. 2) `useMemo` / `useCallback` for expensive operations and callback props. 3) **Code splitting** with `React.lazy()` + `Suspense`. 4) **Virtualization** for long lists (react-window). 5) **Avoid re-creating objects/arrays** in render. 6) **State colocation** — keep state close. 7) **React DevTools Profiler** to identify bottlenecks. 8) Use `key` properly in lists. 9) Debounce/throttle frequent updates.
 
 </QA>
 
 <QA question="Explain the React component lifecycle with an example.">
 
-Asked in interviews.
+**Mounting**: component created and inserted into DOM. Class: `constructor → render → componentDidMount`. Hooks: `useState(initial) → return JSX → useEffect(() => {}, [])`. **Updating**: state/props change. Class: `render → componentDidUpdate`. Hooks: `useEffect(() => {}, [deps])`. **Unmounting**: removed from DOM. Class: `componentWillUnmount`. Hooks: `useEffect(() => { return () => cleanup; }, [])`. Modern React uses hooks exclusively.
 
 </QA>
 
 <QA question="Explain the concept and work process of Redux in React.">
 
-Asked in interviews.
+**Redux** is a state management library. Flow: 1) **Action** — describes what happened: `{ type: 'ADD_TODO', payload: 'Buy milk' }`. 2) **Dispatch** — sends action to store: `dispatch(addTodo('Buy milk'))`. 3) **Reducer** — pure function that computes new state: `(state, action) => newState`. 4) **Store** — holds single state tree. 5) **Subscribe** — components re-render on state change. Modern: use **Redux Toolkit** (`createSlice`, `configureStore`) for simpler setup.
 
 </QA>
 
 <QA question="How can you implement security in a React app?">
 
-Asked in interviews.
+1) **Sanitize user input** — React auto-escapes JSX by default. Never use `dangerouslySetInnerHTML`. 2) **CSRF tokens** for forms. 3) **Authentication** — JWT in httpOnly cookies (not localStorage). 4) **HTTPS** only. 5) **CSP headers** (Content Security Policy). 6) **Input validation** on BOTH client and server. 7) **CORS** configuration. 8) **Dependency auditing** (`npm audit`). 9) **Environment variables** for secrets. 10) Route protection with auth guards.
 
 </QA>
 
 <QA question="Can you explain the difference between stateful and stateless components?">
 
-Asked in interviews.
+**Stateful** components manage their own state. Use `useState`, `useReducer`, or class state. They control data flow and business logic. Example: form component with input values. **Stateless** (presentational) components only receive props and render UI. No internal state. Pure functions of their props. Example: `const Button = ({ label, onClick }) => button onClick={onClick}{label}/button`. Best practice: keep most components stateless, lift state up.
 
 </QA>
 
 <QA question="What are the use cases of Service Workers in the context of React?">
 
-Asked in interviews.
+In React apps: 1) **PWA support** — `create-react-app` includes service worker setup. 2) **Offline-first** — cache React bundles and API responses. 3) **Push notifications** — engage users even when app is closed. 4) **Background sync** — queue failed API requests. 5) **Pre-caching** — cache assets at install time. Frameworks: Workbox (by Google) for caching strategies. Next.js: `next-pwa` package. Service Workers are separate from React’s rendering.
 
 </QA>
 
 <QA question="What is useState() in React and how do you use it?">
 
-Asked in interviews.
+`useState` is a React Hook for adding state to functional components. `const [count, setCount] = useState(0);`. Returns current value and setter function. `setCount(count + 1)` or functional update: `setCount(prev => prev + 1)`. State updates are batched and trigger re-render. For objects: `setState(prev => ({ ...prev, name: 'new' }))`. Lazy initialization: `useState(() => expensiveComputation())`. State is preserved between re-renders.
 
 </QA>
 
 <QA question="Explain JavaScript ES6 features commonly used in React.">
 
-Asked in interviews.
+1) **Arrow functions** — `const fn = () => {}` (lexical this). 2) **Destructuring** — `const { name, age } = props`. 3) **Spread operator** — `{...obj}`, `[...arr]`. 4) **Template literals** — `` `Hello ${name}` ``. 5) **import/export** modules. 6) **let/const** instead of var. 7) **Promises/async-await**. 8) **Optional chaining** — `user?.address?.city`. 9) **Nullish coalescing** — `value ?? default`. 10) **Array methods** — `.map()`, `.filter()`, `.reduce()`.
 
 </QA>
 
 <QA question="How do you handle responsiveness in a React application?">
 
-Asked in interviews.
+1) **CSS media queries** in stylesheets. 2) **Tailwind CSS** responsive classes (`md:flex`, `lg:grid-cols-3`). 3) **CSS-in-JS** with media queries. 4) **Custom hooks** — `useMediaQuery()` or `useWindowSize()` for conditional rendering. 5) **React-responsive** library. 6) **Flexbox/Grid** for fluid layouts. 7) **Mobile-first** approach. 8) **Container queries** for component-level responsiveness. 9) **Image optimization** (`picture`, `srcset`, Next.js `Image`).
 
 </QA>
 
@@ -988,247 +1014,247 @@ useMemo memoizes a computed value (e.g., filtered/sorted list). useCallback memo
 
 <QA question="What are HTML tags and how do they work?">
 
-Asked in interviews.
+Tags are HTML keywords in angle brackets. Opening tag `p`, closing tag `/p`, content between. Self-closing: `img`, `br`. Tags tell the browser how to structure and display content. Tags can have attributes: `a href="url" target="_blank"`. Tags are case-insensitive but lowercase is standard.
 
 </QA>
 
 <QA question="What is the basic structure of an HTML document?">
 
-Asked in interviews.
+`!DOCTYPE html` (document type), `html` (root), `head` (metadata: title, meta, links, scripts), `body` (visible content). Minimal: `!DOCTYPE htmlhtml lang="en"headmeta charset="UTF-8"titlePage/title/headbodyh1Hello/h1/body/html`.
 
 </QA>
 
 <QA question="What is the difference between a tag and an element?">
 
-Asked in interviews.
+A **tag** is the markup syntax: `p` (opening), `/p` (closing). An **element** is the complete unit: opening tag + content + closing tag = `pHello/p`. The element includes everything. A void tag like `img` IS the element (no closing tag needed). Tags define elements; elements are what the browser renders.
 
 </QA>
 
 <QA question="What is the difference between section, article, and div?">
 
-Asked in interviews.
+`section`: thematic grouping of content, should have a heading. `article`: self-contained, independently distributable content (blog posts, comments). `div`: generic container with NO semantic meaning. Use `article` for items that make sense standalone, `section` for parts of a page, `div` only when no semantic element fits.
 
 </QA>
 
 <QA question="How do you create hyperlinks? What are absolute vs relative URLs?">
 
-Asked in interviews.
+`a href="url"Link text/a`. **Absolute URL**: full path including protocol: `https://example.com/about`. **Relative URL**: path relative to current document: `./about`, `../images/pic.jpg`, `/contact`. Absolute for external links; relative for internal links (portable, works across environments). Add `target="_blank" rel="noopener noreferrer"` for new tab.
 
 </QA>
 
 <QA question="What kinds of lists can you make in HTML?">
 
-Asked in interviews.
+1) **Ordered** (`ol`) — numbered/lettered. 2) **Unordered** (`ul`) — bulleted. 3) **Description** (`dl`) — term (`dt`) and description (`dd`) pairs. Lists can be nested. CSS `list-style-type` controls bullet/number style. `ol` attributes: `type`, `start`, `reversed`.
 
 </QA>
 
 <QA question="What does the form tag do and what are the action and method attributes?">
 
-Asked in interviews.
+`form` groups inputs for data submission. `action` specifies where to send data (URL): `action="/api/submit"`. `method` specifies HTTP method: `GET` (data in URL, for searches) or `POST` (data in body, for sensitive/large data). Without `action`, submits to current URL. `enctype` controls encoding; `novalidate` skips HTML validation.
 
 </QA>
 
 <QA question="How do you make a link open in a new tab safely?">
 
-Asked in interviews.
+`a href="url" target="_blank" rel="noopener noreferrer"Link/a`. `target="_blank"` opens in new tab. `rel="noopener"` prevents the new page from accessing `window.opener` (security — prevents phishing). `rel="noreferrer"` also hides the referring URL. Modern browsers apply `noopener` by default, but explicit is safer.
 
 </QA>
 
 <QA question="How do you make a table in HTML?">
 
-Asked in interviews.
+`table` container, `thead/tbody/tfoot` sections, `tr` rows, `th` headers, `td` data cells. `caption` for title. `colspan`/`rowspan` to merge cells. Semantic sections help screen readers. Style with CSS — avoid using tables for layout (use Grid/Flexbox).
 
 </QA>
 
 <QA question="What is the blockquote tag and when should you use cite?">
 
-Asked in interviews.
+`blockquote` marks a block quotation from another source. `blockquote cite="https://source.com"pQuoted text/p/blockquote`. The `cite` attribute provides the source URL (not displayed). `cite` TAG is for the title of a work: `citeThe Great Gatsby/cite`. Use `q` for inline quotes. `blockquote` is block-level with default indentation.
 
 </QA>
 
 <QA question="What are semantic HTML elements and why are they important?">
 
-Asked in interviews.
+Semantic elements convey meaning: `header`, `nav`, `main`, `article`, `section`, `aside`, `footer`, `figure`, `time`. **Important for**: 1) Accessibility — screen readers navigate by landmarks. 2) SEO — search engines understand content. 3) Maintainability — self-documenting code. 4) Default behaviors. Non-semantic: `div`, `span` — no meaning.
 
 </QA>
 
 <QA question="How do you add a video in HTML5?">
 
-Asked in interviews.
+`video src="video.mp4" controls width="640" poster="thumb.jpg"Fallback text/video`. Attributes: `controls`, `autoplay`, `muted`, `loop`, `preload`. Multiple sources for compatibility: `videosource src="video.webm" type="video/webm"source src="video.mp4" type="video/mp4"Not supported/video`. Use `muted` with `autoplay` (browsers block unmuted autoplay).
 
 </QA>
 
 <QA question="Why is the alt attribute important in img tags?">
 
-Asked in interviews.
+`alt` provides text description of images. **Important for**: 1) Screen readers read `alt` to visually impaired users. 2) Displays when image fails to load. 3) SEO — search engines index `alt` text. 4) Required by WCAG accessibility standards. Use descriptive text: `alt="Golden retriever playing fetch"`. Decorative images: `alt=""` (empty, not omitted).
 
 </QA>
 
 <QA question="What does noscript do and why is it still relevant?">
 
-Asked in interviews.
+`noscript` displays content when JavaScript is disabled. `noscriptpThis site requires JavaScript. Please enable it./p/noscript`. Still relevant: 1) Users with JS disabled for security. 2) Search engine crawlers that don't execute JS. 3) Fallback content for progressive enhancement. 4) Legal compliance (accessibility). Rarely used but good practice.
 
 </QA>
 
 <QA question="When should you use strong/em vs b/i for semantics vs presentation?">
 
-Asked in interviews.
+`strong` = importance (screen readers emphasize), `b` = bold without meaning (keywords). `em` = stress emphasis (changes sentence meaning), `i` = italic without emphasis (foreign words, technical terms). Use semantic tags for meaning, presentational tags for visual styling only. CSS should handle most styling: `font-weight: bold`, `font-style: italic`.
 
 </QA>
 
 <QA question="What is enctype in forms? When to use multipart/form-data?">
 
-Asked in interviews.
+`enctype` specifies how form data is encoded. **Values**: 1) `application/x-www-form-urlencoded` (default) — key=value pairs. 2) `multipart/form-data` — for file uploads (binary data). 3) `text/plain` — spaces become +, no encoding. Use `multipart/form-data` when the form has `input type="file"`. Encoding type only matters for POST; GET always uses URL encoding.
 
 </QA>
 
 <QA question="What is the contenteditable attribute?">
 
-Asked in interviews.
+`contenteditable="true"` makes any HTML element editable by the user. `div contenteditable="true"Edit me!/div`. Use for: rich-text editors, inline editing, WYSIWYG tools. Access content via `element.innerHTML` or `element.innerText`. Events: `input`, `blur`. Browser handles cursor, selection, undo/redo. Not a replacement for `input`/`textarea` for forms.
 
 </QA>
 
 <QA question="What is the difference between classes and id in HTML?">
 
-Asked in interviews.
+**id**: unique per page (one element only). High CSS specificity. Referenced via `#id`. Used for: anchors, JavaScript targeting, labels. **class**: reusable (multiple elements can share). Lower specificity. Referenced via `.class`. Used for: CSS styling, grouping similar elements. An element can have multiple classes: `class="btn primary large"`. Id must be unique; class can repeat.
 
 </QA>
 
 <QA question="How can we create a nested webpage in HTML?">
 
-Asked in interviews.
+Using `iframe` (inline frame): `iframe src="other-page.html" width="600" height="400" title="Embedded page"/iframe`. The iframe embeds another HTML document inside the current page. Use `sandbox` attribute for security. For content within the same page, use `div` or `section` for nested layouts. Modern alternatives: Web Components, React portals, or micro-frontends.
 
 </QA>
 
 <QA question="What are HTML entities?">
 
-Asked in interviews.
+Special codes to display reserved or invisible characters. Format: `&name;` or `&#number;`. Common: `&lt;` (less-than), `&gt;` (greater-than), `&amp;` (ampersand), `&nbsp;` (non-breaking space), `&copy;` (©), `&quot;` (quote). Needed when characters conflict with HTML syntax or aren't on keyboard. `&nbsp;` prevents line breaks between words.
 
 </QA>
 
 <QA question="What is HTML Encoding?">
 
-Asked in interviews.
+HTML encoding converts special characters into HTML entity references so they display correctly. The less-than symbol becomes `&lt;`, `&` becomes `&amp;`. Prevents XSS attacks when displaying user input. In JavaScript: `encodeURI()`, `encodeURIComponent()`. Server-side libraries auto-encode. React auto-escapes JSX content. Always encode user-generated content before rendering.
 
 </QA>
 
 <QA question="What is HTML Canvas?">
 
-Asked in interviews.
+The `canvas` element provides a pixel-based drawing surface. Use JavaScript's Canvas API: `const ctx = canvas.getContext('2d'); ctx.fillRect(10, 10, 100, 50);`. Draw: shapes, text, images, animations. Use cases: games, charts, image editing, data visualization. Canvas is immediate mode (no DOM elements). For 3D: use WebGL context. Libraries: Chart.js, Fabric.js, PixiJS.
 
 </QA>
 
 <QA question="What is SVG in HTML?">
 
-Asked in interviews.
+SVG (Scalable Vector Graphics) is XML-based vector image format embedded in HTML. `svg viewBox="0 0 100 100"circle cx="50" cy="50" r="40" fill="blue" //svg`. Scales infinitely without pixelation. Styleable with CSS, animatable with CSS/JS. DOM elements (inspectable, clickable). Use for: icons, logos, charts, illustrations. vs Canvas: SVG is vector/declarative; Canvas is raster/imperative.
 
 </QA>
 
 <QA question="What are the different multimedia formats supported by HTML?">
 
-Asked in interviews.
+**Video**: MP4 (H.264), WebM, Ogg. **Audio**: MP3, WAV, Ogg, AAC. **Images**: JPEG, PNG, GIF, SVG, WebP, AVIF. MP4 is most widely supported video format. WebM is open-source alternative. WebP/AVIF offer better compression than JPEG/PNG. Use `source` elements with `type` attribute for format fallbacks: `videosource src="v.webm" type="video/webm"source src="v.mp4" type="video/mp4"/video`.
 
 </QA>
 
 <QA question="How can we allow the browser to tell our location using HTML Geolocation API?">
 
-Asked in interviews.
+`navigator.geolocation.getCurrentPosition(pos => { console.log(pos.coords.latitude, pos.coords.longitude); }, err => console.error(err));`. Browser prompts user for permission. Options: `enableHighAccuracy`, `timeout`, `maximumAge`. `watchPosition()` for continuous tracking. Requires HTTPS. Returns `GeolocationPosition` with coords (lat, lng, accuracy, altitude, speed).
 
 </QA>
 
 <QA question="What is the HTML Web Storage API?">
 
-Asked in interviews.
+Web Storage provides key-value storage in the browser. **localStorage**: persists across sessions, ~5-10MB. **sessionStorage**: cleared on tab close, ~5MB. API: `setItem(key, val)`, `getItem(key)`, `removeItem(key)`, `clear()`. Data is strings only (JSON.stringify for objects). Same-origin policy. Synchronous. Better than cookies for client-side data (cookies sent with every request, limited to 4KB).
 
 </QA>
 
 <QA question="What is the dialog element and how do showModal() / close() work?">
 
-Asked in interviews.
+`dialog` is a native HTML modal/dialog element. `dialog id="d"pHello!/pbutton onclick="d.close()"Close/button/dialog`. Open: `d.showModal()` (modal with backdrop) or `d.show()` (non-modal). Close: `d.close('returnValue')`. Handles: focus trapping, Escape key, backdrop click. CSS: `::backdrop` pseudo-element for overlay. Native alternative to custom modal implementations.
 
 </QA>
 
 <QA question="What is the template tag in HTML?">
 
-Asked in interviews.
+`template` holds HTML content that is NOT rendered on page load. Content is inert — scripts don't run, images don't load. Use JavaScript to clone and insert: `const clone = document.querySelector('template').content.cloneNode(true); document.body.append(clone);`. Use cases: reusable HTML fragments, Web Components (`slot`), client-side templating without a framework.
 
 </QA>
 
 <QA question="What is the rel attribute in the link tag?">
 
-Asked in interviews.
+`rel` defines the relationship between the document and the linked resource. Values: `stylesheet` (CSS), `icon` (favicon), `preconnect` (dns/connection hint), `preload` (load early), `prefetch` (future navigation), `canonical` (preferred URL for SEO), `noopener` (security for target=_blank), `manifest` (PWA manifest). Example: `link rel="preconnect" href="https://fonts.googleapis.com"`.
 
 </QA>
 
 <QA question="How do you show different language versions of a webpage?">
 
-Asked in interviews.
+1) **`lang` attribute**: `html lang="en"`. 2) **hreflang tags**: `link rel="alternate" hreflang="es" href="/es/page"` tells search engines about language variants. 3) **`meta` charset**: ensure UTF-8 for all languages. 4) **Content negotiation**: server detects `Accept-Language` header. 5) **URL patterns**: `/en/`, `/fr/` subpaths or `en.site.com` subdomains. 6) **i18n libraries**: react-intl, next-intl.
 
 </QA>
 
 <QA question="What is the output tag in HTML?">
 
-Asked in interviews.
+`output` displays the result of a calculation. `form oninput="result.value=parseInt(a.value)+parseInt(b.value)"input id="a" type="range" + input id="b" type="number" = output name="result"/output/form`. The `for` attribute links it to input IDs. Semantic — tells screen readers it's a computed result. `name` attribute allows form submission of the value.
 
 </QA>
 
 <QA question="What is the datalist tag?">
 
-Asked in interviews.
+`datalist` provides autocomplete suggestions for `input`. `input list="browsers"datalist id="browsers"option value="Chrome"option value="Firefox"option value="Safari"/datalist`. The user can type freely OR select from suggestions. Different from `select` (which restricts to predefined options). Linked via `list` attribute matching `datalist` `id`. Native browser UI.
 
 </QA>
 
 <QA question="What are Web Components?">
 
-Asked in interviews.
+**Web Components** are a set of web standards for reusable, encapsulated custom elements. Three main technologies: 1) **Custom Elements** — define new HTML tags: `class MyBtn extends HTMLElement {}; customElements.define('my-btn', MyBtn)`. 2) **Shadow DOM** — encapsulated DOM/CSS (styles don't leak). 3) **`template/slot`** — reusable markup. Framework-agnostic — work in vanilla JS, React, Angular, etc.
 
 </QA>
 
 <QA question="What is ARIA and how do you use it?">
 
-Asked in interviews.
+**ARIA** (Accessible Rich Internet Applications) adds accessibility attributes to HTML. **Roles**: `role="navigation"`, `role="dialog"`, `role="alert"`. **States**: `aria-expanded="true"`, `aria-hidden="true"`, `aria-disabled="true"`. **Properties**: `aria-label="Close"`, `aria-describedby="id"`, `aria-live="polite"`. First rule: use native HTML before ARIA. Use ARIA only when HTML can't express the interaction (custom widgets, SPAs).
 
 </QA>
 
 <QA question="How do you lazy-load images and control loading priority?">
 
-Asked in interviews.
+Lazy loading: `img loading="lazy" src="image.jpg" alt="..."`. Browser defers download until near viewport. **Priority**: `fetchpriority="high"` for above-fold images (hero images), `fetchpriority="low"` for below-fold. Preload critical images: `link rel="preload" as="image" href="hero.jpg"`. Don't lazy-load above-the-fold images (hurts LCP). Use `picture` + `srcset` for responsive loading.
 
 </QA>
 
 <QA question="What is microdata and how does it help SEO?">
 
-Asked in interviews.
+**Microdata** adds structured data to HTML using `itemscope`, `itemtype`, `itemprop` attributes. `div itemscope itemtype="https://schema.org/Product"span itemprop="name"Phone/spanspan itemprop="price"499/span/div`. Helps search engines understand content → rich snippets (stars, prices, recipes in search results). Alternatives: JSON-LD (preferred), RDFa. Schema.org vocabulary.
 
 </QA>
 
 <QA question="How do you make HTML better for SEO?">
 
-Asked in interviews.
+1) Semantic tags (`main`, `article`, `h1`). 2) Proper heading hierarchy (`h1` → `h2` → `h3`). 3) Descriptive `title` and `meta description`. 4) Alt text on images. 5) Structured data (JSON-LD/schema.org). 6) Canonical URLs. 7) `hreflang` for multilingual. 8) Fast loading (lazy images, preconnect). 9) Mobile-friendly (viewport meta). 10) Clean URLs. 11) Open Graph/Twitter meta tags.
 
 </QA>
 
 <QA question="What is the picture element?">
 
-Asked in interviews.
+`picture` provides responsive images with art direction. `picturesource srcset="large.webp" media="(min-width:800px)" type="image/webp"source srcset="small.jpg" media="(max-width:799px)"img src="fallback.jpg" alt="..."/picture`. Browser picks the first matching `source`. Use for: different images at different sizes (art direction), format fallbacks (WebP → JPEG), resolution switching.
 
 </QA>
 
 <QA question="What is the tabindex attribute?">
 
-Asked in interviews.
+`tabindex` controls keyboard navigation (Tab key) order. `tabindex="0"`: element is focusable in natural tab order. `tabindex="-1"`: focusable programmatically only (via JS `element.focus()`), NOT via Tab key. `tabindex="1+"`: explicit order (avoid — breaks natural flow). Use `tabindex="0"` to make non-interactive elements focusable. Use `tabindex="-1"` for modal focus management.
 
 </QA>
 
 <QA question="How do you validate an HTML form?">
 
-Asked in interviews.
+HTML5 built-in: `required`, `minlength`/`maxlength`, `min`/`max`, `pattern="regex"`, `type="email"` (auto-validates). Custom: `setCustomValidity('message')` via JS. CSS: `:valid`, `:invalid`, `:required` pseudo-classes for styling. JavaScript: `form.checkValidity()`, `input.validity` object. `novalidate` on `form` disables built-in validation. Always validate server-side too (client validation is bypassable).
 
 </QA>
 
 <QA question="What are HTML Global Attributes? Give examples.">
 
-Asked in interviews.
+Attributes usable on ANY HTML element. Examples: `id`, `class`, `style`, `title` (tooltip), `tabindex`, `contenteditable`, `draggable`, `hidden`, `lang`, `dir` (text direction), `data-*` (custom data), `spellcheck`, `translate`, `accesskey` (keyboard shortcut). ARIA attributes are also global: `role`, `aria-label`, `aria-hidden`. `autofocus`, `enterkeyhint`, `inputmode` are newer additions.
 
 </QA>
 
@@ -1236,253 +1262,257 @@ Asked in interviews.
 
 <QA question="What is the current version of CSS?">
 
-Asked in interviews.
+CSS doesn't have a single version like "CSS4". After CSS3, the specification was modularized — each module (Selectors, Flexbox, Grid, etc.) has its own level. Current modules are at various levels (e.g., Selectors Level 4, CSS Grid Level 2). Informally, the latest features are called "modern CSS" rather than a version number.
 
 </QA>
 
 <QA question="How is CSS different from CSS3?">
 
-Asked in interviews.
+CSS1/2 were single specifications. **CSS3** split into modules. New features: border-radius, box-shadow, gradients, Flexbox, Grid, animations, transitions, media queries, custom properties (variables), calc(), clamp(), container queries. CSS3 is not a separate language — it's evolution. Modern CSS = CSS3 + newer module additions.
 
 </QA>
 
 <QA question="Suggest some best CSS frameworks.">
 
-Asked in interviews.
+1) **Tailwind CSS** — utility-first, highly customizable. 2) **Bootstrap** — component-based, most popular. 3) **Bulma** — Flexbox-based, no JavaScript. 4) **Foundation** — responsive, enterprise-grade. 5) **Chakra UI** — React component library. 6) **Material UI** — Google Material Design for React. 7) **Ant Design** — enterprise UI. 8) **Shadcn/UI** — copy-paste components. Choose based on project needs.
 
 </QA>
 
 <QA question="What is the syntax for CSS?">
 
-Asked in interviews.
+`selector { property: value; }`. Example: `h1 { color: blue; font-size: 24px; }`. Multiple declarations separated by semicolons. Selectors target HTML elements. Properties define what to style. Values specify how. Comments: `/* comment */`. At-rules: `@media`, `@keyframes`, `@import`. Shorthand: `margin: 10px 20px;` instead of separate top/right/bottom/left.
 
 </QA>
 
 <QA question="Which type of CSS holds the highest priority?">
 
-Asked in interviews.
+Priority (highest to lowest): 1) `!important` (overrides everything). 2) **Inline styles** (`style="..."`). 3) **ID selectors** (`#id`). 4) **Class/attribute/pseudo-class** (`.class`, `[attr]`, `:hover`). 5) **Element/pseudo-element** (`div`, `::before`). 6) **Universal** (`*`). Among same specificity: last rule wins. `!important` should be avoided (hard to override, breaks cascade).
 
 </QA>
 
 <QA question="When is it better to use logical properties vs physical properties in CSS?">
 
-Asked in interviews.
+**Logical properties** adapt to writing direction (LTR/RTL): `margin-inline-start` instead of `margin-left`, `padding-block-end` instead of `padding-bottom`. Use logical when: supporting RTL languages (Arabic, Hebrew), internationalization, building reusable components. Use physical when: animation positioning, absolute pixel placement, or direction doesn't matter. Logical is more future-proof for globalized apps.
 
 </QA>
 
 <QA question="How to make an accessible 'Skip to content' link that's hidden until focus?">
 
-Asked in interviews.
+```css
+.skip-link { position: absolute; left: -9999px; }
+.skip-link:focus { left: 10px; top: 10px; z-index: 999; background: white; padding: 8px 16px; }
+```
+`a class="skip-link" href="#main"Skip to content/a`. Hidden off-screen by default, visible when focused via Tab key. Links to main content area. Essential for keyboard users and screen readers. Use `clip` or `transform: translateX(-100%)` as alternatives.
 
 </QA>
 
 <QA question="What are CSS custom properties (variables) and how do they cascade?">
 
-Asked in interviews.
+Declare with `--name: value;`, use with `var(--name, fallback)`. `:root { --primary: #3b82f6; }` then `.btn { background: var(--primary); }`. They cascade and inherit like other properties — child elements inherit parent values. Can be overridden in any scope. Dynamic — can be changed at runtime via JavaScript: `element.style.setProperty('--primary', 'red')`. Great for theming (dark/light mode).
 
 </QA>
 
 <QA question="What is the difference between a CSS reset and a normalizer?">
 
-Asked in interviews.
+**CSS Reset** (Eric Meyer's): strips ALL default browser styles — margins, paddings, font sizes all become 0/none. You rebuild from scratch. **Normalize.css**: preserves useful defaults, fixes inconsistencies between browsers. Keeps headings, lists, etc. functional. Reset = blank slate; Normalize = consistent baseline. Modern approach: minimal reset + normalize (`*, *::before, *::after { box-sizing: border-box; margin: 0; }`).
 
 </QA>
 
 <QA question="What are CSS HSL Colors?">
 
-Asked in interviews.
+**HSL**: Hue (0-360°, color wheel), Saturation (0-100%, gray to vivid), Lightness (0-100%, black to white). `color: hsl(220, 90%, 50%)` = vivid blue. More intuitive than hex/RGB. Easy to create variations: same hue, different lightness = shades. `hsla(220, 90%, 50%, 0.5)` adds alpha. Modern CSS: `hsl(220 90% 50% / 0.5)`. Great for design systems and programmatic color generation.
 
 </QA>
 
 <QA question="What are CSS backgrounds? List the properties.">
 
-Asked in interviews.
+`background-color` (solid color), `background-image` (image/gradient), `background-repeat` (repeat, no-repeat), `background-position` (center, top right), `background-size` (cover, contain, px), `background-attachment` (scroll, fixed, local), `background-origin` (padding-box, border-box), `background-clip` (border-box, text). Shorthand: `background: #333 url(bg.jpg) no-repeat center/cover`. Multiple backgrounds supported.
 
 </QA>
 
 <QA question="What are the different CSS border properties?">
 
-Asked in interviews.
+`border-width` (px), `border-style` (solid, dashed, dotted, double, groove, ridge, none), `border-color`, `border-radius` (rounded corners). Shorthand: `border: 2px solid #333`. Individual sides: `border-top`, `border-right`, etc. `border-radius: 50%` makes circles. `border-image` for image borders. `outline` is similar but doesn't take space.
 
 </QA>
 
 <QA question="What does margin: 40px 100px 120px 80px signify?">
 
-Asked in interviews.
+Four-value shorthand goes clockwise (TRBL): **top: 40px**, **right: 100px**, **bottom: 120px**, **left: 80px**. Mnemonic: "TRouBLe". Two values: `margin: 10px 20px` = top/bottom 10px, left/right 20px. Three values: `margin: 10px 20px 30px` = top 10px, left/right 20px, bottom 30px. One value: all sides equal.
 
 </QA>
 
 <QA question="What is the difference between CSS border and outline?">
 
-Asked in interviews.
+**Border**: part of the box model, takes up space, can be styled per-side, affects layout. **Outline**: drawn OUTSIDE the border, does NOT take space, doesn't affect layout, can't style individual sides, always surrounds the entire element. `outline-offset` adjusts distance from border. Outlines are used for focus indicators (accessibility). `outline: none` removes focus ring (bad for accessibility).
 
 </QA>
 
 <QA question="What are the different CSS link states?">
 
-Asked in interviews.
+Four pseudo-classes (order matters — LVHA): `:link` (unvisited), `:visited` (visited), `:hover` (mouse over), `:active` (being clicked). `a:link { color: blue; } a:visited { color: purple; } a:hover { color: red; } a:active { color: green; }`. `:focus` (keyboard focused) is also important for accessibility. Always style `:focus` for keyboard users.
 
 </QA>
 
 <QA question="Can we add an image as a list item marker?">
 
-Asked in interviews.
+Yes. `list-style-image: url('bullet.png');`. Or use `::marker` pseudo-element with `content`. Better approach: `li::before { content: ''; background-image: url('icon.svg'); width: 16px; height: 16px; display: inline-block; }` with `list-style: none`. The `::before` approach gives more control over size and positioning.
 
 </QA>
 
 <QA question="Can we overlap elements in CSS?">
 
-Asked in interviews.
+Yes, with `position` + `z-index`. Set `position: absolute/relative/fixed` and adjust `top/left/bottom/right` to position elements. `z-index` controls stacking order (higher = on top). Also: `position: absolute` with negative margins, CSS Grid with `grid-area` (overlapping cells), `margin` with negative values. `z-index` only works on positioned elements.
 
 </QA>
 
 <QA question="What are the various positioning properties in CSS?">
 
-Asked in interviews.
+`position: static` (default, normal flow), `relative` (offset from normal position, reserves space), `absolute` (removed from flow, positioned relative to nearest positioned ancestor), `fixed` (relative to viewport, stays on scroll), `sticky` (switches from relative to fixed at scroll threshold). Properties: `top`, `right`, `bottom`, `left`, `z-index` (stacking).
 
 </QA>
 
 <QA question="What is CSS overflow?">
 
-Asked in interviews.
+`overflow` controls content that exceeds its container. Values: `visible` (default, content overflows), `hidden` (clips overflow), `scroll` (always shows scrollbars), `auto` (shows scrollbars only when needed), `clip` (clips, no scroll). Individual axes: `overflow-x`, `overflow-y`. `overflow: hidden` on parent creates a new block formatting context. Common pattern: `overflow: auto` for scrollable containers.
 
 </QA>
 
 <QA question="What does display:inline-block do?">
 
-Asked in interviews.
+`display: inline-block` combines inline and block behavior. **Inline**: flows in line with text, doesn't start new line. **Block**: respects width, height, margin, padding. Use for: navigation items, buttons side by side with controlled dimensions. Unlike `inline`: can set width/height. Unlike `block`: doesn't force new line. Modern alternative: Flexbox or Grid.
 
 </QA>
 
 <QA question="How can we vertically center a text in CSS?">
 
-Asked in interviews.
+Multiple ways: 1) **Flexbox**: `display: flex; align-items: center; justify-content: center;`. 2) **Grid**: `display: grid; place-items: center;`. 3) **Line-height**: `line-height: equal-to-height` (single line text). 4) **Transform**: `position: absolute; top: 50%; transform: translateY(-50%);`. 5) **Table**: `display: table-cell; vertical-align: middle;`. Best: Flexbox or Grid.
 
 </QA>
 
 <QA question="How can we center an image in CSS?">
 
-Asked in interviews.
+Block centering: `img { display: block; margin: 0 auto; }`. Flex: parent `display: flex; justify-content: center; align-items: center;`. Grid: parent `display: grid; place-items: center;`. Text-align (inline img): `text-align: center` on parent. Absolute: `position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);`. Background image: `background-position: center;`.
 
 </QA>
 
 <QA question="What are CSS Combinators?">
 
-Asked in interviews.
+Combinators define relationships between selectors. **Descendant** (space): `div p` — all `p` inside `div`. **Child** (`>`): `div > p` — direct children only. **Adjacent sibling** (`+`): `h1 + p` — first `p` immediately after `h1`. **General sibling** (`~`): `h1 ~ p` — all `p` siblings after `h1`. Combinators create precise selector targeting without extra classes.
 
 </QA>
 
 <QA question="How can we add gradients in CSS?">
 
-Asked in interviews.
+**Linear**: `background: linear-gradient(to right, #ff0000, #0000ff);`. Direction: `to right`, `45deg`, etc. **Radial**: `background: radial-gradient(circle, #fff, #000);`. **Conic**: `background: conic-gradient(red, yellow, green);`. Multiple color stops: `linear-gradient(90deg, red 0%, blue 50%, green 100%)`. Repeating: `repeating-linear-gradient(...)`. Great for backgrounds, text effects (`background-clip: text`).
 
 </QA>
 
 <QA question="Can we add 2D and 3D transformations using CSS?">
 
-Asked in interviews.
+Yes. **2D**: `transform: translate(50px, 100px)`, `rotate(45deg)`, `scale(1.5)`, `skew(20deg)`, `matrix()`. **3D**: `transform: rotateX(45deg)`, `rotateY(30deg)`, `translateZ(100px)`, `perspective(500px)`. For 3D: set `perspective` on parent, `transform-style: preserve-3d` for nested transforms. `backface-visibility: hidden` hides back of flipped elements. Combine: `transform: rotate(45deg) scale(1.2);`.
 
 </QA>
 
 <QA question="What are CSS transitions?">
 
-Asked in interviews.
+Transitions animate property changes smoothly. `transition: property duration timing-function delay`. Example: `.btn { transition: background-color 0.3s ease; } .btn:hover { background-color: blue; }`. Properties: `transition-property` (which CSS property), `transition-duration` (how long), `transition-timing-function` (ease, linear, ease-in-out, cubic-bezier), `transition-delay`. Use `all` for all properties. Only animatable properties work.
 
 </QA>
 
 <QA question="How can we animate using CSS?">
 
-Asked in interviews.
+With `@keyframes` and `animation` property. `@keyframes slide { from { transform: translateX(-100%); } to { transform: translateX(0); } }`. Apply: `.element { animation: slide 0.5s ease forwards; }`. Properties: `animation-name`, `animation-duration`, `animation-timing-function`, `animation-delay`, `animation-iteration-count` (infinite), `animation-direction` (alternate), `animation-fill-mode`.
 
 </QA>
 
 <QA question="What does the CSS box-sizing property do?">
 
-Asked in interviews.
+`box-sizing` determines how width/height are calculated. **content-box** (default): width = content only (padding + border are extra). **border-box**: width = content + padding + border. With `border-box`, a 200px element stays 200px regardless of padding/border. Best practice: `*, *::before, *::after { box-sizing: border-box; }`. Makes sizing predictable.
 
 </QA>
 
 <QA question="What is the best way to include a CSS file? Why use @import?">
 
-Asked in interviews.
+Best way: `link rel="stylesheet" href="style.css"` in `head`. Fast, parallel loading, cacheable. **@import**: `@import url('other.css');` inside CSS. Drawbacks: sequential loading (slower), blocks rendering, can't be parallel. Use `@import` for: organizing CSS modules during development, Sass/SCSS imports. In production, bundle all CSS into one file. `link` is always preferred for performance.
 
 </QA>
 
 <QA question="How case-sensitive is CSS?">
 
-Asked in interviews.
+CSS is mostly **case-insensitive**: property names (`color`, `COLOR`), selector elements (`DIV`, `div`), hex colors (`#fff`, `#FFF`). **Case-sensitive**: class names and IDs (`.myClass` ≠ `.myclass`), attribute values in selectors (`[type="Text"]` ≠ `[type="text"]`), URL paths, font family names. Best practice: use lowercase consistently for everything.
 
 </QA>
 
 <QA question="What does CSS Animations allow?">
 
-Asked in interviews.
+CSS animations allow: 1) Gradual property transitions over time. 2) Multiple keyframe steps (not just start/end). 3) Looping (`infinite`), alternating directions. 4) Control over timing, delay, fill mode. 5) Complex sequences without JavaScript. 6) Hardware-accelerated performance (transform, opacity). Used for: loading spinners, hover effects, page transitions, attention-grabbing UI elements.
 
 </QA>
 
 <QA question="What is @keyframes used for?">
 
-Asked in interviews.
+`@keyframes` defines the stages of a CSS animation. `@keyframes fadeIn { 0% { opacity: 0; } 100% { opacity: 1; } }`. Apply with: `.element { animation: fadeIn 1s ease; }`. Can use percentages for multiple steps: `0%, 25%, 50%, 75%, 100%`. Shorthand: `from` (= 0%) and `to` (= 100%). Each keyframe specifies property values at that point in the animation timeline.
 
 </QA>
 
 <QA question="What are CSS counters?">
 
-Asked in interviews.
+CSS counters are variables maintained by CSS for automatic numbering. `counter-reset: section;` (initialize). `counter-increment: section;` (increment). Display: `content: counter(section) ". ";` in `::before`. Example: auto-numbering headings, custom numbered lists. Counters can be nested. `counters()` function for nested numbering (1.1, 1.2). No JavaScript needed for sequential numbering.
 
 </QA>
 
 <QA question="What is meant by the universal selector?">
 
-Asked in interviews.
+The `*` (universal) selector matches ALL elements. `* { margin: 0; padding: 0; box-sizing: border-box; }` — resets all elements. Low specificity (0,0,0,0). Use sparingly — can impact performance on large DOMs. Common in CSS resets. `*.class` is same as `.class`. Can be used with combinators: `div > *` selects all direct children of div.
 
 </QA>
 
 <QA question="What is RWD (Responsive Web Design)?">
 
-Asked in interviews.
+RWD makes websites adapt to any screen size. Techniques: 1) **Fluid grids** (%, Flexbox, Grid). 2) **Media queries** (`@media (max-width: 768px) { ... }`). 3) **Flexible images** (`max-width: 100%`). 4) **Viewport meta tag**. 5) **Relative units** (rem, vw, vh). 6) **Mobile-first** approach (start small, enhance). Goal: one codebase for all devices. Coined by Ethan Marcotte (2010).
 
 </QA>
 
 <QA question="What is the difference between class and id selector?">
 
-Asked in interviews.
+**Class** (`.btn`): reusable, multiple elements can share same class, lower specificity (0,0,1,0). **ID** (`#header`): unique per page, only one element, higher specificity (0,1,0,0). Classes for styling groups; IDs for unique elements (anchors, JS targeting, labels). An element can have multiple classes but only one ID. Use classes in CSS; avoid IDs for styling (too specific, hard to override).
 
 </QA>
 
 <QA question="How can we use pagination in CSS?">
 
-Asked in interviews.
+Style pagination links with: `.pagination a { display: inline-block; padding: 8px 16px; text-decoration: none; border: 1px solid #ddd; }`. Active state: `.pagination a.active { background: #3b82f6; color: white; }`. Hover: `.pagination a:hover { background: #eee; }`. Use Flexbox for alignment. Rounded: `border-radius: 50%`. CSS handles styling; JavaScript handles page logic.
 
 </QA>
 
 <QA question="What is CSS Image Reflection?">
 
-Asked in interviews.
+CSS reflection creates a mirror effect: `-webkit-box-reflect: below 2px linear-gradient(transparent, rgba(0,0,0,0.3));`. Values: direction (`above`, `below`, `left`, `right`), offset, mask image. Non-standard WebKit property — not supported in all browsers. Alternative: duplicate image with `transform: scaleY(-1)` and gradient mask overlay. Mostly decorative.
 
 </QA>
 
 <QA question="How can we create multiple columns of text like newspapers using CSS?">
 
-Asked in interviews.
+CSS Multi-column Layout: `column-count: 3;` (3 columns) or `column-width: 200px;` (auto columns). Properties: `column-gap` (space between), `column-rule` (line between columns like border), `column-span: all` (element spans all columns). Content flows automatically between columns. Good for text-heavy pages, article layouts. Use with `break-inside: avoid` to prevent elements splitting across columns.
 
 </QA>
 
 <QA question="How can we give a shadow effect to our text in CSS?">
 
-Asked in interviews.
+`text-shadow: h-offset v-offset blur-radius color`. Example: `text-shadow: 2px 2px 4px rgba(0,0,0,0.5);`. Multiple shadows: comma-separated. Glow effect: `text-shadow: 0 0 10px #fff, 0 0 20px #3b82f6;`. 3D text: multiple shadows with increasing offset. Box shadow (on elements, not text): `box-shadow: 2px 2px 10px rgba(0,0,0,0.3);` with optional `inset`.
 
 </QA>
 
 <QA question="What is !important in CSS?">
 
-Asked in interviews.
+`!important` overrides ALL other specificity rules: `color: red !important;`. It has the HIGHEST priority. Use cases: utility classes, overriding third-party styles. **Problems**: breaks cascade, hard to debug, harder to override (only another !important can). Best practice: avoid !important. Fix specificity issues by restructuring selectors instead. Exception: accessibility styles may justify it.
 
 </QA>
 
 <QA question="What are the attribute selectors in CSS?">
 
-Asked in interviews.
+`[attr]` — has attribute. `[attr=val]` — exact value. `[attr~=val]` — word in space-separated list. `[attr|=val]` — starts with value or value-. `[attr^=val]` — starts with. `[attr$=val]` — ends with. `[attr*=val]` — contains substring. Examples: `input[type="text"]`, `a[href$=".pdf"]`, `[data-theme="dark"]`. Case-insensitive: `[attr=val i]`. Precise targeting without extra classes.
 
 </QA>
 
@@ -1490,217 +1520,217 @@ Asked in interviews.
 
 <QA question="What would be the result of 3+2+'7' in JavaScript?">
 
-Asked in interviews.
+Result: **"57"**. JavaScript evaluates left to right. `3+2 = 5` (both numbers, arithmetic). Then `5+'7'` = `"57"` (number + string triggers string concatenation). The `+` operator with a string converts the other operand to string. If it were `3+2+7` the result would be `12`. `'3'+2+7` would be `"327"`.
 
 </QA>
 
 <QA question="What's new in ECMAScript 2025 (ES2025)?">
 
-Asked in interviews.
+ES2025 features include: 1) **Set** methods (`union`, `intersection`, `difference`, `symmetricDifference`). 2) **RegExp modifiers** (`(?ims:pattern)`). 3) **Promise.try** — wrap sync/async into promise. 4) **Iterator helpers** (`.map()`, `.filter()`, `.take()` on iterators). 5) **JSON modules** (`import json from './data.json' with { type: 'json' }`). 6) **Temporal API** (better date handling, still progressing). 7) **Records and Tuples** (immutable primitives, Stage 2).
 
 </QA>
 
 <QA question="Is JavaScript compiled or interpreted?">
 
-Asked in interviews.
+**Both.** Modern JS engines use **JIT (Just-In-Time) compilation**. V8 (Chrome/Node.js): parses JS → bytecode (Ignition interpreter) → hot code gets compiled to machine code (TurboFan compiler). So it starts interpreted, then frequently-run code is compiled for performance. Technically neither purely compiled nor purely interpreted — it's JIT compiled.
 
 </QA>
 
 <QA question="Are JavaScript and Java related?">
 
-Asked in interviews.
+**No.** Despite similar names, they are completely different languages. JavaScript was named during Java's peak popularity for marketing reasons. Differences: JS is dynamically typed, interpreted/JIT, prototype-based; Java is statically typed, compiled to bytecode, class-based. JS runs in browsers and Node.js; Java runs on JVM. Different syntax, ecosystems, and use cases.
 
 </QA>
 
 <QA question="How many ways can an HTML element be accessed in JavaScript code?">
 
-Asked in interviews.
+1) `document.getElementById('id')` — by ID. 2) `document.getElementsByClassName('class')` — by class. 3) `document.getElementsByTagName('div')` — by tag. 4) `document.querySelector('.class')` — first CSS match. 5) `document.querySelectorAll('.class')` — all CSS matches. 6) `document.getElementsByName('name')` — by name attribute. 7) `document.forms`, `document.images`, etc. querySelector is the most flexible.
 
 </QA>
 
 <QA question="What is the return-value difference between x++ and ++x?">
 
-Asked in interviews.
+`x++` (**post-increment**): returns x's CURRENT value, then increments. `++x` (**pre-increment**): increments first, then returns the NEW value. Example: `let x = 5; let a = x++; // a=5, x=6`. `let x = 5; let b = ++x; // b=6, x=6`. In loops (`for`), both work similarly because the return value isn't used. In expressions: the difference matters.
 
 </QA>
 
 <QA question="What is Variable Scope in JavaScript?">
 
-Asked in interviews.
+Scope determines where variables are accessible. **Global scope**: accessible everywhere. **Function scope**: `var` — accessible within the function. **Block scope**: `let`/`const` — accessible within `{}` (if, for, while blocks). **Module scope**: import/export boundaries. Scope chain: inner scopes can access outer scopes (not vice versa). This creates closures when inner functions reference outer variables.
 
 </QA>
 
 <QA question="What is the difference between Lexical and Dynamic Scoping?">
 
-Asked in interviews.
+**Lexical scoping** (JavaScript): scope is determined at WRITE time (where the function is defined). Inner functions access the scope where they were WRITTEN. **Dynamic scoping** (Perl, some Lisps): scope is determined at CALL time (who called the function). JavaScript uses lexical scoping — closures capture the defining scope. Arrow functions' `this` follows lexical scoping; regular functions' `this` is closer to dynamic binding.
 
 </QA>
 
 <QA question="What is the use of isNaN and how is it different from Number.isNaN?">
 
-Asked in interviews.
+`isNaN(value)`: coerces to number first, then checks. `isNaN('hello')` = true (coerced to NaN). `isNaN('123')` = false (coerced to 123). **`Number.isNaN(value)`**: no coercion, only true for ACTUAL `NaN`. `Number.isNaN('hello')` = false. `Number.isNaN(NaN)` = true. Always use `Number.isNaN()` — it's more predictable and avoids false positives.
 
 </QA>
 
 <QA question="What is negative infinity in JavaScript?">
 
-Asked in interviews.
+`-Infinity` is a numeric value representing negative infinity. Access: `Number.NEGATIVE_INFINITY` or `-Infinity`. Produced by: `1 / -0`, `-1 / 0`, or `Math.log(0)`. Any finite number compared: `x > -Infinity` is always true. `typeof -Infinity` is `'number'`. `-Infinity + Infinity` = `NaN`. Used as initial value in algorithms finding max: `let max = -Infinity;`.
 
 </QA>
 
 <QA question="Why is typeof null === 'object'?">
 
-Asked in interviews.
+It's a **historical bug** from JavaScript's first implementation (1995). In the original engine, values were stored with type tags — objects had tag `0`, and `null` was represented as the NULL pointer (`0x00`). So `typeof null` checks the tag and sees `0` = object. It was never fixed because too much existing code depends on it. Use `=== null` to check for null.
 
 </QA>
 
 <QA question="What are 'truthy' and 'falsy' values in JavaScript?">
 
-Asked in interviews.
+**Falsy** (evaluate to false in boolean context): `false`, `0`, `-0`, `0n` (BigInt), `""` (empty string), `null`, `undefined`, `NaN`. **Truthy**: everything else. `[]` (empty array) is truthy. `{}` (empty object) is truthy. `'0'` is truthy. `' '` is truthy. Important for `if` conditions, `&&`, `||`, ternary. Use `!!value` to coerce to boolean.
 
 </QA>
 
 <QA question="What are undeclared and undefined variables?">
 
-Asked in interviews.
+**Undeclared**: variable not declared with `var/let/const`. Accessing throws `ReferenceError`. In non-strict mode: `x = 5` creates a global variable (bad). **Undefined**: declared but no value assigned. `let x; console.log(x); // undefined`. `typeof undeclared` = `'undefined'` (doesn't throw). `typeof undefined` = `'undefined'`. Functions return `undefined` by default. Missing object properties are `undefined`.
 
 </QA>
 
 <QA question="What are global variables? How are they declared and what are the problems associated with them?">
 
-Asked in interviews.
+Global variables are accessible everywhere. Declared: `var x = 1` outside functions, `window.x = 1`, or undeclared `x = 1` (non-strict mode). **Problems**: 1) Name collisions between scripts. 2) Hard to track/debug. 3) Memory leaks (never garbage collected). 4) Tight coupling between modules. 5) Testing difficulty. Solutions: use `let/const` with block scope, modules (import/export), closures, IIFEs.
 
 </QA>
 
 <QA question="What is the difference between null and undefined in JavaScript?">
 
-Asked in interviews.
+**undefined**: variable declared but not assigned; function returns nothing; missing object property. Automatic/default absence. **null**: intentionally assigned empty/no value. Explicit absence. `typeof undefined` = `'undefined'`; `typeof null` = `'object'` (bug). `null == undefined` is `true`; `null === undefined` is `false`. Use `null` when intentionally clearing a value; `undefined` happens naturally.
 
 </QA>
 
 <QA question="What are template literals and when do you use them?">
 
-Asked in interviews.
+Template literals use backticks: `` `Hello ${name}` ``. Features: 1) **String interpolation**: `${expression}`. 2) **Multi-line strings** without `\n`. 3) **Tagged templates**: `` html`p${text}/p` `` for custom processing (sanitization, i18n, CSS-in-JS). Use when: embedding variables, multi-line strings, building HTML/SQL strings. Better readability than string concatenation.
 
 </QA>
 
 <QA question="Can closures leak memory?">
 
-Asked in interviews.
+Yes. Closures retain references to their outer scope's variables. If a closure references a large object/DOM element and the closure persists (e.g., event listener, timer), that object can't be garbage collected. Common leak: `element.addEventListener('click', () => { /* references largeData */ })` without `removeEventListener`. Fix: nullify references, remove event listeners, use WeakRef/WeakMap for caches.
 
 </QA>
 
 <QA question="Does JavaScript allow multiple inheritance?">
 
-Asked in interviews.
+**No direct multiple inheritance.** A class can only `extends` one parent. But you can simulate it with: 1) **Mixins**: `const Mixin = (Base) => class extends Base { ... }`. Apply: `class Foo extends Mixin1(Mixin2(Base)) {}`. 2) **Object.assign()** to compose behaviors. 3) **Prototype chain** is single. JavaScript chose this to avoid the "diamond problem" of traditional multiple inheritance.
 
 </QA>
 
 <QA question="Is JavaScript statically typed or dynamically typed?">
 
-Asked in interviews.
+**Dynamically typed.** Variables can hold any type and change type at runtime. `let x = 42; x = 'hello'; x = true;` — all valid. Types are checked at runtime, not compile time. This provides flexibility but can cause type-related bugs. TypeScript adds static typing on top of JavaScript for compile-time type checking.
 
 </QA>
 
 <QA question="What is the 'this' keyword in JavaScript?">
 
-Asked in interviews.
+`this` refers to the context object. **In a method**: the object. `obj.fn()` — `this` = `obj`. **Standalone function**: `window` (non-strict) or `undefined` (strict). **Arrow function**: lexical `this` (inherits from parent scope). **Constructor** (`new`): the new instance. **Event handler**: the element. **call/apply/bind**: explicitly set. `this` is determined by HOW a function is called, not where it's defined (except arrow functions).
 
 </QA>
 
 <QA question="Explain the working of timers in JavaScript and the drawbacks of using timers.">
 
-Asked in interviews.
+**setTimeout**: executes once after delay: `setTimeout(fn, 1000)`. **setInterval**: repeats at interval: `setInterval(fn, 1000)`. Clear: `clearTimeout(id)`, `clearInterval(id)`. **Drawbacks**: 1) Not precise — minimum delay, not exact. 2) Blocked by heavy computation (single-threaded). 3) Memory leaks if not cleared. 4) Accumulating delays with setInterval. 5) Excessive timers hurt performance. Alternative: `requestAnimationFrame` for animations.
 
 </QA>
 
 <QA question="What is the difference between ViewState and SessionState?">
 
-Asked in interviews.
+**ViewState**: ASP.NET concept — client-side, stores page-specific data in a hidden field, available only on the same page, sent with every postback. **SessionState**: server-side, stores user data across pages for the session duration, accessible from any page. In modern web: ViewState ~ `useState` (component-level), SessionState ~ `sessionStorage` / server sessions / JWT tokens.
 
 </QA>
 
 <QA question="How do you submit a form using JavaScript?">
 
-Asked in interviews.
+`document.getElementById('myForm').submit();`. Or with `fetch`: `const form = document.querySelector('form'); form.addEventListener('submit', (e) => { e.preventDefault(); const data = new FormData(form); fetch('/api', { method: 'POST', body: data }); });`. `e.preventDefault()` stops default submission. Can also use `HTMLFormElement.requestSubmit()` which triggers validation. React: controlled forms with state.
 
 </QA>
 
 <QA question="Does JavaScript support automatic type conversion?">
 
-Asked in interviews.
+Yes, called **type coercion**. Implicit conversions: `'5' + 3 = '53'` (number to string), `'5' - 3 = 2` (string to number), `!!'hello' = true` (to boolean), `if ('hello')` (truthy check). Operators trigger coercion: `+` prefers strings, `-*/` prefer numbers. `==` does coercion; `===` doesn't. `Number('42')`, `String(42)`, `Boolean(0)` are explicit conversions.
 
 </QA>
 
 <QA question="Is JavaScript single-threaded or multi-threaded?">
 
-Asked in interviews.
+**Single-threaded** — one call stack, one thing at a time. But asynchronous! The **event loop** + **callback queue** enable non-blocking behavior. `setTimeout`, `fetch`, I/O operations are handled by browser/Node.js APIs (separate threads), and their callbacks are queued. **Web Workers** provide actual multi-threading for CPU-intensive tasks but can't access the DOM.
 
 </QA>
 
 <QA question="What is lexical scope in JavaScript?">
 
-Asked in interviews.
+Lexical scope means scope is determined by where code is WRITTEN (not where it's called). Inner functions can access variables from outer functions where they're defined. `function outer() { let x = 10; function inner() { console.log(x); } inner(); }` — `inner` accesses `x` because it's lexically inside `outer`. This is the basis of closures. JavaScript uses lexical scoping exclusively.
 
 </QA>
 
 <QA question="How does lexical scoping work with the this keyword in JavaScript?">
 
-Asked in interviews.
+**Regular functions**: `this` is dynamically bound (depends on how called, NOT lexical). **Arrow functions**: `this` is lexically bound (inherits from enclosing scope). Example: `const obj = { name: 'John', greet: function() { setTimeout(() => { console.log(this.name); // 'John' - arrow inherits obj's this }, 100); } }`. Arrow functions solve the `this` problem in callbacks by using lexical scoping for `this`.
 
 </QA>
 
 <QA question="Explain how to read and write a file using JavaScript.">
 
-Asked in interviews.
+**Browser**: read with File API: `input.files[0]`, `FileReader.readAsText(file)`. Write: download via `Blob` + `URL.createObjectURL()`. **Node.js**: `const fs = require('fs'); fs.readFile('file.txt', 'utf8', (err, data) => {...})` or `const data = fs.readFileSync('file.txt', 'utf8')`. Write: `fs.writeFile('out.txt', content, 'utf8', cb)`. Modern Node: `fs.promises.readFile()` with async/await.
 
 </QA>
 
 <QA question="What is called Variable typing in JavaScript?">
 
-Asked in interviews.
+**Variable typing** (dynamic typing) means variables are NOT bound to a specific type. A variable can hold any type and change type during execution. `let x = 42; x = 'hello'; x = [1,2,3];` — all valid. JavaScript determines type at runtime. Contrast with **static typing** (TypeScript, Java) where types are declared and enforced at compile time. Variable typing enables flexibility but increases risk of type errors.
 
 </QA>
 
 <QA question="Explain how to detect the operating system on the client machine.">
 
-Asked in interviews.
+`navigator.userAgent` contains OS info. `navigator.platform` (deprecated but works). Modern: `navigator.userAgentData.platform` (Chromium). Detection: `const ua = navigator.userAgent; if (ua.includes('Win')) 'Windows'; if (ua.includes('Mac')) 'MacOS'; if (ua.includes('Linux')) 'Linux'; if (/Android/i.test(ua)) 'Android'; if (/iPhone|iPad/i.test(ua)) 'iOS'`. Note: User-Agent can be spoofed. Prefer feature detection over OS detection.
 
 </QA>
 
 <QA question="What are the types of popup boxes available in JavaScript?">
 
-Asked in interviews.
+1) **alert()**: displays message with OK button. `alert('Hello!')`. 2) **confirm()**: displays message with OK and Cancel. Returns `true`/`false`. `if (confirm('Delete?')) { ... }`. 3) **prompt()**: displays input field. Returns string or `null`. `const name = prompt('Your name?', 'default')`. All three block execution (modal). Avoid in production — use custom modals instead.
 
 </QA>
 
 <QA question="What are JavaScript modules and how do you import/export them?">
 
-Asked in interviews.
+**ES Modules** (standard): `export const foo = 42; export default function bar() {}`. Import: `import bar, { foo } from './module.js'`. **CommonJS** (Node.js legacy): `module.exports = { foo }; const { foo } = require('./module')`. ES Modules: static imports (tree-shakable), `type="module"` in browser. Dynamic import: `const module = await import('./module.js')`. Modules have their own scope.
 
 </QA>
 
 <QA question="Explain the concept of memoization in JavaScript.">
 
-Asked in interviews.
+**Memoization** caches function results for repeated calls with same arguments. `function memoize(fn) { const cache = {}; return (...args) => { const key = JSON.stringify(args); if (cache[key]) return cache[key]; return cache[key] = fn(...args); }; }`. Use for: expensive computations, recursive algorithms (Fibonacci), API call deduplication. React: `useMemo`, `useCallback`, `React.memo`. Trade-off: memory for speed.
 
 </QA>
 
 <QA question="What is 'Strict mode' in JavaScript and how can it be enabled?">
 
-Asked in interviews.
+Enable: `'use strict';` at top of file or function. Strict mode catches bugs: 1) No undeclared variables (`x = 5` throws error). 2) No duplicate params. 3) `this` is `undefined` in standalone functions (not `window`). 4) No `with` statement. 5) No octal literals. 6) Can't delete non-configurable properties. ES modules and classes are automatically in strict mode.
 
 </QA>
 
 <QA question="Explain the concept of promises and how they work in JavaScript.">
 
-Asked in interviews.
+Promises represent eventual completion/failure of async operations. `new Promise((resolve, reject) => { asyncOp((err, data) => err ? reject(err) : resolve(data)); })`. States: pending → fulfilled/rejected (immutable). Consume: `.then(val).catch(err).finally()`. Chain: return values pass to next `.then()`. `Promise.all` (all succeed), `Promise.race` (first), `Promise.allSettled` (all complete). `async/await` is syntactic sugar over promises.
 
 </QA>
 
 <QA question="How do you explain closures in JavaScript and when to use them?">
 
-Asked in interviews.
+A **closure** is a function that remembers its outer scope even after the outer function returns. `function outer() { let count = 0; return () => ++count; }`. Use when: 1) **Data privacy** — private variables. 2) **Factory functions** — create specialized functions. 3) **Event handlers** — maintain state. 4) **Currying** — `const add = a => b => a + b`. 5) **Module pattern** — encapsulate logic. Closures are fundamental to JavaScript's functional nature.
 
 </QA>
 
@@ -1708,336 +1738,782 @@ Asked in interviews.
 
 <QA question="How does React.js work?">
 
-Asked in interviews.
+React creates a **Virtual DOM** (in-memory representation of the UI). When state changes: 1) React re-renders the component (creates new VDOM). 2) **Diffing** compares new VDOM with previous. 3) Only changed elements are updated in the real DOM (reconciliation). React uses a component-based architecture — UI is split into reusable components. Data flows one-way (parent → child via props). State changes trigger re-renders.
 
 </QA>
 
 <QA question="What is JSX and how is it converted into JavaScript?">
 
-Asked in interviews.
+**JSX** (JavaScript XML) lets you write HTML-like syntax in JavaScript. `h1Hello {name}/h1`. Babel/SWC compiles JSX to `React.createElement('h1', null, 'Hello ', name)` or modern JSX transform (no import needed). JSX is NOT HTML — it's syntactic sugar for function calls. Differences from HTML: `className` instead of `class`, `htmlFor` instead of `for`, camelCase event handlers, self-closing tags required.
 
 </QA>
 
 <QA question="What is the difference between functional and class components in React?">
 
-Asked in interviews.
+**Functional**: plain functions, use hooks for state/lifecycle, simpler syntax, better performance. `const App = () => divHello/div`. **Class**: extend `React.Component`, use `this.state`, lifecycle methods (`componentDidMount`). `class App extends React.Component { render() { return divHello/div; } }`. Modern React: functional components + hooks are standard. Class components are legacy.
 
 </QA>
 
 <QA question="What are props and default props in React?">
 
-Asked in interviews.
+**Props** (properties): data passed from parent to child. Read-only — child can't modify them. `User name="John" age={25} /`. Access: `function User({ name, age })`. **Default props**: fallback values. `function User({ name = 'Guest', age = 0 })`. Or: `User.defaultProps = { name: 'Guest' }` (deprecated in modern React). TypeScript: define optional props with `?` and defaults in destructuring.
 
 </QA>
 
 <QA question="What is state in React and how do you update it?">
 
-Asked in interviews.
+**State** is component-local, mutable data that triggers re-renders when changed. `const [count, setCount] = useState(0)`. Update: `setCount(count + 1)` or functional: `setCount(prev => prev + 1)`. State updates are asynchronous and batched. For objects: `setState(prev => ({...prev, key: val}))` — must create new references. Never mutate state directly (`state.count++` is wrong).
 
 </QA>
 
 <QA question="What is the difference between Props and State in React?">
 
-Asked in interviews.
+**Props**: passed from parent, read-only, child can't modify. Used for: configuration, data passing. **State**: component-internal, mutable, managed by the component itself. Used for: UI state, user input, toggles. Props flow DOWN (parent → child). State is LOCAL. When state changes, the component re-renders. Props change when parent re-renders OR passes new values. State is source of truth; props are data received.
 
 </QA>
 
 <QA question="What are fragments in React?">
 
-Asked in interviews.
+**Fragments** group multiple elements without adding extra DOM nodes. `{React.Fragment}h1Title/h1pBody/p{/React.Fragment}`. Short syntax: `fragment.../fragment`. Without fragments, you'd wrap in `div` (adds unnecessary DOM node, breaks CSS layouts). Keyed fragments: `React.Fragment with key={id}` — short syntax doesn't support keys. Use when returning multiple elements from a component.
 
 </QA>
 
 <QA question="What is the difference between controlled and uncontrolled components?">
 
-Asked in interviews.
+**Controlled**: React state controls the input value. `input value={name} onChange={e = setName(e.target.value)} />`. React is the "single source of truth". **Uncontrolled**: DOM controls the value. Access via ref: `inputRef.current.value`. `input defaultValue="John" ref={inputRef} /`. Controlled: more predictable, enables validation/formatting. Uncontrolled: simpler, useful for file inputs. Use controlled for most cases.
 
 </QA>
 
 <QA question="What are Hooks in React and why were they introduced?">
 
-Asked in interviews.
+Hooks let functional components use state and lifecycle features (previously class-only). Introduced in React 16.8 to: 1) Share stateful logic without HOCs/render props. 2) Simplify complex components. 3) Avoid class quirks (`this` binding). 4) Better code reuse via custom hooks. Core hooks: `useState`, `useEffect`, `useContext`, `useRef`, `useMemo`, `useCallback`, `useReducer`. Only callable in functional components and custom hooks.
 
 </QA>
 
 <QA question="How does the useState hook work?">
 
-Asked in interviews.
+`const [value, setValue] = useState(initialValue)`. Returns array: current state and setter function. Initial value is used on first render only. Updates trigger re-render. Functional update: `setValue(prev => prev + 1)` — safe for dependent updates. Lazy initialization: `useState(() => expensiveCalc())`. For objects/arrays: always create new references (`{...obj}`, `[...arr]`). State is preserved between re-renders per component instance.
 
 </QA>
 
 <QA question="What is useEffect in React and what is the role of its dependency array?">
 
-Asked in interviews.
+`useEffect` handles side effects: API calls, subscriptions, DOM manipulation. **Dependency array**: `useEffect(() => {}, [deps])`. `[]` = run once on mount. `[dep1, dep2]` = run when deps change. No array = run every render. **Cleanup**: return a function: `useEffect(() => { const id = subscribe(); return () => unsubscribe(id); }, [])`. Runs cleanup before re-running and on unmount.
 
 </QA>
 
 <QA question="What is the difference between useEffect and useLayoutEffect?">
 
-Asked in interviews.
+**useEffect**: runs asynchronously AFTER the browser paints. Non-blocking. Use for: data fetching, subscriptions, analytics. **useLayoutEffect**: runs synchronously AFTER DOM mutation but BEFORE the browser paints. Blocking. Use for: DOM measurements, scroll position, preventing visual flicker. `useLayoutEffect` is like `componentDidMount`/`componentDidUpdate` timing. Default to `useEffect`; only use `useLayoutEffect` when you need to measure/modify DOM before paint.
 
 </QA>
 
 <QA question="What is the useContext hook and when should you use it?">
 
-Asked in interviews.
+`useContext` consumes React Context without nesting consumers. `const value = useContext(MyContext)`. Create: `const MyContext = createContext(defaultValue)`. Provide: `MyContext.Provider with value={data}`. Use when: sharing data across many components (theme, auth, locale) without prop drilling. Caveat: ALL consumers re-render when context value changes. Split contexts for unrelated data. For complex state: combine with `useReducer`.
 
 </QA>
 
 <QA question="What is the useReducer hook and when is it preferred over useState?">
 
-Asked in interviews.
+`const [state, dispatch] = useReducer(reducer, initialState)`. Reducer: `(state, action) => newState`. Dispatch: `dispatch({ type: 'INCREMENT' })`. **Prefer over useState when**: 1) Complex state logic (multiple sub-values). 2) Next state depends on previous. 3) State transitions are predictable (switch/case). 4) State shared via context. Similar to Redux pattern but component-local. Good for: forms, toggles, counters with complex rules.
 
 </QA>
 
 <QA question="What is the useRef hook and what are its common use cases?">
 
-Asked in interviews.
+`const ref = useRef(initialValue)`. Returns mutable object: `{ current: value }`. Persists across renders. Changes to `.current` DON'T trigger re-render. **Use cases**: 1) DOM access: `input ref={inputRef} /`, `inputRef.current.focus()`. 2) Store previous values. 3) Timer IDs: `ref.current = setInterval(...)`. 4) Track mount status. 5) Imperative animations. Think of it as an instance variable for functional components.
 
 </QA>
 
 <QA question="What are custom hooks in React and how do you create one?">
 
-Asked in interviews.
+Custom hooks extract reusable stateful logic. Naming convention: start with `use`. `function useLocalStorage(key, initial) { const [value, setValue] = useState(() => JSON.parse(localStorage.getItem(key)) ?? initial); useEffect(() => { localStorage.setItem(key, JSON.stringify(value)); }, [key, value]); return [value, setValue]; }`. Use: `const [theme, setTheme] = useLocalStorage('theme', 'dark')`. Share logic, not state — each consumer gets its own state.
 
 </QA>
 
 <QA question="What are the rules of hooks and why are they important?">
 
-Asked in interviews.
+1) **Only call hooks at the top level** — never inside conditions, loops, or nested functions. 2) **Only call hooks from React functions** (functional components or custom hooks). Why: React relies on the ORDER of hook calls to track state. Conditional hooks break this order across renders. The `eslint-plugin-react-hooks` enforces these rules. Breaking them causes: stale state, wrong hook associations, crashes.
 
 </QA>
 
 <QA question="What is State Management in React? What is the difference between Local and Global State?">
 
-Asked in interviews.
+**State management**: how data is stored, updated, and shared across components. **Local state**: component-specific (useState, useReducer). Lives in one component. Example: form input, toggles. **Global state**: shared across many components (Context, Redux, Zustand). Accessible from anywhere. Example: auth status, theme, cart. Use local state by default; elevate to global only when needed across distant components.
 
 </QA>
 
 <QA question="What are some popular state management solutions in React/Next.js?">
 
-Asked in interviews.
+1) **Built-in**: useState, useReducer + Context API. 2) **Redux Toolkit** — predictable, DevTools, middleware. 3) **Zustand** — lightweight, minimal boilerplate. 4) **Jotai** — atomic state model. 5) **Recoil** — atomic, by Meta. 6) **MobX** — observable state. 7) **TanStack Query** (React Query) — server state. 8) **SWR** — data fetching. Trend: lightweight solutions (Zustand, Jotai) over Redux for new projects.
 
 </QA>
 
 <QA question="When should you use Redux over Context API?">
 
-Asked in interviews.
+**Context API**: simple data sharing (theme, auth, locale). No middleware, no DevTools, re-renders all consumers on change. **Redux**: complex state logic, frequent updates, need for middleware (async, logging), time-travel debugging. Use Redux when: large app with many state interactions, need DevTools, complex async flows, performance-critical updates. Use Context for: infrequently changing data passed to many components.
 
 </QA>
 
 <QA question="What is the difference between Client State and Server State?">
 
-Asked in interviews.
+**Client state**: UI-related data managed locally (theme, modals, form inputs). Synchronous. Controlled by the app. Managed by useState/Redux/Zustand. **Server state**: data from external sources (API responses, database records). Asynchronous. Has loading/error states. Can be stale. Managed by React Query/SWR/RTK Query. Server state needs: caching, invalidation, background refresh, retry logic. Don't mix them — use different tools for each.
 
 </QA>
 
 <QA question="What is the role of useReducer in state management?">
 
-Asked in interviews.
+`useReducer` centralizes state transitions into a pure reducer function. `const [state, dispatch] = useReducer(reducer, initialState)`. Reducer handles ALL state updates via action types. Benefits: 1) Predictable state transitions. 2) Easy to test (pure function). 3) Complex state logic in one place. 4) Pairs well with context for shared state. Think of it as a mini-Redux within a component.
 
 </QA>
 
 <QA question="How do you handle persistent state in React apps?">
 
-Asked in interviews.
+1) **localStorage/sessionStorage**: `localStorage.setItem('key', JSON.stringify(state))`. Load on mount via `useState(() => JSON.parse(localStorage.getItem('key')))`. 2) **Custom hook**: `useLocalStorage()`. 3) **Libraries**: zustand-persist, redux-persist. 4) **URL state** (query params): `useSearchParams()`. 5) **Cookies** for server-accessible data. 6) **IndexedDB** for large data. Always handle JSON parsing errors.
 
 </QA>
 
 <QA question="What is the difference between derived state and computed state in React?">
 
-Asked in interviews.
+**Derived state**: values calculated directly from existing state/props DURING render. `const total = items.reduce((sum, i) => sum + i.price, 0)`. No extra state needed. **Computed state**: sometimes stored as separate state (anti-pattern). Don't store what you can compute. Use `useMemo` for expensive derivations: `const sorted = useMemo(() => items.sort(...), [items])`. Rule: if it can be calculated from existing state, compute — don't store.
 
 </QA>
 
 <QA question="How can you optimize state updates for performance in React?">
 
-Asked in interviews.
+1) **Batch updates** (React 18 auto-batches). 2) **Functional updates**: `setState(prev => prev + 1)`. 3) **State splitting** — separate frequently-changing from stable state. 4) **useMemo** for expensive derived values. 5) **useTransition** for non-urgent updates (React 18). 6) **Avoid storing derivable data**. 7) **Immutable updates** with spread operator. 8) **Debounce** input handlers. 9) **Move state down** to reduce re-render scope.
 
 </QA>
 
 <QA question="How do you handle asynchronous state updates in React?">
 
-Asked in interviews.
+useEffect for async operations: `useEffect(() => { const fetchData = async () => { setLoading(true); try { const data = await fetch(url).then(r => r.json()); setData(data); } catch(e) { setError(e); } finally { setLoading(false); } }; fetchData(); }, [url])`. Patterns: loading/error/data states. AbortController for cleanup. React Query/SWR handle this automatically. `useTransition` for non-blocking updates.
 
 </QA>
 
 <QA question="Can you explain what the Virtual DOM is and how React uses it?">
 
-Asked in interviews.
+The **Virtual DOM** is a lightweight JavaScript object representation of the actual DOM. React maintains two VDOM trees. On state change: 1) Render new VDOM tree. 2) **Diff** with previous tree (reconciliation). 3) Compute minimal set of changes. 4) **Batch-apply** changes to real DOM. This is faster than direct DOM manipulation because: DOM operations are expensive, batching reduces reflows, and the diffing algorithm is O(n) efficient.
 
 </QA>
 
 <QA question="What do you understand by reconciliation in React? Why is it important?">
 
-Asked in interviews.
+**Reconciliation** is React's diffing algorithm for updating the DOM efficiently. Heuristics: 1) Different element types = destroy and rebuild subtree. 2) Same type = update attributes/props. 3) Keys identify items in lists (enables reordering without rebuilding). Importance: turns O(n³) tree diff into O(n). Without it, React would re-create the entire DOM on every update. Keys prevent unnecessary unmount/remount of list items.
 
 </QA>
 
 <QA question="How does React.memo help improve performance?">
 
-Asked in interviews.
+`React.memo(Component)` memoizes a functional component. Skips re-rendering if props haven't changed (shallow comparison). `const MemoizedComp = React.memo(MyComp)`. Custom comparison: `React.memo(MyComp, (prevProps, nextProps) => prevProps.id === nextProps.id)`. Use when: component re-renders frequently with same props, component is expensive to render. Don't overuse — the comparison has its own cost. Only memo components that actually benefit.
 
 </QA>
 
 <QA question="What do you mean by code splitting and lazy loading in React?">
 
-Asked in interviews.
+**Code splitting**: breaking the bundle into smaller chunks loaded on demand. **Lazy loading**: loading components only when needed. `const LazyComp = React.lazy(() => import('./HeavyComponent'))`. Wrap in `Suspense fallback={Loading}`. Benefits: smaller initial bundle, faster first load. Also works with: React Router (route-based splitting), dynamic imports. Tools: Webpack code splitting, Vite's built-in splitting.
 
 </QA>
 
 <QA question="How would you optimize a slow React application?">
 
-Asked in interviews.
+1) Profile with React DevTools Profiler. 2) `React.memo`, `useMemo`, `useCallback` for unnecessary re-renders. 3) Code splitting + lazy loading. 4) Virtualize long lists (react-window). 5) Debounce/throttle inputs. 6) Avoid inline objects/functions in JSX. 7) Use `useTransition` for non-urgent updates. 8) Optimize images (lazy loading, WebP). 9) Move state down. 10) Use production build. 11) Server-side rendering (Next.js).
 
 </QA>
 
 <QA question="What is the difference between React.PureComponent and React.Component?">
 
-Asked in interviews.
+**React.Component**: re-renders on every parent re-render or setState call. **React.PureComponent**: implements `shouldComponentUpdate` with shallow prop/state comparison — skips re-render if props/state haven't changed. Functional equivalent: `React.memo()`. Caveat: shallow comparison only — nested objects/arrays won't be detected. Use when: component renders the same result given the same props/state. Modern React: use `React.memo` with functional components.
 
 </QA>
 
 <QA question="How does React handle re-rendering when state or props change?">
 
-Asked in interviews.
+When state changes: the component and ALL its children re-render (create new VDOM). React then diffs and updates only changed DOM nodes. Props change occurs when: parent re-renders and passes new prop values. Optimization: `React.memo` prevents child re-render if props are same. `useMemo`/`useCallback` stabilize prop references. React 18: automatic batching groups multiple state updates into one re-render.
 
 </QA>
 
 <QA question="How do you render a list of items in React?">
 
-Asked in interviews.
+Use `.map()`: `{items.map(item => li key={item.id}{item.name}/li)}`. **key** is required — must be unique and stable (use ID, not index). Keys help React identify which items changed/moved/removed. Wrap in `ul` or `ol`. For complex items: extract a component. `{items.map(item => ItemCard key={item.id} {...item} /)}`. Always provide unique keys.
 
 </QA>
 
 <QA question="What happens if we use the array index as a key in React?">
 
-Asked in interviews.
+Using index as key (`key={index}`) causes issues when: 1) Items are reordered — React reuses wrong components. 2) Items are inserted/deleted — wrong state associations. 3) Inputs lose their values. Index as key is OK ONLY when: list is static, never reordered, never filtered. Always use unique IDs: `key={item.id}`. Using index leads to subtle bugs and performance issues (unnecessary unmount/remount).
 
 </QA>
 
 <QA question="How do you conditionally render list items in React?">
 
-Asked in interviews.
+`{items.filter(item => item.active).map(item => Item key={item.id} {...item} /)}`. Filter BEFORE map. Or inline: `{items.map(item => item.active ? Item key={item.id} {...item} / : null)}`. Use `&&` for simple conditions: `{item.visible && Item}`. Never return `undefined` from map — return `null` to render nothing. Use `useMemo` for expensive filter operations.
 
 </QA>
 
 <QA question="How do you update or remove an item from a list in React state?">
 
-Asked in interviews.
+**Update**: `setItems(prev => prev.map(item => item.id === id ? {...item, name: 'New'} : item))`. **Remove**: `setItems(prev => prev.filter(item => item.id !== id))`. **Add**: `setItems(prev => [...prev, newItem])`. Always create new arrays — never mutate directly (`items.push()` won't trigger re-render). The spread/map/filter pattern creates new references that React detects as changes.
 
 </QA>
 
 <QA question="What are some performance tips when rendering large lists in React?">
 
-Asked in interviews.
+1) **Virtualization** (react-window, react-virtuoso) — only render visible items. 2) **Pagination** or infinite scroll. 3) Stable **keys** (not index). 4) **React.memo** on list item components. 5) **useMemo** for filtered/sorted lists. 6) **Avoid inline functions** in list items. 7) Debounce search/filter. 8) **Batch state updates**. 9) Use `useCallback` for event handlers passed to items.
 
 </QA>
 
 <QA question="How would you render a nested list in React?">
 
-Asked in interviews.
+Nested `.map()`: `{categories.map(cat => (div key={cat.id}h2{cat.name}/h2ul{cat.items.map(item => li key={item.id}{item.name}/li)}/ul/div))}`. Extract sub-components for readability: `CategoryList` → `Category` → `Item`. Each level needs unique keys. For deeply nested data: consider recursive components.
 
 </QA>
 
 <QA question="How do you handle dynamic addition of items in a list?">
 
-Asked in interviews.
+`const [items, setItems] = useState([]); const addItem = () => { setItems(prev => [...prev, { id: Date.now(), text: input }]); setInput(''); };`. Use form submission: `form onSubmit={e = { e.preventDefault(); addItem(); }}>`. Always spread into new array. Generate unique IDs: `crypto.randomUUID()`, `Date.now()`, or uuid library. Clear input after adding.
 
 </QA>
 
 <QA question="How do you handle dynamic sorting or filtering of lists in React?">
 
-Asked in interviews.
+Maintain sort/filter criteria in state: `const [sortBy, setSortBy] = useState('name'); const [filter, setFilter] = useState('');`. Derive the displayed list: `const displayed = useMemo(() => items.filter(i => i.name.includes(filter)).sort((a, b) => a[sortBy].localeCompare(b[sortBy])), [items, filter, sortBy])`. Render `displayed`. Use `useMemo` to avoid recomputing on every render. Debounce filter input for performance.
 
 </QA>
 
 <QA question="What is the difference between rendering lists with map() vs forEach()?">
 
-Asked in interviews.
+`map()` returns a new array — React can render it: `{items.map(i => li key={i.id}{i.name}/li)}`. `forEach()` returns `undefined` — React can't render it. `forEach` is for side effects only. Always use `map()` for rendering lists in JSX. If you used `forEach`, you'd need to manually push to an array, which is unnecessary and less idiomatic.
 
 </QA>
 
 <QA question="How are forms handled in React compared to plain HTML?">
 
-Asked in interviews.
+In HTML: forms use DOM state, submit via action URL. In **React**: 1) **Controlled components** — state drives input values: `input value={name} onChange={e = setName(e.target.value)} />`. 2) `e.preventDefault()` stops page reload. 3) Handle submission in JavaScript. 4) Validation in real-time. 5) Libraries: React Hook Form, Formik. React gives you full control over form data, validation, and submission flow.
 
 </QA>
 
 <QA question="How do you prevent the default form submission behavior in React?">
 
-Asked in interviews.
+`form onSubmit={handleSubmit}`. `function handleSubmit(e) { e.preventDefault(); // process form data }`. `e.preventDefault()` stops the browser from sending an HTTP request and reloading the page. This is essential in SPAs where form handling is done via JavaScript (fetch API, state updates). Without it, the page would reload and lose React state.
 
 </QA>
 
 <QA question="What is event bubbling and how can you stop it in React?">
 
-Asked in interviews.
+**Event bubbling**: events propagate from the target element UP through ancestors. Click on `button` inside `div` — both handlers fire. Stop: `e.stopPropagation()` in the handler. React uses **Synthetic Events** (wrapper around native events, consistent cross-browser). React delegates events to root, not individual elements. `e.nativeEvent` accesses the original. Capture phase: `onClickCapture`.
 
 </QA>
 
 <QA question="How do you handle multiple input fields in a single form in React?">
 
-Asked in interviews.
+Use one state object: `const [form, setForm] = useState({ name: '', email: '' })`. Single handler: `const handleChange = (e) => { setForm(prev => ({...prev, [e.target.name]: e.target.value})); }`. Inputs: `input name="name" value={form.name} onChange={handleChange} /`. The `[e.target.name]` computed property key makes this dynamic. For complex forms: use React Hook Form or Formik.
 
 </QA>
 
 <QA question="How do you reset form fields after submission in React?">
 
-Asked in interviews.
+**Controlled**: reset state to initial values: `setForm({ name: '', email: '' })`. Or use initial state constant: `const INITIAL = { name: '', email: '' }; setForm(INITIAL)`. **Uncontrolled**: `formRef.current.reset()`. With React Hook Form: `reset()`. Always clear state after successful submission to provide clean UX. Also consider clearing success/error messages with a timer.
 
 </QA>
 
 <QA question="What is React Router and why is it used?">
 
-Asked in interviews.
+**React Router** is the standard routing library for React SPAs. Enables client-side navigation without full page reloads. Features: declarative routing, nested routes, dynamic parameters (`/user/:id`), lazy loading, programmatic navigation. `BrowserRouterRoutesRoute path="/" element={Home} /Route path="/about" element={About} //Routes/BrowserRouter`. Latest version: React Router v6. Next.js has file-based routing built-in.
 
 </QA>
 
 <QA question="Difference between an anchor tag and Link in React Router?">
 
-Asked in interviews.
+`a href="/about"` — full page reload, loses React state, re-downloads all assets. `Link to="/about"` — client-side navigation, no page reload, preserves state, instant. Link intercepts the click, uses the History API to update the URL, and React Router renders the matching component. Always use `Link` for internal navigation, `a` for external links.
 
 </QA>
 
 <QA question="What are the main components of React Router?">
 
-Asked in interviews.
+1) **BrowserRouter** — wraps the app, uses HTML5 History API. 2) **Routes** — container for Route definitions. 3) **Route** — maps a path to a component: `Route path="/about" element={About} /`. 4) **Link/NavLink** — client-side navigation. 5) **Outlet** — renders nested route children. 6) **Navigate** — programmatic redirect. 7) Hooks: `useNavigate`, `useParams`, `useLocation`, `useSearchParams`.
 
 </QA>
 
 <QA question="What is the difference between useHistory and useNavigate?">
 
-Asked in interviews.
+`useHistory` (React Router v5): `const history = useHistory(); history.push('/path'); history.goBack();`. **`useNavigate`** (React Router v6, replacement): `const navigate = useNavigate(); navigate('/path'); navigate(-1);`. `navigate('/path', { replace: true })` replaces history entry. `navigate` is simpler API. v6 also uses `Navigate` component for declarative redirects. Always use `useNavigate` in v6+ projects.
 
 </QA>
 
 <QA question="How do you implement nested routes in React Router?">
 
-Asked in interviews.
+Parent route with `Outlet`: `Route path="/dashboard" element={Dashboard}Route path="settings" element={Settings} /Route path="profile" element={Profile} //Route`. `Dashboard` component includes `Outlet` where child routes render. URL: `/dashboard/settings` renders `Dashboard` with `Settings` inside. Index route: `Route index element={DashboardHome} /` for default child.
 
 </QA>
 
 <QA question="What are route parameters and how do you access them?">
 
-Asked in interviews.
+Dynamic segments in the path: `Route path="/user/:id" element={User} /`. Access: `const { id } = useParams()`. URL `/user/123` → `id = '123'`. Multiple params: `/post/:postId/comment/:commentId`. Always strings — parse if needed: `parseInt(id)`. Optional params: use `?` or search params. Query strings: `const [searchParams] = useSearchParams(); searchParams.get('page')`.
 
 </QA>
 
 <QA question="How do you redirect a user in React Router?">
 
-Asked in interviews.
+**Programmatic**: `const navigate = useNavigate(); navigate('/login');` or `navigate('/login', { replace: true })` (no back). **Declarative**: `Navigate to="/login" replace /` in JSX (e.g., for auth guards). **Conditional**: `if (!isAuthenticated) return Navigate to="/login" /`. v5 used `Redirect` component. In Next.js: `router.push('/path')` or `redirect()` in server components.
 
 </QA>
 
 <QA question="What is the difference between client-side routing and server-side routing?">
 
-Asked in interviews.
+**Server-side**: browser sends request to server for each page → server returns HTML. Full page reload. Traditional web apps. **Client-side**: JavaScript intercepts navigation, updates URL via History API, renders new component WITHOUT page reload. SPA behavior. Pros: faster transitions, preserved state. Cons: initial load larger, SEO challenges (solved by SSR). React Router provides client-side routing.
 
 </QA>
 
 <QA question="Difference between Switch and Routes in React Router?">
 
-Asked in interviews.
+**Switch** (v5): renders first matching `Route`. Uses exact prop for exact matching. `SwitchRoute exact path="/"`... **Routes** (v6, replacement): always uses exact matching by default. Better algorithm — picks the most specific match. No `exact` prop needed. Supports nested routes natively. `RoutesRoute path="/" element={Home} /`. Always use `Routes` in v6+ projects. `Switch` is removed in v6.
+
+</QA>
+
+## TypeScript (from InterviewBit)
+
+<QA question="What are the primitive types in TypeScript?">
+
+`string`, `number`, `boolean`, `null`, `undefined`, `bigint`, `symbol`. Example: `let name: string = 'John'; let age: number = 25; let active: boolean = true; let big: bigint = 100n; let sym: symbol = Symbol('id');`. TypeScript also has `void` (no return), `never` (never returns), `any` (opt out), `unknown` (type-safe any). Primitives are immutable.
+
+</QA>
+
+<QA question="Explain how the arrays work in TypeScript.">
+
+Two syntaxes: `let nums: number[] = [1, 2, 3]` or `let nums: Arraynumber = [1, 2, 3]`. Arrays are typed — can only hold elements of the declared type. Read-only: `readonly number[]` or `ReadonlyArraynumber`. Tuple: `let pair: [string, number] = ['John', 25]`. Multi-type: `(string | number)[]`. All JS array methods work: `map`, `filter`, `reduce`, `push`, `splice`. TypeScript catches type mismatches at compile time.
+
+</QA>
+
+<QA question="What is any type, and when to use it?">
+
+`any` disables type checking — the variable can be anything. `let data: any = 42; data = 'hello'; data.foo()`. Use when: migrating JS to TS (gradual adoption), working with dynamic third-party libraries, truly dynamic data. **Avoid when possible** — defeats TypeScript's purpose. Prefer `unknown` (requires type checking before use). `noImplicitAny` flag in tsconfig warns when `any` is inferred.
+
+</QA>
+
+<QA question="What is void, and when to use the void type?">
+
+`void` indicates a function returns nothing. `function log(msg: string): void { console.log(msg); }`. You CAN return `undefined` from void functions. Difference from `undefined`: void specifically means "return value should not be used". Use for: event handlers, side-effect functions, callbacks that don't use return values. Variables of type `void` can only hold `undefined`.
+
+</QA>
+
+<QA question="What is an unknown type, and when to use it in TypeScript?">
+
+`unknown` is the type-safe counterpart of `any`. You can assign anything to `unknown`, but you MUST narrow it before using it. `let data: unknown = fetch(); if (typeof data === 'string') { console.log(data.toUpperCase()); }`. Use for: API responses, user input, deserialized data. Forces type checking before access. Preferred over `any` because it maintains type safety.
+
+</QA>
+
+<QA question="Explain the arrow function syntax in TypeScript.">
+
+`const add = (a: number, b: number): number => a + b;`. With block body: `const greet = (name: string): void => { console.log(name); };`. Type alias: `type MathFn = (x: number, y: number) => number;`. Arrow functions have lexical `this` (inherit from parent scope). Generic arrow functions use angle bracket syntax. In JSX files: use a trailing comma in generic params to avoid conflict with JSX tags.
+
+</QA>
+
+<QA question="Provide the syntax of a function with the type annotations.">
+
+`function greet(name: string, age: number): string` — returns a string. Optional: `function greet(name: string, title?: string): string`. Default: `function greet(name: string = 'World'): string`. Rest: `function sum(...nums: number[]): number`. Function type: `let fn: (a: string) => void`. Overloads: multiple function signatures above the implementation.
+
+</QA>
+
+<QA question="How to create objects in TypeScript?">
+
+Using interfaces or type aliases: `interface User { name: string; age: number; } const user: User = { name: 'John', age: 25 };`. Type alias: `type User = { name: string; age: number; }`. Inline: `const user: { name: string; age: number } = { name: 'John', age: 25 };`. Class: `class User { constructor(public name: string, public age: number) {} }`. Record: `const map: Record of string to number = { a: 1 };`.
+
+</QA>
+
+<QA question="How to specify optional properties in TypeScript?">
+
+Use `?` after the property name: `interface User { name: string; email?: string; }`. Optional properties can be `undefined`. Accessing: use optional chaining `user.email?.toUpperCase()`. With function params: `function greet(name: string, title?: string)`. In destructuring: `const { name, email = 'N/A' }: User = user;`. `PartialT` makes ALL properties optional.
+
+</QA>
+
+<QA question="Explain the purpose of the never type in TypeScript.">
+
+`never` represents values that NEVER occur. Use cases: 1) Functions that never return: `function throwError(msg: string): never { throw new Error(msg); }`. 2) Infinite loops: `function loop(): never { while(true) {} }`. 3) Exhaustive checks in switch: `default: const _: never = value;` — TypeScript errors if a case is missed. `never` is the bottom type — subtype of all types, but no type is a subtype of `never`.
+
+</QA>
+
+<QA question="Explain how enums work in TypeScript?">
+
+`enum Direction { Up, Down, Left, Right }`. Numeric by default (0, 1, 2, 3). String enum: `enum Color { Red = 'RED', Blue = 'BLUE' }`. Access: `Direction.Up`. Reverse mapping (numeric only): `Direction[0] === 'Up'`. `const enum` — inlined at compile time (better performance, no runtime object). Use for: fixed sets of related constants. Alternative: union types — `type Direction = 'up' | 'down'` (often preferred).
+
+</QA>
+
+<QA question="What is the typeof operator? How is it used in TypeScript?">
+
+In JavaScript: `typeof x` returns runtime type string (`'string'`, `'number'`, etc.). In TypeScript: `typeof` also works at TYPE level. `const user = { name: 'John', age: 25 }; type User = typeof user; // { name: string; age: number }`. Useful for: inferring types from values, `ReturnTypetypeof fn`, type guards in narrowing: `if (typeof x === 'string')`. Combines JS runtime checks with TS compile-time types.
+
+</QA>
+
+<QA question="What are the rest parameters and arguments in TypeScript?">
+
+**Rest parameters**: collect remaining arguments into an array. `function sum(...nums: number[]): number { return nums.reduce((a, b) => a + b, 0); }`. Call: `sum(1, 2, 3, 4)`. Must be last parameter. Typed as array. **Spread** (related): `const arr = [1, 2] as const; sum(...arr)`. With tuples: `function foo(...args: [string, number])`. TypeScript ensures type safety for all rest arguments.
+
+</QA>
+
+<QA question="What is the purpose of the tsconfig.json file?">
+
+`tsconfig.json` configures the TypeScript compiler. Key options: `target` (JS version: ES2022), `module` (ESNext, CommonJS), `strict` (enables all strict checks), `outDir` (output directory), `rootDir` (source root), `include`/`exclude` (which files to compile), `jsx` (React JSX support), `paths` (module aliases), `lib` (available type definitions). Generate: `npx tsc --init`. Controls compilation behavior, type checking strictness, and module resolution.
+
+</QA>
+
+<QA question="How to enforce strict null checks in TypeScript?">
+
+Enable `"strictNullChecks": true` in tsconfig.json (included in `"strict": true`). With it: `null` and `undefined` are NOT assignable to other types. `let name: string = null;` → error. Must explicitly allow: `let name: string | null = null;`. Forces null checks: `if (value !== null) { value.method(); }`. Use optional chaining (`?.`), nullish coalescing (`??`), and non-null assertion (`!`) when certain.
+
+</QA>
+
+<QA question="What are type assertions in TypeScript?">
+
+Type assertions tell the compiler "trust me, I know the type." `const el = document.getElementById('app') as HTMLInputElement;`. Or angle-bracket: `const el = HTMLInputElementdocument.getElementById('app');` (not in JSX files). Does NOT perform runtime conversion. Use when: you know more than TypeScript (DOM elements, API responses). `as const` assertion makes values readonly literals. Avoid overuse — prefer type narrowing.
+
+</QA>
+
+<QA question="Explain the tuple types in TypeScript.">
+
+Tuples are fixed-length arrays with specific types per position. `let pair: [string, number] = ['John', 25];`. Access: `pair[0]` is `string`, `pair[1]` is `number`. Named tuples: `type Pair = [name: string, age: number]`. Optional: `[string, number?]`. Rest: `[string, ...number[]]`. Readonly: `readonly [string, number]`. Use for: function return values, CSV rows, destructuring patterns. `const` assertion: `[1, 2] as const`.
+
+</QA>
+
+<QA question="What are type aliases? How do you create one?">
+
+`type` keyword creates named types: `type UserID = string | number;`. Objects: `type User = { name: string; age: number; };`. Functions: `type Callback = (data: string) => void;`. Unions: `type Status = 'active' | 'inactive';`. Generic: `type ListT = T[];`. vs interface: types support unions, mapped types, primitives. Interfaces support declaration merging, extends. Use types for unions/primitives, interfaces for objects.
+
+</QA>
+
+<QA question="What are intersection types?">
+
+`&` combines types: `type Admin = User & { role: 'admin'; permissions: string[]; }`. The resulting type has ALL properties from both types. `type A = { name: string; }; type B = { age: number; }; type C = A & B; // { name: string; age: number; }`. Use for: composing types, mixins, adding features to existing types. Conflicting properties: if types are incompatible, the property becomes `never`.
+
+</QA>
+
+<QA question="What are union types in TypeScript?">
+
+`|` allows multiple types: `let id: string | number = 'abc'; id = 123;`. Discriminated unions: `type Shape = { kind: 'circle'; radius: number } | { kind: 'square'; side: number }`. Narrow with type guards: `if (typeof id === 'string')`. Literal unions: `type Direction = 'up' | 'down' | 'left' | 'right'`. Union arrays: `(string | number)[]`. Common in: function parameters, API responses, state machines.
+
+</QA>
+
+<QA question="What are abstract classes? When should you use one?">
+
+`abstract class Shape { abstract area(): number; describe(): string { return 'I am a shape'; } }`. Can't be instantiated directly. Must be extended: `class Circle extends Shape { area() { return Math.PI * r * r; } }`. Use when: shared base logic + mandatory overrides. vs Interface: abstract classes can have implementations, constructors, access modifiers. Use abstract when you need shared code + contract.
+
+</QA>
+
+<QA question="How to make object properties immutable in TypeScript? (hint: readonly)">
+
+`readonly` modifier: `interface User { readonly id: number; name: string; }`. Can't reassign after creation: `user.id = 2; // Error`. `ReadonlyT` utility makes ALL properties readonly. `as const` assertion: `const config = { port: 3000 } as const;` — deeply readonly. `ReadonlyArrayT` or `readonly T[]` for arrays. Note: `readonly` is compile-time only — no runtime enforcement.
+
+</QA>
+
+<QA question="What are conditional types? How do you create them?">
+
+`T extends U ? X : Y`. If T is assignable to U, result is X; otherwise Y. `type IsStringT = T extends string ? true : false;` — evaluates to true for string types. With `infer`: `type ReturnTypeT = T extends (...args: any[]) => infer R ? R : never;`. Use for: extracting types, filtering unions, creating flexible generic types. Distributes over unions automatically.
+
+</QA>
+
+<QA question="List some of the utility types provided by TypeScript and explain their usage.">
+
+`PartialT` — all props optional. `RequiredT` — all required. `ReadonlyT` — all readonly. `Pick` — select specific props. `Omit` — exclude props. `Record` — key-value map. `Exclude` — remove from union. `Extract` — keep from union. `NonNullableT` — remove null/undefined. `ReturnTypeT` — function return type. `ParametersT` — function params tuple.
+
+</QA>
+
+<QA question="Explain how optional chaining works in TypeScript.">
+
+`?.` safely accesses nested properties when intermediate values might be null/undefined. `user?.address?.street` returns `undefined` if any part is nullish (instead of throwing). Works with: property access (`obj?.prop`), array indexing (`arr?.[0]`), function calls (`fn?.()`). Compiles to: `user === null || user === void 0 ? void 0 : user.address`. Combine with nullish coalescing: `user?.name ?? 'Guest'`.
+
+</QA>
+
+<QA question="What is meant by type inference?">
+
+TypeScript automatically determines types without explicit annotations. `let x = 42;` — inferred as `number`. `const arr = [1, 'hello'];` — inferred as `(number | string)[]`. Function return types are inferred. `const` narrows: `const x = 42` is type `42`, not `number`. Best practice: let TypeScript infer when possible, annotate for function parameters, public APIs, and complex types. Reduces boilerplate while maintaining safety.
+
+</QA>
+
+<QA question="What is the purpose of noImplicitAny?">
+
+`"noImplicitAny": true` in tsconfig (included in `strict`). Errors when TypeScript can't infer a type and falls back to `any`. Example: `function add(a, b) { return a + b; }` — error (a, b implicitly `any`). Fix: `function add(a: number, b: number)`. Forces you to explicitly type all parameters and variables. Catches bugs early. You CAN still use `any` explicitly when needed.
+
+</QA>
+
+## React Native (from InterviewBit)
+
+<QA question="How Different is React Native from ReactJS?">
+
+**ReactJS**: web library, renders HTML DOM (`div`, `span`), CSS for styling, browser events. **React Native**: mobile framework, renders native components (`View`, `Text`, `ScrollView`), StyleSheet for styling (subset of CSS), native touch events. Shared: JSX, component model, hooks, state management, React concepts. RN has no browser DOM. Styles are objects, not CSS strings. Navigation: React Router (web) vs React Navigation (RN).
+
+</QA>
+
+<QA question="How do you integrate React Native in an existing Android mobile application?">
+
+Add RN as a dependency in `build.gradle`. Create a `ReactRootView` in your Android Activity. Add `MainApplication` implementing `ReactApplication`. Bundle JS: `npx react-native bundle`. Use `ReactInstanceManager` to start the JS runtime. Navigation between native and React screens via `Intent` → `ReactActivity`. Share data via native modules. Gradle config: add Maven repo for React Native. This is the "Brownfield" approach.
+
+</QA>
+
+<QA question="Describe Networking in React Native and how to make AJAX network calls?">
+
+React Native provides `fetch()` API (same as browser). `const res = await fetch('https://api.example.com/data'); const json = await res.json();`. Also supports `XMLHttpRequest` and WebSocket. Libraries: **Axios** (popular, interceptors), **React Query** (caching/state), **SWR**. Use `useEffect` for API calls on mount. Handle: loading states, errors, AbortController for cleanup. No CORS issues (mobile, not browser).
+
+</QA>
+
+<QA question="What is Props Drilling and how can we avoid it?">
+
+**Props drilling**: passing props through multiple intermediate components that don't use them, just to reach a deeply nested child. Avoid with: 1) **Context API** — global state without prop passing. 2) **State management** (Zustand, Redux, Jotai). 3) **Component composition** — pass children/render props. 4) **Custom hooks** for shared logic. 5) **Lifting state** to appropriate level. Props drilling becomes problematic at 3+ levels deep.
+
+</QA>
+
+<QA question="How to debug React Native Applications and name the tools used for it?">
+
+1) **React Native Debugger** — standalone app with React DevTools + Redux DevTools + network inspector. 2) **Flipper** — Meta's debugging platform (network, layout, logs). 3) **Chrome DevTools** — via `Debug JS Remotely`. 4) **React DevTools** — inspect component tree. 5) **console.log** + LogBox. 6) **Reactotron** — API requests, state changes. 7) **Xcode/Android Studio** — native crash logs. Shake device for dev menu.
+
+</QA>
+
+<QA question="What is Redux in React Native? What are important components of Redux?">
+
+Redux is a predictable state container. Components: 1) **Store** — single source of truth (holds entire state). 2) **Actions** — plain objects describing what happened: `{ type: 'ADD_TODO', payload: 'Learn RN' }`. 3) **Reducers** — pure functions: `(state, action) => newState`. 4) **Dispatch** — sends actions to store. 5) **Selectors** — extract state slices. Use **Redux Toolkit** (RTK) for modern Redux with less boilerplate.
+
+</QA>
+
+<QA question="What is State and how is it used in React Native?">
+
+**State** is mutable data that controls the component's behavior and rendering. `const [count, setCount] = useState(0)`. When state updates, the component re-renders with new data. Use for: user input, toggles, lists, loading states. Same API as React web. State is local to each component. For shared state: Context, Zustand, Redux. Async state: React Query. State updates are batched and asynchronous.
+
+</QA>
+
+<QA question="What are threads in general? Explain different threads in React Native.">
+
+React Native has 3 main threads: 1) **UI Thread** (Main Thread) — handles native rendering, touch events, native module calls. 2) **JS Thread** — runs JavaScript code, React logic, business logic. 3) **Shadow Thread** — calculates layout (Yoga engine, Flexbox). Communication between JS and Native was via the **Bridge** (JSON serialization). New Architecture: **JSI (JavaScript Interface)** enables synchronous, direct communication without bridge overhead.
+
+</QA>
+
+<QA question="What is Flexbox and describe its most used properties in React Native?">
+
+Flexbox is the ONLY layout system in React Native. Default: `flexDirection: 'column'` (vs web's `row`). Properties: `flex: 1` (fill available space), `flexDirection` (column/row), `justifyContent` (main axis: center, space-between), `alignItems` (cross axis: center, flex-start), `flexWrap` (wrap children), `gap` (spacing). All sizes are unitless (density-independent pixels). No CSS Grid or floats in RN.
+
+</QA>
+
+<QA question="Explain Async Storage in React Native. When to use it and when not?">
+
+**AsyncStorage** is unencrypted, persistent, key-value storage. `await AsyncStorage.setItem('token', 'abc'); const val = await AsyncStorage.getItem('token');`. Use for: user preferences, theme, onboarding flags, non-sensitive cache. **Don't use for**: sensitive data (passwords, tokens — use Keychain/Keystore), large datasets (use SQLite/WatermelonDB), complex queries. Community package: `@react-native-async-storage/async-storage`. Always async.
+
+</QA>
+
+<QA question="What are the different ways to style a React Native application?">
+
+1) **StyleSheet.create** (recommended): `const styles = StyleSheet.create({ container: { flex: 1, padding: 16 } })`. 2) **Inline styles**: `View style={{ padding: 16 }}`. 3) **Styled-components** (CSS-in-JS): `styled.View`. 4) **NativeWind** (Tailwind for RN). 5) **Tamagui**, **React Native Paper** (component libraries). All styles are JavaScript objects. No CSS files. CamelCase properties. No cascade/inheritance.
+
+</QA>
+
+<QA question="How to use React Navigation in React Native?">
+
+`npm install @react-navigation/native @react-navigation/native-stack`. Wrap app: `NavigationContainer`. Create navigator: `const Stack = createNativeStackNavigator()`. Define screens: `[Stack.Navigator][Stack.Screen name="Home" component={HomeScreen} /][/Stack.Navigator]`. Navigate: `navigation.navigate('Details', { id: 1 })`. Navigators: Stack, Tab (`@react-navigation/bottom-tabs`), Drawer. Access params: `route.params.id`.
+
+</QA>
+
+<QA question="Explain FlatList components, what are its key features?">
+
+`FlatList` renders large scrollable lists efficiently. `FlatList data={items} renderItem={({item}) = Text{item.name}/Text} keyExtractor={item => item.id} />`. Features: 1) **Virtualization** — only renders visible items. 2) `onEndReached` for infinite scroll. 3) `ListHeaderComponent`, `ListFooterComponent`. 4) `refreshControl` for pull-to-refresh. 5) `numColumns` for grids. 6) `getItemLayout` for fixed-height optimization. Alternative: `SectionList` for grouped data.
+
+</QA>
+
+<QA question="What are Touchable components in React Native and which one to use when?">
+
+1) **TouchableOpacity** — reduces opacity on press (most common). 2) **TouchableHighlight** — darkens background on press. 3) **TouchableWithoutFeedback** — no visual feedback (use sparingly). 4) **Pressable** (recommended, modern) — highly customizable, supports `onPressIn/Out`, `onLongPress`, `hitSlop`, `android_ripple`. Use `Pressable` for new projects. Legacy `Touchable*` still works. Always provide visual feedback for accessibility.
+
+</QA>
+
+<QA question="What is a bridge and why is it used in React Native?">
+
+The **Bridge** was RN's communication layer between JavaScript and Native threads. JS sends serialized JSON messages to Native (and vice versa). Asynchronous, batched. Problems: serialization overhead, can't share memory, async-only. **New Architecture** (Fabric/TurboModules) replaces Bridge with **JSI (JavaScript Interface)** — direct, synchronous C++ bindings. JSI allows JS to hold references to native objects directly. Much faster.
+
+</QA>
+
+<QA question="How to make your React Native app feel smooth on animations?">
+
+1) Use **Reanimated 2** for JS-thread-independent animations (runs on UI thread). 2) **LayoutAnimation** for simple layout changes. 3) Avoid `useNativeDriver: false` — always use `useNativeDriver: true` for `Animated` API. 4) Offload to native: `transform`, `opacity` (GPU-accelerated). 5) Reduce JS thread work during animations. 6) Use `InteractionManager.runAfterInteractions()`. 7) 60fps target: keep JS frame time under 16ms.
+
+</QA>
+
+<QA question="Describe Memory leak issues in React Native. How to detect and resolve them?">
+
+Common leaks: 1) Uncleared timers/intervals. 2) Event listeners not removed. 3) Closures retaining large objects. 4) State updates on unmounted components. **Detect**: Xcode Instruments (iOS), Android Studio Profiler, Flipper memory plugin, `console.warn` for unmounted updates. **Resolve**: cleanup in `useEffect` return, `AbortController` for fetch, `isMounted` refs (anti-pattern but works), WeakRef for caches, remove listeners.
+
+</QA>
+
+## jQuery (from InterviewBit)
+
+<QA question="What are the advantages of jQuery?">
+
+1) **Cross-browser compatibility** — handles browser differences. 2) **Concise syntax** — `$('#id').hide()` vs verbose DOM API. 3) **AJAX simplified** — `$.ajax()`, `$.get()`. 4) **DOM manipulation** — chaining, traversal. 5) **Animation** — built-in effects. 6) **Plugin ecosystem** — thousands of plugins. 7) **Low learning curve**. Note: jQuery is declining — modern JS and frameworks (React, Vue) have largely replaced it.
+
+</QA>
+
+<QA question="How is jQuery different from other JavaScript frameworks?">
+
+jQuery is a **library** (not framework) — it enhances DOM manipulation, doesn't dictate app structure. vs **React/Vue/Angular** (frameworks): component-based, virtual DOM, state management, routing. jQuery manipulates the real DOM directly. Frameworks use declarative rendering. jQuery: imperative (`$('#btn').on('click', fn)`). React: declarative (`button onClick={fn}`). jQuery is still useful for legacy projects and simple pages.
+
+</QA>
+
+<QA question="Explain the $() function in the jQuery library.">
+
+`$()` is the jQuery selector/constructor. `$('#id')` — select by ID. `$('.class')` — by class. `$('div')` — by tag. `$('div')` — create element. `$(document)` — wrap DOM object. `$(function() { })` — shorthand for document ready. Returns a jQuery object with chainable methods. Actually calls `jQuery()`. The `$` is an alias for `jQuery`. Use `jQuery.noConflict()` if `$` conflicts with other libraries.
+
+</QA>
+
+<QA question="Explain $(document).ready() function?">
+
+`$(document).ready(function() { ... })` runs code AFTER the DOM is fully loaded (but before images/CSS finish). Shorthand: `$(function() { ... })`. Ensures elements exist before manipulating them. Multiple `ready` handlers run in order. Modern equivalent: `document.addEventListener('DOMContentLoaded', fn)`. In modules: `defer` attribute on script tags. React equivalent: `useEffect(() => {}, [])` on mount.
+
+</QA>
+
+<QA question="What is the exact difference between onload() and document.ready()?">
+
+**$(document).ready()**: fires when DOM is parsed (HTML structure complete). Doesn't wait for images, iframes, stylesheets. Runs earlier. Multiple handlers allowed. **window.onload**: fires when EVERYTHING is loaded (DOM + images + CSS + iframes). Runs later. Only one handler (overwrites previous). Use `ready()` for DOM manipulation, `onload` for operations needing all resources loaded (image dimensions, etc.).
+
+</QA>
+
+<QA question="What are the jQuery functions used to provide effects?">
+
+**Show/Hide**: `show()`, `hide()`, `toggle()`. **Fading**: `fadeIn()`, `fadeOut()`, `fadeToggle()`, `fadeTo(speed, opacity)`. **Sliding**: `slideDown()`, `slideUp()`, `slideToggle()`. **Custom animation**: `animate({prop: val}, speed)`. **Stop**: `stop()` halts current animation. All accept: speed (`slow`, `fast`, ms), callback. Chain: `$('#el').slideUp(300).slideDown(300)`. `delay(ms)` pauses animation queue.
+
+</QA>
+
+<QA question="What are events in jQuery?">
+
+jQuery events respond to user actions. Methods: `click()`, `dblclick()`, `hover()`, `keydown()`, `keyup()`, `submit()`, `change()`, `focus()`, `blur()`, `scroll()`, `resize()`. Universal: `on('event', handler)` — preferred method. Delegation: `$('ul').on('click', 'li', fn)` — handles dynamically added elements. `off()` removes handlers. `one()` fires once. `trigger()` programmatically fires events.
+
+</QA>
+
+<QA question="What is the purpose of jQuery's delay() method?">
+
+`delay(ms)` adds a pause between queued animations/effects. `$('#el').fadeOut(500).delay(1000).fadeIn(500)` — fades out, waits 1 second, fades in. Only works in the animation queue (not with `show()`/`hide()` without duration). For non-animation delays: use `setTimeout()`. `delay()` returns the jQuery object for chaining. Useful for sequencing multiple visual effects.
+
+</QA>
+
+<QA question="What is CDN and how to use it with jQuery?">
+
+**CDN** (Content Delivery Network): serves files from geographically distributed servers for faster loading. Use: `script src="https://code.jquery.com/jquery-3.7.1.min.js"/script`. Benefits: 1) Caching — if user visited another site using same CDN URL, it's cached. 2) Parallel downloads. 3) Reduced server load. Popular CDNs: cdnjs, Google Hosted Libraries, jQuery CDN. Fallback: check `window.jQuery` and load local copy if CDN fails.
+
+</QA>
+
+<QA question="What is the difference between JavaScript and jQuery?">
+
+**JavaScript**: the programming language itself. Runs everywhere. Verbose DOM API. **jQuery**: a JavaScript LIBRARY that simplifies JS tasks. Concise syntax. JS: `document.getElementById('id').style.display = 'none';` vs jQuery: `$('#id').hide()`. JS: `addEventListener('click', fn)` vs jQuery: `$('#id').click(fn)`. jQuery wraps JS — everything jQuery does, JS can do. Modern JS (ES6+) has narrowed the gap significantly.
+
+</QA>
+
+<QA question="What are the selectors in jQuery? How many types of selectors?">
+
+Three main types: 1) **Element**: `$('div')`, `$('p')`. 2) **ID**: `$('#myId')`. 3) **Class**: `$('.myClass')`. Advanced: **Attribute**: `$('[type="text"]')`. **Pseudo-class**: `$(':first-child')`, `$(':visible')`, `$(':checked')`. **Hierarchy**: `$('div > p')` (child), `$('div p')` (descendant), `$('h1 + p')` (adjacent). **Filter**: `$(':eq(2)')`, `$(':not(.active)')`. Uses CSS selector syntax.
+
+</QA>
+
+<QA question="In jQuery, distinguish between bind(), live(), and delegate() functions.">
+
+All are **deprecated** — use `on()` instead. `bind()`: attaches handler directly to elements (no delegation, doesn't work on future elements). `live()`: event delegation on `document` (removed in jQuery 1.9). `delegate()`: event delegation on specified parent. Modern: `$('parent').on('click', 'child', handler)` — combines delegation + efficiency. `on()` replaced all three since jQuery 1.7.
+
+</QA>
+
+<QA question="What is event.stopPropagation()?">
+
+`event.stopPropagation()` prevents the event from bubbling UP to parent elements. Click on child: without it, parent handlers also fire. With it: only child's handler fires. `$('button').click(function(e) { e.stopPropagation(); });`. `stopImmediatePropagation()` also prevents other handlers on the SAME element. Doesn't prevent the default browser action (use `preventDefault()` for that).
+
+</QA>
+
+<QA question="Explain the use of event.preventDefault() method.">
+
+`event.preventDefault()` stops the browser's default action for that event. Examples: clicking a link (prevents navigation), submitting a form (prevents page reload), right-clicking (prevents context menu). `$('a').click(function(e) { e.preventDefault(); // custom logic })`. Doesn't stop propagation. `return false` in jQuery does BOTH `preventDefault()` AND `stopPropagation()`.
+
+</QA>
+
+<QA question="How to perform jQuery AJAX requests?">
+
+`$.ajax({ url: '/api/data', method: 'GET', dataType: 'json', success: function(data) { ... }, error: function(err) { ... } });`. Shorthands: `$.get(url, callback)`, `$.post(url, data, callback)`, `$.getJSON(url, callback)`. `$(element).load(url)` loads HTML into element. Promise-style: `$.ajax(opts).done(fn).fail(fn).always(fn)`. Headers: `beforeSend: function(xhr) { xhr.setRequestHeader('Auth', token); }`.
+
+</QA>
+
+## Additional Front-End & MERN Stack (from InterviewBit)
+
+<QA question="What is ClickJacking?">
+
+**Clickjacking** tricks users into clicking on hidden elements by layering an invisible iframe over a legitimate page. User thinks they're clicking a button but actually clicks a hidden element (like, share, delete). **Prevention**: 1) `X-Frame-Options: DENY` header (prevents iframe embedding). 2) `Content-Security-Policy: frame-ancestors 'none'`. 3) JS frame-busting: `if (top !== self) top.location = self.location`. Use both HTTP headers for maximum protection.
+
+</QA>
+
+<QA question="How browsers render the UI?">
+
+**Critical Rendering Path**: 1) Parse HTML → **DOM tree**. 2) Parse CSS → **CSSOM tree**. 3) Combine → **Render tree** (visible elements only). 4) **Layout** (calculate positions/sizes). 5) **Paint** (fill pixels). 6) **Composite** (layer compositing, GPU). JavaScript can block parsing (use `defer`/`async`). CSS blocks rendering. Reflow (layout recalculation) is expensive. Repaint is cheaper. Minimize both for performance.
+
+</QA>
+
+<QA question="What is user-centered design?">
+
+**User-centered design** (UCD) focuses on users' needs, behaviors, and feedback throughout the design process. Principles: 1) Understand users (research, personas). 2) Iterate based on user feedback. 3) Task-oriented design. 4) Accessibility (WCAG). 5) Usability testing at every stage. Methods: user interviews, wireframing, prototyping, A/B testing, heuristic evaluation. Goal: create products that are intuitive, efficient, and satisfying.
+
+</QA>
+
+<QA question="Mention three ways to decrease page load time.">
+
+1) **Minimize resources**: minify CSS/JS, compress images (WebP/AVIF), enable gzip/brotli compression, tree-shake unused code. 2) **Optimize delivery**: use CDN, enable HTTP/2+ multiplexing, preload critical resources (`link rel="preload"`), lazy-load below-fold content. 3) **Reduce render-blocking**: defer non-critical JS (`defer`/`async`), inline critical CSS, code-split with dynamic imports. Also: caching (Cache-Control headers, service workers).
+
+</QA>
+
+<QA question="What is Progressive Rendering?">
+
+**Progressive rendering** techniques improve perceived load time by showing content as soon as possible. Techniques: 1) **Lazy loading** images/components. 2) **Server-side rendering** (SSR) for initial HTML. 3) **Streaming HTML** (`Transfer-Encoding: chunked`). 4) **Progressive images** (LQIP — Low Quality Image Placeholder). 5) **Skeleton screens**. 6) **Above-the-fold prioritization**. 7) React's `Suspense` + streaming SSR. Makes users feel the page loads faster.
+
+</QA>
+
+<QA question="What is Webpack and when should you use it?">
+
+**Webpack** is a module bundler that transforms and bundles JS, CSS, images, and other assets. Features: code splitting, tree shaking, hot module replacement (HMR), loaders (Babel, CSS, images), plugins (minification, environment variables). Use when: complex app with many dependencies, need custom build pipeline. Alternatives: **Vite** (faster, ES modules), **Turbopack** (Next.js), **esbuild**, **Rollup** (libraries). Vite is the modern default.
+
+</QA>
+
+<QA question="Controlled vs uncontrolled components — when to use which?">
+
+**Controlled**: React state is source of truth. Every keystroke updates state. Use for: real-time validation, conditional disabling, form values that affect other UI, complex forms. **Uncontrolled**: DOM holds the value, accessed via refs. Use for: file inputs (can't be controlled), simple forms, performance-critical scenarios, integrating with non-React libraries. Modern: React Hook Form uses uncontrolled internally for performance with controlled API.
+
+</QA>
+
+<QA question="When do you prefer Context API vs Redux?">
+
+**Context API**: infrequently changing data (theme, auth, locale). Simple setup. No middleware. Re-renders all consumers. **Redux**: frequently changing complex state, need for DevTools/time-travel, middleware (thunks, sagas), predictable state transitions, large teams. **In practice**: many apps use both — Context for simple global data + Zustand/Redux for complex state. For new projects: start with Context + Zustand (lighter than Redux).
+
+</QA>
+
+<QA question="What is a reducer and why is immutability important?">
+
+A **reducer** is a pure function: `(state, action) => newState`. Takes current state + action, returns NEW state. **Immutability** is critical because: 1) React uses reference equality (`===`) to detect changes. 2) Mutating existing state → same reference → no re-render. 3) Enables time-travel debugging. 4) Predictable state history. Always return new objects/arrays: `{...state, key: newVal}`, `[...arr, newItem]`. Never `state.key = val`.
+
+</QA>
+
+<QA question="What does a typical MERN architecture look like?">
+
+**MERN**: MongoDB + Express.js + React + Node.js. Architecture: **Frontend** (React SPA) → HTTP/REST/GraphQL → **Backend** (Express.js on Node.js) → **Database** (MongoDB). Client sends requests to Express API routes. Express controllers process business logic. Mongoose ODM interacts with MongoDB. React handles UI and client-side routing. Optional: Redis for caching, JWT for auth, Socket.io for real-time. Deploy: Vercel (frontend) + Railway/AWS (backend).
+
+</QA>
+
+<QA question="How do you structure a MERN project (frontend, backend, shared config)?">
+
+Monorepo: `project/client/` (React: src/, components/, pages/, hooks/, utils/) + `project/server/` (Express: routes/, controllers/, models/, middleware/, config/) + `project/shared/` (types, constants, validation schemas). Package.json at root with workspaces. Or separate repos. Backend: MVC pattern. Frontend: feature-based folders. Shared: TypeScript types (zod schemas for validation). Environment: `.env` files per service.
+
+</QA>
+
+<QA question="How do you build CRUD (React form → Express API → MongoDB) end to end?">
+
+**Backend**: Mongoose model → Express routes: `router.post('/api/items', async (req, res) => { const item = await Item.create(req.body); res.json(item); })`. CRUD: `create()`, `find()`, `findByIdAndUpdate()`, `findByIdAndDelete()`. **Frontend**: React form with state → `fetch('/api/items', { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(formData) })`. Use React Query for caching/refetching.
+
+</QA>
+
+<QA question="How do you implement pagination in MongoDB and Express and consume it in React?">
+
+**Backend**: `router.get('/api/items', async (req, res) => { const { page = 1, limit = 10 } = req.query; const items = await Item.find().skip((page-1)*limit).limit(limit); const total = await Item.countDocuments(); res.json({ items, totalPages: Math.ceil(total/limit), currentPage: page }); })`. **Frontend**: `const [page, setPage] = useState(1); useEffect(() => { fetch('/api/items?page=${page}') }, [page])`. Cursor-based pagination is more efficient for large datasets.
+
+</QA>
+
+<QA question="How do you upload a file (image) in Express, store it, and render it in React?">
+
+**Backend**: Use `multer` middleware. `const upload = multer({ dest: 'uploads/' }); router.post('/upload', upload.single('image'), (req, res) => { res.json({ path: req.file.path }); })`. Or upload to **S3/Cloudinary**: `const url = await cloudinary.uploader.upload(file.path); res.json({ url })`. **Frontend**: `input type="file" onChange={e = setFile(e.target.files[0])} />`. Submit: `const formData = new FormData(); formData.append('image', file); fetch('/upload', { method: 'POST', body: formData })`. Render: `img src={imageUrl} /`.
 
 </QA>

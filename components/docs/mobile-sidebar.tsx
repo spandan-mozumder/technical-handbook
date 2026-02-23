@@ -14,11 +14,20 @@ export function MobileSidebar() {
         setIsOpen(false);
     }, [pathname]);
 
+    React.useEffect(() => {
+        if (isOpen) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "";
+        }
+        return () => { document.body.style.overflow = ""; };
+    }, [isOpen]);
+
     return (
         <>
             <button
                 onClick={() => setIsOpen(true)}
-                className="md:hidden flex items-center justify-center w-8 h-8 rounded-md hover:bg-muted/50 transition-colors"
+                className="md:hidden flex items-center justify-center w-9 h-9 rounded-lg hover:bg-muted/60 active:bg-muted transition-colors"
                 aria-label="Open navigation"
             >
                 <svg
@@ -41,18 +50,18 @@ export function MobileSidebar() {
             {isOpen && (
                 <div className="fixed inset-0 z-50 md:hidden">
                     <div
-                        className="fixed inset-0 bg-black/50 backdrop-blur-sm"
+                        className="fixed inset-0 bg-black/40 backdrop-blur-sm animate-fade-in"
                         onClick={() => setIsOpen(false)}
                     />
-                    <div className="fixed inset-y-0 left-0 w-[280px] bg-background border-r overflow-y-auto p-4">
-                        <div className="flex items-center justify-between mb-4">
-                            <Link href="/" className="text-sm font-semibold flex items-center gap-2">
-                                <span>📘</span>
+                    <div className="fixed inset-y-0 left-0 w-[300px] max-w-[85vw] bg-background border-r border-border/60 overflow-y-auto animate-slide-in-left shadow-2xl">
+                        <div className="flex items-center justify-between px-5 py-4 border-b border-border/40">
+                            <Link href="/" className="text-sm font-semibold flex items-center gap-2 text-foreground">
+                                <span className="text-base">📘</span>
                                 <span>Tech Handbook</span>
                             </Link>
                             <button
                                 onClick={() => setIsOpen(false)}
-                                className="w-8 h-8 flex items-center justify-center rounded-md hover:bg-muted/50"
+                                className="w-9 h-9 flex items-center justify-center rounded-lg hover:bg-muted/60 transition-colors"
                                 aria-label="Close navigation"
                             >
                                 <svg
@@ -71,7 +80,7 @@ export function MobileSidebar() {
                                 </svg>
                             </button>
                         </div>
-                        <div className="space-y-1">
+                        <div className="px-3 py-4 space-y-1">
                             {docsConfig.sidebarNav.map((section, i) => (
                                 <MobileSection key={i} section={section} pathname={pathname} />
                             ))}
@@ -102,10 +111,10 @@ function MobileSection({
             <button
                 onClick={() => setIsOpen(!isOpen)}
                 className={cn(
-                    "flex w-full items-center justify-between px-3 py-2 text-sm font-medium rounded-lg transition-colors",
+                    "flex w-full items-center justify-between px-3 py-2.5 text-sm font-medium rounded-lg transition-colors",
                     hasActiveItem
-                        ? "text-foreground bg-muted/50"
-                        : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                        ? "text-foreground bg-muted/60"
+                        : "text-muted-foreground hover:text-foreground hover:bg-muted/40"
                 )}
             >
                 <span className="truncate text-left">{section.title}</span>
@@ -125,24 +134,31 @@ function MobileSection({
                     <path d="m9 18 6-6-6-6" />
                 </svg>
             </button>
-            {isOpen && section.items && (
-                <div className="mt-1 ml-3 space-y-0.5 border-l border-border/50 pl-3">
-                    {section.items.map((item, index) => (
-                        <Link
-                            key={index}
-                            href={item.href || "#"}
-                            className={cn(
-                                "block px-2 py-1.5 text-sm rounded-md transition-colors",
-                                pathname === item.href
-                                    ? "text-primary font-medium bg-primary/5"
-                                    : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
-                            )}
-                        >
-                            {item.title}
-                        </Link>
-                    ))}
-                </div>
-            )}
+            <div
+                className={cn(
+                    "overflow-hidden transition-all duration-200",
+                    isOpen ? "max-h-[5000px] opacity-100" : "max-h-0 opacity-0"
+                )}
+            >
+                {section.items && (
+                    <div className="mt-1 ml-3 space-y-0.5 border-l border-border/50 pl-3">
+                        {section.items.map((item, index) => (
+                            <Link
+                                key={index}
+                                href={item.href || "#"}
+                                className={cn(
+                                    "block px-3 py-2 text-sm rounded-md transition-colors",
+                                    pathname === item.href
+                                        ? "text-primary font-medium bg-primary/5"
+                                        : "text-muted-foreground hover:text-foreground hover:bg-muted/30"
+                                )}
+                            >
+                                {item.title}
+                            </Link>
+                        ))}
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

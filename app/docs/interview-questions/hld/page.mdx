@@ -12,91 +12,97 @@ Scale vertically when: you need quick improvements, application is stateful, or 
 
 <QA question="Describe a High-Level Design (HLD) problem you faced during project implementation.">
 
-Asked in interviews.
+A common HLD challenge is designing a notification system that supports email, SMS, and push notifications at scale. The solution typically involves a message queue (e.g., Kafka/SQS) to decouple producers from consumers, a notification service that routes to the correct channel adapter, a priority queue for urgent messages, rate limiting to avoid spamming users, and a delivery tracking database. Key trade-offs include at-least-once vs exactly-once delivery and latency vs throughput.
 
 </QA>
 
 <QA question="Design a fare splitting app, including both HLD and LLD.">
 
-Asked in interviews.
+**HLD**: Client apps (iOS/Android) → API Gateway → Microservices (User Service, Trip Service, Payment Service, Split Service) → Database (PostgreSQL for transactions, Redis for sessions). Payment Service integrates with Stripe/Razorpay. Split Service calculates each user's share (equal, percentage, or custom), creates payment intents, and tracks settlement status. Push notifications via Firebase for payment reminders.
+
+**LLD**: Core classes — `Trip` (id, amount, participants[]), `SplitStrategy` interface with `EqualSplit`, `PercentageSplit`, `CustomSplit` implementations. `PaymentRequest` (payer, payee, amount, status). `SettlementEngine` minimizes transactions using a net-balance algorithm. Database schema: `trips`, `participants`, `splits`, `payments` tables with foreign key relationships.
 
 </QA>
 
 <QA question="Design the High-Level Design (HLD) for a rider management system.">
 
-Asked in interviews.
+**Components**: 1) **Rider App** — GPS tracking, order acceptance, navigation. 2) **API Gateway** — authentication, rate limiting. 3) **Rider Service** — profile CRUD, availability toggle, document verification. 4) **Location Service** — ingests GPS pings (every 4s) via WebSocket, stores in Redis Geo for fast proximity queries. 5) **Matching Service** — assigns orders to nearest available riders using geospatial indexing. 6) **Trip Service** — manages active deliveries, ETA calculation. 7) **Payment Service** — tracks earnings, settlements. **Data flow**: Order placed → Matching Service queries Location Service for riders within radius → sends push notification → rider accepts → Trip Service tracks progress → Payment Service settles.
 
 </QA>
 
 <QA question="Describe a typical high-level design for a scalable system.">
 
-Asked in interviews.
+A scalable system typically has: 1) **Load Balancer** (L7/L4) distributing traffic across application servers. 2) **Stateless Application Tier** — horizontally scaled behind the LB, sessions stored externally. 3) **Caching Layer** — Redis/Memcached for hot data, reducing database load. 4) **Database Layer** — primary-replica for read scaling, sharding for write scaling. 5) **Message Queue** (Kafka/RabbitMQ) for async processing. 6) **CDN** for static assets. 7) **Monitoring & Alerting** (Prometheus + Grafana). Traffic enters through DNS → CDN → Load Balancer → App Servers → Cache → Database, with async workers processing queue messages.
 
 </QA>
 
 <QA question="How would you manage data on a large scale (HLD)?">
 
-Asked in interviews.
+1) **Partitioning/Sharding** — distribute data across multiple database nodes using hash-based or range-based sharding. 2) **Replication** — primary-replica setup for read scaling and fault tolerance. 3) **Caching** — multi-layer caching (CDN, application cache, database query cache). 4) **Data Lake / Warehouse** — offload analytics workloads to separate systems (e.g., BigQuery, Redshift). 5) **Event Sourcing / CQRS** — separate read and write models. 6) **Archival** — move cold data to cheaper storage (S3 Glacier). 7) **Compression & Indexing** — optimize storage and query performance. Key consideration: choose consistency model (strong vs eventual) based on business requirements.
 
 </QA>
 
 <QA question="Design a high-level architecture for a Housing Society application.">
 
-Asked in interviews.
+**Services**: 1) **User Service** — resident registration, roles (admin, resident, guard). 2) **Visitor Management** — pre-approve visitors, guard check-in via QR/OTP, logs. 3) **Maintenance Service** — raise complaints, assign to staff, track resolution. 4) **Billing Service** — generate monthly maintenance bills, payment integration, reminders. 5) **Notice Board Service** — announcements, polls, event scheduling. 6) **Amenity Booking** — book clubhouse, gym slots with calendar view. **Tech Stack**: React Native app, Node.js APIs, PostgreSQL, Redis for notifications, Firebase push notifications, S3 for document storage. **Architecture**: API Gateway → microservices → shared PostgreSQL with schema-per-service.
 
 </QA>
 
 <QA question="Explain how you would design a high-level architecture for an IoT-based system.">
 
-Asked in interviews.
+**Layers**: 1) **Device Layer** — sensors/actuators communicating via MQTT/CoAP protocols. 2) **Gateway Layer** — edge devices that aggregate, filter, and forward data; handles protocol translation. 3) **Ingestion Layer** — MQTT broker (e.g., HiveMQ, AWS IoT Core) receiving millions of messages/sec. 4) **Processing Layer** — stream processing (Kafka Streams/Flink) for real-time analytics, batch processing for historical analysis. 5) **Storage Layer** — time-series DB (InfluxDB/TimescaleDB) for telemetry, S3 for raw data. 6) **Application Layer** — dashboards, alerting, device management APIs. 7) **Security** — TLS for transport, X.509 certificates for device identity, IAM for API access.
 
 </QA>
 
 <QA question="Current Project architecture and high level design discussion.">
 
-Asked in interviews.
+When discussing your project's architecture, cover: 1) **System context** — what problem it solves, expected scale (users, requests/sec). 2) **Component diagram** — show major services and how they communicate (sync REST/gRPC vs async events). 3) **Data flow** — trace a typical request from client to response. 4) **Database choices** — why you chose SQL vs NoSQL, caching strategy. 5) **Deployment** — containerized? Kubernetes? Cloud provider? 6) **Trade-offs made** — what you chose and why (e.g., eventual consistency for performance). 7) **Bottlenecks identified** — where can it break and how you'd handle scale.
 
 </QA>
 
 <QA question="What modernizations have you suggested in HLD?">
 
-Asked in interviews.
+Common modernizations: 1) **Monolith to microservices** — decompose by bounded context, introduce API gateway. 2) **Synchronous to event-driven** — replace REST chaining with Kafka/RabbitMQ for loose coupling. 3) **On-prem to cloud-native** — containerize with Docker, orchestrate with Kubernetes. 4) **Batch to real-time** — replace nightly ETL with stream processing (Flink/Spark Streaming). 5) **Single DB to polyglot persistence** — use the right DB for each service. 6) **Manual to CI/CD** — automated pipelines with Infrastructure as Code (Terraform). 7) **Add observability** — distributed tracing (Jaeger), centralized logging (ELK), metrics (Prometheus).
 
 </QA>
 
 <QA question="Explain the role of a Load Balancer in HLD.">
 
-Asked in interviews.
+A load balancer distributes incoming traffic across multiple servers to ensure no single server is overwhelmed. **Types**: L4 (transport layer — TCP/UDP, faster) and L7 (application layer — HTTP, smarter routing). **Algorithms**: Round Robin, Least Connections, Weighted, IP Hash, Consistent Hashing. **Key roles**: 1) **High availability** — health checks remove unhealthy servers. 2) **Horizontal scaling** — add/remove servers seamlessly. 3) **SSL termination** — offload TLS decryption. 4) **Session affinity** — sticky sessions when needed. 5) **Rate limiting** and DDoS protection. Examples: AWS ALB/NLB, Nginx, HAProxy. In a typical HLD, the LB sits between clients and application servers, and sometimes between app servers and databases.
 
 </QA>
 
 <QA question="How do you ensure high availability in your architecture?">
 
-Asked in interviews.
+1) **Redundancy** — no single points of failure; duplicate every critical component. 2) **Load balancing** — distribute traffic, auto-remove unhealthy nodes. 3) **Database replication** — primary-replica with automatic failover. 4) **Multi-AZ / Multi-region deployment** — survive datacenter failures. 5) **Circuit breakers** — prevent cascade failures (e.g., Hystrix pattern). 6) **Health checks & auto-healing** — Kubernetes restarts failed pods. 7) **Graceful degradation** — serve cached/stale data when a service is down. 8) **Chaos engineering** — regularly test failure scenarios. Target: 99.99% uptime (≈52 min downtime/year). SLA = SLO + consequences.
 
 </QA>
 
 <QA question="Design the HLD for a distributed logging system.">
 
-Asked in interviews.
+**Architecture**: 1) **Log Producers** — applications emit structured logs (JSON) via SDK/agent. 2) **Collection Layer** — Fluentd/Filebeat agents on each node collect and forward logs. 3) **Ingestion Layer** — Kafka cluster as a buffer (handles bursts, decouples producers/consumers). 4) **Processing Layer** — Logstash/Flink for parsing, enriching, filtering, and transforming logs. 5) **Storage Layer** — Elasticsearch for searchable hot data (last 7-30 days), S3/HDFS for cold storage. 6) **Query Layer** — Kibana dashboards, Grafana for visualization, API for programmatic access. 7) **Alerting** — rules engine triggers alerts on error patterns. **Scale**: partition Kafka topics by service, shard Elasticsearch indices by date.
 
 </QA>
 
 <QA question="Explain the difference between HLD and LLD with examples.">
 
-Asked in interviews.
+**HLD (High-Level Design)** focuses on the overall system architecture — what components exist, how they communicate, which technologies to use. Example: "The e-commerce system has a User Service, Product Service, Order Service, and Payment Service communicating via REST APIs, with Kafka for async events, PostgreSQL for data, and Redis for caching."
+
+**LLD (Low-Level Design)** focuses on internal implementation details — class diagrams, method signatures, database schemas, algorithms. Example: "The Order Service has classes: `Order` (id, userId, items[], status, totalAmount), `OrderRepository` (CRUD operations), `OrderService` (createOrder, cancelOrder, calculateTotal), `OrderValidator` (validateStock, validatePayment). Database table: `orders(id UUID PK, user_id FK, status ENUM, total DECIMAL, created_at TIMESTAMP)`."
+
+HLD answers "what components and how they interact"; LLD answers "how each component works internally."
 
 </QA>
 
 <QA question="How do you handle database sharding in high level design?">
 
-Asked in interviews.
+**Sharding Strategy**: 1) **Choose shard key** — pick a column with high cardinality and even distribution (e.g., user_id). Avoid hot keys. 2) **Hash-based sharding** — `shard = hash(key) % num_shards`. Even distribution but range queries span all shards. 3) **Range-based sharding** — e.g., users A-M on shard 1, N-Z on shard 2. Supports range queries but can create hotspots. 4) **Directory-based** — lookup table maps key to shard. Flexible but adds a lookup step. **Challenges**: cross-shard joins (avoid by denormalizing), rebalancing when adding shards (use consistent hashing), distributed transactions (use Saga pattern). **Tools**: Vitess (MySQL), Citus (PostgreSQL), native sharding in MongoDB.
 
 </QA>
 
 <QA question="Design the architecture for a global video streaming platform.">
 
-Asked in interviews.
+**Architecture**: 1) **Upload Pipeline** — users upload to S3, triggering a transcoding pipeline (AWS MediaConvert/FFmpeg) that produces multiple resolutions (240p-4K) and adaptive bitrate (HLS/DASH) formats. 2) **CDN** — CloudFront/Akamai with PoPs globally for low-latency delivery. 3) **Catalog Service** — metadata, search (Elasticsearch), recommendations (ML model). 4) **Streaming Service** — serves manifest files, handles DRM (Widevine/FairPlay). 5) **User Service** — auth, profiles, watch history, subscriptions. 6) **Analytics** — real-time view counts (Kafka → Flink), quality metrics (buffering ratio, startup time). **Database**: DynamoDB for user data, Redis for session/watch progress, S3 for video storage. **Scale**: pre-warm CDN for popular content, regional failover, ~200 Gbps peak bandwidth.
 
 </QA>
 

@@ -18,91 +18,91 @@ JS arrays are dynamic (auto-resize), heterogeneous (can store mixed types), and 
 
 <QA question="Determine if a singly linked list is a palindrome.">
 
-Asked in interviews.
+**Approach**: 1) Find the middle using slow/fast pointers. 2) Reverse the second half in-place. 3) Compare first half with reversed second half node by node. 4) Restore the list (optional). **Time**: O(n), **Space**: O(1). Alternative: push all values to a stack, then traverse from head comparing with stack pops — O(n) time, O(n) space.
 
 </QA>
 
 <QA question="How would you keep track of top 10 trending words in a dynamically changing file?">
 
-Asked in interviews.
+Use a **Min-Heap of size 10** + **HashMap** (word → count). As words come in: update count in HashMap. If word is in heap, update and heapify. If count > heap's min, replace min with this word. Result: heap always contains top 10. For streaming data, use **Count-Min Sketch** (probabilistic) for memory-efficient frequency estimation, combined with a min-heap. Time: O(log 10) = O(1) per word update.
 
 </QA>
 
 <QA question="Write a function to remove duplicate elements from an array.">
 
-Asked in interviews.
+**Sorted array**: Two-pointer approach. `let j = 0; for (let i = 1; i < arr.length; i++) { if (arr[i] !== arr[j]) { j++; arr[j] = arr[i]; } }` — O(n) time, O(1) space. **Unsorted array**: Use a Set. `return [...new Set(arr)]` — O(n) time, O(n) space. Or sort first O(n log n), then use two-pointer.
 
 </QA>
 
 <QA question="Given a Binary Search Tree (BST), find the nearest greater value of a given value.">
 
-Asked in interviews.
+This is finding the **inorder successor**. Start from root: if `node.val > target`, this could be the answer — save it and go left. If `node.val <= target`, go right. When you reach null, the last saved value is the nearest greater. **Time**: O(h) where h is tree height (O(log n) for balanced BST). Alternative: do inorder traversal, find the target, and return the next value — but this is O(n).
 
 </QA>
 
 <QA question="What is a hashmap? Where is it used and what is its complexity?">
 
-Asked in interviews.
+A **HashMap** (hash table) stores key-value pairs using a hash function to compute an index into an array of buckets. **Complexity**: Average O(1) for get, put, delete. Worst case O(n) when all keys collide. **Uses**: caching, counting frequencies, deduplication, indexing, symbol tables, database indexing. **Collision handling**: chaining (linked list per bucket) or open addressing (linear/quadratic probing). Java's HashMap switches from linked list to red-black tree when a bucket exceeds 8 entries (O(log n) worst case).
 
 </QA>
 
 <QA question="What are the differences between a Stack and a Queue with real-time examples?">
 
-Asked in interviews.
+**Stack (LIFO)**: last element added is first removed. Operations: push, pop, peek — all O(1). **Examples**: undo/redo, browser back button, function call stack, expression evaluation, DFS. **Queue (FIFO)**: first element added is first removed. Operations: enqueue, dequeue, peek — all O(1). **Examples**: print queue, BFS, task scheduling, message queues (Kafka, RabbitMQ), customer service line. **Deque**: supports both ends — can act as either stack or queue.
 
 </QA>
 
 <QA question="What data structure uses a Tree? Give examples.">
 
-Asked in interviews.
+Trees are hierarchical data structures. **Examples**: 1) **Binary Search Tree** — sorted data, O(log n) search. 2) **AVL/Red-Black Tree** — self-balancing BST (used in TreeMap, TreeSet). 3) **B-Tree/B+Tree** — database indexes, file systems. 4) **Trie** — autocomplete, spell checking, IP routing. 5) **Heap** — priority queues, scheduling. 6) **Segment Tree** — range queries (sum, min, max). 7) **Suffix Tree** — string matching. 8) **DOM** — HTML document structure. 9) **AST** — compiler/interpreter parse trees. 10) **Decision Tree** — ML classification.
 
 </QA>
 
 <QA question="Explain the algorithm for tree traversal (DFS/BFS).">
 
-Asked in interviews.
+**DFS (Depth-First Search)**: go deep before wide. Three orders for binary trees: **Inorder** (left, root, right — gives sorted order for BST), **Preorder** (root, left, right — used for serialization), **Postorder** (left, right, root — used for deletion). Implemented with recursion or explicit stack. O(n) time, O(h) space. **BFS (Breadth-First Search)**: visit level by level using a queue. Enqueue root; while queue not empty, dequeue node, process, enqueue children. O(n) time, O(w) space where w = max width. BFS finds shortest path in unweighted graphs.
 
 </QA>
 
 <QA question="How do you create a custom read-only list?">
 
-Asked in interviews.
+Wrap an existing list and only expose read operations: `class ReadOnlyList { constructor(items) { this._items = [...items]; } get(index) { return this._items[index]; } get length() { return this._items.length; } [Symbol.iterator]() { return this._items[Symbol.iterator](); } }`. In Java: `Collections.unmodifiableList(list)` returns a view that throws `UnsupportedOperationException` on mutation. In TypeScript: use `readonly` modifier on array type: `readonly number[]` prevents push/pop at compile time.
 
 </QA>
 
 <QA question="What data structure would you use for a dictionary?">
 
-Asked in interviews.
+A **Trie (Prefix Tree)** is ideal for a dictionary — supports O(m) lookup (m = word length), prefix search, autocomplete, and spell checking. Each node represents a character; paths from root to leaf form words. Alternative: **HashMap** for simple key-value lookup — O(1) average but no prefix capabilities. For a dictionary with definitions, use HashMap (word → definition). For autocomplete/suggestions, use Trie. For ranked suggestions, use Trie + frequency counts. For fuzzy matching, use BK-tree or edit distance with Trie.
 
 </QA>
 
 <QA question="Squares of a Sorted Array Problem: Generate sorted squares of elements.">
 
-Asked in interviews.
+**Two-pointer approach**: since the input is sorted and can contain negatives, the largest squares are at the extremes. Use two pointers (left=0, right=n-1) and fill result array from the end. Compare `abs(arr[left])` with `abs(arr[right])`, place the larger square at the current position, move the pointer inward. **Time**: O(n), **Space**: O(n) for result. Example: `[-4, -1, 0, 3, 10]` → squares from right: 100, 16, 9, 1, 0 → `[0, 1, 9, 16, 100]`.
 
 </QA>
 
 <QA question="Count the number of triplets in a sorted doubly linked list that sum to X.">
 
-Asked in interviews.
+Use three pointers. Fix one node (iterate from head). For the remaining two values, use two-pointer technique on the doubly linked list: `left` starts after current, `right` starts at tail. If `current.val + left.val + right.val === X`, count++ and move both pointers. If sum < X, move left forward. If sum > X, move right backward. **Time**: O(n²), **Space**: O(1). The sorted doubly linked list enables the two-pointer approach since we can move both forward and backward.
 
 </QA>
 
 <QA question="Which data structure allows insertion and deletion in O(1) time?">
 
-Asked in interviews.
+**HashMap/HashSet** — O(1) average for insert and delete with good hash function. **Stack** — O(1) push and pop (from top). **Queue** (with linked list) — O(1) enqueue and dequeue. **Doubly Linked List** — O(1) insertion and deletion if you have a reference to the node. **LRU Cache** (HashMap + Doubly Linked List) — O(1) for all operations. Note: arrays have O(n) deletion (shifting), and BSTs have O(log n) operations.
 
 </QA>
 
 <QA question="What is FIFO and LIFO and where have you implemented them?">
 
-Asked in interviews.
+**FIFO** (First In, First Out) — Queue. First element added is first removed. **Uses**: BFS traversal, print job scheduling, message queues (Kafka, SQS), request handling in web servers, breadth-first processing. **LIFO** (Last In, First Out) — Stack. Last element added is first removed. **Uses**: function call stack, undo/redo functionality, browser navigation history, expression evaluation (postfix), DFS traversal, backtracking algorithms. In practice: JavaScript array supports both — `push/pop` (LIFO) and `push/shift` (FIFO, but O(n) — use proper Queue implementation).
 
 </QA>
 
 <QA question="Explain the implementation of a Priority Queue.">
 
-Asked in interviews.
+A Priority Queue dequeues elements based on priority (not insertion order). **Implementation using Binary Heap** (most common): array-based complete binary tree. Min-heap: parent ≤ children. **Insert**: add at end, bubble UP (swap with parent while smaller). O(log n). **Extract-min**: remove root, move last element to root, bubble DOWN (swap with smaller child). O(log n). **Peek**: return root. O(1). **Array mapping**: parent = `(i-1)/2`, left child = `2i+1`, right child = `2i+2`. Alternative implementations: unsorted array (O(1) insert, O(n) extract), sorted array (O(n) insert, O(1) extract), Fibonacci heap (O(1) amortized insert).
 
 </QA>
 
@@ -122,97 +122,97 @@ Big O describes asymptotic behavior — how the algorithm scales as n approaches
 
 <QA question="Sorting a list of people belonging to different cities and states.">
 
-Asked in interviews.
+**Multi-key sorting**: sort by state first then by city within each state. Use a comparator: `people.sort((a, b) => a.state.localeCompare(b.state) || a.city.localeCompare(b.city))`. This leverages the stability of modern sort algorithms. For large datasets with limited city/state values, **Radix Sort** or **Counting Sort** on categorical keys can achieve O(n). Alternatively, use **Bucket Sort**: create buckets by state, then sort within each bucket by city.
 
 </QA>
 
 <QA question="Find the second largest element in an array with the least time complexity.">
 
-Asked in interviews.
+Single pass O(n) with two variables: `let max = -Infinity, secondMax = -Infinity; for (const num of arr) { if (num > max) { secondMax = max; max = num; } else if (num > secondMax && num !== max) { secondMax = num; } }`. This scans once, tracking both the largest and second largest. No sorting needed (which would be O(n log n)). Edge case: handle arrays with all same elements or length less than 2.
 
 </QA>
 
 <QA question="Print two strings in an alternating sequence by indices.">
 
-Asked in interviews.
+Interleave characters: `function alternate(s1, s2) { let result = ''; const maxLen = Math.max(s1.length, s2.length); for (let i = 0; i < maxLen; i++) { if (i < s1.length) result += s1[i]; if (i < s2.length) result += s2[i]; } return result; }`. Example: `alternate("abc", "12345")` → `"a1b2c345"`. Time: O(n + m), Space: O(n + m) for result.
 
 </QA>
 
 <QA question="Find the length of the longest increasing subsequence (LIS).">
 
-Asked in interviews.
+**DP approach**: O(n²). `dp[i]` = length of LIS ending at index i. `dp[i] = max(dp[j] + 1) for all j < i where arr[j] < arr[i]`. Answer: `max(dp)`. **Optimized**: O(n log n) using patience sorting. Maintain a tails array where `tails[i]` = smallest tail of all increasing subsequences of length i+1. For each element, binary search for its position in tails. Length of tails = LIS length. Example: `[10, 9, 2, 5, 3, 7, 101, 18]` → LIS = `[2, 3, 7, 18]`, length = 4.
 
 </QA>
 
 <QA question="Remove duplicates from a sorted integer array and return the new length.">
 
-Asked in interviews.
+**Two-pointer in-place**: `function removeDuplicates(nums) { if (!nums.length) return 0; let j = 0; for (let i = 1; i < nums.length; i++) { if (nums[i] !== nums[j]) { j++; nums[j] = nums[i]; } } return j + 1; }`. `j` tracks the position of the last unique element. Only works because array is sorted (duplicates are adjacent). **Time**: O(n), **Space**: O(1). Example: `[1,1,2,3,3]` → `[1,2,3,_,_]`, returns 3.
 
 </QA>
 
 <QA question="Search for an element in a sorted but rotated array.">
 
-Asked in interviews.
+**Modified Binary Search**: O(log n). Find which half is sorted, then check if target lies in sorted half. `if (arr[left] <= arr[mid]) { // left half sorted: if target in [left, mid], go left else right } else { // right half sorted: if target in [mid, right], go right else left }`. The key insight: in a rotated sorted array, at least one half is always sorted. This lets us decide which half to search in O(1). Example: `[4,5,6,7,0,1,2]`, target=0 → found at index 4.
 
 </QA>
 
 <QA question="Minimum number of characters to insert to convert a string into a palindrome.">
 
-Asked in interviews.
+This equals `n - LPS(s)` where LPS = Longest Palindromic Subsequence. **LPS using DP**: `LPS(s) = LCS(s, reverse(s))`. DP table: `dp[i][j]` = LPS of substring i to j. If `s[i] === s[j]`, `dp[i][j] = dp[i+1][j-1] + 2`, else `dp[i][j] = max(dp[i+1][j], dp[i][j-1])`. **Time**: O(n²), **Space**: O(n²), can optimize to O(n). Example: "abcde" → LPS = 1 (any single char), insertions = 5 - 1 = 4. "aab" → LPS = 2 ("aa"), insertions = 1.
 
 </QA>
 
 <QA question="Find the largest cycle in a maze represented by N cells.">
 
-Asked in interviews.
+Each cell has at most one outgoing edge (functional graph). Use **DFS with coloring**: WHITE (unvisited), GREY (in current path), BLACK (fully processed). When you hit a GREY node during DFS, you've found a cycle. Measure cycle length by tracking distance. For each unvisited node, start DFS. If we revisit a node in current path, cycle length = current_distance - distance_when_first_visited. Track the maximum cycle length found. **Time**: O(N), **Space**: O(N). Alternative: use Kahn's algorithm variant to find nodes not in any cycle, then process remaining.
 
 </QA>
 
 <QA question="Identify the K-th smallest element of two merged sorted arrays.">
 
-Asked in interviews.
+**Binary search approach**: O(log(min(m,n))). Partition both arrays such that combined left partition has exactly k elements with all left elements ≤ all right elements. Binary search on the smaller array for the correct partition point. **Simpler O(k)**: merge technique — use two pointers, advance the smaller one, count to k. For small k relative to array sizes, this is efficient enough. Edge cases: k=1 (min of both first elements), k=m+n (max of both last elements).
 
 </QA>
 
 <QA question="Find even and odd numbers using lambda expressions.">
 
-Asked in interviews.
+**JavaScript**: `const isEven = n => n % 2 === 0;` `const evens = arr.filter(n => n % 2 === 0);` `const odds = arr.filter(n => n % 2 !== 0);`. **Python**: `evens = list(filter(lambda x: x % 2 == 0, arr))`. **Java**: `ListInteger evens = list.stream().filter(n -> n % 2 == 0).collect(Collectors.toList());`. **Partition both**: `const [evens, odds] = arr.reduce(([e, o], n) => n % 2 === 0 ? [[...e, n], o] : [e, [...o, n]], [[], []]);`. Time: O(n), Space: O(n).
 
 </QA>
 
 <QA question="What are the differences between Merge Sort and Heap Sort?">
 
-Asked in interviews.
+**Merge Sort**: divide-and-conquer. Time: O(n log n) always. Space: O(n) extra (not in-place). **Stable** (preserves relative order of equal elements). Excellent cache locality during merge. Preferred for linked lists and external sorting. **Heap Sort**: selection-based using heap. Time: O(n log n) always. Space: O(1) (in-place). **Not stable**. Poor cache locality (jumping around the array). Preferred when space is critical. **In practice**: Merge Sort is often faster due to cache efficiency. Heap Sort guarantees O(n log n) with O(1) space — useful for embedded systems.
 
 </QA>
 
 <QA question="Constellation Identification: Identify patterns in a matrix.">
 
-Asked in interviews.
+Use **connected component labeling**. For each unvisited '+' or '*' cell, run BFS/DFS to find all connected cells of the same type. Extract the shape as a set of relative coordinates (normalize to top-left corner). Compare shapes by their normalized coordinates — matching shapes are the same constellation. **Algorithm**: 1) Scan matrix for unvisited pattern cells. 2) BFS to find connected component. 3) Normalize coordinates (subtract min row/col). 4) Store as sorted set of (row, col) pairs. 5) Compare against known patterns. Time: O(rows × cols).
 
 </QA>
 
 <QA question="Determine the number of mismatching bits between two integers.">
 
-Asked in interviews.
+This is the **Hamming Distance**. XOR the two numbers (sets bits where they differ), then count set bits. `function hammingDistance(a, b) { let xor = a ^ b, count = 0; while (xor) { count += xor & 1; xor >>= 1; } return count; }`. Optimized with Brian Kernighan's algorithm: `while (xor) { xor &= xor - 1; count++; }` — only iterates as many times as there are set bits. Example: 1 (001) vs 4 (100) → XOR = 101 → 2 mismatching bits.
 
 </QA>
 
 <QA question="Find the maximum distance for every 0-cell to its nearest 1-cell in a binary matrix.">
 
-Asked in interviews.
+**Multi-source BFS**: Add all 1-cells to queue with distance 0. BFS outward — each 0-cell gets distance = parent's distance + 1. Track maximum distance seen. **Time**: O(m×n), **Space**: O(m×n). This works because BFS explores cells level by level, guaranteeing shortest distances. Alternative: two-pass DP — first pass top-left to bottom-right, second pass bottom-right to top-left, taking min distance from nearest 1 in each direction. Same complexity but avoids queue overhead.
 
 </QA>
 
 <QA question="Write code to generate the Fibonacci sequence up to 10.">
 
-Asked in interviews.
+**Iterative** (O(n) time, O(1) space): `function fib(n) { let a = 0, b = 1; for (let i = 0; i < n; i++) { console.log(a); [a, b] = [b, a + b]; } }` → Output: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34. **Recursive** (O(2ⁿ) without memoization): `const fib = n => n <= 1 ? n : fib(n-1) + fib(n-2)`. **Memoized** (O(n)): `const memo = {}; const fib = n => memo[n] ?? (memo[n] = n <= 1 ? n : fib(n-1) + fib(n-2))`.
 
 </QA>
 
 <QA question="Explain the time complexity of Quick Sort in the best and worst cases.">
 
-Asked in interviews.
+**Best case**: O(n log n) — pivot divides array into two equal halves each time. Recurrence: T(n) = 2T(n/2) + O(n). **Worst case**: O(n²) — pivot is always the smallest or largest element (already sorted array with first-element pivot). Recurrence: T(n) = T(n-1) + O(n). **Average case**: O(n log n) — random pivots give balanced partitions on average. **Mitigation**: use randomized pivot, median-of-three, or IntroSort (switch to heap sort if recursion depth exceeds log n). **Space**: O(log n) average (recursion stack), O(n) worst case.
 
 </QA>
 
@@ -453,5 +453,167 @@ Dijkstra's, Kruskal's, Topological Sort, Bellman-Ford, Floyd Warshall, Prim's, D
 <QA question="What are the top bit manipulation problems for interviews?">
 
 Find Non-Repeating Element, Count Set Bits, Maximum XOR, Two Non-Repeating Elements, Sparse Number Check, Maximum Subarray XOR, Sum of XOR of Subarrays, Element Appearing Once, Power of Two Check.
+
+</QA>
+
+## Data Structures (from InterviewBit)
+
+<QA question="What are Data Structures and why create them?">
+
+Data structures are specialized formats for organizing, storing, and accessing data efficiently. We create them because different problems require different access patterns: arrays for random access, linked lists for frequent insertions, trees for hierarchical data, hash tables for fast lookups, graphs for relationships. Choosing the right data structure can reduce time complexity from O(n²) to O(n log n) or O(n), making software practical at scale. Without data structures, even simple operations on large datasets would be impractically slow.
+
+</QA>
+
+<QA question="What are some applications of Data structures?">
+
+1) **Arrays**: image pixels, lookup tables, matrix operations. 2) **Stacks**: undo/redo, expression evaluation, browser history. 3) **Queues**: task scheduling, BFS, print spooling. 4) **Hash Tables**: database indexing, caching, symbol tables, deduplication. 5) **Trees**: file systems (directories), DOM, databases (B-trees), decision making (decision trees). 6) **Graphs**: social networks, maps/navigation, web page ranking (PageRank), dependency resolution. 7) **Heaps**: priority queues, OS scheduling, Dijkstra's algorithm. 8) **Tries**: autocomplete, spell checking, IP routing.
+
+</QA>
+
+<QA question="Explain the process behind storing a variable in memory.">
+
+When you declare `int x = 42`: 1) **Compiler determines type** → int needs 4 bytes. 2) **Memory allocation** — stack variables: allocated on stack frame (fast, automatic cleanup). Heap variables (new/malloc): allocated on heap (manual or GC cleanup). 3) **Address assignment** — the variable name is mapped to a memory address (e.g., 0x7FFF5C). 4) **Value storage** — 42 is converted to binary and stored at that address. 5) **Symbol table** — compiler maintains mapping of variable name → address + type. For objects: the variable stores a reference (pointer) to heap memory where the actual data lives.
+
+</QA>
+
+<QA question="Can you explain the difference between file structure and storage structure?">
+
+**Storage structure**: data organization in the computer's main memory (RAM). Temporary — lost when program ends. Fast access. Examples: arrays, linked lists, stacks, queues in memory. **File structure**: data organization on secondary storage (disk/SSD). Persistent — survives program termination. Slower access. Examples: sequential files, indexed files, B-tree indexes on disk. Key difference: storage structures exist during program execution; file structures exist on permanent media. When data moves from file to memory, it transitions from file structure to storage structure. Database indexes bridge both — stored on disk but loaded into memory for fast queries.
+
+</QA>
+
+<QA question="Describe the types of Data Structures.">
+
+**Linear**: elements arranged sequentially. **Static**: Array (fixed size, contiguous memory). **Dynamic**: Linked List, Stack, Queue (grow/shrink at runtime). **Non-Linear**: elements arranged hierarchically or as networks. **Trees**: Binary Tree, BST, AVL, B-Tree, Trie, Heap. **Graphs**: directed, undirected, weighted, DAG. **Hash-based**: HashMap, HashSet (key-value mapping). **Specialized**: Bloom Filter (probabilistic), Skip List (probabilistic BST alternative), Union-Find (disjoint sets), Segment Tree (range queries). Linear structures are simpler; non-linear handle complex relationships.
+
+</QA>
+
+<QA question="What is a deque data structure and its types? What are the applications for deque?">
+
+A **Deque** (Double-Ended Queue) supports insertion and deletion at BOTH ends. **Types**: 1) **Input-restricted**: insertion at one end only, deletion from both. 2) **Output-restricted**: deletion at one end only, insertion at both. **Operations**: insertFront, insertRear, deleteFront, deleteRear — all O(1). **Applications**: 1) Sliding window maximum/minimum (monotonic deque). 2) Work-stealing algorithm (thread pools). 3) Undo-redo (push/pop from both ends). 4) A-steal job scheduling. 5) Palindrome checking. 6) Browser history (navigate forward/back). Implemented using circular array or doubly linked list. JavaScript: no native Deque, use array (push/pop/shift/unshift — shift is O(n) though).
+
+</QA>
+
+<QA question="What is a priority queue? What are the applications for priority queue?">
+
+A Priority Queue serves elements based on priority (not FIFO order). Highest (or lowest) priority element is dequeued first. **Implementation**: typically a Binary Heap (O(log n) insert/extract, O(1) peek). **Applications**: 1) **Dijkstra's algorithm** — shortest path. 2) **Huffman coding** — data compression. 3) **OS scheduling** — process priority. 4) **Event-driven simulation** — process events chronologically. 5) **Merge K sorted lists**. 6) **Top-K elements** — min-heap of size K. 7) **A* search** — pathfinding in games/maps. 8) **Load balancing** — assign to least-loaded server.
+
+</QA>
+
+<QA question="Compare different implementations of priority queue.">
+
+| Implementation | Insert | Extract-Min | Peek | Space |
+|---|---|---|---|---|
+| **Unsorted Array** | O(1) | O(n) | O(n) | O(n) |
+| **Sorted Array** | O(n) | O(1) | O(1) | O(n) |
+| **Binary Heap** | O(log n) | O(log n) | O(1) | O(n) |
+| **Fibonacci Heap** | O(1) amortized | O(log n) amortized | O(1) | O(n) |
+| **BST** | O(log n) | O(log n) | O(log n) | O(n) |
+
+Binary Heap is the practical default — simple, cache-friendly, good all-around performance. Fibonacci Heap is theoretically better for decrease-key (O(1) amortized) but complex to implement.
+
+</QA>
+
+<QA question="What is graph data structure and its representations?">
+
+A **Graph** G = (V, E) consists of vertices (nodes) and edges (connections). **Types**: directed/undirected, weighted/unweighted, cyclic/acyclic. **Representations**: 1) **Adjacency Matrix**: V×V boolean/weight matrix. Space O(V²). O(1) edge lookup. Best for dense graphs. 2) **Adjacency List**: array of lists — each vertex stores its neighbors. Space O(V + E). Best for sparse graphs. 3) **Edge List**: list of (u, v, weight) tuples. Space O(E). Best for algorithms that iterate over edges (Kruskal's). Most real-world graphs are sparse → adjacency list is the default choice.
+
+</QA>
+
+<QA question="What is AVL tree data structure, its operations, and its rotations?">
+
+An **AVL tree** is a self-balancing BST where the height difference (balance factor) between left and right subtrees of every node is at most 1. **Operations**: insert, delete, search — all O(log n) guaranteed. **Rotations** to restore balance: 1) **Left Rotation (LL)** — right-heavy, rotate left. 2) **Right Rotation (RR)** — left-heavy, rotate right. 3) **Left-Right (LR)** — left child is right-heavy, left rotate child then right rotate node. 4) **Right-Left (RL)** — right child is left-heavy, right rotate child then left rotate node. After every insert/delete, check balance factor and rotate if |BF| greater than 1.
+
+</QA>
+
+<QA question="What is a B-tree data structure? What are the applications for B-trees?">
+
+A **B-tree** is a self-balancing tree optimized for disk access. Each node can have multiple keys (up to m-1 for order m) and multiple children (up to m). All leaves are at the same level. **Properties**: minimizes disk I/O by having wide nodes that fit in a disk page. **Operations**: search, insert, delete — all O(log n). **Applications**: 1) **Database indexes** — MySQL InnoDB, PostgreSQL use B+ trees (variant). 2) **File systems** — NTFS, ext4, HFS+ use B-trees for directory indexing. 3) **Key-value stores** — many storage engines. B+ tree variant: all data in leaves, internal nodes only store keys, leaves are linked for range scans.
+
+</QA>
+
+<QA question="Define Segment Tree data structure and its applications.">
+
+A **Segment Tree** is a binary tree for efficient range query and point update operations. Each leaf represents an array element, internal nodes store aggregated values (sum, min, max) of their children's ranges. **Operations**: build O(n), query O(log n), update O(log n). **Applications**: 1) Range sum/min/max queries. 2) Finding the number of elements in a range. 3) Lazy propagation for range updates. 4) Computational geometry. 5) Competitive programming. **Lazy Propagation**: defer updates to children until needed — enables O(log n) range updates. Alternative: Fenwick Tree (Binary Indexed Tree) for simpler range sum queries.
+
+</QA>
+
+<QA question="Define Trie data structure and its applications.">
+
+A **Trie** (Prefix Tree) is a tree where each node represents a character; paths from root to leaves form complete words. Each node has up to 26 children (for lowercase English). **Operations**: insert, search, prefix search — all O(m) where m = word length. **Applications**: 1) **Autocomplete** — suggest words from prefix. 2) **Spell checking** — find similar words. 3) **IP routing** — longest prefix matching. 4) **Phone directory** — search by prefix. 5) **Word games** — Scrabble, Boggle. **Space optimization**: compressed trie (Patricia Trie) merges single-child chains. Alternative: Ternary Search Tree (TST) — more space efficient.
+
+</QA>
+
+<QA question="Define Red-Black Tree and its applications.">
+
+A **Red-Black Tree** is a self-balancing BST with these properties: 1) Every node is red or black. 2) Root is black. 3) Leaves (NIL) are black. 4) Red node's children must be black (no consecutive reds). 5) All paths from root to leaves have the same number of black nodes. **Operations**: search, insert, delete — all O(log n). Less strictly balanced than AVL (allows height up to 2×log(n)) but faster insertions/deletions (fewer rotations). **Applications**: `TreeMap` and `TreeSet` in Java, `std::map` and `std::set` in C++, Linux kernel's CFS scheduler, maintaining sorted data with frequent updates.
+
+</QA>
+
+<QA question="Which data structures are used for implementing LRU cache?">
+
+**HashMap** (O(1) key lookup) + **Doubly Linked List** (O(1) insertion and deletion at any position with node reference). HashMap maps key → node in the linked list. Most recently accessed items move to the head; least recently used items are at the tail. On access: move node to head. On insert with full capacity: remove tail node. In Java: `LinkedHashMap` with `accessOrder=true` implements LRU directly. In JavaScript: `Map` maintains insertion order — delete and re-insert to move to end.
+
+</QA>
+
+<QA question="What is a heap data structure?">
+
+A **Heap** is a complete binary tree satisfying the heap property: **Min-Heap** — parent ≤ children (root is minimum). **Max-Heap** — parent ≥ children (root is maximum). **Implemented as array**: parent at `(i-1)/2`, left child at `2i+1`, right child at `2i+2`. **Operations**: insert (add at end, bubble up) O(log n), extract-min/max (swap root with last, bubble down) O(log n), peek O(1), heapify array O(n). **Uses**: priority queues, heap sort, median finding (two heaps), K-th largest/smallest, merge K sorted lists. Not to be confused with memory heap (RAM region for dynamic allocation).
+
+</QA>
+
+<QA question="What is the requirement for an object to be used as key or value in HashMap?">
+
+**As a Key**: must properly implement `hashCode()` and `equals()` (Java). Equal objects MUST have the same hash code (contract). Key should be **immutable** — if key's hash changes after insertion, you can't find it. Good hash codes distribute uniformly. Common key types: String, Integer (immutable, proper hashCode). **As a Value**: no special requirements — any object works. **In JavaScript**: Map allows any value as key (objects, functions, primitives). Object keys are auto-converted to strings. **Best practice**: use immutable objects as keys, ensure consistent hashCode/equals, avoid mutable keys.
+
+</QA>
+
+<QA question="How does HashMap handle collisions in Java?">
+
+When two keys hash to the same bucket: **Java 7**: chaining with linked list — all collisions go in a list. O(n) worst case for lookup within a bucket. **Java 8+**: starts with linked list, but when a bucket exceeds 8 entries, it converts to a **Red-Black Tree** — O(log n) worst case. When entries drop below 6, it reverts to linked list. **Load factor**: default 0.75 — when 75% full, the HashMap doubles its capacity and rehashes all entries. **Treeification threshold**: bucket size greater than 8 AND total capacity ≥ 64. This makes worst-case performance O(log n) instead of O(n).
+
+</QA>
+
+## DSA Coding Problems (from InterviewBit)
+
+<QA question="Write a program to remove duplicates from a sorted array in place.">
+
+Two-pointer approach: `function removeDuplicates(arr) { if (arr.length === 0) return 0; let writeIdx = 0; for (let i = 1; i < arr.length; i++) { if (arr[i] !== arr[writeIdx]) { writeIdx++; arr[writeIdx] = arr[i]; } } return writeIdx + 1; }`. The `writeIdx` pointer marks where the next unique element should go. Since the array is sorted, duplicates are adjacent. **Time**: O(n), **Space**: O(1). Returns the new length; array elements after that index are irrelevant.
+
+</QA>
+
+<QA question="Write a function for zigzag traversal in a binary tree.">
+
+BFS with alternating direction per level. Use a queue for level-order and a flag `leftToRight`. `function zigzag(root) { const result = []; const queue = [root]; let leftToRight = true; while (queue.length) { const level = []; const size = queue.length; for (let i = 0; i < size; i++) { const node = queue.shift(); leftToRight ? level.push(node.val) : level.unshift(node.val); if (node.left) queue.push(node.left); if (node.right) queue.push(node.right); } result.push(level); leftToRight = !leftToRight; } return result; }`. Time: O(n), Space: O(n).
+
+</QA>
+
+<QA question="Write a function to sort a linked list of 0s, 1s, and 2s.">
+
+**Approach 1 — Count method**: Traverse and count 0s, 1s, 2s. Then overwrite the list: first count0 nodes with 0, then count1 with 1, then count2 with 2. O(n) time, O(1) space. **Approach 2 — Dutch National Flag on linked list**: maintain three dummy heads for 0-list, 1-list, 2-list. Traverse original, append each node to appropriate list. Finally, connect: 0-list tail → 1-list head → 2-list head. Set 2-list tail.next = null. O(n) time, O(1) space, single pass, preserves relative order.
+
+</QA>
+
+<QA question="Write a function to detect cycle in an undirected graph.">
+
+**Using DFS**: `function hasCycle(graph, node, visited, parent) { visited[node] = true; for (const neighbor of graph[node]) { if (!visited[neighbor]) { if (hasCycle(graph, neighbor, visited, neighbor)) return true; } else if (neighbor !== parent) return true; // back edge = cycle } return false; }`. Call for each unvisited component. Key: a visited neighbor that isn't the parent means a cycle. **Using Union-Find**: for each edge (u, v), if find(u) === find(v), cycle exists. O(E × α(V)) ≈ O(E).
+
+</QA>
+
+<QA question="Write a function to convert an infix expression to postfix expression.">
+
+**Shunting-yard algorithm** using a stack: For each token: **operand** → output. **operator** → while stack top has higher/equal precedence, pop to output; push operator. **'('** → push. **')'** → pop to output until '(' is found. After all tokens, pop remaining operators. Example: `A + B * C` → `A B C * +`. **Precedence**: `*/` > `+-`. **Associativity**: left-to-right (pop equal precedence). Right-to-right for `^` (don't pop equal precedence). Time: O(n), Space: O(n). Postfix is useful because it can be evaluated with a simple stack — no parentheses needed.
+
+</QA>
+
+<QA question="Implement LRU (Least Recently Used) Cache.">
+
+**HashMap + Doubly Linked List**: `class LRUCache { constructor(capacity) { this.cap = capacity; this.map = new Map(); this.head = { next: null }; this.tail = { prev: null }; this.head.next = this.tail; this.tail.prev = this.head; } }`. `get(key)`: if in map, move node to front (after head), return value. `put(key, value)`: if exists, update and move to front. If new and at capacity, remove node before tail (LRU), delete from map. Add new node after head, add to map. All operations O(1). JavaScript shortcut: use `Map` which preserves insertion order.
+
+</QA>
+
+<QA question="What is topological sorting in a graph?">
+
+Topological sorting is a linear ordering of vertices in a **DAG** (Directed Acyclic Graph) such that for every edge (u → v), u comes before v. **Use cases**: task scheduling, build system dependencies, course prerequisites, compilation order. **Algorithms**: 1) **Kahn's (BFS)**: find nodes with 0 in-degree, add to queue. Process queue: remove node, decrement neighbors' in-degree, add new 0-in-degree nodes. O(V+E). 2) **DFS-based**: run DFS, push node to stack after visiting all neighbors. Stack order = topological sort. O(V+E). If the graph has a cycle, topological sort is impossible.
 
 </QA>

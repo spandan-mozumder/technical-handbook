@@ -12,115 +12,117 @@ import { QA } from "@/components/QA";
 
 <QA question="Describe how you would build a system for College Fest Management.">
 
-Asked in interviews.
+**Services**: 1) **Event Service** — manage events (hackathons, cultural shows, talks) with schedules, venues, capacity. 2) **Registration Service** — user sign-up, team formation, ticket generation (QR codes). 3) **Venue Management** — room/stage booking, conflict detection using interval scheduling. 4) **Notification Service** — email/push alerts for schedule changes, reminders. 5) **Live Dashboard** — real-time attendance tracking, event status. **Tech**: React frontend, Node.js APIs, PostgreSQL (relational data), Redis (live counts, session), S3 (posters/media). Use WebSockets for live updates. Handle peak registration with a queue (SQS) to prevent database overload.
 
 </QA>
 
 <QA question="Design the High-Level Design (HLD) for a rider management system.">
 
-Asked in interviews.
+**Components**: 1) **Rider App** — GPS tracking, order acceptance, navigation. 2) **API Gateway** — auth, rate limiting. 3) **Rider Service** — profiles, availability, document verification. 4) **Location Service** — ingests GPS pings via WebSocket, stores in Redis Geo for proximity queries. 5) **Matching Service** — assigns orders to nearest available riders using geospatial indexing (S2 cells). 6) **Trip Service** — tracks active deliveries, ETA calculation using road graph + real-time traffic. 7) **Payment Service** — earnings, incentives, weekly settlements. **Scale**: partition by city, process 10K+ location updates/sec per city via Kafka.
 
 </QA>
 
 <QA question="What is the low-level design for storing contacts in a phone book?">
 
-Asked in interviews.
+**Data structures**: Use a **Trie** for prefix-based search (autocomplete) and a **HashMap** for O(1) lookup by name. **Classes**: `Contact` (name, phoneNumbers[], emails[], groups[]), `PhoneBook` (contacts: Map, trie: Trie), `SearchEngine` (searchByName, searchByNumber, searchByPrefix). **Database schema**: `contacts(id, name, created_at)`, `phone_numbers(id, contact_id FK, number, type)`, `emails(id, contact_id FK, email, type)`. **Operations**: addContact O(name_length), searchByPrefix O(prefix_length + results), deleteContact O(1) with hash + O(name_length) for trie removal. Index on `phone_numbers.number` for reverse lookup.
 
 </QA>
 
 <QA question="Design a system where users can claim 6 million burgers in 10 minutes.">
 
-Asked in interviews.
+**Challenge**: 10K claims/second, prevent double-claims, maintain fairness. **Architecture**: 1) **Pre-generate claim tokens** — 6M tokens in Redis sorted set before event. 2) **Rate limiter** — per-user limit (1 claim) using user_id + Redis SET. 3) **Atomic claim**: `SPOP` from Redis set (O(1), atomic) — if token returned, user gets a burger. 4) **CDN + static pages** for the landing page (handle 100K+ concurrent visitors). 5) **Queue** — successful claims go to Kafka → Claim Processing Service → database for persistence. 6) **Countdown page** shows remaining count from Redis `SCARD`. Use multiple Redis shards if needed. **Key**: Redis atomic operations prevent double-claiming; horizontal scaling handles throughput.
 
 </QA>
 
 <QA question="How would you design a system where users can subscribe to specific topics, and receive messages whenever a new message is posted related to those topics?">
 
-Asked in interviews.
+This is a **Pub/Sub system**. **Architecture**: 1) **Topic Service** — CRUD for topics. 2) **Subscription Service** — users subscribe to topics (stored in DB: `user_subscriptions(user_id, topic_id)`). 3) **Publisher Service** — accepts new messages tagged with topic. 4) **Message Broker** — Kafka with one partition per topic. When message is published, it goes to the topic's Kafka partition. 5) **Fan-out Service** — consumes Kafka messages, looks up subscribers for that topic, pushes via: WebSocket (real-time), push notification, or email. 6) **Delivery tracking** — mark messages as delivered/read per user. For large fan-outs (millions of subscribers per topic), use a push-pull hybrid: push to online users, pull (polling/pagination) for offline users.
 
 </QA>
 
 <QA question="Design the High-Level Design (HLD) and Low-Level Design (LLD) of Zomato.">
 
-Asked in interviews.
+**HLD**: User/Restaurant/Delivery apps → API Gateway → Microservices: User Service, Restaurant Service (menu, hours, photos), Search Service (Elasticsearch — location + cuisine + rating filters), Order Service (state machine: placed → confirmed → preparing → dispatched → delivered), Payment Service (Razorpay/Stripe integration), Delivery Service (rider matching, tracking), Review Service, Notification Service. Databases: PostgreSQL (orders, users), MongoDB (restaurants, menus), Redis (sessions, geolocation, cache), Kafka (order events, analytics).
+
+**LLD**: `Order` class with state pattern (OrderPlaced, OrderConfirmed, OrderPreparing, OrderDispatched, OrderDelivered states). `RestaurantSearch` uses Elasticsearch with geo_distance query. `DeliveryAssignment` uses a greedy algorithm considering rider distance, current load, and restaurant prep time.
 
 </QA>
 
 <QA question="Can you explain framework designs and their architecture?">
 
-Asked in interviews.
+**MVC** (Model-View-Controller): Model handles data/logic, View renders UI, Controller processes input. Used in Rails, Django, Spring. **MVVM** (Model-View-ViewModel): View binds to ViewModel which wraps Model. Used in React (with hooks), Angular, SwiftUI. **Microservices**: decompose into independent services communicating via APIs/events. Each service owns its data. **Event-Driven**: components communicate via events through a message broker. Loose coupling, high scalability. **Hexagonal/Clean Architecture**: business logic at center, ports (interfaces) connect to adapters (REST, DB, CLI). Framework-agnostic core. Each pattern trades off between simplicity, testability, and scalability.
 
 </QA>
 
 <QA question="How would you design a distributed system?">
 
-Asked in interviews.
+**Key principles**: 1) **Decomposition** — split into services by bounded context. 2) **Communication** — sync (REST/gRPC) for queries, async (Kafka/RabbitMQ) for events. 3) **Data management** — database-per-service, eventual consistency where possible. 4) **Service discovery** — Consul/Kubernetes DNS for finding services. 5) **Fault tolerance** — circuit breakers, retries with exponential backoff, bulkheads. 6) **Consistency** — use Saga pattern for distributed transactions. 7) **Observability** — distributed tracing (Jaeger), centralized logging (ELK), metrics (Prometheus). 8) **Deployment** — containerized (Docker), orchestrated (Kubernetes), CI/CD pipelines. 9) **Security** — mTLS between services, API gateway for external auth.
 
 </QA>
 
 <QA question="Design a system for messaging multiple teams simultaneously.">
 
-Asked in interviews.
+**Architecture**: 1) **User Service** — profiles, team memberships. 2) **Team Service** — teams, channels, member lists. 3) **Message Service** — stores messages (MongoDB — flexible schema), supports text, files, reactions. 4) **WebSocket Gateway** — maintains persistent connections per user, routes real-time messages. 5) **Fan-out Service** — when a message is sent to a team, looks up all members, pushes via WebSocket to online users, stores for offline users. 6) **Notification Service** — push notifications for offline/muted users based on preferences. **Multi-team broadcast**: message goes to Kafka topic, fan-out consumers process each team's members in parallel. Use Redis presence tracking to know who's online.
 
 </QA>
 
 <QA question="Design a system for publishing newspapers using classes and functions.">
 
-Asked in interviews.
+**Classes**: `Article` (title, body, author, category, publishDate, status: DRAFT|REVIEW|PUBLISHED). `Author` (name, bio, articles[]). `Editor` extends Author with approve(article) and reject(article). `Newspaper` (name, edition, articles[], publishDate). `Category` enum (POLITICS, SPORTS, TECH, etc.). `PublishingPipeline`: submit(article) → review(editor) → approve/reject → layout() → publish(). `Subscriber` (name, email, preferences[]). `DistributionService`: distribute(newspaper, subscribers[]) — filters by preferences, sends via email/print. **Patterns used**: Observer (notify subscribers), State (article lifecycle), Strategy (distribution channel — email, print, web).
 
 </QA>
 
 <QA question="Design YouTube as a microservice.">
 
-Asked in interviews.
+**Microservices**: 1) **Upload Service** — accepts video, stores raw in S3, triggers transcoding. 2) **Transcoding Service** — FFmpeg workers convert to multiple resolutions (144p-4K) and formats (HLS/DASH). Managed via job queue (SQS). 3) **Video Service** — metadata CRUD, thumbnails, CDN URL generation. 4) **Search Service** — Elasticsearch for title/tag/description search. 5) **Recommendation Service** — collaborative filtering + content-based ML model. 6) **User Service** — auth, profiles, subscriptions. 7) **Comment Service** — threaded comments (MongoDB). 8) **Analytics Service** — view counts (Kafka → Flink → real-time aggregation), watch time tracking. **Delivery**: CDN (CloudFront) serves video chunks. Adaptive bitrate streaming adjusts quality based on bandwidth.
 
 </QA>
 
 <QA question="Design a URL shortener with a database and all necessary components.">
 
-Asked in interviews.
+**Core algorithm**: Convert auto-increment ID to Base62 (a-z, A-Z, 0-9) → 7 characters support 3.5 trillion URLs. **Components**: 1) **API Service** — POST /shorten (long URL → short code), GET /:code (redirect 301/302). 2) **ID Generator** — distributed unique IDs using Snowflake or counter with range allocation. 3) **Database** — PostgreSQL table: `urls(id BIGINT PK, short_code VARCHAR(7) UNIQUE, long_url TEXT, created_at, expires_at, user_id)`. 4) **Cache** — Redis for hot short codes (99% reads). 5) **Analytics** — Kafka event per click → aggregate clicks, referrers, geo. **Scale**: 100:1 read:write ratio. Cache handles most reads. Shard database by hash(short_code). Rate limit URL creation per user.
 
 </QA>
 
 <QA question="Describe the system design for a platform like BookMyShow.">
 
-Asked in interviews.
+**Services**: 1) **Movie/Event Service** — catalog, schedules, venues. 2) **Seat Inventory Service** — real-time seat map with **distributed locking** (Redis SETNX) to prevent double-booking. Hold seats for 10 minutes during checkout. 3) **Booking Service** — reservation workflow with payment. 4) **Payment Service** — integrate payment gateway, handle failures/refunds. 5) **Search Service** — Elasticsearch for movies by city, date, language, genre. 6) **User Service** — auth, booking history. 7) **Notification Service** — ticket confirmation, reminders. **Key challenge**: concurrent seat selection — use optimistic locking with version numbers. Show real-time seat availability via WebSocket updates. Handle peak traffic (movie release day) with queue-based admission to booking page.
 
 </QA>
 
 <QA question="How do you improve the QPS of a production system?">
 
-Asked in interviews.
+1) **Caching** — add Redis/Memcached for database query results, use CDN for static content. 2) **Database optimization** — add indexes, optimize queries, use read replicas. 3) **Horizontal scaling** — add more application servers behind load balancer. 4) **Connection pooling** — reuse database connections. 5) **Async processing** — move non-critical work to message queues. 6) **Code optimization** — profile hot paths, reduce N+1 queries, batch operations. 7) **Protocol optimization** — use gRPC over REST, HTTP/2, compression. 8) **Rate limiting** — shed excess load gracefully. 9) **Denormalization** — pre-compute expensive joins. 10) **Vertical scaling** — upgrade to more powerful hardware for bottleneck components.
 
 </QA>
 
 <QA question="System design around microservices.">
 
-Asked in interviews.
+**Principles**: 1) **Single responsibility** — each service does one thing well. 2) **Database per service** — no shared databases. 3) **API contracts** — versioned REST/gRPC interfaces. 4) **Service mesh** — sidecar proxies (Istio/Envoy) handle mTLS, retries, circuit breakers. 5) **Event-driven communication** — Kafka for async cross-service events. 6) **API Gateway** — single entry point for clients, handles auth, rate limiting, routing. 7) **Saga pattern** — manage distributed transactions via choreography or orchestration. 8) **Container orchestration** — Kubernetes for deployment, scaling, self-healing. 9) **Observability** — distributed tracing (Jaeger), centralized logging (ELK), metrics (Prometheus). 10) **CI/CD** — independent deployment pipelines per service.
 
 </QA>
 
 <QA question="How would you design a parking lot system?">
 
-Asked in interviews.
+**Classes**: `ParkingLot` (floors[], entryGates[], exitGates[]), `Floor` (spots[][]), `ParkingSpot` (id, type: COMPACT|REGULAR|LARGE, status: FREE|OCCUPIED, vehicle), `Vehicle` (licensePlate, type), `Ticket` (id, spot, entryTime, exitTime, amount), `Gate` (id, type: ENTRY|EXIT). **Key design**: Strategy pattern for `PricingStrategy` (hourly, daily, monthly). Observer pattern to update display boards when spots change. **Database**: `spots(id, floor, type, status)`, `tickets(id, spot_id, vehicle_id, entry_time, exit_time, amount)`. **API**: `POST /entry` — find nearest available spot matching vehicle type, assign, generate ticket. `POST /exit/:ticketId` — calculate fee, process payment, free spot.
 
 </QA>
 
 <QA question="How did you scale the system and what was the capacity planning?">
 
-Asked in interviews.
+**Scaling story**: Start with estimates — DAU, peak QPS, storage growth. Example: 1M DAU, 100 req/sec average, 500 req/sec peak. **Steps taken**: 1) Moved from single DB to primary-replica (handled 3x read growth). 2) Added Redis cache layer (reduced DB load by 80%). 3) Horizontal scaling — went from 2 to 8 app servers behind ALB. 4) Database sharding by user_id when single primary hit write limits. 5) CDN for static assets (offloaded 60% of bandwidth). **Capacity planning**: calculate storage = daily_records × record_size × retention_days. Network = peak_QPS × avg_response_size. Memory = working_set_size for cache hit ratio greater than 95%. Plan for 3x current capacity with autoscaling for bursts.
 
 </QA>
 
 <QA question="Design a notification system which supports immediate, delayed, and repeated notifications.">
 
-Asked in interviews.
+**Architecture**: 1) **Notification API** — accepts notification requests with type (IMMEDIATE / DELAYED / REPEATED), channel (email/push/SMS), schedule info. 2) **Router** — immediate → directly to channel adapter; delayed → Delay Queue (SQS with delay, or Redis sorted set with score = delivery_timestamp); repeated → Scheduler (cron-like, stores in DB with next_run_time). 3) **Scheduler Worker** — polls for due notifications, publishes to processing queue. 4) **Channel Adapters** — Email (SES), Push (FCM/APNs), SMS (Twilio). 5) **Delivery Tracker** — records sent/delivered/failed status. 6) **Retry Logic** — exponential backoff for failed deliveries, dead letter queue after max retries. **Database**: `notifications(id, user_id, channel, type, payload, scheduled_at, status, next_retry)`.
 
 </QA>
 
 <QA question="Explain the architecture of a real-time tracking system.">
 
-Asked in interviews.
+**Architecture**: 1) **Client SDK** — sends GPS coordinates every 3-5 seconds via WebSocket or MQTT. 2) **Ingestion Service** — WebSocket gateway that receives location updates at scale (100K+/sec). Publishes to Kafka partitioned by entity_id. 3) **Location Processing** — Kafka consumers that: update current position in Redis Geo, store historical points in TimescaleDB, calculate ETA using road graph + traffic data. 4) **Tracking API** — REST/WebSocket endpoint where viewers subscribe to an entity's location. Uses Redis Pub/Sub to push updates. 5) **Geofencing Service** — triggers events when entity enters/exits defined zones. **Scale**: Redis Geo supports O(log(N)) proximity queries. Partition by geographic region (city). Use H3/S2 cells for efficient spatial indexing.
 
 </QA>
 
@@ -144,120 +146,120 @@ Yes, but it's often misunderstood. In reality, partitions are rare, so the choic
 
 <QA question="How would you design a URL shortening service like TinyURL?">
 
-Asked in interviews.
+**Requirements**: Convert long URLs to 7-character short codes, redirect, handle billions of URLs. **Algorithm**: Generate unique ID (Snowflake/counter) → encode as Base62. 7 chars = 62^7 = 3.5 trillion. **Components**: API servers (stateless, auto-scalable), Redis cache (99% reads hit cache), PostgreSQL/DynamoDB (persistent storage), Analytics pipeline (Kafka → click tracking). **API**: `POST /api/shorten {url}` → returns short URL. `GET /:code` → 301 redirect. **Scale**: 100:1 read-write ratio. Cache popular URLs. Shard DB by hash(short_code). Set TTL for expired URLs.
 
 </QA>
 
 <QA question="How to design a web crawler?">
 
-Asked in interviews.
+**Architecture**: 1) **URL Frontier** — priority queue of URLs to crawl (BFS ordering, politeness — one request per domain at a time). 2) **Fetcher** — downloads pages respecting robots.txt, handles redirects, timeouts. 3) **HTML Parser** — extracts links, text, metadata. 4) **URL Filter** — deduplicates URLs using Bloom filter, applies URL normalization. 5) **Content Dedup** — simhash/fingerprint to avoid storing duplicate pages. 6) **Storage** — S3 for raw HTML, Elasticsearch for indexed content. **Scale**: distribute URL frontier across multiple workers using consistent hashing by domain. Rate limit per domain (1 req/sec). Recrawl scheduler based on page change frequency. Handle traps (infinite calendars, session URLs) with URL depth limits and URL pattern detection.
 
 </QA>
 
 <QA question="How to design Facebook's news feed?">
 
-Asked in interviews.
+**Two approaches**: 1) **Pull (Fan-out on read)** — when user opens feed, query all friends' posts, rank, return top N. Simple but slow for users with many friends. 2) **Push (Fan-out on write)** — when user posts, write to all followers' feed caches immediately. Fast reads but expensive writes for celebrities. **Hybrid approach (Facebook's)**: Push for normal users (less than 500 friends), Pull for celebrities. **Components**: Post Service, Social Graph Service, Feed Generation Service, Ranking Service (ML model considering recency, engagement, relationship). **Storage**: Posts in MySQL, Feed cache in Redis (sorted set by timestamp/rank score). Feed = merge of pre-computed cache + real-time pulls for celebrity content.
 
 </QA>
 
 <QA question="How to design a social media platform like Instagram?">
 
-Asked in interviews.
+**Services**: 1) **User Service** — registration, profiles, follow/unfollow. 2) **Media Service** — photo/video upload to S3, generate thumbnails (Lambda), serve via CDN. 3) **Post Service** — create posts with media, captions, tags, location. 4) **Feed Service** — fan-out on write for normal users, fan-out on read for celebrities. Rank using engagement signals. 5) **Story Service** — ephemeral content, TTL = 24h. 6) **Search Service** — Elasticsearch for users, hashtags, locations. 7) **Notification Service** — likes, comments, follows. **Database**: PostgreSQL (users, relationships), Cassandra (posts, feeds — write-heavy), Redis (sessions, counters), S3 + CDN (media). **Scale**: ~2 billion MAU. Shard by user_id, heavy CDN usage, eventual consistency for likes/counts.
 
 </QA>
 
 <QA question="How to design an API rate limiter?">
 
-Asked in interviews.
+**Algorithms**: 1) **Token Bucket** — bucket holds N tokens, refills at R tokens/sec. Each request consumes 1 token. Allows bursts up to N. 2) **Sliding Window Log** — store timestamp of each request in Redis sorted set. Count requests in last window. Accurate but memory-heavy. 3) **Sliding Window Counter** — combine current and previous window counts with weighted average. Memory-efficient. **Implementation**: Redis-based — `INCR user:{id}:minute:{ts}` with `EXPIRE`. Return 429 Too Many Requests with `Retry-After` header. **Distributed**: each rate limiter node syncs with Redis. **Levels**: per-user, per-IP, per-API-key, global. Place at API Gateway layer (Kong, Nginx) or as middleware.
 
 </QA>
 
 <QA question="How to design Twitter search?">
 
-Asked in interviews.
+**Architecture**: 1) **Indexing Pipeline** — new tweets flow through Kafka → Indexer builds inverted index in Elasticsearch (terms → tweet IDs). Index fields: text, hashtags, user, timestamp, language, location. 2) **Search Service** — receives query → tokenize → query Elasticsearch with filters (date range, language, user). Rank results by relevance (BM25) + recency + engagement (likes, retweets). 3) **Typeahead Service** — Trie-based prefix suggestions for trending queries, users, hashtags. 4) **Trending Service** — sliding window count of hashtags/topics using Kafka Streams. **Scale**: ~500M tweets/day. Partition Elasticsearch by time (daily indices) and user_id. Keep recent tweets (last 7 days) in hot storage, archive older to cold storage.
 
 </QA>
 
 <QA question="How to design a chat application like WhatsApp?">
 
-Asked in interviews.
+**Architecture**: 1) **WebSocket Gateway** — persistent connections per device, routes messages in real-time. 2) **Message Service** — stores messages in Cassandra (partition by chat_id, sorted by timestamp). 3) **Presence Service** — tracks online/offline/last-seen using Redis with heartbeat. 4) **Group Service** — manages group metadata, membership (max 1024 members). 5) **Media Service** — upload to S3, generate thumbnails, share via CDN link. **Message flow**: Sender → WebSocket → Message Service (persist) → check recipient online → if online, push via WebSocket; if offline, store and push notification (FCM/APNs). **End-to-end encryption**: Signal Protocol. Each device has public/private key pair. Messages encrypted on sender device, decrypted only on recipient device. Server never sees plaintext.
 
 </QA>
 
 <QA question="How to design a file sharing system like Dropbox or Google Drive?">
 
-Asked in interviews.
+**Architecture**: 1) **File chunking** — split files into 4MB chunks, each with hash. Only upload changed chunks (deduplication + delta sync). 2) **Metadata Service** — PostgreSQL storing file/folder hierarchy, permissions, versions. 3) **Block Storage** — S3 for actual chunks, with content-addressable storage (hash as key). 4) **Sync Service** — client watches local file changes, computes chunk hashes, uploads only new/modified chunks. Long-polling/WebSocket for server → client notifications. 5) **Sharing Service** — permissions (viewer/editor/owner), shareable links with expiry. 6) **Versioning** — keep N versions of each file, store only chunk diffs. **Scale**: deduplicate identical chunks across all users (saves ~60% storage). CDN for frequently accessed shared files.
 
 </QA>
 
 <QA question="How to design a ride-sharing service like Uber or Lyft?">
 
-Asked in interviews.
+**Services**: 1) **Rider Service** — request ride, see ETA, track driver, pay. 2) **Driver Service** — go online, accept rides, navigate, earn. 3) **Location Service** — ingest driver GPS every 4s via WebSocket, store in Redis Geo / S2 index. 4) **Matching Service** — when ride requested, find nearby available drivers (geo query), rank by distance + rating + acceptance rate, send request with timeout. 5) **Trip Service** — state machine: REQUESTED → MATCHED → ARRIVING → IN_PROGRESS → COMPLETED. 6) **Pricing Service** — base fare + distance + time + surge multiplier (based on demand/supply ratio per geo cell). 7) **Payment Service** — calculate fare, charge rider, pay driver. **Scale**: partition by city, process millions of location updates/min via Kafka, use geospatial indexing (H3 hexagons) for efficient proximity queries.
 
 </QA>
 
 <QA question="How to design a video streaming platform like YouTube or Netflix?">
 
-Asked in interviews.
+**Architecture**: 1) **Upload Pipeline** — users upload to S3, trigger transcoding pipeline (AWS MediaConvert) producing multiple resolutions (240p–4K) in adaptive bitrate formats (HLS/DASH). 2) **CDN** — CloudFront/Akamai with 400+ PoPs globally for low-latency delivery. Pre-warm popular content. 3) **Catalog Service** — metadata, search (Elasticsearch), recommendations (collaborative filtering ML). 4) **Streaming Service** — serves manifest files (.m3u8), handles DRM (Widevine/FairPlay), adaptive bitrate switching based on client bandwidth. 5) **User Service** — profiles, watch history, subscriptions. 6) **Analytics** — real-time view counts via Kafka → Flink, quality metrics (buffer ratio, startup time). **Scale**: CDN handles 95%+ of bandwidth. Origin servers only serve CDN cache misses. ~200+ Gbps peak bandwidth for major platforms.
 
 </QA>
 
 <QA question="What are the key components of High-Level Design (HLD)?">
 
-Asked in interviews.
+1) **System architecture diagram** — components and their interactions. 2) **Technology choices** — languages, frameworks, databases, cloud services. 3) **Data flow** — how requests flow through the system. 4) **API design** — endpoints, protocols (REST/gRPC/GraphQL). 5) **Database design** — SQL vs NoSQL choices, schema overview. 6) **Scalability strategy** — horizontal scaling, caching, sharding. 7) **Security** — authentication, authorization, encryption. 8) **Infrastructure** — cloud provider, deployment model, CDN. 9) **Non-functional requirements** — latency, throughput, availability targets. 10) **Trade-offs documentation** — why you chose one approach over another.
 
 </QA>
 
 <QA question="What are the key components of Low-Level Design (LLD)?">
 
-Asked in interviews.
+1) **Class diagrams** — classes, attributes, methods, relationships. 2) **Design patterns** — which patterns are used and why (Strategy, Observer, Factory, etc.). 3) **Database schema** — tables, columns, types, indexes, constraints, foreign keys. 4) **API contracts** — request/response schemas, status codes, error formats. 5) **Algorithm details** — pseudocode for core logic. 6) **State machines** — entity lifecycle (e.g., Order states). 7) **Sequence diagrams** — method call flow for key scenarios. 8) **Error handling** — exception hierarchy, retry logic, fallback behavior. 9) **Interface definitions** — abstractions for extensibility. 10) **Data validation** — input validation rules and sanitization.
 
 </QA>
 
 <QA question="How does Low-Level Design differ from High-Level Design?">
 
-Asked in interviews.
+**HLD** answers "WHAT" and "WHERE" — what components exist, what technologies to use, where data flows. It's architecture-level, technology-agnostic to some extent, and aimed at system architects. **LLD** answers "HOW" — how each component works internally, how classes interact, how algorithms are implemented. It's code-level, language-specific, and aimed at developers. **Example**: For an e-commerce system, HLD says "Order Service communicates with Payment Service via REST API and publishes events to Kafka." LLD says "OrderService class has createOrder(userId, items) method that validates stock via InventoryClient, creates Order object with PENDING state, calls PaymentGateway.charge(), and publishes OrderCreatedEvent."
 
 </QA>
 
 <QA question="How do you handle scalability in system design?">
 
-Asked in interviews.
+**Horizontal scaling**: add more machines — stateless app servers behind load balancer. **Vertical scaling**: upgrade hardware (CPU, RAM) — simpler but has limits. **Database scaling**: read replicas for read-heavy workloads, sharding for write-heavy. **Caching**: Redis/Memcached for hot data (reduces DB load 80%+), CDN for static assets. **Async processing**: message queues (Kafka, SQS) for non-real-time work. **Denormalization**: pre-compute expensive queries. **Microservices**: scale individual services independently. **Auto-scaling**: cloud auto-scaling based on CPU, memory, or custom metrics. **Key**: identify bottleneck first (CPU, memory, I/O, network), then apply the right scaling strategy.
 
 </QA>
 
 <QA question="Explain the concept of load balancing and its importance in system design.">
 
-Asked in interviews.
+**Load balancing** distributes incoming traffic across multiple servers. **Why important**: 1) **No single point of failure** — if one server dies, others continue. 2) **Horizontal scaling** — add/remove servers seamlessly. 3) **Optimal resource utilization** — prevents one server from being overloaded while others are idle. **Types**: L4 (TCP/UDP level, faster, less intelligent) and L7 (HTTP level, can route by URL/headers/cookies). **Algorithms**: Round Robin, Least Connections, Weighted, IP Hash, Consistent Hashing. **Features**: health checks (remove unhealthy servers), SSL termination, session affinity (sticky sessions), rate limiting. Examples: Nginx, HAProxy, AWS ALB/NLB, GCP Cloud Load Balancing.
 
 </QA>
 
 <QA question="What is database sharding and when should you use it?">
 
-Asked in interviews.
+**Sharding** splits a database horizontally — distributing rows across multiple database instances (shards). Each shard holds a subset of data. **When to use**: single database can't handle write volume, dataset exceeds single machine storage, need to reduce query latency. **Strategies**: Hash-based (hash(key) % N — even distribution), Range-based (A-M on shard 1 — supports range queries), Directory-based (lookup table — flexible). **Challenges**: cross-shard joins (avoid by denormalizing), rebalancing (use consistent hashing), distributed transactions (use Saga pattern), increased operational complexity. **Tools**: Vitess (MySQL), Citus (PostgreSQL), MongoDB native sharding. Rule of thumb: exhaust vertical scaling and read replicas before sharding.
 
 </QA>
 
 <QA question="How do you design for fault tolerance and high availability?">
 
-Asked in interviews.
+1) **Redundancy** — eliminate single points of failure. Multiple servers, databases, load balancers. 2) **Replication** — database primary-replica with automatic failover. Multi-AZ deployment. 3) **Health checks** — continuously monitor components, auto-replace failed instances. 4) **Circuit breakers** — stop calling a failing service, return fallback response. 5) **Retries with backoff** — retry failed requests with exponential delays + jitter. 6) **Graceful degradation** — serve cached/partial data when a service is down. 7) **Data backups** — regular backups with tested recovery procedures. 8) **Multi-region** — deploy across regions for disaster recovery. 9) **Chaos engineering** — regularly test failure scenarios (Netflix Chaos Monkey). **Target**: 99.99% uptime = ~52 min downtime/year.
 
 </QA>
 
 <QA question="What is the role of message queues in system design?">
 
-Asked in interviews.
+Message queues (Kafka, RabbitMQ, SQS) provide **asynchronous communication** between services. **Benefits**: 1) **Decoupling** — producers and consumers are independent; deploy, scale, fail independently. 2) **Buffering** — absorb traffic spikes; producers can write faster than consumers process. 3) **Durability** — messages persist until processed; no data loss if consumer is temporarily down. 4) **Load leveling** — spread processing over time instead of handling bursts. 5) **Fan-out** — one message consumed by multiple consumers. **Use cases**: order processing, email/notification sending, log aggregation, event sourcing, ETL pipelines. **Trade-off**: adds latency (not for real-time responses) and operational complexity.
 
 </QA>
 
 <QA question="Explain the concept of CDN and caching in system design.">
 
-Asked in interviews.
+**CDN** (Content Delivery Network): globally distributed network of edge servers that cache and serve content close to users. Reduces latency from 200ms+ to under 20ms. Serves static assets (images, CSS, JS, videos) and can cache API responses. Examples: CloudFront, Cloudflare, Akamai. **Caching layers**: 1) **Browser cache** — HTTP cache headers (Cache-Control, ETag). 2) **CDN cache** — edge server cache. 3) **Application cache** — Redis/Memcached for computed results, session data. 4) **Database cache** — query cache, buffer pool. **Strategies**: Cache-Aside (app manages cache), Write-Through (writes to cache and DB), Write-Behind (async DB writes). **Invalidation**: TTL-based, event-based, or manual purge. Key metrics: cache hit ratio (aim for over 95%).
 
 </QA>
 
 <QA question="How would you design a notification system?">
 
-Asked in interviews.
+**Architecture**: 1) **Notification API** — accepts notifications with channel (email/push/SMS/in-app), priority, schedule. 2) **Priority Queue** — urgent notifications go to fast lane, bulk/marketing to slow lane. 3) **Template Service** — renders notification content from templates + variables. 4) **Channel Router** — routes to appropriate adapter based on user preferences and channel. 5) **Channel Adapters** — Email (SES/SendGrid), Push (FCM/APNs), SMS (Twilio), In-App (WebSocket). 6) **Rate Limiter** — prevent notification fatigue (max N per user per hour). 7) **Delivery Tracker** — track sent/delivered/opened/failed status. 8) **Retry Queue** — exponential backoff for failed deliveries, dead letter queue after max retries. **Scale**: Kafka for message ingestion, process millions of notifications/day. Batch email sending for efficiency.
 
 </QA>

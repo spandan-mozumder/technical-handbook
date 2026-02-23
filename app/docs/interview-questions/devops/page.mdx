@@ -12,121 +12,121 @@ Hard link: another name for the same inode (same file data). Deleting the origin
 
 <QA question="What is the command to check profile consistency in Linux?">
 
-Asked in interviews.
+`pwck` checks `/etc/passwd` and `/etc/shadow` for consistency — verifies each entry has correct format, valid fields, proper permissions, and matching entries between files. `grpck` does the same for `/etc/group`. Run periodically or after manual edits to user files.
 
 </QA>
 
 <QA question="What is Linux, and how do you add new commands to the system?">
 
-Asked in interviews.
+**Linux** is an open-source, Unix-like OS kernel. To add new commands: 1) Write a script/binary. 2) Place it in a directory on `$PATH` (e.g., `/usr/local/bin/`). 3) Make it executable: `chmod +x /usr/local/bin/mycommand`. Alternatively, create shell aliases in `~/.bashrc`: `alias ll='ls -la'`.
 
 </QA>
 
 <QA question="What is your knowledge of Windows and Linux-based servers?">
 
-Asked in interviews.
+**Windows servers**: GUI-driven, Active Directory, IIS web server, PowerShell, .NET ecosystem, licensing costs. **Linux servers**: CLI-driven, SSH access, Apache/Nginx, Bash scripting, open source, dominant in cloud/DevOps. Linux is preferred for servers (90%+ of cloud) due to stability, security, cost, and container ecosystem (Docker/K8s).
 
 </QA>
 
 <QA question="How do you create an archive file (tar/zip) in Linux?">
 
-Asked in interviews.
+**tar**: `tar -czvf archive.tar.gz /path/to/dir` (create gzip-compressed tar). Extract: `tar -xzvf archive.tar.gz`. Options: `-c` create, `-x` extract, `-z` gzip, `-j` bzip2, `-v` verbose, `-f` file. **zip**: `zip -r archive.zip /path/to/dir`. Extract: `unzip archive.zip`. tar preserves Unix permissions; zip is more portable across OSes.
 
 </QA>
 
 <QA question="What happens when you delete files in Linux? (Inodes and recovery)">
 
-Asked in interviews.
+Deleting removes the directory entry (filename → inode mapping), not the data. The inode's link count decreases. When link count reaches 0 AND no process has the file open, the inode and data blocks are marked free. **Recovery**: data isn't immediately overwritten — tools like `extundelete`, `testdisk`, or `photorec` can recover data before it's overwritten. Using `shred` overwrites data making recovery impossible.
 
 </QA>
 
 <QA question="What are the differences between UNIX and LINUX?">
 
-Asked in interviews.
+**UNIX**: proprietary (Solaris, AIX, HP-UX), expensive, specific hardware, closed source. **Linux**: open-source (GPL), free, runs on any hardware, community-driven. Linux is Unix-like (follows POSIX standards) but NOT Unix. Linux has wider hardware support, larger community, and dominates servers/cloud. macOS is certified Unix; Linux is not.
 
 </QA>
 
 <QA question="Explain the Linux boot process (BIOS, MBR, GRUB, Kernel, Init).">
 
-Asked in interviews.
+1) **BIOS/UEFI**: hardware initialization, POST (Power-On Self-Test), finds boot device. 2) **MBR/GPT**: Master Boot Record loads bootloader from first 512 bytes. 3) **GRUB**: bootloader displays menu, loads kernel and initramfs into memory. 4) **Kernel**: initializes hardware, mounts root filesystem, starts first process. 5) **Init/Systemd** (PID 1): starts services, sets runlevel/target, brings system to usable state.
 
 </QA>
 
 <QA question="How would you monitor file changes in Linux?">
 
-Asked in interviews.
+`inotifywait` / `inotifywatch` (inotify-tools): monitor filesystem events in real-time. `inotifywait -m -r /path/ -e modify,create,delete`. `tail -f /var/log/syslog`: follow log file changes. `watch -n 1 ls -la /path/`: poll directory every second. `auditd`: kernel-level file auditing. `fswatch` (cross-platform). For version control: use Git to track changes.
 
 </QA>
 
 <QA question="Tell us about your technical knowledge of Linux Networking.">
 
-Asked in interviews.
+Key commands: `ip addr` / `ifconfig` (show interfaces), `ip route` (routing table), `ss` / `netstat` (socket statistics), `ping` (connectivity), `traceroute` (path to host), `dig` / `nslookup` (DNS lookup), `curl` / `wget` (HTTP requests), `iptables` / `nftables` (firewall rules), `tcpdump` (packet capture), `nmcli` (NetworkManager CLI). Config files: `/etc/hosts`, `/etc/resolv.conf`, `/etc/network/interfaces` or `/etc/netplan/`.
 
 </QA>
 
 <QA question="What are hard links and soft links in Linux?">
 
-Asked in interviews.
+**Hard link**: points to the same inode; changes in one reflect in the other. Cannot cross filesystems or link directories. Deleting original doesn't affect hard link. `ln file hardlink`. **Soft/symbolic link**: points to a file PATH. Can cross filesystems and link directories. Breaks if target is deleted. `ln -s target symlink`. Check with `ls -li` (same inode = hard link).
 
 </QA>
 
 <QA question="How do Linux permissions (chmod/chown) work?">
 
-Asked in interviews.
+Three permission groups: **owner**, **group**, **others**. Three permissions each: **read (4)**, **write (2)**, **execute (1)**. `chmod 755 file` = rwxr-xr-x. `chmod u+x file` = add execute for owner. `chown user:group file` = change ownership. Special: **SUID (4xxx)**: run as file owner. **SGID (2xxx)**: run as file group. **Sticky bit (1xxx)**: only owner can delete in directory (e.g., /tmp).
 
 </QA>
 
 <QA question="How to configure and work with DNS in Linux?">
 
-Asked in interviews.
+DNS resolves domain names to IPs. **Config**: `/etc/resolv.conf` (nameserver entries), `/etc/hosts` (local overrides), `/etc/nsswitch.conf` (resolution order). **Tools**: `dig domain.com` (detailed DNS query), `nslookup domain.com`, `host domain.com`. **Run DNS server**: install BIND (`named`) or `dnsmasq`. Edit zone files for records (A, AAAA, CNAME, MX, TXT). `systemd-resolved` manages DNS on modern distros.
 
 </QA>
 
 <QA question="What is the maximum size (in bytes) of a filename in Linux?">
 
-Asked in interviews.
+**255 bytes** on most Linux filesystems (ext4, XFS, Btrfs). Full path length limit is **4096 bytes** (`PATH_MAX`). Filenames are case-sensitive, can contain any character except `/` and null (`\0`). Avoid spaces and special characters in scripts — use quotes if needed.
 
 </QA>
 
 <QA question="How do you kill a process in RHEL / CentOS?">
 
-Asked in interviews.
+`kill PID` (sends SIGTERM — graceful shutdown). `kill -9 PID` (SIGKILL — force kill, can't be caught). `killall processname` (by name). `pkill -f pattern` (by pattern). `top` or `htop` to find PID interactively. `ps aux | grep process` to find PID. `kill -l` lists all signals. Always try SIGTERM first; use SIGKILL as last resort.
 
 </QA>
 
 <QA question="What is the meaning and use of the 'sed' stream editor?">
 
-Asked in interviews.
+`sed` (Stream Editor) transforms text line by line. **Substitution**: `sed 's/old/new/g' file` (replace all occurrences). **In-place**: `sed -i 's/old/new/g' file`. **Delete lines**: `sed '5d' file` (line 5), `sed '/pattern/d' file` (matching lines). **Print specific lines**: `sed -n '10,20p' file`. **Insert**: `sed '3i\New line' file`. Commonly used in scripts for config file manipulation and text processing pipelines.
 
 </QA>
 
 <QA question="What is a Linux shell and what are its types?">
 
-Asked in interviews.
+A **shell** is a command-line interpreter between user and kernel. **Types**: **Bash** (Bourne Again Shell — most common, default on most Linux), **sh** (Bourne Shell — POSIX compatible), **zsh** (Z Shell — default on macOS, powerful features), **fish** (Friendly Interactive Shell — modern, auto-suggestions), **csh/tcsh** (C Shell — C-like syntax), **ksh** (Korn Shell — scripting). Check current: `echo $SHELL`. Change: `chsh -s /bin/zsh`.
 
 </QA>
 
 <QA question="Explain the use of the grep command with examples (grep -i, grep -v, grep -e).">
 
-Asked in interviews.
+`grep` searches text using patterns. `grep 'error' log.txt` — find lines containing 'error'. **Flags**: `-i` (case-insensitive), `-v` (invert — show non-matching lines), `-e` (multiple patterns: `grep -e 'err' -e 'warn'`), `-r` (recursive search in directories), `-c` (count matches), `-n` (show line numbers), `-l` (show only filenames), `-E` (extended regex), `-w` (whole word match). Example: `grep -rni 'TODO' src/`.
 
 </QA>
 
 <QA question="Explain the difference between a process and a thread in Linux.">
 
-Asked in interviews.
+**Process**: independent execution unit with own memory space (address space, file descriptors, PID). Created via `fork()`. Inter-process communication via pipes, sockets, shared memory. **Thread**: lightweight unit within a process sharing the same memory space. Created via `pthread_create()`. Faster to create/switch than processes. Threads share heap but have separate stacks. Processes are isolated (crash doesn't affect others); threads can corrupt shared memory.
 
 </QA>
 
 <QA question="Why can only four primary partitions be created in Linux?">
 
-Asked in interviews.
+The MBR (Master Boot Record) partition table uses a 64-byte area, with each partition entry requiring 16 bytes: 64 / 16 = **4 primary partitions max**. To work around this, one primary partition can be made an **extended partition** containing multiple **logical partitions**. **GPT** (GUID Partition Table, used with UEFI) removes this limitation — supports up to 128 partitions by default.
 
 </QA>
 
 <QA question="What is the Find command in Linux and how is it used?">
 
-Asked in interviews.
+`find` searches the filesystem for files/directories matching criteria. **By name**: `find /path -name '*.log'`. **By type**: `find / -type d -name config` (directories only). **By size**: `find / -size +100M`. **By time**: `find / -mtime -7` (modified in last 7 days). **Execute**: `find . -name '*.tmp' -exec rm {} \;` or `find . -name '*.js' | xargs grep 'TODO'`. **By permissions**: `find / -perm 777`. Powerful and flexible; use `-maxdepth` to limit search scope.
 
 </QA>
 
@@ -140,121 +140,121 @@ Multi-stage builds create smaller production images. Build stage has dev depende
 
 <QA question="What is Docker, and how can I create a Docker Compose file and a Dockerfile for my Node.js application?">
 
-Asked in interviews.
+**Docker** is a platform for building, shipping, and running applications in containers. **Dockerfile**: `FROM node:18-alpine\nWORKDIR /app\nCOPY package*.json ./\nRUN npm ci\nCOPY . .\nEXPOSE 3000\nCMD ["node", "server.js"]`. **docker-compose.yml**: defines multi-container apps — `services: app: build: . ports: - 3000:3000 db: image: postgres:15 volumes: - pgdata:/var/lib/postgresql/data`.
 
 </QA>
 
 <QA question="What is docker and difference b/w docker attach and docker exec?">
 
-Asked in interviews.
+**Docker** packages applications into containers — lightweight, portable, isolated environments. **docker attach**: connects your terminal to a RUNNING container's main process (PID 1). If you exit, the container may stop. **docker exec**: runs a NEW command inside a running container (`docker exec -it container bash`). Exiting doesn't affect the container. Use `exec` for debugging; `attach` to view main process output.
 
 </QA>
 
 <QA question="What is Docker and its advantages? Which is the most secure docker image?">
 
-Asked in interviews.
+**Docker** containerizes applications for consistency across environments. **Advantages**: consistent dev/prod environments, fast startup, resource efficiency vs VMs, easy scaling, version-controlled images, simplified CI/CD. **Most secure image**: **Distroless** images (Google) — contain only the app and runtime, no shell, no package manager, minimal attack surface. **Alpine**-based images are also popular — tiny (~5MB) but have a shell. Scratch images (empty base) are smallest but hardest to debug.
 
 </QA>
 
 <QA question="What is Docker and what is its purpose?">
 
-Asked in interviews.
+Docker is an open-source containerization platform. It packages applications and dependencies into **containers** — lightweight, isolated environments that share the host OS kernel. **Purpose**: eliminates "works on my machine" problems, ensures consistent environments from development to production, enables microservices architecture, simplifies deployment and scaling, and improves resource utilization compared to VMs.
 
 </QA>
 
 <QA question="What is the use of docker and kubernetes?">
 
-Asked in interviews.
+**Docker**: packages applications into containers — lightweight, portable, isolated units with all dependencies. Used for building and shipping individual services. **Kubernetes (K8s)**: orchestrates containers at scale — handles deployment, scaling, load balancing, self-healing, rolling updates across clusters. Docker builds containers; K8s manages them in production. Docker Compose handles multi-container dev setups; K8s handles production orchestration.
 
 </QA>
 
 <QA question="What are the basic commands of docker?">
 
-Asked in interviews.
+`docker build -t myapp .` (build image), `docker run -d -p 3000:3000 myapp` (run container), `docker ps` (list running containers), `docker logs id` (view logs), `docker exec -it id bash` (shell into container), `docker stop id` (stop), `docker rm id` (remove container), `docker images` (list images), `docker rmi id` (remove image), `docker pull image:tag` (download), `docker push image:tag` (upload).
 
 </QA>
 
 <QA question="What is the difference between an image and a container?">
 
-Asked in interviews.
+**Image**: read-only template/blueprint with application code, runtime, libraries, and configs. Built from a Dockerfile. Stored in registries. Immutable — versioned with tags. Like a class in OOP. **Container**: a running instance of an image with its own writable layer. Has its own filesystem, network, and process space. Like an object in OOP. Multiple containers can run from the same image, each isolated. `docker images` lists images; `docker ps` lists containers.
 
 </QA>
 
 <QA question="Explain Docker and Docker Hub.">
 
-Asked in interviews.
+**Docker**: open-source platform for building, running, and managing containers. Core components: Docker Engine (daemon + CLI), Docker Desktop (GUI), Docker Compose (multi-container). **Docker Hub**: the default public registry for Docker images — like GitHub for container images. Pull official images (`docker pull nginx`), push your own, set up automated builds, scan for vulnerabilities. Alternatives: GitHub Container Registry, AWS ECR, Google GCR, self-hosted Harbor.
 
 </QA>
 
 <QA question="What is Docker Swarm and how is it different from Kubernetes?">
 
-Asked in interviews.
+**Docker Swarm**: Docker's built-in orchestration. Simpler setup, uses Docker CLI, good for small deployments. **Kubernetes**: more powerful, complex. Supports auto-scaling, rolling updates, service discovery, RBAC, custom resources. **Key differences**: K8s has larger ecosystem, more cloud provider support, handles complex topologies. Swarm is easier to learn but less feature-rich. K8s is the industry standard for production container orchestration.
 
 </QA>
 
 <QA question="How do you optimize Docker images for production?">
 
-Asked in interviews.
+1) Use **multi-stage builds** to separate build and runtime. 2) Use **small base images** (alpine, distroless). 3) **Minimize layers** — combine RUN commands. 4) **Order Dockerfile wisely** — least-changing layers first (for cache hits). 5) Use `.dockerignore` to exclude unnecessary files. 6) Don't install unnecessary packages. 7) Run as **non-root user**. 8) Use specific tags (not `latest`). 9) Scan for vulnerabilities (`docker scout`). 10) Remove build artifacts and caches.
 
 </QA>
 
 <QA question="What is the difference between COPY and ADD in a Dockerfile?">
 
-Asked in interviews.
+Both copy files into the image. **COPY**: straightforward file/directory copy. Preferred for most cases. **ADD**: does everything COPY does PLUS: auto-extracts tar archives, and can fetch from URLs. **Best practice**: always use COPY unless you specifically need tar extraction. ADD's URL feature is discouraged — use `curl` or `wget` in a RUN command instead for better caching and transparency.
 
 </QA>
 
 <QA question="Explain the Docker container lifecycle.">
 
-Asked in interviews.
+1) **Created**: container exists but hasn't started (`docker create`). 2) **Running**: actively executing (`docker start/run`). 3) **Paused**: processes frozen (`docker pause`). 4) **Stopped**: processes terminated, state preserved (`docker stop`). 5) **Deleted**: container and writable layer removed (`docker rm`). Transitions: Created → Running → Paused → Running → Stopped → Deleted. Use `docker ps -a` to see all containers including stopped ones.
 
 </QA>
 
 <QA question="What is a Docker volume and why is it preferred over bind mounts?">
 
-Asked in interviews.
+A **Docker volume** is a Docker-managed filesystem stored outside the container's writable layer. **vs Bind mounts**: volumes are managed by Docker (in `/var/lib/docker/volumes/`), portable, work on all OS, can be shared between containers, support volume drivers for remote storage. Bind mounts depend on host directory structure, have security concerns. **Benefits**: data persists after container deletion, named volumes for easy management, backup/restore support.
 
 </QA>
 
 <QA question="How do you monitor Docker containers in a production environment?">
 
-Asked in interviews.
+1) **Docker stats**: `docker stats` for real-time CPU/memory/network. 2) **Logging**: `docker logs --follow container` or log drivers (Fluentd, syslog). 3) **cAdvisor**: Google's container monitoring tool — exports to Prometheus. 4) **Prometheus + Grafana**: metrics collection and dashboards. 5) **Datadog/New Relic**: commercial APM solutions. 6) **Health checks**: `HEALTHCHECK CMD curl -f http://localhost/ || exit 1` in Dockerfile. 7) **ELK Stack** for centralized logging.
 
 </QA>
 
 <QA question="What are the different Docker networking modes (Bridge, Host, None)?">
 
-Asked in interviews.
+**Bridge** (default): containers get private IPs on an internal network. Communicate via port mapping (`-p 8080:80`). Isolated from host network. **Host**: container shares host's network directly — no isolation but best performance. Container uses host ports directly. **None**: no networking. Container is completely isolated. **Overlay**: multi-host networking for Swarm/K8s. **Macvlan**: assigns MAC addresses to containers, appearing as physical devices on the network.
 
 </QA>
 
 <QA question="Explain the concept of 'Dockerizing' an application.">
 
-Asked in interviews.
+Dockerizing = containerizing an application. Steps: 1) Write a **Dockerfile** defining base image, dependencies, code, and startup command. 2) Create **.dockerignore** to exclude unnecessary files. 3) Build: `docker build -t myapp:1.0 .`. 4) Test locally: `docker run -p 3000:3000 myapp:1.0`. 5) Push to registry: `docker push myrepo/myapp:1.0`. 6) Deploy to production. Benefits: consistent environments, easy rollbacks, scalable deployments.
 
 </QA>
 
 <QA question="What is the role of Docker Daemon?">
 
-Asked in interviews.
+The **Docker Daemon** (`dockerd`) is the background process that manages Docker objects (images, containers, networks, volumes). It listens for Docker API requests (from CLI or remote clients), pulls images, starts/stops containers, manages networking and storage. The **Docker CLI** (`docker`) communicates with the daemon via REST API over a Unix socket (`/var/run/docker.sock`). The daemon handles the heavy lifting — building images, managing container lifecycles, and interfacing with the kernel (namespaces, cgroups).
 
 </QA>
 
 <QA question="How do you handle secrets and sensitive data in Docker?">
 
-Asked in interviews.
+1) **Docker Secrets** (Swarm): `docker secret create` — encrypted at rest, mounted as files in containers at `/run/secrets/`. 2) **Environment variables**: `docker run -e SECRET=value` — visible in `docker inspect` (least secure). 3) **Kubernetes Secrets**: base64-encoded, mounted as files or env vars. 4) **Vault** (HashiCorp): dynamic secrets, rotation, access control. 5) **Build args** (`ARG`): for build-time only. **Never** bake secrets into images.
 
 </QA>
 
 <QA question="What is the purpose of .dockerignore file?">
 
-Asked in interviews.
+`.dockerignore` excludes files from the build context sent to Docker daemon. Reduces build time and image size. Format similar to `.gitignore`. Common entries: `node_modules`, `.git`, `*.md`, `docker-compose*.yml`, `.env`, `__pycache__`, `*.log`, `.vscode`. Without it, everything in the build directory is sent to the daemon — even files not used in the image. Critical for performance when the build context is large.
 
 </QA>
 
 <QA question="Explain how Docker helps in a CI/CD pipeline.">
 
-Asked in interviews.
+Docker in CI/CD: 1) **Consistent build environment** — build runs in same container everywhere. 2) **Reproducible builds** — Dockerfile pins exact versions. 3) **Parallel testing** — spin up isolated test containers. 4) **Image as artifact** — build once, deploy same image to staging and production. 5) **Fast rollbacks** — revert to previous image tag. Pipeline: push code → CI builds Docker image → runs tests in container → pushes image to registry → CD deploys to K8s/ECS.
 
 </QA>
 
@@ -268,121 +268,121 @@ Deployment: stateless apps. Pods are interchangeable, random names (myapp-abc123
 
 <QA question="What is Kubernetes, and what are its primary use cases?">
 
-Asked in interviews.
+**Kubernetes (K8s)** is an open-source container orchestration platform. **Use cases**: automated deployment and scaling, self-healing (restart failed containers), load balancing, rolling updates with zero downtime, service discovery, secret/config management. Manages containerized applications across clusters of machines.
 
 </QA>
 
 <QA question="What are the fundamentals of Kubernetes (K8s)?">
 
-Asked in interviews.
+Key concepts: **Pod** (smallest unit, one or more containers), **Deployment** (manages pod replicas), **Service** (stable network endpoint), **Namespace** (logical isolation), **ConfigMap/Secret** (config management), **PersistentVolume** (storage), **Ingress** (HTTP routing), **HPA** (auto-scaling), **RBAC** (access control). Architecture: Control Plane (API Server, Scheduler, Controller Manager, etcd) + Worker Nodes (kubelet, kube-proxy, container runtime).
 
 </QA>
 
 <QA question="What is Kubernetes? why it is required? how it is different from Docker Swarm?">
 
-Asked in interviews.
+**Kubernetes**: open-source container orchestration for deploying, scaling, and managing containerized apps. **Required because**: manual container management doesn't scale; K8s automates deployment, scaling, load balancing, self-healing, rolling updates. **vs Docker Swarm**: K8s is more feature-rich (auto-scaling, RBAC, custom resources, service mesh), has larger ecosystem, better multi-cloud support, steeper learning curve. Swarm is simpler, uses Docker CLI, suitable for smaller deployments.
 
 </QA>
 
 <QA question="How do you deploy a web application into Kubernetes?">
 
-Asked in interviews.
+1) Build Docker image and push to registry. 2) Write K8s manifests: **Deployment** (defines pod template, replicas) + **Service** (exposes pods) + **Ingress** (HTTP routing). 3) Apply: `kubectl apply -f deployment.yaml`. 4) Verify: `kubectl get pods`, `kubectl get services`. In practice, use Helm charts for templating, ArgoCD/Flux for GitOps, and CI/CD pipelines for automation. `kubectl rollout status` to monitor. `kubectl rollout undo` to rollback.
 
 </QA>
 
 <QA question="Describe the architecture of Kubernetes.">
 
-Asked in interviews.
+**Control Plane**: API Server (frontend, validates requests), Scheduler (assigns pods to nodes), Controller Manager (runs control loops — Deployment, ReplicaSet), etcd (distributed key-value store for cluster state). **Worker Nodes**: kubelet (manages pods on the node), kube-proxy (network rules, service routing), Container Runtime (Docker, containerd, CRI-O). Communication: kubectl → API Server → Scheduler/Controllers → kubelet on nodes.
 
 </QA>
 
 <QA question="Explain the components of the Kubernetes Control Plane.">
 
-Asked in interviews.
+Control Plane components: 1) **API Server** (`kube-apiserver`): RESTful frontend for all operations, validates and processes requests. 2) **etcd**: distributed key-value store holding all cluster state and config. 3) **Scheduler** (`kube-scheduler`): decides which node runs each new pod based on resource requirements, affinity rules, taints. 4) **Controller Manager**: runs controllers (Deployment, ReplicaSet, Node, Job) that maintain desired state. 5) **Cloud Controller Manager**: interacts with cloud provider APIs.
 
 </QA>
 
 <QA question="What is a Pod in Kubernetes and why is it the smallest unit?">
 
-Asked in interviews.
+A **Pod** is the smallest deployable unit in K8s — wraps one or more containers that share network (same IP), storage (volumes), and lifecycle. Why smallest: K8s doesn't manage individual containers; it manages pods. Containers in a pod are co-located and co-scheduled. Most pods run one container, but sidecar patterns add logging, proxy, or monitoring containers alongside the main app. Pods are ephemeral — they can be killed and recreated.
 
 </QA>
 
 <QA question="Explain the difference between a Deployment and a StatefulSet.">
 
-Asked in interviews.
+**Deployment**: for stateless apps. Pods are interchangeable, have random names, can be scaled up/down freely. No persistent identity. **StatefulSet**: for stateful apps (databases, message queues). Pods have stable network identities (`pod-0`, `pod-1`), persistent volumes that follow them, ordered startup/shutdown (pod-0 before pod-1). Use Deployment for web servers, APIs. Use StatefulSet for PostgreSQL, MongoDB, Kafka, Redis clusters.
 
 </QA>
 
 <QA question="What is an Ingress controller and how does it work?">
 
-Asked in interviews.
+**Ingress** defines HTTP/HTTPS routing rules (host-based, path-based) to Services. An **Ingress Controller** (Nginx, Traefik, AWS ALB) implements those rules — it's the actual reverse proxy/load balancer. Example: `host: api.example.com, path: /users → user-service:8080`. Supports TLS termination, URL rewriting, rate limiting. Without Ingress, you'd need a LoadBalancer Service per app (expensive).
 
 </QA>
 
 <QA question="How does service discovery and load balancing work in Kubernetes?">
 
-Asked in interviews.
+**Service Discovery**: pods register with Services which have stable DNS names (`my-service.default.svc.cluster.local`). CoreDNS resolves service names to cluster IPs. **Load Balancing**: Services distribute traffic across pods using iptables/IPVS rules managed by kube-proxy. Types: ClusterIP (internal), NodePort (external on node ports), LoadBalancer (cloud LB). kube-proxy watches API server for Service/Endpoint changes and updates routing rules.
 
 </QA>
 
 <QA question="What are ConfigMaps and Secrets, and how are they used?">
 
-Asked in interviews.
+**ConfigMaps**: store non-sensitive configuration as key-value pairs. Consumed as environment variables or mounted as files. `kubectl create configmap app-config --from-literal=DB_HOST=postgres`. **Secrets**: store sensitive data (passwords, tokens, keys). Base64-encoded (not encrypted by default — enable encryption at rest). Consumed same ways as ConfigMaps. Both decouple config from application code. Update ConfigMap/Secret and pods can pick up changes (mounted volumes auto-update; env vars require restart).
 
 </QA>
 
 <QA question="Explain the role and functionality of Kube-proxy.">
 
-Asked in interviews.
+**kube-proxy** runs on every worker node and maintains network rules for Services. It watches the API server for Service and Endpoint changes, then updates iptables/IPVS rules to route traffic to the correct pods. **Modes**: iptables (default — rules-based, O(n) rules), IPVS (hash-based, better performance for many services). kube-proxy enables: ClusterIP virtual IPs, NodePort access, session affinity, and load balancing across pod replicas.
 
 </QA>
 
 <QA question="What is Horizontal Pod Autoscaling (HPA) and how do you configure it?">
 
-Asked in interviews.
+**HPA** automatically scales pod count based on metrics. Configure: `kubectl autoscale deployment myapp --min=2 --max=10 --cpu-percent=70`. HPA checks metrics every 15 seconds (configurable), calculates desired replicas: `desiredReplicas = currentReplicas × (currentMetric / targetMetric)`. Requires **metrics-server** for CPU/memory. Custom metrics via Prometheus Adapter. Also supports scaling on multiple metrics, scaling behavior (cooldown periods), and scale-to-zero with KEDA.
 
 </QA>
 
 <QA question="What are Kubernetes namespaces and when should you use them?">
 
-Asked in interviews.
+**Namespaces** provide logical isolation within a cluster — separate teams, environments (dev/staging/prod), or projects. Each namespace has its own resources, quotas, RBAC policies. Default namespaces: `default`, `kube-system`, `kube-public`, `kube-node-lease`. Use when: multiple teams share a cluster, separating environments, applying resource quotas per team. Don't use for: isolating production from dev (use separate clusters). Resources can communicate across namespaces via FQDN.
 
 </QA>
 
 <QA question="Explain Role-Based Access Control (RBAC) in Kubernetes.">
 
-Asked in interviews.
+**RBAC** controls who can do what in the cluster. Components: **Role** (namespace-scoped permissions — what verbs on what resources), **ClusterRole** (cluster-wide), **RoleBinding** (grants Role to a user/group/service account in a namespace), **ClusterRoleBinding** (cluster-wide grant). Example: Role allowing `get`, `list`, `watch` on pods in namespace `dev`. Bind to a ServiceAccount. Principle of least privilege — start with minimal permissions.
 
 </QA>
 
 <QA question="What is a Sidecar container pattern?">
 
-Asked in interviews.
+**Sidecar** is a container running alongside the main application container in the same Pod, sharing network and storage. **Use cases**: log collection (Fluentd sidecar), service mesh proxy (Envoy/Istio), TLS termination, config reload, monitoring agent, data synchronization. Benefits: separation of concerns (main app doesn't handle logging), reusable across services (same sidecar for all apps). K8s 1.28+ has native sidecar containers with init-container lifecycle semantics.
 
 </QA>
 
 <QA question="Explain the difference between ClusterIP, NodePort, and LoadBalancer services.">
 
-Asked in interviews.
+**ClusterIP** (default): exposes Service on internal cluster IP only. Accessible within cluster. **NodePort**: exposes on each node's IP at a static port (30000-32767). Accessible externally via `NodeIP:NodePort`. **LoadBalancer**: provisions a cloud load balancer (AWS ELB, GCP GLB) pointing to the Service. Accessible via external IP. In practice: ClusterIP for internal services, LoadBalancer for external APIs, or Ingress + ClusterIP for HTTP routing.
 
 </QA>
 
 <QA question="What is a Liveness probe vs a Readiness probe?">
 
-Asked in interviews.
+**Liveness probe**: checks if the container is ALIVE. If it fails, kubelet restarts the container. Catches deadlocks and hung processes. **Readiness probe**: checks if the container is READY to receive traffic. If it fails, the pod is removed from Service endpoints (no traffic sent). Used during startup and temporary unavailability. Configure with HTTP, TCP, or exec checks. Example: `livenessProbe: httpGet: path: /healthz port: 8080` with `initialDelaySeconds`, `periodSeconds`.
 
 </QA>
 
 <QA question="How do you manage persistent storage in Kubernetes?">
 
-Asked in interviews.
+**PersistentVolume (PV)**: cluster-level storage resource (NFS, EBS, GCE PD). **PersistentVolumeClaim (PVC)**: request for storage by a pod. **StorageClass**: defines how PVs are dynamically provisioned. Flow: create StorageClass → pod requests PVC → K8s dynamically provisions PV → PVC binds to PV → pod mounts PVC. **Access modes**: ReadWriteOnce (single node), ReadOnlyMany (many nodes), ReadWriteMany (many nodes, NFS). StatefulSets get a PVC per pod.
 
 </QA>
 
 <QA question="What is ETCD and why is it important in a Kubernetes cluster?">
 
-Asked in interviews.
+**etcd** is a distributed, consistent key-value store that serves as Kubernetes' single source of truth. Stores ALL cluster state: nodes, pods, configs, secrets, service accounts, RBAC policies. Uses **Raft consensus** for distributed consistency. If etcd is lost, the entire cluster state is lost — **always backup etcd**. Runs on control plane nodes (or dedicated nodes for HA). Performance-critical: uses fast SSDs. Accessed only by the API server (never directly by other components).
 
 </QA>
 
@@ -409,3 +409,290 @@ RED Method: for services/endpoints — how many requests, how many errors, how l
 Counter: for things that only go up — requests served, errors occurred, bytes sent. Always use rate() to get useful per-second values. Gauge: for things that fluctuate — temperature, queue depth, active users. Can be used directly.
 
 </QA>
+
+## CI/CD (from InterviewBit)
+
+<QA question="What is a CI/CD pipeline?">
+
+A **CI/CD pipeline** automates the software delivery process. **CI** (Continuous Integration): developers merge code frequently, automated builds and tests run on every commit. **CD** (Continuous Delivery/Deployment): code is automatically built, tested, and deployed. Stages: Source (Git push) → Build (compile/bundle) → Test (unit/integration/e2e) → Deploy (staging then production). Tools: GitHub Actions, Jenkins, GitLab CI, CircleCI.
+
+</QA>
+
+<QA question="Explain Continuous Integration, Continuous Delivery, and Continuous Deployment.">
+
+**Continuous Integration**: developers merge code to main branch frequently; each merge triggers automated build + tests. Catches bugs early. **Continuous Delivery**: extends CI — code is always in a deployable state; deployment to production requires manual approval. **Continuous Deployment**: extends Delivery — every change that passes all tests is automatically deployed to production. No manual gate. CI = build+test. Delivery = can deploy anytime. Deployment = does deploy every time.
+
+</QA>
+
+<QA question="What are some popular CI/CD tools?">
+
+**Jenkins** (open-source, self-hosted, highly customizable). **GitHub Actions** (integrated with GitHub, YAML-based, free for public repos). **GitLab CI/CD** (built into GitLab, strong DevOps integration). **CircleCI** (cloud-native, fast). **Travis CI** (GitHub integration). **Azure DevOps Pipelines** (Microsoft ecosystem). **AWS CodePipeline** (AWS native). **ArgoCD** (GitOps for Kubernetes). **Tekton** (K8s-native pipelines).
+
+</QA>
+
+<QA question="Explain the benefit of the CI/CD Pipeline.">
+
+1) **Faster releases** — automated pipeline reduces manual work. 2) **Early bug detection** — tests run on every commit. 3) **Reduced risk** — smaller, frequent deploys are easier to debug. 4) **Consistency** — same process every time, no human error. 5) **Faster feedback** — developers know within minutes if something broke. 6) **Higher quality** — automated testing catches regressions. 7) **Team confidence** — deploy anytime without fear.
+
+</QA>
+
+<QA question="What are some of the deployment strategies?">
+
+1) **Rolling Update**: gradually replace old pods with new ones. Zero downtime. Default in K8s. 2) **Blue/Green**: run two identical environments; switch traffic from blue (old) to green (new). Instant rollback. 3) **Canary**: route small percentage of traffic to new version; gradually increase. 4) **Recreate**: kill all old, start all new. Has downtime. 5) **A/B Testing**: route based on user segments. 6) **Feature Flags**: deploy code but toggle features on/off.
+
+</QA>
+
+<QA question="Why is Automated Testing essential for CI/CD?">
+
+Without automated testing, CI/CD is just CI/CD theater — pushing broken code faster. Automated tests are the safety net: **unit tests** catch logic bugs, **integration tests** verify component interactions, **e2e tests** validate user flows. Tests must be fast (minutes, not hours), reliable (no flaky tests), and comprehensive. A failing test should block deployment. Coverage targets: aim for high unit test coverage, selective integration/e2e tests for critical paths.
+
+</QA>
+
+<QA question="What are some common practices of CI/CD?">
+
+1) **Commit often** — small, frequent commits. 2) **Automate everything** — build, test, deploy. 3) **Main branch always deployable**. 4) **Fast feedback** — pipeline should complete in less than 10 minutes. 5) **Fix broken builds immediately** — top priority. 6) **Test in production-like environments**. 7) **Version control everything** — code, configs, infrastructure (IaC). 8) **Monitor deployments** — metrics, alerts, rollback capability. 9) **Trunk-based development** or short-lived feature branches.
+
+</QA>
+
+<QA question="Does security play an important role in CI/CD? How does it get secured?">
+
+Yes, critical. **DevSecOps** = integrating security into every CI/CD stage. **How**: 1) **SAST** — static code analysis (SonarQube, CodeQL). 2) **DAST** — dynamic scanning of running app. 3) **Dependency scanning** — check for vulnerable packages (Snyk, Dependabot). 4) **Container scanning** — scan Docker images (Trivy, Scout). 5) **Secrets detection** — prevent leaked credentials (GitGuardian). 6) **Signed artifacts** — verify image integrity. 7) **RBAC** on pipeline access. Shift security LEFT.
+
+</QA>
+
+<QA question="Explain trunk-based development.">
+
+**Trunk-based development**: all developers commit directly to `main` (trunk) or use very short-lived feature branches (less than 1 day). Features are hidden behind **feature flags** until ready. Benefits: reduces merge conflicts, enables CI (always integrating), simpler branching model, faster delivery. Requires: good test coverage, feature flags, code review culture. Contrast with Gitflow (long-lived branches). Used by Google, Facebook, Netflix for high-velocity delivery.
+
+</QA>
+
+## Jenkins (from InterviewBit)
+
+<QA question="What is Jenkins?">
+
+**Jenkins** is an open-source automation server for CI/CD. Written in Java, extensible with 1800+ plugins. Supports building, testing, and deploying applications automatically. Self-hosted (full control) but requires maintenance. Competitors: GitHub Actions (simpler), GitLab CI (integrated), CircleCI (cloud-native).
+
+</QA>
+
+<QA question="What are the common use cases Jenkins is used for?">
+
+1) **CI/CD pipelines** — automated build, test, deploy. 2) **Scheduled jobs** — nightly builds, periodic tasks. 3) **Code quality** — run linters, static analysis, SonarQube scans. 4) **Multi-environment deployments** — dev, staging, production. 5) **Infrastructure automation** — Terraform/Ansible execution. 6) **Docker image building** and pushing to registries. 7) **Notification** — Slack/email alerts on build status.
+
+</QA>
+
+<QA question="What is a Jenkins Pipeline?">
+
+A **Jenkins Pipeline** is a suite of automated steps defined as code (Pipeline as Code). Defined in a `Jenkinsfile` in the project repository. Uses Groovy-based DSL. Stages represent logical phases (Build, Test, Deploy). Steps are individual commands within stages. Pipelines are durable (survive Jenkins restarts), versionable (in Git), and reviewable (pull requests).
+
+</QA>
+
+<QA question="What are the types of Jenkins pipelines?">
+
+**Scripted Pipeline**: full Groovy flexibility, `node { stage('Build') { sh 'make' } }`. More powerful but harder to read. **Declarative Pipeline**: structured, opinionated syntax: `pipeline { agent any stages { stage('Build') { steps { sh 'make' } } } }`. Easier to write, has built-in validation. Declarative is recommended for most use cases; scripted for complex logic.
+
+</QA>
+
+<QA question="Explain Jenkins Multibranch Pipeline.">
+
+Automatically creates pipeline jobs for each branch in a repository. Detects new branches, runs their Jenkinsfile, and cleans up when branches are deleted. Benefits: automatic PR builds, per-branch configuration, no manual job creation. Each branch/PR gets its own pipeline run. Essential for Gitflow or feature branch workflows.
+
+</QA>
+
+<QA question="How do you store credentials in Jenkins securely?">
+
+Use **Jenkins Credentials Plugin**: stores secrets encrypted at rest. Types: Username/Password, SSH Key, Secret Text, Certificate. Access in pipeline: `withCredentials([string(credentialsId: 'my-secret', variable: 'TOKEN')]) { sh 'curl -H "Auth: $TOKEN" ...' }`. Never hardcode secrets in Jenkinsfile. Use credential scoping (folder-level). Integrate with HashiCorp Vault for dynamic secrets.
+
+</QA>
+
+<QA question="What are the ways to trigger a Jenkins Job/Pipeline?">
+
+1) **SCM polling** — Jenkins periodically checks Git for changes. 2) **Webhooks** — Git push triggers Jenkins (preferred, immediate). 3) **Scheduled (cron)** — `triggers { cron('H */4 * * *') }`. 4) **Manual** — click 'Build Now'. 5) **Upstream projects** — triggered when another job completes. 6) **Remote trigger** — via API call with token. 7) **Pipeline trigger** — one pipeline triggers another.
+
+</QA>
+
+<QA question="What is a Jenkins Shared Library and how is it useful?">
+
+A reusable Groovy library stored in a Git repo that multiple pipelines can import. Eliminates code duplication across Jenkinsfiles. Structure: `vars/` (global functions), `src/` (classes), `resources/` (files). Usage: `@Library('my-lib') _` then call `myLib.build()`. Centralizes common pipeline logic (build, test, deploy steps). Changes to the library automatically apply to all pipelines using it.
+
+</QA>
+
+<QA question="What is the Blue Ocean in Jenkins?">
+
+**Blue Ocean** is a modern UI for Jenkins that provides: visual pipeline editor, intuitive pipeline visualization (see stages/steps graphically), better log viewing, GitHub/Bitbucket integration, and personalized dashboard. Makes Jenkins more user-friendly. However, Blue Ocean development has slowed — Jenkins is investing in other UI improvements.
+
+</QA>
+
+<QA question="How is continuous integration achieved using Jenkins?">
+
+1) Developer pushes code to Git. 2) Webhook notifies Jenkins. 3) Jenkins pulls latest code. 4) **Build stage**: compile, bundle, create artifacts. 5) **Test stage**: run unit tests, integration tests, code quality checks. 6) **Report**: publish test results, coverage reports. 7) **Notify**: Slack/email on success or failure. 8) If all pass, optionally trigger CD (deploy to staging/production). Jenkinsfile defines all steps as code, versioned alongside application code.
+
+</QA>
+
+## Docker (from InterviewBit)
+
+<QA question="How many Docker components are there?">
+
+Three main components: 1) **Docker Client** (CLI — `docker` command), 2) **Docker Daemon** (`dockerd` — manages containers, images, networks, volumes), 3) **Docker Registry** (stores images — Docker Hub, ECR). Additional: Docker Desktop (GUI), Docker Compose (multi-container orchestration), Docker Buildx (advanced builds).
+
+</QA>
+
+<QA question="What is a DockerFile?">
+
+A **Dockerfile** is a text file with instructions to build a Docker image. Each instruction creates a layer. Key instructions: `FROM` (base image), `WORKDIR` (set directory), `COPY`/`ADD` (add files), `RUN` (execute commands), `ENV` (set variables), `EXPOSE` (document ports), `CMD`/`ENTRYPOINT` (startup command). Built with `docker build -t name:tag .`.
+
+</QA>
+
+<QA question="What can you tell about Docker Compose?">
+
+**Docker Compose** defines and runs multi-container applications using a YAML file (`docker-compose.yml`). Define services, networks, volumes in one file. `docker compose up` starts everything. `docker compose down` stops and removes. Features: service dependencies (`depends_on`), environment variables, volume mounts, network isolation. Used for local development environments mimicking production (app + database + cache + queue).
+
+</QA>
+
+<QA question="Can you tell something about docker namespace?">
+
+Docker uses Linux **namespaces** for container isolation: **PID namespace** (separate process tree), **NET namespace** (separate network stack), **MNT namespace** (separate filesystem mounts), **UTS namespace** (separate hostname), **IPC namespace** (separate inter-process communication), **USER namespace** (separate user IDs). Each container gets its own set of namespaces, making it appear as an isolated system while sharing the host kernel.
+
+</QA>
+
+<QA question="What is docker image registry?">
+
+A **Docker image registry** is a storage and distribution system for Docker images. **Types**: public (Docker Hub, GitHub Container Registry), private (AWS ECR, Google GCR, Azure ACR, self-hosted Harbor/Nexus). Registries store tagged images organized by repositories. `docker push`/`pull` interact with registries. Supports vulnerability scanning, access control, and image signing.
+
+</QA>
+
+<QA question="What is a Docker Hub?">
+
+**Docker Hub** is the default public cloud registry for Docker images. Features: official images (nginx, node, postgres), automated builds from GitHub, vulnerability scanning, webhooks, organizations/teams, public and private repositories. Free tier: 1 private repo, unlimited public. Pull rate limits for anonymous users (100 pulls/6 hours). Alternatives: GitHub Container Registry (GHCR), Quay.io.
+
+</QA>
+
+<QA question="What is the purpose of the volume parameter in a docker run command?">
+
+The `-v` or `--volume` flag in `docker run` mounts a volume or bind mount into the container. `docker run -v mydata:/app/data` (named volume — Docker-managed). `docker run -v /host/path:/container/path` (bind mount — maps host directory). Purpose: persist data beyond container lifecycle, share data between host and container, share data between containers. Without volumes, all container data is lost on removal.
+
+</QA>
+
+<QA question="Can you tell the differences between a docker Image and Layer?">
+
+**Image**: the whole picture — a read-only template built from a Dockerfile. Stored and distributed as a unit. **Layer**: each instruction in a Dockerfile creates a layer (a diff of filesystem changes). Layers are cached and shared between images. If two images share the same base, they share those layers (saving disk space and download time). Images are stacks of layers; the writable top layer is the container layer (lost on removal).
+
+</QA>
+
+<QA question="Can you tell the difference between CMD and ENTRYPOINT?">
+
+**CMD**: default command that can be overridden at runtime. `CMD ["node", "app.js"]` — user can run `docker run myapp python script.py` to override. **ENTRYPOINT**: the main executable that ALWAYS runs. `ENTRYPOINT ["node"]` + `CMD ["app.js"]` — CMD becomes arguments to ENTRYPOINT. User can append: `docker run myapp server.js`. Use ENTRYPOINT for the command, CMD for default arguments. `--entrypoint` flag overrides ENTRYPOINT.
+
+</QA>
+
+<QA question="Differentiate between COPY and ADD commands in a Dockerfile.">
+
+**COPY**: simple file/directory copy from build context to image. Straightforward, predictable. **ADD**: same as COPY PLUS auto-extracts tar archives and supports remote URLs. Best practice: always use COPY (explicit, no surprises). Use ADD only when you specifically need tar extraction. For URLs, prefer `RUN curl` or `RUN wget` for better caching control. Docker official documentation recommends COPY.
+
+</QA>
+
+<QA question="Describe the lifecycle of Docker Container.">
+
+1) **Created**: `docker create` — container exists, not running. 2) **Running**: `docker start`/`docker run` — processes active. 3) **Paused**: `docker pause` — processes frozen (SIGSTOP). 4) **Unpaused**: `docker unpause` — resume. 5) **Stopped**: `docker stop` (SIGTERM then SIGKILL after timeout). 6) **Restarting**: restart policy triggered. 7) **Removed**: `docker rm` — container deleted. Key: stopped containers still exist (visible with `docker ps -a`) until explicitly removed.
+
+</QA>
+
+## Kubernetes (from InterviewBit)
+
+<QA question="How to do maintenance activity on the K8 node?">
+
+1) `kubectl cordon node-name` — mark node unschedulable (no new pods). 2) `kubectl drain node-name --ignore-daemonsets --delete-emptydir-data` — evict all pods (they're rescheduled on other nodes). 3) Perform maintenance (OS update, kernel patch, hardware). 4) `kubectl uncordon node-name` — mark node schedulable again. PodDisruptionBudgets ensure minimum availability during drain.
+
+</QA>
+
+<QA question="What are the various things that can be done to increase Kubernetes security?">
+
+1) **RBAC** — least-privilege access. 2) **Network Policies** — restrict pod-to-pod communication. 3) **Pod Security Standards** — enforce security contexts (non-root, read-only filesystem). 4) **Secrets encryption** at rest. 5) **Image scanning** (Trivy, Snyk). 6) **Admission controllers** (OPA Gatekeeper). 7) **Audit logging**. 8) **Service mesh** (mTLS between services). 9) **Minimal base images** (distroless). 10) Regular updates/patches.
+
+</QA>
+
+<QA question="What is the role of Load Balancer in Kubernetes?">
+
+A **Load Balancer** Service integrates with cloud provider LBs (AWS ELB, GCP GLB) to distribute external traffic to pods. K8s creates a cloud LB automatically, assigns an external IP, and routes traffic to NodePorts which forward to ClusterIP which forwards to pods. For internal load balancing, kube-proxy distributes traffic across pod replicas using iptables/IPVS rules. Ingress controllers provide L7 (HTTP) load balancing with path/host-based routing.
+
+</QA>
+
+<QA question="What is the init container and when can it be used?">
+
+**Init containers** run BEFORE the main application containers in a Pod. They run to completion sequentially. **Use cases**: 1) Wait for a dependency (database ready check). 2) Setup configuration files. 3) Download secrets from Vault. 4) Database migrations. 5) Clone a Git repo. 6) Set correct file permissions. Init containers have all the same fields as app containers but don't support probes. If any init container fails, the pod restarts.
+
+</QA>
+
+<QA question="What is PDB (Pod Disruption Budget)?">
+
+**PDB** (Pod Disruption Budget) limits the number of pods that can be simultaneously unavailable during voluntary disruptions (node drain, cluster upgrade). Configure: `minAvailable: 2` or `maxUnavailable: 1`. Ensures application maintains minimum availability during maintenance. Kubernetes respects PDBs during `kubectl drain`. Does NOT protect against involuntary disruptions (node crash, OOM kill). Essential for production workloads.
+
+</QA>
+
+<QA question="What is Ingress Default Backend?">
+
+The **Ingress Default Backend** handles requests that don't match any Ingress rule — typically returns a 404 page. Configured via the Ingress controller's default backend service. Every Ingress controller needs one. Example: Nginx Ingress controller comes with a default backend that serves a "default backend - 404" page. You can customize it to serve your own custom error page.
+
+</QA>
+
+<QA question="What is GKE?">
+
+**GKE** (Google Kubernetes Engine) is Google Cloud's managed Kubernetes service. Google manages the control plane (API server, etcd, scheduler). You manage worker nodes (or use Autopilot mode for fully managed). Features: auto-scaling, auto-repair, integrated monitoring (Cloud Monitoring), GCR integration, Identity-Aware Proxy, Workload Identity. Alternatives: AWS EKS, Azure AKS. GKE is considered the most mature managed K8s service (Google created Kubernetes).
+
+</QA>
+
+<QA question="Can you explain the differences between Docker Swarm and Kubernetes?">
+
+**Docker Swarm**: simpler setup (single command: `docker swarm init`), uses Docker CLI, built into Docker, limited features. **Kubernetes**: complex setup, powerful (auto-scaling, RBAC, custom resources, service mesh), massive ecosystem, multi-cloud support, declarative configs. Swarm: good for small-medium deployments needing simplicity. K8s: industry standard for production, large-scale orchestration. K8s has won the orchestration war — Swarm usage is declining.
+
+</QA>
+
+## DevOps General (from InterviewBit)
+
+<QA question="What is configuration management?">
+
+**Configuration Management** is automating the setup and maintenance of servers and infrastructure to a desired state. Tools: **Ansible** (agentless, YAML playbooks, SSH-based), **Puppet** (agent-based, declarative, Ruby DSL), **Chef** (agent-based, procedural, Ruby), **SaltStack** (agent/agentless, Python). Ensures consistency across environments, enables idempotent operations (run multiple times, same result), and treats infrastructure as code.
+
+</QA>
+
+<QA question="What does CAMS stand for in DevOps?">
+
+**CAMS** = Culture, Automation, Measurement, Sharing. The four pillars of DevOps: **Culture** — collaboration between dev and ops, blameless postmortems. **Automation** — CI/CD, IaC, automated testing. **Measurement** — metrics, monitoring, KPIs (deployment frequency, lead time, MTTR). **Sharing** — knowledge sharing, transparency, shared responsibilities. DevOps is a culture shift, not just tools.
+
+</QA>
+
+<QA question="What are the three important DevOps KPIs?">
+
+1) **Deployment Frequency** — how often you deploy to production (elite teams: multiple times per day). 2) **Lead Time for Changes** — time from code commit to production deployment (elite: less than 1 hour). 3) **Mean Time to Recovery (MTTR)** — time to restore service after failure (elite: less than 1 hour). Also important: Change Failure Rate (percentage of deployments causing failures). These are the DORA metrics.
+
+</QA>
+
+<QA question="Can you explain the 'infrastructure as code' (IaC) concept?">
+
+**IaC** manages infrastructure through code instead of manual processes. Define infrastructure (servers, networks, databases) in version-controlled files. **Tools**: Terraform (multi-cloud, HCL), CloudFormation (AWS), Pulumi (general-purpose languages), Ansible (configuration). **Benefits**: reproducible environments, version history, code review for infra changes, automated provisioning, disaster recovery (recreate from code). **Declarative** (Terraform: describe desired state) vs **Imperative** (scripts: describe steps).
+
+</QA>
+
+<QA question="What is Blue/Green Deployment Pattern?">
+
+Run two identical production environments: **Blue** (current, serving traffic) and **Green** (new version, idle). Deploy new version to Green. Test Green thoroughly. Switch traffic from Blue to Green (DNS or load balancer switch). If issues: instantly switch back to Blue (rollback in seconds). **Benefits**: zero downtime, instant rollback, full testing on production-like environment. **Cost**: requires 2x infrastructure.
+
+</QA>
+
+<QA question="Explain the different phases in DevOps methodology.">
+
+1) **Plan** — define requirements and features. 2) **Code** — develop using version control (Git). 3) **Build** — compile, bundle, create artifacts (CI). 4) **Test** — automated unit/integration/e2e testing. 5) **Release** — prepare for deployment, version tagging. 6) **Deploy** — push to production (CD). 7) **Operate** — run and manage in production. 8) **Monitor** — observe metrics, logs, alerts (Prometheus, Grafana). This is the DevOps ∞ (infinity) loop — continuous cycle.
+
+</QA>
+
+<QA question="How is DevOps different from Agile Methodology?">
+
+**Agile**: focuses on software development methodology — iterative development, sprints, user stories. Team: developers + product. Goal: deliver working software quickly. **DevOps**: focuses on software delivery AND operations — CI/CD, infrastructure, monitoring, reliability. Team: dev + ops collaboration. Goal: deliver AND operate reliably. Agile answers "how do we build it?"; DevOps answers "how do we build, deploy, and run it?" They're complementary, not competing.
+
+</QA>
+
+<QA question="Can you explain the 'Shift left to reduce failure' concept in DevOps?">
+
+"Shift left" means moving testing, security, and quality checks EARLIER in the development process (leftward on the timeline). Instead of finding bugs in production, catch them during development. **Examples**: write tests before code (TDD), run security scans in CI (not just before release), code reviews with automated linting, shift performance testing to development phase. Earlier detection = cheaper fixes = fewer production failures.
+
+</QA>
+

@@ -3,6 +3,7 @@ import * as React from "react";
 import { cn } from "@/lib/utils";
 import { MermaidDiagram } from "@/components/mermaid-diagram";
 import { CodeBlock } from "@/components/code-block";
+import { QA } from "@/components/QA";
 
 function extractText(children: React.ReactNode): string {
     if (typeof children === "string") return children;
@@ -14,15 +15,6 @@ function extractText(children: React.ReactNode): string {
         if (props.children !== undefined) return extractText(props.children);
     }
     return "";
-}
-
-function QA({ question, children }: { question: string; children: React.ReactNode }) {
-    return (
-        <div className="my-4 rounded-lg border border-primary/20 bg-primary/5 p-4">
-            <p className="text-sm font-semibold text-primary mb-2">💬 {question}</p>
-            <div className="text-sm text-foreground/90">{children}</div>
-        </div>
-    );
 }
 
 function Callout({ variant = "info", children }: { variant?: "info" | "warning" | "tip"; children: React.ReactNode }) {

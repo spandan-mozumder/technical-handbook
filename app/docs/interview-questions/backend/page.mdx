@@ -12,91 +12,102 @@ Node delegates I/O operations (file reads, network requests, DNS) to libuv's thr
 
 <QA question="What are the main modules of Node.js? Explain in detail.">
 
-Asked in interviews.
+**Core modules**: `http`/`https` (create servers), `fs` (file system operations), `path` (file path utilities), `os` (OS info), `events` (EventEmitter), `stream` (readable/writable streams), `crypto` (hashing, encryption), `url` (URL parsing), `util` (utilities), `child_process` (spawn processes), `cluster` (multi-process), `buffer` (binary data), `net` (TCP sockets), `dns` (DNS lookups). Import with `require('module')` or `import` (ESM).
 
 </QA>
 
 <QA question="How do you deploy a Node.js application?">
 
-Asked in interviews.
+1) **Build**: `npm run build` / `npm test`. 2) **Containerize**: create `Dockerfile` (multi-stage build). 3) **CI/CD**: GitHub Actions / Jenkins pipeline — lint, test, build, push Docker image. 4) **Deploy**: push to AWS ECS/EKS, Heroku, Vercel, Railway, or a VPS (PM2 as process manager). 5) **Use PM2** in production: `pm2 start app.js -i max` (cluster mode). 6) **Set NODE_ENV=production**, use HTTPS, configure reverse proxy (Nginx). 7) **Monitor**: logs (Winston), metrics (Prometheus), health checks.
 
 </QA>
 
 <QA question="Explain how you follow SDLC (Agile, Waterfall)?">
 
-Asked in interviews.
+**Agile**: iterative sprints (1-3 weeks), daily standups, backlog grooming, sprint planning, retrospectives. Teams self-organize, adapt to changing requirements. Tools: Jira, Linear. **Waterfall**: sequential phases (Requirements → Design → Implementation → Testing → Deployment). Each phase must complete before the next starts. Better for well-defined, fixed-scope projects. Most modern teams use Agile (Scrum or Kanban).
 
 </QA>
 
 <QA question="Describe your JavaScript proficiency and experience with data structures and algorithms (DSA).">
 
-Asked in interviews.
+JavaScript proficiency covers: ES6+ features (arrow functions, destructuring, spread, async/await, modules), closures, prototypal inheritance, event loop, promises. **DSA experience**: arrays, linked lists, stacks, queues, trees, graphs, hash maps. Algorithms: sorting (merge sort, quick sort), searching (binary search), BFS/DFS, dynamic programming. Practice on LeetCode/HackerRank. Strong JS fundamentals + DSA is essential for technical interviews.
 
 </QA>
 
 <QA question="What is the difference between cluster and thread?">
 
-Asked in interviews.
+**Cluster**: creates multiple worker PROCESSES (via `child_process.fork()`). Each has its own V8 instance, memory, and event loop. Ideal for utilizing multi-core CPUs for HTTP servers. Workers share the server port. **Thread** (Worker Threads): creates threads WITHIN a single process. Share memory via `SharedArrayBuffer`. Lighter than processes. Ideal for CPU-intensive tasks (parsing, crypto). Don’t block the main event loop.
 
 </QA>
 
 <QA question="What is an error-first callback function?">
 
-Asked in interviews.
+An **error-first callback** follows the convention: `callback(error, result)`. The first parameter is always an error object (or `null` if no error). Example: `fs.readFile('file.txt', (err, data) => { if (err) { console.error(err); return; } console.log(data); })`. This pattern ensures errors are always handled first. Foundation of Node.js async patterns, now largely replaced by Promises and async/await.
 
 </QA>
 
 <QA question="What is NodeJS? Why do we use it?">
 
-Asked in interviews.
+**Node.js** is a JavaScript runtime built on Chrome’s V8 engine. It runs JavaScript on the server side. **Why use it**: 1) Non-blocking, event-driven I/O — handles thousands of concurrent connections efficiently. 2) Same language (JS) for frontend and backend. 3) Huge npm ecosystem (2M+ packages). 4) Fast for I/O-bound applications (APIs, real-time apps, streaming). 5) Easy to learn for JS developers. Used by Netflix, LinkedIn, Uber, PayPal.
 
 </QA>
 
 <QA question="What is Node.js, and how does it differ from traditional JavaScript execution environments?">
 
-Asked in interviews.
+**Node.js** is a server-side JavaScript runtime built on V8 (Chrome’s JS engine). Unlike browsers (which run JS in the DOM/window context), Node provides access to file system, networking, OS, and other server-side APIs. No DOM, no `window` object. Uses CommonJS modules (`require`) or ES Modules (`import`). Adds: `fs`, `http`, `net`, `child_process`, `stream`, `Buffer`, `process` globals. Enables full-stack JavaScript development.
 
 </QA>
 
 <QA question="What is Node.js and how does it handle concurrency?">
 
-Asked in interviews.
+Node.js handles concurrency through its **event loop** and **non-blocking I/O**. All I/O operations are async — delegated to the OS kernel or libuv’s thread pool. The single-threaded event loop processes callbacks when I/O completes. This avoids thread-per-request overhead. For CPU-heavy tasks: use **Worker Threads** or **cluster** module. The event loop phases: timers → pending callbacks → idle/prepare → poll → check → close callbacks.
 
 </QA>
 
 <QA question="What is NodeJS and its event loop?">
 
-Asked in interviews.
+The **event loop** is the core of Node.js concurrency. It continuously checks for pending callbacks and executes them. **Phases**: 1) **Timers** — execute `setTimeout`/`setInterval` callbacks. 2) **Pending callbacks** — I/O callbacks deferred from last cycle. 3) **Idle/Prepare** — internal use. 4) **Poll** — retrieve new I/O events, execute I/O callbacks. 5) **Check** — `setImmediate()` callbacks. 6) **Close** — `socket.on('close')` callbacks. `process.nextTick()` runs between phases (microtask queue).
 
 </QA>
 
 <QA question="Explain the concept of Streams in Node.js.">
 
-Asked in interviews.
+**Streams** are collections of data that may not be available all at once. They process data in chunks, using minimal memory. **Types**: 1) **Readable** — source of data (`fs.createReadStream()`). 2) **Writable** — destination (`fs.createWriteStream()`). 3) **Duplex** — both readable and writable (TCP socket). 4) **Transform** — modify data while passing through (`zlib.createGzip()`). Streams implement backpressure to handle speed mismatches. Use `.pipe()` to connect streams.
 
 </QA>
 
 <QA question="What are the steps involved in NodeJS?">
 
-Asked in interviews.
+Steps in a Node.js application: 1) **Initialize** — `npm init` creates `package.json`. 2) **Install dependencies** — `npm install express`. 3) **Write application code** — create server, define routes, middleware. 4) **Run** — `node app.js` or `npm start`. 5) **Test** — unit and integration tests (Jest, Mocha). 6) **Build** — transpile if using TypeScript. 7) **Deploy** — containerize and push to production. 8) **Monitor** — logging and performance monitoring.
 
 </QA>
 
 <QA question="Can you describe best practices for handling large CSV datasets in data processing workflows?">
 
-Asked in interviews.
+For large CSV files: 1) **Stream processing** — use `csv-parser` or `papaparse` with `fs.createReadStream()` to process row-by-row (O(1) memory). 2) **Batch inserts** — accumulate N rows, bulk-insert to DB. 3) **Back-pressure handling** — pause reading when downstream is slow. 4) **Worker threads** for CPU-heavy transforms. 5) **Chunked uploads** for client-side. 6) **Progress tracking** — count processed/total rows. Never load entire file into memory with `fs.readFile()` for large datasets.
 
 </QA>
 
 <QA question="Write a JavaScript function that takes input from a user, calculates the sum of the inputs, and returns the result.">
 
-Asked in interviews.
+```javascript
+function sumInputs(...numbers) {
+  return numbers.reduce((sum, num) => sum + Number(num), 0);
+}
+// Usage: sumInputs(1, 2, 3) → 6
+// Or with user input (Node.js readline):
+const readline = require('readline');
+const rl = readline.createInterface({ input: process.stdin });
+let total = 0;
+rl.on('line', (line) => { total += Number(line); });
+rl.on('close', () => console.log('Sum:', total));
+```
 
 </QA>
 
 <QA question="What is the output of the setTimeout JavaScript function?">
 
-Asked in interviews.
+`setTimeout(callback, delay)` schedules the callback to run AFTER the specified delay (in ms) and returns a timer ID. **Output behavior**: the callback doesn't execute immediately — it’s placed in the timer phase of the event loop. With `setTimeout(() => console.log('hello'), 0)`, the output appears AFTER synchronous code completes (event loop must finish current phase). Common interview trick: `setTimeout` with 0 delay still runs after synchronous code and `Promise.then()` microtasks.
 
 </QA>
 
@@ -110,73 +121,86 @@ The request hangs indefinitely — the next middleware/handler never runs and th
 
 <QA question="What is express js and why it is used in web apps?">
 
-Asked in interviews.
+**Express.js** is the most popular Node.js web framework for building web apps and APIs. It's minimal, unopinionated, and provides: routing, middleware support, template engine integration, and HTTP utility methods. Used because: 1) Simplifies Node’s `http` module. 2) Middleware architecture (request pipeline). 3) Easy routing. 4) Large ecosystem. 5) Foundation for many frameworks (NestJS, LoopBack).
 
 </QA>
 
 <QA question="What is the purpose of ExpressJS?">
 
-Asked in interviews.
+Express.js provides: 1) **Routing** — handle GET, POST, PUT, DELETE requests. 2) **Middleware** — process requests through a pipeline. 3) **Template rendering** — server-side HTML with EJS, Pug. 4) **Static file serving** — CSS, images. 5) **Error handling** — centralized error middleware. 6) **REST API creation** — JSON responses. It simplifies the Node.js `http` module and powers most Node.js backend applications.
 
 </QA>
 
 <QA question="What is Express.js?">
 
-Asked in interviews.
+Express.js is a fast, unopinionated, minimalist web framework for Node.js. It sits on top of Node’s built-in `http` module, providing a clean API for: routing (URL → handler mapping), middleware (request/response pipeline), template engines, static files, and error handling. Installation: `npm install express`. Hello world: `const app = require('express')(); app.get('/', (req, res) => res.send('Hello')); app.listen(3000);`
 
 </QA>
 
 <QA question="Tell us about the working manner of Express.js.">
 
-Asked in interviews.
+Express works as a middleware pipeline: 1) Client sends HTTP request. 2) Express matches the request URL/method to defined routes. 3) Request flows through middleware stack in order (logging → parsing → auth → route handler). 4) Each middleware can modify `req`/`res`, call `next()`, or send a response. 5) Route handler generates the response. 6) Response is sent back to client. Error middleware (4 params) catches thrown errors.
 
 </QA>
 
 <QA question="Explain about angular, nodejs, expressjs integration.">
 
-Asked in interviews.
+Angular is a frontend framework (TypeScript, SPA, runs in browser). Node.js is a backend runtime (JavaScript, server-side). Express.js is a Node.js web framework. **Integration**: Angular app (frontend) communicates with Express.js API (backend) via HTTP requests (REST/GraphQL). Full-stack flow: Angular → HTTP request → Express route → business logic → database → JSON response → Angular. This is the MEAN stack (MongoDB, Express, Angular, Node).
 
 </QA>
 
 <QA question="What are the differences between Express and Node.js?">
 
-Asked in interviews.
+**Node.js**: runtime environment for executing JavaScript server-side. Provides core modules (fs, http, net). Low-level. **Express.js**: web FRAMEWORK built ON TOP of Node.js. Provides routing, middleware, template engines, error handling. Higher-level abstraction. You CAN build a web server with just Node.js (`http.createServer()`), but Express makes it much simpler. Express IS a Node.js module (installed via npm). Every Express app runs on Node.js.
 
 </QA>
 
 <QA question="Describe the process of creating a RESTful API using Node.js and Express.">
 
-Asked in interviews.
+1) Install: `npm init && npm install express`. 2) Create server: `const express = require('express'); const app = express();`. 3) Add middleware: `app.use(express.json())` for JSON parsing. 4) Define routes: `app.get('/users', (req, res) => res.json(users))`. 5) Use HTTP methods: GET (read), POST (create), PUT (update), DELETE (remove). 6) Add error handling middleware. 7) Connect to database (MongoDB/PostgreSQL). 8) Test with Postman/curl. 9) Use environment variables for config.
 
 </QA>
 
 <QA question="Build a sample app server with Express.js.">
 
-Asked in interviews.
+```javascript
+const express = require('express');
+const app = express();
+app.use(express.json());
+
+app.get('/', (req, res) => res.send('Hello World'));
+app.get('/api/users', (req, res) => res.json([{ id: 1, name: 'John' }]));
+app.post('/api/users', (req, res) => {
+  const user = req.body;
+  res.status(201).json(user);
+});
+
+app.listen(3000, () => console.log('Server running on port 3000'));
+```
 
 </QA>
 
 <QA question="What is meant by express?">
 
-Asked in interviews.
+**Express** (Express.js) is a minimal and flexible Node.js web application framework that provides a robust set of features for building web and mobile applications. "Express" comes from "Express" delivery — it's designed to make building web apps fast and easy. It handles HTTP requests/responses, routing, middleware processing, and integrates with template engines and databases.
 
 </QA>
 
 <QA question="You are building an Express.js middleware to authenticate API requests...">
 
-Asked in interviews.
+Authentication middleware pattern: `const authenticate = (req, res, next) => { const token = req.headers.authorization?.split(' ')[1]; if (!token) return res.status(401).json({ error: 'No token' }); try { const decoded = jwt.verify(token, process.env.JWT_SECRET); req.user = decoded; next(); } catch { res.status(401).json({ error: 'Invalid token' }); } };` Apply to routes: `app.get('/protected', authenticate, handler)`. Add role checks: check `req.user.role` for authorization.
 
 </QA>
 
 <QA question="How do you handle routing in Express?">
 
-Asked in interviews.
+Express routing maps HTTP methods and URL patterns to handler functions. **Methods**: `app.get()`, `app.post()`, `app.put()`, `app.delete()`, `app.patch()`. **Route parameters**: `app.get('/users/:id', handler)` — access via `req.params.id`. **Query strings**: `/search?q=term` — access via `req.query.q`. **Router**: `express.Router()` for modular route files. **Route chaining**: `app.route('/users').get(list).post(create)`. Middleware can be per-route: `app.get('/admin', authMiddleware, handler)`.
 
 </QA>
 
 <QA question="Explain the concept of Middleware in Express.js.">
 
-Asked in interviews.
+**Middleware** is a function with access to `req`, `res`, and `next`. It runs between receiving a request and sending a response. Types: 1) **Application-level** — `app.use(fn)`. 2) **Router-level** — `router.use(fn)`. 3) **Error-handling** — `(err, req, res, next)` (4 params). 4) **Built-in** — `express.json()`, `express.static()`. 5) **Third-party** — `cors`, `helmet`, `morgan`. Middleware executes in order of `app.use()` calls. Must call `next()` to pass control or send a response.
 
 </QA>
 
@@ -200,7 +224,7 @@ Cluster: multiple processes, each with own memory, ideal for scaling HTTP server
 
 <QA question="When should you use streams vs reading the whole file?">
 
-Use streams for large files (>100MB), real-time data, or when you need backpressure control. Use fs.readFile for small files where simplicity matters. Streams use O(1) memory regardless of file size.
+Use streams for large files (greater than 100MB), real-time data, or when you need backpressure control. Use fs.readFile for small files where simplicity matters. Streams use O(1) memory regardless of file size.
 
 </QA>
 
@@ -208,343 +232,343 @@ Use streams for large files (>100MB), real-time data, or when you need backpress
 
 <QA question="How does Node.js work?">
 
-Asked in interviews.
+Node.js is single-threaded by design because: 1) Simplifies programming model (no locks/mutexes/race conditions). 2) The event loop + non-blocking I/O handles concurrency without threads. 3) Lower memory overhead per connection vs thread-per-request models. 4) JavaScript was originally single-threaded (browsers). However, Node IS NOT purely single-threaded — libuv uses a thread pool (default 4) for blocking operations (file I/O, DNS, crypto).
 
 </QA>
 
 <QA question="What is NPM?">
 
-Asked in interviews.
+**NPM** (Node Package Manager) is the default package manager for Node.js. It provides: 1) A CLI tool to install, update, remove packages (`npm install`, `npm update`). 2) An online registry (npmjs.com) hosting 2M+ packages. 3) Manages dependencies via `package.json` and `package-lock.json`. 4) Scripts runner (`npm run build`). 5) Semantic versioning. Alternatives: Yarn (faster, deterministic), pnpm (efficient disk usage).
 
 </QA>
 
 <QA question="Why is NodeJS single-threaded?">
 
-Asked in interviews.
+Node.js is single-threaded by design because: 1) Simplifies programming model (no locks/mutexes/race conditions). 2) The event loop + non-blocking I/O handles concurrency without threads. 3) Lower memory overhead per connection vs thread-per-request models. 4) JavaScript was originally single-threaded (browsers). However, Node IS NOT purely single-threaded — libuv uses a thread pool (default 4) for blocking operations (file I/O, DNS, crypto).
 
 </QA>
 
 <QA question="If NodeJS is single-threaded, how does it handle concurrency?">
 
-Asked in interviews.
+Via the **event loop**: 1) Async operations are delegated to the OS kernel or libuv’s thread pool. 2) The main thread continues processing other requests. 3) When I/O completes, callbacks are queued. 4) The event loop picks up callbacks and executes them on the main thread. This allows handling thousands of concurrent requests without spawning threads. For CPU-intensive work: use `worker_threads` module to offload to separate threads.
 
 </QA>
 
 <QA question="Why is NodeJS preferred over other backend technologies like Java and PHP?">
 
-Asked in interviews.
+1) **Non-blocking I/O** — handles many concurrent connections efficiently. 2) **Same language** (JS) for frontend + backend — code sharing, unified teams. 3) **Fast execution** (V8 engine compiles to machine code). 4) **NPM ecosystem** — largest package registry. 5) **Real-time capabilities** (WebSockets, Socket.io). 6) **Microservices friendly** (lightweight). 7) **JSON native** — natural for APIs. Java/PHP use thread-per-request (higher memory), Node uses event-driven model.
 
 </QA>
 
 <QA question="What is the difference between Synchronous and Asynchronous functions?">
 
-Asked in interviews.
+**Synchronous**: blocks execution until the operation completes. Code runs line-by-line. Example: `fs.readFileSync()`. **Asynchronous**: non-blocking — registers a callback and continues execution. Example: `fs.readFile(path, callback)`. Async is preferred in Node.js because blocking the event loop prevents handling other requests. Async patterns: callbacks, Promises, async/await. Rule: NEVER use sync functions in production server code.
 
 </QA>
 
 <QA question="What are the modules in NodeJS?">
 
-Asked in interviews.
+Modules are reusable blocks of code. **Types**: 1) **Core modules** — built-in (`fs`, `http`, `path`, `crypto`). 2) **Local modules** — your own files, export with `module.exports`. 3) **Third-party modules** — installed via npm (`express`, `lodash`). Module systems: **CommonJS** (`require()` / `module.exports`) — default in Node. **ES Modules** (`import` / `export`) — supported with `.mjs` or `"type": "module"` in package.json.
 
 </QA>
 
 <QA question="What is the purpose of the 'require' keyword in NodeJS?">
 
-Asked in interviews.
+`require()` loads and caches modules in Node.js. It reads the module file, wraps it in a function (giving it `module`, `exports`, `require`, `__dirname`, `__filename`), executes it, and returns `module.exports`. **Resolution**: 1) Core module? Return it. 2) Starts with `./` or `../`? Load as file/directory. 3) Search `node_modules` directory (up the tree). Modules are **cached** after first load — subsequent `require()` calls return the cached object.
 
 </QA>
 
 <QA question="What is the V8 engine in Node.js?">
 
-Asked in interviews.
+**V8** is Google’s open-source JavaScript and WebAssembly engine, written in C++. Used in Chrome and Node.js. It compiles JavaScript directly to native machine code (JIT compilation) instead of interpreting it, making execution very fast. Features: hidden classes, inline caching, garbage collection (generational, mark-and-sweep). Node.js embeds V8 to execute JavaScript, adding server-side APIs (fs, net, http) around it.
 
 </QA>
 
 <QA question="How do you handle environment variables in NodeJS?">
 
-Asked in interviews.
+Access via `process.env.VARIABLE_NAME`. **Methods**: 1) **dotenv package** — `require('dotenv').config()` loads `.env` file into `process.env`. 2) **Command line** — `PORT=3000 node app.js`. 3) **Docker** — `ENV` or `docker run -e`. 4) **CI/CD** — secrets/environment variables. Best practices: never commit `.env` files (add to `.gitignore`), use `.env.example` as template, validate required vars at startup.
 
 </QA>
 
 <QA question="What is control flow in NodeJS?">
 
-Asked in interviews.
+**Control flow** in Node.js refers to the order in which statements and function calls execute. In async Node.js: 1) Synchronous code runs first. 2) `process.nextTick()` callbacks. 3) Microtasks (Promise.then). 4) Macrotasks (setTimeout, setInterval, I/O callbacks). Control flow tools: callbacks, Promises, async/await, event emitters. Libraries: `async.js` (series, parallel, waterfall).
 
 </QA>
 
 <QA question="What do you mean by the event loop in NodeJS?">
 
-Asked in interviews.
+The **event loop** is the mechanism that allows Node.js to perform non-blocking I/O. It runs in phases: Timers → Pending callbacks → Idle/prepare → Poll → Check → Close callbacks. Between each phase: process.nextTick() queue and Promise microtask queue are drained. This enables async concurrency on a single thread.
 
 </QA>
 
 <QA question="What is the order in which control flow statements get executed?">
 
-Asked in interviews.
+Execution order: 1) **Synchronous code** runs first (call stack). 2) **process.nextTick()** callbacks (nextTick queue). 3) **Microtasks** (Promise.then/catch/finally). 4) **Macrotasks** (setTimeout, setInterval, setImmediate, I/O). Within macrotasks, the event loop phases determine order.
 
 </QA>
 
 <QA question="What are the main disadvantages of NodeJS?">
 
-Asked in interviews.
+Disadvantages: 1) **Single-threaded** — CPU-intensive tasks block the event loop. 2) **Callback hell** — deeply nested callbacks (mitigated by Promises/async-await). 3) **Not ideal for CPU-bound tasks** (image processing, ML). 4) **No strong typing** (mitigated by TypeScript). 5) npm security — supply chain attacks are a concern. 6) Unstable API across major versions.
 
 </QA>
 
 <QA question="What is REPL in NodeJS?">
 
-Asked in interviews.
+**REPL** (Read-Eval-Print Loop) is an interactive shell that reads JavaScript input, evaluates it, prints the result, and loops. Start with `node` command (no file argument). Useful for quick experimentation, debugging, testing expressions. Commands: `.help`, `.break`, `.exit`, `.save`, `.load`. Supports tab completion and `_` to access last result.
 
 </QA>
 
 <QA question="How do you import a module in NodeJS?">
 
-Asked in interviews.
+**CommonJS**: `const module = require('./myModule')` or `const { func } = require('./myModule')`. Export: `module.exports = { func }`. **ES Modules**: `import module from './myModule.js'` or `import { func } from './myModule.js'`. Export: `export default func` or `export { func }`. ESM requires `.mjs` extension or `"type": "module"` in package.json.
 
 </QA>
 
 <QA question="What is the difference between NodeJS and Angular?">
 
-Asked in interviews.
+**Node.js**: server-side runtime for JS. Backend. Runs on server. **Angular**: frontend framework for building SPAs. Runs in browser. Uses TypeScript. Components, templates, dependency injection, RxJS. Node.js handles API/business logic/database; Angular handles UI/UX/client-side rendering. They complement each other in the MEAN stack.
 
 </QA>
 
 <QA question="What is package.json in NodeJS?">
 
-Asked in interviews.
+`package.json` is the manifest file for a Node.js project. Contains: `name`, `version`, `description`, `main` (entry point), `scripts` (npm commands), `dependencies` (production packages), `devDependencies` (development-only packages), `engines` (Node version), `license`. Created with `npm init`. `package-lock.json` locks exact dependency versions for reproducible installs.
 
 </QA>
 
 <QA question="How do you create a simple HTTP server in NodeJS?">
 
-Asked in interviews.
+Using Node’s built-in `http` module: `const http = require('http'); const server = http.createServer((req, res) => { res.writeHead(200, {'Content-Type': 'text/plain'}); res.end('Hello World'); }); server.listen(3000);`. For production, use Express for routing and middleware.
 
 </QA>
 
 <QA question="What are the most commonly used libraries in NodeJS?">
 
-Asked in interviews.
+**Express** (web framework), **Mongoose** (MongoDB ODM), **Socket.io** (WebSockets), **Passport** (authentication), **Joi/Zod** (validation), **Winston/Pino** (logging), **dotenv** (env vars), **Axios** (HTTP client), **bcrypt** (password hashing), **jsonwebtoken** (JWT), **Multer** (file uploads), **Cors** (CORS middleware), **Helmet** (security headers), **PM2** (process manager), **Jest/Mocha** (testing).
 
 </QA>
 
 <QA question="What are promises in NodeJS?">
 
-Asked in interviews.
+A **Promise** represents the eventual completion (or failure) of an async operation. States: **pending** → **fulfilled** (resolved with value) or **rejected** (with error). Usage: `new Promise((resolve, reject) => { ... })`. Chain with `.then()`, `.catch()`, `.finally()`. **Promise.all()** — parallel, all must succeed. **Promise.allSettled()** — wait for all. **Promise.race()** — first to settle. Modern: use `async/await` for cleaner syntax.
 
 </QA>
 
 <QA question="How do you install, update, and delete a dependency?">
 
-Asked in interviews.
+**Install**: `npm install package-name` (or `npm i`). Save as dev: `npm i -D package`. **Update**: `npm update package-name` (to latest allowed by semver). `npm outdated` to check. **Delete**: `npm uninstall package-name` (removes from node_modules and package.json). **Global**: add `-g` flag. Lock versions with `package-lock.json`. Use `npx` to run packages without installing.
 
 </QA>
 
 <QA question="What is event-driven programming in NodeJS?">
 
-Asked in interviews.
+A paradigm where program flow is determined by events (user actions, I/O completions, messages). Node.js uses EventEmitter: objects emit named events, listeners (callbacks) handle them. Example: `server.on('request', handler)`. HTTP server, streams, and most Node.js APIs are event-driven. Benefits: loose coupling, non-blocking, scalable.
 
 </QA>
 
 <QA question="What is a buffer in NodeJS?">
 
-Asked in interviews.
+A **Buffer** is a fixed-size chunk of memory (outside V8 heap) for handling raw binary data. Used when working with streams, file I/O, network protocols, and binary data. Created with: `Buffer.from('hello')`, `Buffer.alloc(10)`. Methods: `.toString()`, `.slice()`, `.concat()`, `.length`. Buffers are like arrays of bytes (0-255). Important for performance-sensitive binary operations.
 
 </QA>
 
 <QA question="What are streams in NodeJS?">
 
-Asked in interviews.
+**Streams** process data piece-by-piece without loading everything into memory. Types: **Readable** (fs.createReadStream), **Writable** (fs.createWriteStream), **Duplex** (net.Socket), **Transform** (zlib.createGzip). Connect with `.pipe()`: `readable.pipe(transform).pipe(writable)`. Key events: `data`, `end`, `error`, `finish`. Enable processing large files with constant memory.
 
 </QA>
 
 <QA question="Explain the crypto module in NodeJS.">
 
-Asked in interviews.
+The `crypto` module provides cryptographic functions: **Hashing**: `crypto.createHash('sha256').update(data).digest('hex')`. **HMAC**: `crypto.createHmac('sha256', key).update(data).digest('hex')`. **Encryption/Decryption**: `crypto.createCipheriv()` / `createDecipheriv()`. **Random bytes**: `crypto.randomBytes(32)`. **Scrypt/Pbkdf2**: password hashing. Used for: password hashing, token generation, data encryption, digital signatures.
 
 </QA>
 
 <QA question="What is callback hell?">
 
-Asked in interviews.
+**Callback hell** is deeply nested callbacks creating a "pyramid of doom" shape. Occurs when multiple async operations depend on each other sequentially. Makes code hard to read, debug, and maintain. Solutions: 1) **Promises** — chain `.then()` calls. 2) **async/await** — write async code that looks synchronous. 3) **Named functions** — extract callbacks into named functions. 4) **Modularize** — break into smaller functions.
 
 </QA>
 
 <QA question="Explain the use of the timers module in NodeJS.">
 
-Asked in interviews.
+Timers schedule code execution: **setTimeout(fn, ms)** — run once after delay. **setInterval(fn, ms)** — run repeatedly every interval. **setImmediate(fn)** — run after current poll phase completes. **process.nextTick(fn)** — run before next event loop iteration (highest priority). Cancel with: `clearTimeout()`, `clearInterval()`, `clearImmediate()`. Timers are not guaranteed to fire at exact time — they fire as soon as possible after the specified delay.
 
 </QA>
 
 <QA question="What is the difference between setImmediate() and process.nextTick()?">
 
-Asked in interviews.
+**process.nextTick()**: fires BEFORE the event loop continues (microtask queue). Higher priority. Can starve I/O if overused. **setImmediate()**: fires in the CHECK phase of the event loop (after poll). Allows I/O to happen first. Rule: use `setImmediate()` unless you specifically need to fire before I/O. `process.nextTick()` runs before any I/O event in the current iteration.
 
 </QA>
 
 <QA question="What are the different types of HTTP requests?">
 
-Asked in interviews.
+**GET** — retrieve data (idempotent, cacheable). **POST** — create resource (not idempotent). **PUT** — replace entire resource (idempotent). **PATCH** — partial update (not necessarily idempotent). **DELETE** — remove resource (idempotent). **HEAD** — like GET but no body (check headers). **OPTIONS** — describe communication options (CORS preflight). **TRACE** — echo request (debugging).
 
 </QA>
 
 <QA question="What is the difference between spawn() and fork() methods?">
 
-Asked in interviews.
+**spawn()**: creates a new process, streams I/O (stdin/stdout/stderr). For running any command. No built-in IPC. `child_process.spawn('ls', ['-la'])`. **fork()**: special case of spawn() specifically for Node.js scripts. Automatically sets up IPC channel (inter-process communication) between parent and child. Shares no memory. `child_process.fork('./worker.js')`. Use fork() for Node.js worker processes, spawn() for external commands.
 
 </QA>
 
 <QA question="Explain the use of the passport module in NodeJS.">
 
-Asked in interviews.
+**Passport** is authentication middleware for Node.js. Supports 500+ strategies: **passport-local** (username/password), **passport-jwt** (JWT), **passport-google-oauth20** (Google), **passport-github** (GitHub). Setup: `passport.use(new LocalStrategy(verify))`. Serialize/deserialize user for sessions. Use `passport.authenticate('local')` as route middleware. Modular — add strategies as needed. Works with Express sessions or JWT (stateless).
 
 </QA>
 
 <QA question="What is a fork in NodeJS?">
 
-Asked in interviews.
+A **fork** creates a new Node.js child process using `child_process.fork('./script.js')`. The child runs in its own V8 instance with separate memory. An IPC (Inter-Process Communication) channel is automatically established between parent and child for message passing: `child.send(message)` / `process.on('message', handler)`. Used for: offloading CPU-intensive tasks, running separate services, cluster mode.
 
 </QA>
 
 <QA question="What are the three methods to avoid callback hell?">
 
-Asked in interviews.
+1) **Promises**: chain `.then()` / `.catch()` instead of nesting. 2) **async/await**: write async code that reads like synchronous code. `const data = await fs.promises.readFile('file.txt')`. 3) **Modularization**: break callbacks into named functions or separate modules. Bonus: use libraries like `async.js` for complex control flows (series, parallel, waterfall).
 
 </QA>
 
 <QA question="What is body-parser in NodeJS?">
 
-Asked in interviews.
+**body-parser** is Express middleware that parses incoming request bodies. `app.use(bodyParser.json())` parses JSON bodies. `bodyParser.urlencoded({ extended: true })` parses form data. **Note**: since Express 4.16+, body-parser is BUILT INTO Express: `app.use(express.json())` and `app.use(express.urlencoded())`. No need to install separately. `req.body` contains the parsed data after middleware runs.
 
 </QA>
 
 <QA question="What is CORS in NodeJS?">
 
-Asked in interviews.
+**CORS** (Cross-Origin Resource Sharing) is a security mechanism that controls which origins can access your API. Browsers block cross-origin requests by default. Enable with `cors` package: `app.use(cors({ origin: 'https://frontend.com', credentials: true }))`. Or manually set headers: `Access-Control-Allow-Origin`, `Access-Control-Allow-Methods`. Preflight (OPTIONS) requests check allowed methods/headers. Essential for frontend-backend separation.
 
 </QA>
 
 <QA question="Explain the TLS module in NodeJS.">
 
-Asked in interviews.
+The `tls` module provides encrypted stream communication using TLS/SSL. Creates secure TCP connections. `tls.createServer({ key, cert }, callback)` for HTTPS-like servers. `tls.connect()` for secure client connections. Requires SSL certificate (`cert`) and private key (`key`). For HTTPS: use `https.createServer({ key, cert }, app)` which wraps tls. Supports TLS 1.2/1.3, client certificates, certificate pinning.
 
 </QA>
 
 <QA question="Can you access the DOM in Node?">
 
-Asked in interviews.
+**No**. Node.js runs on the server — there is no browser, no DOM, no `document`, no `window`. The DOM is a browser API for manipulating HTML/CSS. In Node, you work with files, databases, and network — not UI. To parse HTML on the server, use libraries like **jsdom**, **cheerio**, or **puppeteer** (which creates a headless browser).
 
 </QA>
 
 <QA question="How do you manage packages in your NodeJS project?">
 
-Asked in interviews.
+Via **npm** or **yarn/pnpm**: 1) `package.json` defines project metadata and dependencies. 2) `npm install` installs all dependencies. 3) `package-lock.json` locks exact versions. 4) Separate `dependencies` (production) and `devDependencies` (dev-only). 5) Use semantic versioning (`^1.2.3`). 6) `npm audit` checks for vulnerabilities. 7) Use `.npmrc` for registry configuration. 8) `npx` for one-off script execution.
 
 </QA>
 
 <QA question="What is the purpose of NODE_ENV?">
 
-Asked in interviews.
+`NODE_ENV` is an environment variable that specifies the runtime environment: **development** (verbose logging, detailed errors, hot reload), **production** (optimized, minified, caching, no stack traces to client), **test** (test configuration). Set: `NODE_ENV=production node app.js`. Express uses it to enable caching, suppress error details. Many libraries optimize behavior based on NODE_ENV. Always set to `production` in deployment.
 
 </QA>
 
 <QA question="What is a test pyramid in NodeJS?">
 
-Asked in interviews.
+The **test pyramid** describes the ideal ratio of test types: **Base (most)**: Unit tests — fast, isolated, test individual functions (Jest, Mocha). **Middle**: Integration tests — test modules working together, API routes, database queries (Supertest). **Top (fewest)**: E2E tests — test full user flows, browser-based (Cypress, Playwright). More unit tests = faster feedback. Fewer E2E = less flaky. Aim for ~70% unit, ~20% integration, ~10% E2E.
 
 </QA>
 
 <QA question="What is piping in NodeJS?">
 
-Asked in interviews.
+**Piping** connects a readable stream's output to a writable stream's input: `readableStream.pipe(writableStream)`. Handles backpressure automatically (pauses reading when writing is slow). Chain multiple: `fs.createReadStream('input.txt').pipe(zlib.createGzip()).pipe(fs.createWriteStream('output.gz'))`. The `.pipe()` method returns the destination stream, enabling chaining. Use `pipeline()` from `stream` module for proper error handling.
 
 </QA>
 
 <QA question="What is a cluster in NodeJS?">
 
-Asked in interviews.
+The `cluster` module creates multiple worker processes that share the same server port. The master process forks workers (one per CPU core). Each worker is a separate Node.js process with its own V8 and event loop. Workers share the TCP connection via round-robin (default on Linux). `if (cluster.isPrimary) { for (let i = 0; i < os.cpus().length; i++) cluster.fork(); } else { app.listen(3000); }`. Provides horizontal scaling on a single machine.
 
 </QA>
 
 <QA question="Explain some of the cluster methods in NodeJS.">
 
-Asked in interviews.
+`cluster.fork()` — creates new worker process. `cluster.isPrimary` — true if current process is master. `worker.send(msg)` — IPC message to worker. `worker.kill()` — kill a worker. `cluster.on('exit', handler)` — detect worker crashes (restart). `cluster.on('online', handler)` — worker is running. `worker.id` — unique worker ID. `cluster.workers` — object of all active workers. Use PM2 instead of raw cluster module in production.
 
 </QA>
 
 <QA question="How do you manage sessions in NodeJS?">
 
-Asked in interviews.
+Using `express-session` middleware: `app.use(session({ secret: 'key', resave: false, saveUninitialized: false, store: new RedisStore({client: redis}) }))`. Access: `req.session.userId = user.id`. **Stores**: memory (dev only), **Redis** (production, fast), MongoDB (connect-mongo), PostgreSQL. Sessions are server-side (cookie only stores session ID). For stateless: use **JWT** tokens instead. Alternatives: `cookie-session` (stores data in cookie itself).
 
 </QA>
 
 <QA question="How many types of API functions are there in Node.js?">
 
-Asked in interviews.
+Two types: 1) **Asynchronous (non-blocking)** — don't block execution, use callbacks/promises. `fs.readFile()`, `http.get()`. These are preferred in Node.js. 2) **Synchronous (blocking)** — block until complete. `fs.readFileSync()`, `crypto.pbkdf2Sync()`. Avoid in production servers (blocks the event loop for all users). Async functions let the event loop serve other requests while waiting for I/O.
 
 </QA>
 
 <QA question="How can we implement authentication and authorization in NodeJS?">
 
-Asked in interviews.
+**Authentication** (who are you): JWT — `jsonwebtoken` package: `jwt.sign(payload, secret)` on login, `jwt.verify(token, secret)` on each request. Passport.js for strategies (local, OAuth). **Authorization** (what can you do): middleware checks `req.user.role`. RBAC (Role-Based Access Control): `const authorize = (roles) => (req, res, next) => { if (!roles.includes(req.user.role)) return res.status(403).json({error: 'Forbidden'}); next(); }`. Use bcrypt for password hashing.
 
 </QA>
 
 <QA question="Explain the packages used for file uploading in NodeJS.">
 
-Asked in interviews.
+**Multer** — most popular, handles `multipart/form-data`: `upload = multer({ dest: 'uploads/', limits: { fileSize: 5*1024*1024 }, fileFilter: (req, file, cb) => {} })`. Use as middleware: `app.post('/upload', upload.single('file'), handler)`. **Formidable** — low-level streaming parser. **Busboy** — streaming HTML form parser (Multer uses it internally). Best practices: validate file type/size, scan for malware, store in cloud (S3), never serve uploaded files from app directory.
 
 </QA>
 
 <QA question="Explain the difference between NodeJS and server-side scripting languages like Python.">
 
-Asked in interviews.
+**Node.js**: event-driven, non-blocking I/O. Single-threaded event loop. JavaScript. Best for I/O-bound tasks, real-time apps, APIs. V8 engine (fast). npm ecosystem. **Python**: multi-threaded (GIL limits true parallelism). Synchronous by default (async with asyncio). Better for CPU-bound tasks, ML/AI, data science, scripting. Django/Flask for web. More readable syntax. Python is general-purpose; Node excels at concurrent I/O.
 
 </QA>
 
 <QA question="How do you connect NodeJS to a MongoDB database?">
 
-Asked in interviews.
+Using **Mongoose** (ODM): `const mongoose = require('mongoose'); mongoose.connect('mongodb://localhost:27017/mydb'); const userSchema = new mongoose.Schema({ name: String }); const User = mongoose.model('User', userSchema);`. Or native **MongoDB driver**: `const { MongoClient } = require('mongodb'); const client = new MongoClient(uri); await client.connect(); const db = client.db('mydb');`. Use connection pooling, handle errors, set up indexes.
 
 </QA>
 
 <QA question="How do you read command line arguments in NodeJS?">
 
-Asked in interviews.
+`process.argv` — array: [node path, script path, ...args]. `process.argv[2]` is the first user argument. Example: `node app.js hello` → `process.argv[2]` = 'hello'. For structured arguments: use **yargs** (`yargs.argv.name`), **commander** (`program.option('-p, --port NUMBER')`, `program.parse()`), or **minimist** (lightweight). `process.env` for environment variables.
 
 </QA>
 
 <QA question="Explain the NodeJS Redis module.">
 
-Asked in interviews.
+**Redis** is an in-memory data store used with Node.js for caching, sessions, pub/sub, rate limiting. Package: `ioredis` or `redis`. Setup: `const Redis = require('ioredis'); const redis = new Redis()`. Operations: `await redis.set('key', 'value')`, `await redis.get('key')`, `await redis.del('key')`. Data structures: strings, hashes, lists, sets, sorted sets. Use for: session store, API response caching, real-time leaderboards, message queues.
 
 </QA>
 
 <QA question="What is a web socket?">
 
-Asked in interviews.
+**WebSocket** provides full-duplex, persistent communication between client and server over a single TCP connection. Unlike HTTP (request-response), WebSocket allows the server to push data to clients in real-time. Protocol: `ws://` or `wss://` (secure). Use cases: chat apps, live notifications, real-time dashboards, gaming. Node.js libraries: **Socket.io** (with fallbacks), **ws** (lightweight). Connection starts as HTTP upgrade, then becomes persistent WebSocket.
 
 </QA>
 
 <QA question="Explain the util module in NodeJS.">
 
-Asked in interviews.
+The `util` module provides utility functions: `util.promisify(fn)` — converts callback-based functions to Promises (essential for async/await). `util.inspect(obj)` — string representation of object (debugging). `util.format()` — printf-style formatting. `util.types.isDate()` — type checking. `util.deprecate(fn, msg)` — mark function as deprecated. `util.callbackify()` — inverse of promisify. Most used: `util.promisify()`.
 
 </QA>
 
 <QA question="Explain the DNS module in NodeJS.">
 
-Asked in interviews.
+The `dns` module resolves domain names: `dns.lookup('google.com', callback)` — uses OS resolver (cached, reads /etc/hosts). `dns.resolve('google.com', 'A', callback)` — performs actual DNS query (bypasses OS cache). Methods: `dns.resolve4()` (A records), `dns.resolve6()` (AAAA), `dns.resolveMx()` (mail), `dns.resolveTxt()` (TXT). `dns.promises` API for async/await. Use `dns.lookup` for most cases; `dns.resolve` for DNS-specific queries.
 
 </QA>
 
 <QA question="What is the difference between setImmediate() and setTimeout()?">
 
-Asked in interviews.
+**setTimeout(fn, 0)**: fires in the TIMERS phase of the next event loop iteration. Has a minimum delay (~1ms in practice). **setImmediate(fn)**: fires in the CHECK phase after the poll phase. Within an I/O callback, `setImmediate` always fires before `setTimeout(fn, 0)`. Outside I/O, the order is non-deterministic. `setImmediate` is designed for "execute asap after I/O" whereas `setTimeout(0)` means "execute after at least 0ms".
 
 </QA>
 
 <QA question="What is an Event Emitter in Node.js?">
 
-Asked in interviews.
+The **EventEmitter** class (from `events` module) allows objects to emit named events and register listeners. Core pattern of Node.js. `const EventEmitter = require('events'); const emitter = new EventEmitter(); emitter.on('data', (msg) => console.log(msg)); emitter.emit('data', 'hello');`. Methods: `.on()`, `.once()`, `.emit()`, `.removeListener()`, `.listenerCount()`. Streams, HTTP server, and most Node.js APIs extend EventEmitter.
 
 </QA>
 
@@ -552,18 +576,395 @@ Asked in interviews.
 
 <QA question="Describe your experience as a backend developer working with MongoDB. What challenges did you face?">
 
-Asked in interviews.
+Challenges include: 1) **Schema design** — choosing embed vs reference (denormalization tradeoffs). 2) **Query performance** — adding proper indexes, avoiding collection scans. 3) **Data consistency** — MongoDB lacks traditional ACID transactions (multi-doc transactions added in 4.0 but with overhead). 4) **Migration** — schema evolution without downtime. 5) **Scaling** — choosing the right shard key. Solutions: proper indexing, Mongoose schema validation, aggregation pipelines, replica sets for HA.
 
 </QA>
 
 <QA question="How do you handle schema design for a backend application using MongoDB?">
 
-Asked in interviews.
+**Key decisions**: 1) **Embed** when data is always accessed together (1:1, 1:few). Example: address in user document. 2) **Reference** when data is large, accessed independently, or has many-to-many relationships. 3) **Denormalize** for read-heavy workloads (duplicate data for query speed). 4) Use **Mongoose schemas** for validation. 5) Design for access patterns (not normalization). 6) Consider document size limits (16MB). Best practice: start with embedded, normalize when needed.
 
 </QA>
 
 <QA question="What are the best practices for MongoDB performance tuning in a Node.js backend?">
 
-Asked in interviews.
+1) **Indexes** — create indexes on frequently queried fields (`db.collection.createIndex()`). Use `.explain()` to analyze queries. 2) **Projection** — only return needed fields. 3) **Connection pooling** — Mongoose maintains a pool (default 5). 4) **Lean queries** — `.lean()` returns plain objects (faster). 5) **Aggregation pipeline** for complex queries (server-side processing). 6) **Pagination** with `.skip()/.limit()` or cursor-based. 7) Avoid `$regex` without anchors. 8) Use replica sets for read scaling.
 
 </QA>
+
+## Node.js (from InterviewBit)
+
+<QA question="What is a first class function in Javascript?">
+
+In JavaScript, functions are **first-class citizens** — they can be: 1) Assigned to variables: `const greet = function() {}`. 2) Passed as arguments: `arr.map(fn)`. 3) Returned from functions: `function outer() { return function inner() {} }`. 4) Stored in data structures: `const obj = { method: function() {} }`. This enables functional programming patterns: higher-order functions, closures, callbacks, and composition.
+
+</QA>
+
+<QA question="What is the purpose of module.exports?">
+
+`module.exports` defines what a module makes available when `require()` is called. Whatever you assign to `module.exports` is what the importing file receives. `module.exports = function() {}` exports a function. `module.exports = { fn1, fn2 }` exports an object. `exports` is a shorthand reference to `module.exports` (but reassigning `exports =` breaks the reference). ES Module equivalent: `export default` / `export { name }`.
+
+</QA>
+
+<QA question="What is REPL in Node.js?">
+
+**REPL** (Read-Eval-Print Loop) is Node.js's interactive command-line interface. Launch with `node` (no arguments). It reads your JavaScript input, evaluates it, prints the result, and waits for more input. Features: tab completion, multi-line editing, `_` for last result, `.help` for commands. Useful for prototyping and debugging. Similar to Python's interactive interpreter or browser DevTools console.
+
+</QA>
+
+<QA question="How many types of API functions are there in Node.js?">
+
+Two types: 1) **Asynchronous (non-blocking)** — register callback, continue execution. Example: `fs.readFile()`. Preferred for servers. 2) **Synchronous (blocking)** — wait until complete. Example: `fs.readFileSync()`. Blocks the event loop. Only use at startup or in scripts, never in request handlers.
+
+</QA>
+
+<QA question="What are the advantages of using promises instead of callbacks?">
+
+1) **Avoid callback hell** — chain `.then()` instead of nesting. 2) **Error handling** — single `.catch()` handles all errors in the chain. 3) **Composition** — `Promise.all()`, `Promise.race()`, `Promise.allSettled()`. 4) **async/await** — Promises enable cleaner async syntax. 5) **Predictable** — always resolve or reject once (no accidental double-calling). 6) **Return values** — can be returned and passed unlike callbacks.
+
+</QA>
+
+<QA question="What are some commonly used timing features of Node.js?">
+
+`setTimeout(fn, delay)` — execute once after delay. `setInterval(fn, interval)` — execute repeatedly. `setImmediate(fn)` — execute after current poll phase. `process.nextTick(fn)` — execute before next event loop tick. `Date.now()` — current timestamp. `process.hrtime.bigint()` — high-resolution time for benchmarking. `performance.now()` — high-res timing (from `perf_hooks`). Cancel timers with `clearTimeout/clearInterval/clearImmediate`.
+
+</QA>
+
+<QA question="Explain the concept of stub in Node.js.">
+
+A **stub** is a test double that replaces a function with a controlled implementation. Used in testing to isolate code from external dependencies (DB calls, APIs, file I/O). Libraries: **Sinon.js** — `sinon.stub(object, 'method').returns(value)`. Stubs can: return specific values, throw errors, call callbacks, track call count/args. Restore after test: `stub.restore()`. Difference: **stub** controls behavior, **spy** observes without modifying, **mock** sets expectations.
+
+</QA>
+
+<QA question="Describe the exit codes of Node.js.">
+
+**0** — no errors, process ended normally. **1** — uncaught fatal exception. **2** — unused (reserved by Bash). **3** — internal JavaScript parse error. **4** — internal JS evaluation failure. **5** — V8 fatal error. **6** — non-function internal exception handler. **7** — internal exception handler runtime failure. **8** — unused. **9** — invalid argument. **10** — internal JS runtime failure. **12** — invalid debug argument. **>128** — signal exits (e.g., 130 = SIGINT/Ctrl+C).
+
+</QA>
+
+<QA question="Why should you separate Express app and server?">
+
+Separating `app` (Express application) from `server` (HTTP listener) enables: 1) **Testing** — import `app` without starting the server (`supertest` needs the app, not a running server). 2) **Flexibility** — same app can run with different server configs (HTTP, HTTPS, cluster). 3) **Clean shutdown** — `server.close()` is separate from app logic. Pattern: `app.js` exports the Express app; `server.js` calls `app.listen()`. Standard in production setups.
+
+</QA>
+
+<QA question="Explain the Reactor Pattern in Node.js.">
+
+The **Reactor Pattern** is the architectural pattern behind Node.js's non-blocking I/O. **Flow**: 1) Application registers an I/O operation with a handler (callback). 2) The event demultiplexer (libuv) monitors I/O operations. 3) When I/O completes, a new event is added to the event queue. 4) The event loop processes the queue, invoking the corresponding handlers. This allows handling many concurrent I/O operations on a single thread without blocking.
+
+</QA>
+
+<QA question="What are Node.js buffers?">
+
+**Buffers** are fixed-length sequences of bytes (raw binary data) allocated outside V8's heap. Used for: file I/O, network streams, binary protocols. Create: `Buffer.from('hello')`, `Buffer.alloc(1024)`. Convert: `buf.toString('utf8')`, `buf.toString('hex')`. Operations: `Buffer.concat()`, `buf.slice()`, `buf.copy()`. Buffers are like Uint8Array. Important for handling binary data that streams produce.
+
+</QA>
+
+<QA question="What are Node.js streams?">
+
+Streams process data incrementally (chunks) instead of loading everything at once. 4 types: **Readable** (data source), **Writable** (data destination), **Duplex** (both), **Transform** (modify data in flight). Key events: `data`, `end`, `error`, `drain`, `finish`. Connect with `.pipe()` or `pipeline()`. Streams implement backpressure: if the writable is slower, the readable pauses automatically. Enable O(1) memory processing of large data.
+
+</QA>
+
+<QA question="How does Node.js overcome the problem of blocking I/O operations?">
+
+Node.js uses **asynchronous, non-blocking I/O** via libuv. Instead of waiting for I/O to complete (blocking), it: 1) Initiates the operation and registers a callback. 2) Continues processing other events. 3) Executes the callback when I/O completes. libuv uses OS async primitives (epoll on Linux, kqueue on macOS, IOCP on Windows) for network I/O and a thread pool (default 4 threads) for file system and DNS operations.
+
+</QA>
+
+<QA question="Differentiate between process.nextTick() and setImmediate().">
+
+`process.nextTick()`: fires at the END of the current operation, BEFORE the event loop continues to the next phase. Highest priority microtask. Can starve I/O if recursive. `setImmediate()`: fires in the CHECK phase (after poll). Allows I/O callbacks to run first. **Rule**: use `setImmediate()` for deferring work after I/O; use `process.nextTick()` only when you need to run before any I/O in the current tick.
+
+</QA>
+
+<QA question="What is an Event Emitter in Node.js?">
+
+**EventEmitter** is the foundation of Node.js's event-driven architecture. Objects emit named events that trigger registered listener functions. `const emitter = new EventEmitter(); emitter.on('event', handler); emitter.emit('event', data);`. Methods: `.on()`, `.once()`, `.off()`, `.emit()`, `.listenerCount()`. HTTP servers, streams, and most Node APIs extend EventEmitter. Custom event emitters enable decoupled, reactive architectures.
+
+</QA>
+
+<QA question="Explain enhancing Node.js performance through clustering.">
+
+The `cluster` module forks multiple worker processes (typically one per CPU core) that share the same server port. **Benefits**: 1) Utilizes all CPU cores. 2) Increases throughput. 3) Provides fault tolerance (restart crashed workers). Setup: master process forks workers; each worker handles requests independently. PM2 simplifies this: `pm2 start app.js -i max`. Combine with a reverse proxy (Nginx) for load balancing across multiple machines.
+
+</QA>
+
+<QA question="What is a thread pool and which library handles it in Node.js?">
+
+**libuv** manages Node.js's thread pool (default 4 threads, configurable via `UV_THREADPOOL_SIZE`, max 128). The thread pool handles operations that can't be done asynchronously by the OS: **file system** operations, **DNS lookups** (`dns.lookup`), **crypto** (pbkdf2, randomBytes), **zlib** compression. Network I/O does NOT use the thread pool — it uses OS-level async (epoll/kqueue/IOCP). Increase pool size for I/O-heavy apps.
+
+</QA>
+
+<QA question="How are worker threads different from clusters?">
+
+**Worker Threads**: threads WITHIN a single process. Share memory via `SharedArrayBuffer`. Use for CPU-intensive tasks (parsing, crypto). Lighter. `const { Worker } = require('worker_threads')`. **Clusters**: separate PROCESSES (via fork). Each has own V8, memory, event loop. Use for scaling HTTP servers across cores. Higher overhead. Can't share memory directly (only IPC messages). Use workers for computation, clusters for request handling.
+
+</QA>
+
+<QA question="How do you diagnose memory leaks in Node.js in production?">
+
+1) **Monitor heap**: `process.memoryUsage()` — track `heapUsed` over time. 2) **Heap snapshots**: `--inspect` flag + Chrome DevTools, compare snapshots. 3) **v8.writeHeapSnapshot()** — programmatic snapshots. 4) **clinic.js** — `clinic doctor` detects common patterns. 5) **heapdump** npm package. 6) Look for: growing arrays/maps, uncleaned event listeners, closures holding references, global variables. 7) **pm2 monit** for real-time monitoring. 8) Set `--max-old-space-size` to limit and force earlier OOM.
+
+</QA>
+
+<QA question="Explain backpressure in streams. What breaks if you ignore it?">
+
+**Backpressure** occurs when a writable stream can't consume data as fast as the readable produces it. `.pipe()` handles this automatically (pauses the readable). If you manually use `write()`, check its return value — `false` means buffer is full, wait for `'drain'` event. **If ignored**: memory grows unboundedly (OOM crash), data may be lost. Use `stream.pipeline()` for proper error and backpressure handling.
+
+</QA>
+
+<QA question="How do you implement graceful shutdown in Node (SIGTERM) without dropping requests?">
+
+```
+process.on('SIGTERM', () => {
+  server.close(() => { // Stop accepting new connections
+    db.disconnect(); // Close DB connections
+    process.exit(0);
+  });
+  setTimeout(() => process.exit(1), 10000); // Force exit after 10s
+});
+```
+Key: 1) Stop accepting new connections. 2) Let in-flight requests complete. 3) Close DB/Redis connections. 4) Set a force-kill timeout. Used in Kubernetes (SIGTERM before SIGKILL), Docker stop, PM2.
+
+</QA>
+
+## Express.js (from InterviewBit)
+
+<QA question="What is Express.js and where does it sit in a Node.js backend stack?">
+
+Express.js is a minimal, flexible Node.js web framework. It sits as the **HTTP layer** in the stack: Client → Reverse Proxy (Nginx) → **Express.js** (routing, middleware, controllers) → Business Logic → Database (MongoDB/PostgreSQL). Express handles: request parsing, routing, middleware pipeline, response formatting. It does NOT handle: database ORM, authentication logic, business rules (those are built on top). Part of MERN/MEAN stacks.
+
+</QA>
+
+<QA question="What's the difference between app.use() and route handlers like app.get()?">
+
+`app.use()`: mounts middleware for ALL HTTP methods on a path (or globally if no path). Runs for any matching request. `app.use('/api', cors())` applies to all routes under `/api`. `app.get()` / `app.post()` etc.: handles ONLY the specific HTTP method for the exact path. `app.get('/users', handler)` only matches GET requests to `/users`. `app.use()` is for middleware; route handlers are for endpoint logic.
+
+</QA>
+
+<QA question="How do you serve static files in Express, and what are common pitfalls?">
+
+`app.use(express.static('public'))` serves files from the `public` directory. Files are served by their path: `public/css/style.css` is available at `/css/style.css`. **Pitfalls**: 1) Serving sensitive files (`.env`, source code) — use a dedicated directory. 2) No cache headers by default — set `maxAge`. 3) Path traversal attacks — Express prevents this. 4) Performance — use Nginx for static files in production, not Express. 5) Order matters — static middleware should come before route handlers.
+
+</QA>
+
+<QA question="What is express.Router() and why do we use it?">
+
+`express.Router()` creates a mini-application (modular router) with its own middleware and routes. Enables **modular route organization**: `const userRouter = express.Router(); userRouter.get('/', listUsers); userRouter.post('/', createUser); app.use('/api/users', userRouter);`. Benefits: 1) Separation of concerns (file per resource). 2) Reusable middleware per router. 3) Cleaner code structure. 4) Route prefixing. Essential for large applications.
+
+</QA>
+
+<QA question="What is the difference between query params, route params, and body?">
+
+**Route params**: part of URL path — `/users/:id` → `req.params.id`. For identifying resources. **Query params**: after `?` in URL — `/search?q=term&page=1` → `req.query.q`. For filtering/pagination. **Body**: data in request payload (POST/PUT) — `req.body` (requires `express.json()` middleware). For creating/updating resources. GET requests should NOT have a body. Use route params for resource IDs, query for filters, body for data.
+
+</QA>
+
+<QA question="How do you structure routes and controllers in a production Express app?">
+
+```
+src/
+  routes/        — userRoutes.js, authRoutes.js (define endpoints)
+  controllers/   — userController.js (handle request/response)
+  services/      — userService.js (business logic)
+  models/        — User.js (database models)
+  middleware/    — auth.js, validate.js
+  config/        — db.js, env.js
+  app.js         — Express setup, middleware, route mounting
+  server.js      — app.listen()
+```
+Routes delegate to controllers, controllers call services, services interact with models. Keep controllers thin.
+
+</QA>
+
+<QA question="How do you write custom middleware for authentication and authorization?">
+
+**Auth middleware**: `const auth = async (req, res, next) => { const token = req.headers.authorization?.split(' ')[1]; if (!token) return res.status(401).json({error:'Unauthorized'}); const user = jwt.verify(token, secret); req.user = user; next(); };`. **Role middleware**: `const requireRole = (...roles) => (req, res, next) => { if (!roles.includes(req.user.role)) return res.status(403).json({error:'Forbidden'}); next(); };`. Apply: `app.get('/admin', auth, requireRole('admin'), handler)`.
+
+</QA>
+
+<QA question="What's the difference between synchronous errors and async errors in Express routes?">
+
+**Sync errors** (thrown in route handler) are caught by Express automatically: `app.get('/', (req, res) => { throw new Error('oops'); });` → goes to error middleware. **Async errors** (in promises/async functions) are NOT caught by Express before version 5: `app.get('/', async (req, res) => { await somePromise(); });` — if it rejects, the error is lost. **Fix**: wrap with try/catch, or use `express-async-errors` package, or Express 5+ which handles async errors natively.
+
+</QA>
+
+<QA question="How do you implement rate limiting and request throttling?">
+
+Using `express-rate-limit`: `const limiter = rateLimit({ windowMs: 15*60*1000, max: 100, message: 'Too many requests' }); app.use('/api/', limiter);`. Advanced: use **Redis** as rate limit store (for distributed systems): `rate-limit-redis`. Per-user limiting with custom key generator. Sliding window vs fixed window algorithms. Also: Nginx `limit_req`, API gateways, or cloud WAF (Cloudflare). Consider different limits for authenticated vs anonymous users.
+
+</QA>
+
+<QA question="How do you handle file uploads securely in Express?">
+
+Use **Multer**: `const upload = multer({ dest: 'uploads/', limits: { fileSize: 5*1024*1024 }, fileFilter: (req, file, cb) => { if (['image/jpeg','image/png'].includes(file.mimetype)) cb(null, true); else cb(new Error('Invalid type')); } });`. **Security**: 1) Validate file type (MIME + magic bytes). 2) Limit file size. 3) Store outside webroot or in cloud (S3). 4) Generate unique filenames. 5) Scan for malware. 6) Don't trust original filename.
+
+</QA>
+
+<QA question="How do you implement streaming responses (downloads or large payloads) in Express?">
+
+Pipe a readable stream to the response: `const fileStream = fs.createReadStream('large-file.zip'); res.setHeader('Content-Disposition', 'attachment; filename=file.zip'); fileStream.pipe(res);`. For streaming JSON: `res.write('['); items.forEach(item => res.write(JSON.stringify(item) + ',')); res.end(']')`. Benefits: constant memory usage regardless of file size. Handle errors: `fileStream.on('error', (err) => res.status(500).end())`.
+
+</QA>
+
+<QA question="How do you implement idempotency for POST endpoints (payment or order APIs)?">
+
+Use an **idempotency key**: client sends a unique key in headers (`Idempotency-Key: uuid`). Server: 1) Check if key exists in cache/DB. 2) If yes, return the cached response. 3) If no, process the request, store the result with the key. Implementation: middleware that wraps the handler, stores results in Redis with TTL (e.g., 24 hours). Stripe and other payment APIs use this pattern. Prevents duplicate charges/orders from retries.
+
+</QA>
+
+## REST API (from InterviewBit)
+
+<QA question="What do you understand by RESTful Web Services?">
+
+**REST** (Representational State Transfer) is an architectural style for web services. RESTful services: use HTTP methods (GET, POST, PUT, DELETE) to perform CRUD operations, identify resources with URIs (`/users/123`), transfer data as JSON/XML, are stateless (no server-side session), support caching, use standard HTTP status codes. Benefits: simplicity, scalability, interoperability. Follows Roy Fielding's 2000 dissertation.
+
+</QA>
+
+<QA question="What are the HTTP Methods?">
+
+**GET** — retrieve resource (safe, idempotent). **POST** — create resource. **PUT** — replace entire resource (idempotent). **PATCH** — partial update. **DELETE** — remove resource (idempotent). **HEAD** — GET without body (check existence). **OPTIONS** — describe available methods (CORS preflight). **TRACE** — echo request for debugging (rarely used). **CONNECT** — establish tunnel (HTTPS proxy). GET/HEAD/OPTIONS are safe (no side effects).
+
+</QA>
+
+<QA question="What are HTTP Status codes?">
+
+**1xx** (Informational): 100 Continue. **2xx** (Success): 200 OK, 201 Created, 204 No Content. **3xx** (Redirection): 301 Moved Permanently, 302 Found, 304 Not Modified. **4xx** (Client Error): 400 Bad Request, 401 Unauthorized, 403 Forbidden, 404 Not Found, 409 Conflict, 422 Unprocessable Entity, 429 Too Many Requests. **5xx** (Server Error): 500 Internal Server Error, 502 Bad Gateway, 503 Service Unavailable.
+
+</QA>
+
+<QA question="What is the concept of statelessness in REST?">
+
+Each request from client to server must contain ALL information needed to process it. The server stores NO client state between requests. No sessions, no server-side context. Benefits: 1) Scalability (any server can handle any request). 2) Simplicity. 3) Reliability (no state to lose on crash). Authentication: client sends token with every request (JWT, API key). If session-like behavior is needed, the client manages it (cookies/tokens).
+
+</QA>
+
+<QA question="What is URI in REST?">
+
+**URI** (Uniform Resource Identifier) identifies a resource in a RESTful API. **Best practices**: use nouns (not verbs): `/users` not `/getUsers`. Plural names: `/users`, `/orders`. Hierarchical: `/users/123/orders/456`. Use hyphens for readability: `/user-profiles`. No trailing slashes. Version in URL: `/v1/users` or header. Query params for filtering: `/users?role=admin`. URIs should be stable and predictable.
+
+</QA>
+
+<QA question="What are the best practices to develop RESTful web services?">
+
+1) Use proper HTTP methods (GET/POST/PUT/DELETE). 2) Use meaningful URIs with nouns. 3) Return appropriate status codes. 4) Version your API (`/v1/`). 5) Support pagination, filtering, sorting. 6) Use JSON for data. 7) Implement HATEOAS (links in responses). 8) Handle errors consistently. 9) Use authentication (JWT/OAuth). 10) Rate limiting. 11) Documentation (OpenAPI/Swagger). 12) Validate input. 13) Use HTTPS. 14) Idempotent PUT/DELETE.
+
+</QA>
+
+<QA question="What are Idempotent methods? How is it relevant in RESTful web services?">
+
+An **idempotent** method produces the same result regardless of how many times it's called. **Idempotent**: GET, PUT, DELETE, HEAD, OPTIONS. **Not idempotent**: POST (each call creates a new resource). **Relevance**: safe to retry idempotent requests on failure (network error → retry PUT/DELETE without side effects). POST needs idempotency keys to prevent duplicates. PATCH may or may not be idempotent depending on implementation.
+
+</QA>
+
+<QA question="What are the differences between PUT and POST in REST?">
+
+**POST**: creates a NEW resource. Server assigns the URI. Not idempotent (2 POSTs = 2 resources). `POST /users` creates user. **PUT**: replaces the ENTIRE resource at a specific URI. Client specifies the URI. Idempotent (2 identical PUTs = same result). `PUT /users/123` replaces user 123. If the resource doesn't exist, PUT can create it (with client-defined ID). For partial updates, use PATCH instead.
+
+</QA>
+
+<QA question="How does HTTP Basic Authentication work?">
+
+Client sends credentials in the `Authorization` header: `Authorization: Basic base64(username:password)`. The credentials are base64-encoded (NOT encrypted). Server decodes and validates. **Security concerns**: must use HTTPS (credentials are plaintext in base64). Sent with every request (stateless). Simple but insecure without TLS. Better alternatives: Bearer tokens (JWT), OAuth 2.0, API keys. Used in internal APIs or as a simple auth mechanism.
+
+</QA>
+
+<QA question="What is the difference between idempotent and safe HTTP methods?">
+
+**Safe methods**: do NOT modify server state. Read-only. GET, HEAD, OPTIONS. Can be cached/prefetched. **Idempotent methods**: calling N times has the same effect as calling once. GET, PUT, DELETE, HEAD, OPTIONS. **All safe methods are idempotent, but not all idempotent methods are safe.** DELETE is idempotent (deleting same resource twice = same end state) but NOT safe (it modifies state). POST is neither safe nor idempotent.
+
+</QA>
+
+## Full Stack & Web API (from InterviewBit)
+
+<QA question="Explain the meaning of multithreading.">
+
+**Multithreading** is running multiple threads concurrently within a single process. Threads share the same memory space but have their own call stacks. Benefits: utilize multi-core CPUs, concurrent execution, shared memory (fast communication). Challenges: race conditions, deadlocks, synchronization complexity. Languages: Java (native threading), Python (GIL limits), Node.js (Worker Threads). Used for: parallel computation, responsive UIs, server request handling (e.g., Java Tomcat).
+
+</QA>
+
+<QA question="What is Callback Hell?">
+
+**Callback hell** (pyramid of doom) is deeply nested callbacks that occur when chaining multiple async operations. Each level adds indentation, making code hard to read, maintain, and debug. Example: `getData(a => { process(a, b => { save(b, c => { notify(c, d => {}); }); }); });`. **Solutions**: 1) Promises (`.then()` chains). 2) async/await. 3) Named functions. 4) Control flow libraries (async.js).
+
+</QA>
+
+<QA question="Explain Long Polling.">
+
+**Long Polling** is a technique where the client sends a request and the server HOLDS the response until new data is available (or timeout). When data arrives, the server responds and the client immediately sends a new request. Simulates real-time push. **vs Short Polling**: short polling repeatedly asks at intervals (wasteful). **vs WebSockets**: WebSockets are truly bidirectional and more efficient. Long polling is a workaround for environments where WebSockets aren't available.
+
+</QA>
+
+<QA question="State difference between GraphQL and REST.">
+
+**REST**: multiple endpoints per resource (`/users`, `/users/123/posts`). Fixed data shape. Over-fetching (get more than needed) or under-fetching (need multiple requests). Caching with HTTP. **GraphQL**: single endpoint (`/graphql`). Client specifies exact data shape in query. No over/under-fetching. Strong typing (schema). Subscriptions for real-time. Harder to cache (POST requests). More complex server-side. REST is simpler; GraphQL is more flexible for complex data needs.
+
+</QA>
+
+<QA question="Explain dependency injection.">
+
+**Dependency Injection** (DI) is a design pattern where dependencies are provided to a class/function from outside rather than created internally. Instead of: `class UserService { constructor() { this.db = new Database(); } }`, inject: `class UserService { constructor(db) { this.db = db; } }`. Benefits: 1) Testability (inject mocks). 2) Loose coupling. 3) Flexibility (swap implementations). 4) Single Responsibility. Frameworks: NestJS (built-in DI), InversifyJS.
+
+</QA>
+
+<QA question="What do you mean by observer pattern?">
+
+The **Observer Pattern** defines a one-to-many dependency: when a subject changes state, all registered observers are notified automatically. In Node.js: **EventEmitter** is the observer pattern. `subject.on('event', observer)`. Also used in: RxJS (Observables), Vue.js reactivity, pub/sub systems, MVC (model notifies views). Benefits: decoupled components, event-driven architecture, extensibility.
+
+</QA>
+
+<QA question="State the difference between normalization and denormalization.">
+
+**Normalization**: organizing data to reduce redundancy. Split into related tables (1NF, 2NF, 3NF). Advantages: data integrity, no update anomalies, less storage. Disadvantage: complex joins, slower reads. **Denormalization**: intentionally adding redundancy for read performance. Duplicate data across tables/documents. Advantages: faster reads, fewer joins. Disadvantage: data inconsistency risk, more storage, complex writes. SQL databases favor normalization; NoSQL (MongoDB) often uses denormalization.
+
+</QA>
+
+<QA question="State the difference between GET and POST.">
+
+**GET**: retrieves data. Data in URL query string (visible). Cacheable. Bookmarkable. Idempotent. Limited data size (~2048 chars in URL). Safe method. **POST**: sends/creates data. Data in request body (not visible in URL). Not cacheable (by default). Not bookmarkable. Not idempotent. No size limit. For sensitive data (passwords) and large payloads. GET for reading; POST for writing.
+
+</QA>
+
+<QA question="What is the difference between blue/green deployment and rolling deployment?">
+
+**Blue/Green**: two identical environments. "Blue" is live. Deploy new version to "Green". Test Green. Switch traffic (DNS/load balancer). Instant rollback (switch back to Blue). Zero downtime. Higher cost (double infrastructure). **Rolling**: gradually replace old instances with new ones (one at a time). During deployment, both versions run simultaneously. Lower cost. Slower rollback. Risk: version compatibility issues during transition. Blue/green is safer; rolling is more resource-efficient.
+
+</QA>
+
+<QA question="Explain inversion of control.">
+
+**Inversion of Control** (IoC) is a principle where the flow of control is inverted — framework calls your code, not the other way around ("Hollywood principle: don't call us, we'll call you"). Example: Express middleware (Express calls your handler, not you calling Express). DI is a form of IoC. IoC containers manage object creation and lifecycle. Benefits: decoupling, testability, flexibility. Frameworks using IoC: NestJS, Spring, Angular.
+
+</QA>
+
+<QA question="What is Web API and why do we use it?">
+
+A **Web API** is an interface exposed over HTTP that allows applications to communicate. Client sends HTTP requests, server returns data (usually JSON). **Why**: 1) Decouples frontend/backend. 2) Multiple clients (web, mobile, IoT). 3) Microservices communication. 4) Third-party integrations. Types: REST API (most common), GraphQL, gRPC, SOAP. Built with: Express.js (Node), Django REST (Python), Spring Boot (Java).
+
+</QA>
+
+<QA question="What are Web API filters?">
+
+**Web API filters** are components that run before/after request processing (similar to middleware). Types: **Authorization filters** — check permissions. **Action filters** — run before/after action method (logging, validation). **Exception filters** — handle errors. **Result filters** — modify response. In Express.js, middleware serves the same purpose. In ASP.NET Web API, filters are attributes applied to controllers/actions.
+
+</QA>
+
+<QA question="What is the difference between Web API and WCF?">
+
+**Web API**: HTTP-based, RESTful, JSON/XML, lightweight. Open standards. Easy to consume from any client (browser, mobile). Built for the web. **WCF** (Windows Communication Foundation): Microsoft framework supporting multiple protocols (HTTP, TCP, MSMQ). SOAP-based (XML). More complex but more features (transactions, reliable messaging, security). WCF is enterprise-heavy; Web API is modern and simple. Web API is the modern choice for most web services.
+
+</QA>
+
+<QA question="What is REST and SOAP? What is the difference between them?">
+
+**REST**: architectural style, uses HTTP methods, stateless, JSON/XML, lightweight. Flexible (any format). Cacheable. Easy to consume. **SOAP** (Simple Object Access Protocol): protocol, uses XML exclusively, WSDL for contract, built-in security (WS-Security), ACID transactions. Heavier. Language/platform independent. **Key differences**: REST is simpler and faster; SOAP has built-in standards for security and transactions. REST dominates modern APIs; SOAP used in enterprise/banking/legacy systems.
+
+</QA>
+
+<QA question="What is CORS in Web API?">
+
+**CORS** (Cross-Origin Resource Sharing) allows web browsers to make requests to APIs on different domains. By default, browsers block cross-origin requests (Same-Origin Policy). The server must send CORS headers: `Access-Control-Allow-Origin: https://frontend.com`, `Access-Control-Allow-Methods: GET, POST`, `Access-Control-Allow-Headers: Content-Type, Authorization`. Preflight (OPTIONS) request checks allowed methods first. In Express: `app.use(cors())`. Essential for SPAs calling APIs on different domains.
+
+</QA>
+

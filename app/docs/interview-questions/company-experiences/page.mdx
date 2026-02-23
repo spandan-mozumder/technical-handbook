@@ -8,85 +8,85 @@ import { QA } from "@/components/QA";
 
 <QA question="Find K largest elements from a big file or array.">
 
-Asked in interviews.
+Use a **Min-Heap** of size K. Iterate through elements: if element > heap top, replace top and heapify. Time: O(n log K). Space: O(K). Alternatively: **QuickSelect** (average O(n), worst O(n²)). For very large files: external sort or MapReduce. Python: `heapq.nlargest(k, arr)`. The heap approach is optimal for streaming data where n is unknown or very large.
 
 </QA>
 
 <QA question="Find a triplet a, b, c such that a² = b² + c². Variations include finding a triplet with sum equal to 0.">
 
-Asked in interviews.
+**Pythagorean triplet**: Square all elements, sort. For each `a²`, use two-pointer on remaining to find `b² + c² = a²`. O(n²). **3Sum (sum = 0)**: Sort array. For each element `a[i]`, two-pointer on `i+1` to `n-1` finding pairs summing to `-a[i]`. Skip duplicates. O(n²). Use a HashSet for O(n²) with O(n) space alternative.
 
 </QA>
 
 <QA question="Binary tree traversal questions — left view, right view, top view, bottom view, maximum of a level, minimum of a level, children sum property, diameter.">
 
-Asked in interviews.
+**Left/Right view**: BFS level-order, take first/last node per level. **Top/Bottom view**: BFS with horizontal distance (HD); top = first node at each HD, bottom = last. **Max/Min of level**: BFS, track per level. **Children sum**: recursive check `node.val == left.val + right.val`. **Diameter**: `max(leftHeight + rightHeight)` at each node using DFS; O(n). Track global max during postorder traversal.
 
 </QA>
 
 <QA question="Convert a Binary tree to a Doubly Linked List.">
 
-Asked in interviews.
+Use **in-order traversal**. Maintain a `prev` pointer. For each node: set `node.left = prev` and `prev.right = node`. After traversal, the DLL is sorted (in-order). Track the `head` (leftmost node). Time: O(n), Space: O(h) for recursion. The key insight: in-order gives sorted order; left pointer becomes `prev` link and right pointer becomes `next` link.
 
 </QA>
 
 <QA question="Find the Lowest Common Ancestor in a Binary Search Tree and a Binary Tree.">
 
-Asked in interviews.
+**BST**: If both nodes < root, go left. If both > root, go right. Otherwise, root IS the LCA. O(h). **Binary Tree**: Recursive — search left and right subtrees. If both return non-null, current node is LCA. If only one returns non-null, that's the LCA. Base: if root == null or root == p or root == q, return root. O(n). Iterative: use parent pointers + ancestor set.
 
 </QA>
 
 <QA question="Implement a stack with push(), pop() and min() in O(1) time.">
 
-Asked in interviews.
+Use two stacks: main stack + min stack. **Push**: push to main; if value ≤ min stack top (or min empty), push to min stack too. **Pop**: pop from main; if popped value == min stack top, pop min too. **Min**: return min stack top. All O(1). Alternative: store pairs `(value, currentMin)` in single stack. Space: O(n) worst case for min stack.
 
 </QA>
 
 <QA question="Reverse a linked list in groups of size k.">
 
-Asked in interviews.
+Iterative: for each group of k nodes, reverse pointers. Track `prevTail` (end of previous reversed group) and connect to new head. Handle last group with fewer than k nodes (reverse or leave as-is). Recursive: reverse first k nodes, recursively call for remaining, connect. Time: O(n), Space: O(1) iterative / O(n/k) recursive. Key: carefully manage `prev`, `curr`, `next` pointers at group boundaries.
 
 </QA>
 
 <QA question="Given two numbers represented by two linked lists, write a function that returns the sum list.">
 
-Asked in interviews.
+If digits are in **reverse order** (like LeetCode #2): traverse both lists, add digits + carry, create new node. `carry = sum / 10`, `digit = sum % 10`. If **forward order**: reverse both lists first, add, reverse result. Or use stacks. Time: O(max(m,n)). Handle: different lengths, final carry. Edge: one list empty, both single digit with carry.
 
 </QA>
 
 <QA question="Rotate a matrix by 90 degrees.">
 
-Asked in interviews.
+**Clockwise 90°**: 1) Transpose the matrix (swap `[i][j]` with `[j][i]`). 2) Reverse each row. **Counter-clockwise**: 1) Transpose. 2) Reverse each column. **In-place**: Layer-by-layer rotation: for each layer, save top, move left→top, bottom→left, right→bottom, saved→right. Time: O(n²), Space: O(1). Also: `rotated[j][n-1-i] = original[i][j]` for new matrix approach.
 
 </QA>
 
 <QA question="Solve the Stock Span Problem.">
 
-Asked in interviews.
+For each day, find how many consecutive previous days had price ≤ today's price. Use a **stack** storing indices. For each day: pop indices while stack top's price ≤ current price. Span = `i - stack.top()` (or `i + 1` if stack empty). Push current index. Time: O(n) — each element pushed/popped at most once. Classic monotonic stack problem.
 
 </QA>
 
 <QA question="Find the Next Greater Element for every element in an array.">
 
-Asked in interviews.
+Use a **monotonic decreasing stack**. Traverse right to left: for each element, pop stack while top ≤ current. If stack not empty, top is NGE; else NGE = -1. Push current. Time: O(n). For circular array: traverse 2n elements using `i % n`. Variation: Next Greater Element II (circular), Next Smaller Element (use increasing stack).
 
 </QA>
 
 <QA question="Find maximum sum subarray such that no two elements are consecutive.">
 
-Asked in interviews.
+DP approach: `incl = max sum including current element`, `excl = max sum excluding current`. For each element: `newIncl = excl + arr[i]`, `newExcl = max(incl, excl)`. Answer: `max(incl, excl)`. O(n) time, O(1) space. This is essentially House Robber problem. Can also formulate as `dp[i] = max(dp[i-1], dp[i-2] + arr[i])`.
 
 </QA>
 
 <QA question="Solve the Edit Distance problem.">
 
-Asked in interviews.
+**DP**: `dp[i][j]` = min operations to convert `word1[0..i-1]` to `word2[0..j-1]`. If chars match: `dp[i][j] = dp[i-1][j-1]`. Else: `dp[i][j] = 1 + min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1])` (delete, insert, replace). Base: `dp[i][0] = i`, `dp[0][j] = j`. Time: O(mn), Space: O(mn) or O(n) with rolling array. Classic DP problem (Levenshtein distance).
 
 </QA>
 
 <QA question="Solve the Assembly Line Scheduling problem.">
 
-Asked in interviews.
+DP problem with two assembly lines. `dp1[j]` = fastest time to reach station j on line 1. `dp1[j] = min(dp1[j-1] + a1[j], dp2[j-1] + t2[j] + a1[j])` (stay on line 1 or transfer from line 2). Similarly for `dp2[j]`. Base: `dp1[0] = e1 + a1[0]`, `dp2[0] = e2 + a2[0]`. Answer: `min(dp1[n-1] + x1, dp2[n-1] + x2)`. Time: O(n), Space: O(n) or O(1).
 
 </QA>
 
@@ -94,31 +94,31 @@ Asked in interviews.
 
 <QA question="Why Amazon?">
 
-Asked in interviews.
+Focus on **Leadership Principles**: Customer Obsession, Ownership, Bias for Action, Dive Deep. Mention: massive scale challenges, diverse tech stack, impact on millions of users, Day 1 culture (innovation mindset), career growth opportunities. Be specific about which team/product excites you. Show alignment with their values. Research recent Amazon innovations. Avoid generic answers — connect to your specific interests and skills.
 
 </QA>
 
 <QA question="Tell me about a project you worked on in your previous company or final year.">
 
-Asked in interviews.
+Use **STAR format**: Situation (context/problem), Task (your role), Action (what you did technically), Result (impact/metrics). Be specific: technologies used, architecture decisions, challenges overcome, quantifiable outcomes ("reduced latency by 40%", "served 10K users"). Show: ownership, technical depth, collaboration. Prepare 2-3 projects with different themes (scalability, innovation, leadership). Keep to 3-5 minutes.
 
 </QA>
 
 <QA question="What motivates you to do your best work?">
 
-Asked in interviews.
+Be authentic but strategic. Good answers: solving challenging technical problems, shipping products users love, continuous learning (new technologies), collaborating with smart people, seeing tangible impact of your work, mentoring others. Connect to the role: "I'm motivated by building scalable systems that handle millions of requests" or "I love the feedback loop of shipping features and seeing user engagement." Avoid: money, titles.
 
 </QA>
 
 <QA question="Where do you see yourself in five years?">
 
-Asked in interviews.
+Show growth ambition aligned with the company. Examples: "Leading a team of engineers, architecting large-scale systems, and mentoring junior developers." Or: "Becoming a deep technical expert in distributed systems, contributing to open-source, and driving technical strategy." Show you want to grow WITH the company. Avoid: "Your job" or overly specific titles. Show learning mindset and increasing impact.
 
 </QA>
 
 <QA question="What aspects of your job do you find most fulfilling?">
 
-Asked in interviews.
+Connect to engineering values: designing elegant solutions to complex problems, seeing code deployed and used by real users, collaborative code reviews, debugging tricky production issues, learning new technologies, building tools that make the team more productive. Be genuine. Give a specific example: "Last quarter, I optimized our API which reduced p99 latency by 60% — seeing that direct impact is incredibly fulfilling."
 
 </QA>
 
@@ -128,103 +128,103 @@ Asked in interviews.
 
 <QA question="Convert a Decimal Number (1 to 3999) to Roman Numerals.">
 
-Asked in interviews.
+Greedy approach: define value-symbol pairs in descending order: `[(1000,'M'), (900,'CM'), (500,'D'), (400,'CD'), (100,'C'), (90,'XC'), (50,'L'), (40,'XL'), (10,'X'), (9,'IX'), (5,'V'), (4,'IV'), (1,'I')]`. For each pair: while num ≥ value, append symbol and subtract value. Time: O(1) since max iterations bounded. Example: 1994 → M+CM+XC+IV = MCMXCIV.
 
 </QA>
 
 <QA question="Find all triplets with zero sum in an array.">
 
-Asked in interviews.
+Sort the array. For each `i`: set `left = i+1`, `right = n-1`. If `sum less than 0`, move left++. If `sum greater than 0`, move right--. If `sum == 0`, record and skip duplicates. Skip duplicate values of `i` too. Time: O(n²). To get distinct triplets: skip elements equal to previous. Alternative: HashSet approach, but sorting is cleaner for deduplication.
 
 </QA>
 
 <QA question="Find the largest subset whose all elements are Fibonacci numbers.">
 
-Asked in interviews.
+Generate all Fibonacci numbers up to max(array) into a HashSet. Iterate through array: if element is in the Fibonacci set, add to result. Time: O(n + log(max)) for Fibonacci generation (grows exponentially, so few numbers needed). Space: O(F) where F = count of Fibonacci numbers up to max. Sort result if needed.
 
 </QA>
 
 <QA question="Calculate maximum value using '+' or '*' sign between two numbers in a string.">
 
-Asked in interviews.
+DP/Greedy: between each pair of digits, choose `+` or `*` to maximize result. Key insight: multiplying by 0 or 1 is suboptimal — add instead. For digits greater than 1: multiply. For 0 or 1: add. Recursive approach: try both operations at each position, take max. For `n` digits, O(2^n) brute force or O(n) greedy: always multiply unless a digit is 0 or 1 (then add).
 
 </QA>
 
 <QA question="Convert a Ternary Expression to a Binary Tree.">
 
-Asked in interviews.
+Parse expression like `a?b:c` or nested `a?b?c:d:e`. Use a **stack**: traverse left to right. Push operands. On `?`: mark as expecting true branch. On `:`: create node, connect children. Recursive: first char is root. If next is `?`, parse true branch (until matching `:`), then false branch. Time: O(n). The key is correctly handling nesting by counting `?`/`:` pairs.
 
 </QA>
 
 <QA question="Convert Roman Numerals to Decimal (1 to 3999).">
 
-Asked in interviews.
+Map: `{'I':1, 'V':5, 'X':10, 'L':50, 'C':100, 'D':500, 'M':1000}`. Traverse right to left: if current value < previous value, subtract it; else add it. `result = 0; prev = 0`. Example: `MCMXCIV` → 1000+(-100+1000)+(-10+100)+(-1+5) = 1994. Time: O(n), Space: O(1). The subtraction rule handles CM, XC, IV patterns.
 
 </QA>
 
 <QA question="Count all distinct pairs with difference equal to k.">
 
-Asked in interviews.
+Use a **HashSet**: insert all elements. For each element `x`, check if `x + k` exists (for k greater than 0). Count matches. For k = 0: count elements appearing more than once (use frequency map). Time: O(n), Space: O(n). Alternative: sort + two pointers (O(n log n)). Be careful with duplicates — use a set for elements and count distinct pairs only.
 
 </QA>
 
 <QA question="Decode a string recursively encoded as count followed by substring.">
 
-Asked in interviews.
+`"3[a2[bc]]"` → `"abcbcabcbcabcbc"`. Use a **stack**: push current string and count when hitting `[`. On `]`: pop count and previous string, append current string repeated count times. Or recursive: parse number, expect `[`, recursively decode until `]`, repeat result. Time: O(output length). LeetCode #394.
 
 </QA>
 
 <QA question="Find if a string is K-Palindrome or not.">
 
-Asked in interviews.
+A string is K-palindrome if it can become a palindrome by removing at most K characters. Find **Longest Palindromic Subsequence** (LPS) using DP. If `n - LPS ≤ K`, it's K-palindrome. LPS DP: `dp[i][j]` = LPS of `s[i..j]`. If `s[i] == s[j]`: `dp[i][j] = dp[i+1][j-1] + 2`. Else: `max(dp[i+1][j], dp[i][j-1])`. Time: O(n²). Alternative: Edit distance between string and its reverse ≤ 2K.
 
 </QA>
 
 <QA question="Find Minimum Depth of a Binary Tree.">
 
-Asked in interviews.
+**BFS** (optimal): level-order traversal. Return depth of first leaf node encountered. O(n) time, O(w) space where w = max width. **DFS**: if leaf, return 1. If one child null, recurse on other child (don't return 0). If both children: `1 + min(left, right)`. BFS is preferred — stops early for unbalanced trees. Edge: single node = depth 1.
 
 </QA>
 
 <QA question="Find subarray with a given sum (non-negative numbers).">
 
-Asked in interviews.
+**Sliding window**: start = 0, currSum = 0. For each end: add arr[end] to currSum. While currSum > target: subtract arr[start] and start++. If currSum == target: return [start, end]. Works because all non-negative — expanding window increases sum, shrinking decreases. Time: O(n), Space: O(1). For arrays with negatives: use prefix sum + HashMap.
 
 </QA>
 
 <QA question="Given two unsorted arrays, find all pairs whose sum is x.">
 
-Asked in interviews.
+Hash approach: insert all elements of array2 into a HashSet. For each element `a` in array1: check if `x - a` exists in the set. If yes, `(a, x-a)` is a pair. Time: O(m+n), Space: O(n). For distinct pairs: use a visited set. Sorting + two-pointer: sort both, use pointers from start of one and end of other. O(m log m + n log n).
 
 </QA>
 
 <QA question="Activity Selection Problem (Greedy).">
 
-Asked in interviews.
+Given activities with start/end times, select max non-overlapping activities. **Greedy**: sort by finish time. Pick first activity. For each subsequent: if start ≥ last selected's finish, select it. Time: O(n log n) for sorting. Always choosing earliest-finishing activity leaves max room for future activities. Proof: exchange argument shows greedy is optimal. Foundation for interval scheduling problems.
 
 </QA>
 
 <QA question="Generate the Look-and-Say Sequence.">
 
-Asked in interviews.
+1, 11, 21, 1211, 111221... Each term describes the previous. "1" → "one 1" → "11". "11" → "two 1s" → "21". Algorithm: scan previous string, count consecutive identical digits, append count + digit. `let result = ''; let i = 0; while(i < s.length) { let count = 1; while(i+count < s.length && s[i+count] === s[i]) count++; result += count + s[i]; i += count; }`. Time: O(n) per term.
 
 </QA>
 
 <QA question="Find the smallest subarray with sum greater than a given value.">
 
-Asked in interviews.
+**Sliding window**: expand right to increase sum, shrink left to minimize length. `minLen = Infinity; start = 0; sum = 0`. For each end: `sum += arr[end]`. While `sum > target`: update `minLen = min(minLen, end-start+1)`, subtract `arr[start++]`. Time: O(n). Works for positive numbers. For mixed: use prefix sums + deque or binary search on prefix sums (O(n log n)).
 
 </QA>
 
 <QA question="Write a program to add two binary strings.">
 
-Asked in interviews.
+Traverse both strings from right to left. Add corresponding bits + carry. `sum = bit1 + bit2 + carry`. Append `sum % 2`. Update `carry = Math.floor(sum / 2)`. If one string is shorter, treat missing bits as 0. After loop: if carry, append 1. Reverse result. Time: O(max(m,n)). Can use BigInt in JS: `(BigInt('0b'+a) + BigInt('0b'+b)).toString(2)` but manual is interview-expected.
 
 </QA>
 
 <QA question="Rearrange a string in sorted order followed by the integer sum.">
 
-Asked in interviews.
+Separate characters and digits. Sort characters alphabetically. Sum all digits. Concatenate: sorted characters + sum. Example: `"a1b2c3"` → `"abc6"`. Implementation: iterate string, push letters to array and accumulate digit sum. Sort letters array. Join: `sortedLetters.join('') + sum`. Time: O(n log n) for sorting letters. Handle edge cases: no letters, no digits.
 
 </QA>
 
@@ -232,37 +232,37 @@ Asked in interviews.
 
 <QA question="Boggle problem using Trie.">
 
-Asked in interviews.
+Build a **Trie** from the dictionary. DFS from each cell on the board: at each cell, check if current path exists in Trie. If it's a word, add to results. Mark visited cells. Explore 8 neighbors. Backtrack. Trie optimization: prune branches with no matching prefix. Time: O(M·N·4^L) worst case, much better with Trie pruning. LeetCode #212 (Word Search II).
 
 </QA>
 
 <QA question="Count Possible Decodings of a given Digit Sequence.">
 
-Asked in interviews.
+DP: `dp[i]` = ways to decode `s[0..i-1]`. If `s[i-1] != '0'`: `dp[i] += dp[i-1]` (single digit). If `10 ≤ s[i-2..i-1] ≤ 26`: `dp[i] += dp[i-2]` (two digits). Base: `dp[0] = 1`, `dp[1] = s[0] != '0' ? 1 : 0`. Time: O(n), Space: O(1) with two variables. Handle: leading zeros, "0" characters. LeetCode #91.
 
 </QA>
 
 <QA question="Inplace rotate square matrix by 90 degrees.">
 
-Asked in interviews.
+**Clockwise**: 1) Transpose (`swap(mat[i][j], mat[j][i])`). 2) Reverse each row. **Counter-clockwise**: 1) Transpose. 2) Reverse each column. Or: layer-by-layer rotation processing elements in groups of 4. `temp = mat[i][j]; mat[i][j] = mat[n-1-j][i]; mat[n-1-j][i] = mat[n-1-i][n-1-j]; mat[n-1-i][n-1-j] = mat[j][n-1-i]; mat[j][n-1-i] = temp`. Time: O(n²), Space: O(1).
 
 </QA>
 
 <QA question="Find Largest Rectangular Area in a Histogram using Stack.">
 
-Asked in interviews.
+Use a **monotonic increasing stack** of indices. For each bar: while stack top's height > current, pop and calculate area with popped bar as smallest. Width = `i - stack.top() - 1` (or `i` if stack empty). Push current. After loop: process remaining stack elements. Time: O(n), Space: O(n). Each bar pushed/popped at most once. Foundation for maximal rectangle in binary matrix. LeetCode #84.
 
 </QA>
 
 <QA question="Find largest sum subarray with at-least k numbers.">
 
-Asked in interviews.
+Compute prefix sums. For subarrays of length ≥ k: `maxSum = prefix[k] - prefix[0]`. For each `i > k`: `maxSum = max(maxSum, prefix[i] - min(prefix[0..i-k]))`. Track running minimum of prefix sums. Alternative: compute max subarray sum for exactly k elements using sliding window, then extend using Kadane's. Time: O(n). Combine: max of (sliding window of k) and (Kadane's extended beyond k).
 
 </QA>
 
 <QA question="Multiply Large Numbers represented as Strings.">
 
-Asked in interviews.
+Simulate grade-school multiplication. Create result array of size `m+n`. For each digit pair `num1[i] * num2[j]`: add to `result[i+j+1]`, propagate carry to `result[i+j]`. Convert result array to string, remove leading zeros. Time: O(m·n). No BigInt needed. Key: `result[i+j+1] += num1[i] * num2[j]`, then `result[i+j] += result[i+j+1] / 10`, `result[i+j+1] %= 10`. LeetCode #43.
 
 </QA>
 
@@ -270,19 +270,19 @@ Asked in interviews.
 
 <QA question="Find the Median in a stream of integers (running integers).">
 
-Asked in interviews.
+Use two heaps: **Max-Heap** (left half) and **Min-Heap** (right half). Insert: add to max-heap, balance so both heaps differ by at most 1. Median: if equal size, average of both tops. If unequal, top of larger heap. Time: O(log n) per insertion, O(1) for median. Balance: if `maxHeap.top() > minHeap.top()`, swap tops. Keep `|maxHeap.size - minHeap.size| ≤ 1`. LeetCode #295.
 
 </QA>
 
 <QA question="Find the m-th smallest value in k sorted arrays.">
 
-Asked in interviews.
+Use a **Min-Heap** of size k. Insert first element from each array. Extract min m times: each extraction, push next element from same array. Time: O(m log k). Alternative: binary search on the value range — for each candidate value, count elements ≤ value across all arrays using binary search. O(k log n · log(max-min)). For k=2: merge and pick m-th.
 
 </QA>
 
 <QA question="Wildcard Pattern Matching.">
 
-Asked in interviews.
+`?` matches any single character. `*` matches any sequence (including empty). **DP**: `dp[i][j]` = does `pattern[0..i-1]` match `text[0..j-1]`. If `p[i]=='*'`: `dp[i][j] = dp[i-1][j] || dp[i][j-1]` (skip `*` or consume one more char). If `p[i]=='?' || p[i]==t[j]`: `dp[i][j] = dp[i-1][j-1]`. Time: O(m·n). Space can be optimized to O(n). LeetCode #44.
 
 </QA>
 
@@ -290,109 +290,109 @@ Asked in interviews.
 
 <QA question="Check if a Binary Tree is BST or not.">
 
-Asked in interviews.
+Pass a valid range `[min, max]` to each node. Root: `[-∞, ∞]`. Left child: `[min, parent.val]`. Right child: `[parent.val, max]`. If node.val is outside range, not BST. Time: O(n). Alternative: in-order traversal should produce sorted sequence — track `prev` value and ensure `current > prev`. Edge: handle equal values per problem definition.
 
 </QA>
 
 <QA question="Remove duplicates from a string in-place.">
 
-Asked in interviews.
+Use a **boolean array** (or HashSet) of 256 characters. Two-pointer: `write = 0`. For each `read` position: if char not seen, mark seen, copy to `write` position, `write++`. Result length: `write`. Time: O(n), Space: O(1) (fixed 256 array). For sorted strings: compare adjacent chars. For preserving order: the HashSet approach maintains first occurrence order.
 
 </QA>
 
 <QA question="Search for an element in a sorted and rotated array.">
 
-Asked in interviews.
+**Modified binary search**: find which half is sorted. If `arr[low] ≤ arr[mid]`: left half sorted — if target in `[arr[low], arr[mid])`, search left, else right. Else: right half sorted — if target in `(arr[mid], arr[high]]`, search right, else left. Time: O(log n). Handle duplicates: if `arr[low] == arr[mid]`, do `low++`. LeetCode #33.
 
 </QA>
 
 <QA question="Given two linked lists that represent big numbers, write a function that adds them and stores the result in a third list.">
 
-Asked in interviews.
+Reverse both lists (to process from least significant digit). Traverse simultaneously: `sum = l1.val + l2.val + carry`. Create new node with `sum % 10`. `carry = Math.floor(sum / 10)`. Handle different lengths (treat null as 0). After both lists: if carry remains, add node. Reverse result list. Time: O(max(m,n)). Alternative: use stacks instead of reversing.
 
 </QA>
 
 <QA question="Subtract or multiply two numbers represented by linked lists.">
 
-Asked in interviews.
+**Subtract**: convert lists to numbers (or reverse and subtract digit by digit with borrow). Determine which is larger first. Subtract smaller from larger: `diff = digit1 - digit2 - borrow`. If negative: add 10, borrow = 1. **Multiply**: for each digit in list2, multiply with entire list1 (like long multiplication), shift by position, add results. Or convert to numbers if within range.
 
 </QA>
 
 <QA question="Print last 10 lines of a big file or big string.">
 
-Asked in interviews.
+Use a **circular buffer** of size 10. Read file line by line. Store each line at `buffer[count % 10]`. After reading: print from `(count less than 10 ? 0 : count % 10)` to end. Time: O(n) for reading, O(1) space (beyond buffer). Alternative: `tail -10 file` in Unix. For big strings: count newlines, seek to position of 10th-from-last newline. Two-pass: count lines first, then read from `total-10`.
 
 </QA>
 
 <QA question="Clone a linked list with next and random pointer.">
 
-Asked in interviews.
+**Interleaving approach**: 1) Insert copied nodes after originals: `A->A'->B->B'->C->C'`. 2) Set random pointers: `copy.random = original.random.next`. 3) Separate lists. Time: O(n), Space: O(1) (excluding result). **HashMap approach**: map original → copy. First pass: create copies. Second pass: set next/random using map. Time: O(n), Space: O(n). LeetCode #138.
 
 </QA>
 
 <QA question="Connect nodes at the same level in a binary tree.">
 
-Asked in interviews.
+BFS level-order: for each level, link nodes left to right using a `next` pointer. `node.next = queue.peek()` (for non-last node in level). Or iterative using existing `next` pointers: traverse level using `next`, connect children of current level. For perfect binary tree: `node.left.next = node.right`, `node.right.next = node.next?.left`. Time: O(n). LeetCode #116/#117.
 
 </QA>
 
 <QA question="Find the Least Common Ancestor of a binary tree or binary search tree.">
 
-Asked in interviews.
+**BST**: traverse from root. If both nodes < root, go left. Both > root, go right. Otherwise root is LCA. O(h). **Binary Tree**: recursive DFS. If root is null or root == p or root == q, return root. Recurse left and right. If both return non-null, root is LCA. If one returns null, return other. O(n). Iterative: store parent pointers, find ancestors of p, check q's ancestors against set.
 
 </QA>
 
 <QA question="Write test cases for testing an ATM.">
 
-Asked in interviews.
+**Functional**: valid PIN, correct balance display, successful withdrawal, correct denominations, receipt generation, multi-language support. **Edge cases**: insufficient funds, invalid PIN (3 attempts → block), withdrawal exceeding daily limit, requesting unavailable denominations, zero balance. **Security**: card skimming protection, session timeout, encrypted PIN transmission. **Concurrency**: two users accessing same account. **Hardware**: card jam, paper-out, network failure mid-transaction.
 
 </QA>
 
 <QA question="Implement Run Length Encoding.">
 
-Asked in interviews.
+`"aaabbc"` → `"a3b2c1"`. Traverse string, count consecutive identical characters. Append char + count. `let result = ''; let i = 0; while(i < s.length) { let count = 1; while(i+count < s.length && s[i+count] === s[i]) count++; result += s[i] + count; i += count; }`. Decoding: parse char + number pairs, repeat char. Time: O(n). Efficient for strings with many repeats.
 
 </QA>
 
 <QA question="Detect and remove a cycle in a linked list.">
 
-Asked in interviews.
+**Floyd's algorithm**: slow (1 step) and fast (2 steps) pointers. If they meet, cycle exists. **Remove**: reset slow to head. Move both one step at a time. They meet at cycle start. Set the node before cycle start's next to null. Alternative: hash set of visited nodes — first revisited node is cycle start. Time: O(n), Space: O(1) for Floyd's. LeetCode #141/#142.
 
 </QA>
 
 <QA question="Given a sorted array of size n with unique elements from 1 to n+1, find the missing element. Write code and test cases.">
 
-Asked in interviews.
+**Binary search**: if `arr[mid] == mid + 1`, missing is in right half. Else left half. O(log n). **Math**: `missing = n*(n+1)/2 - sum(arr)` but only works for 1 to n. **XOR**: XOR all array elements with 1 to n+1. Test cases: missing at start (1), end (n+1), middle, n=1, n=2.
 
 </QA>
 
 <QA question="Check if a binary tree is height-balanced.">
 
-Asked in interviews.
+Balanced: for every node, `|leftHeight - rightHeight| ≤ 1`. Recursive O(n) solution: return -1 if unbalanced, else height. `function check(node) { if (!node) return 0; let l = check(node.left); if (l == -1) return -1; let r = check(node.right); if (r == -1 || Math.abs(l-r) greater than 1) return -1; return 1 + Math.max(l, r); }`. Balanced if `check(root) != -1`. Bottom-up avoids redundant height calculations.
 
 </QA>
 
 <QA question="Validate a given IP address.">
 
-Asked in interviews.
+Split by `.` for IPv4 (4 parts, each 0-255, no leading zeros). Split by `:` for IPv6 (8 groups, each 1-4 hex digits). **IPv4 validation**: `parts = ip.split('.')`. Check: `parts.length == 4`, each part is numeric, `0 ≤ parseInt(part) ≤ 255`, no leading zeros (except "0" itself). **Regex**: `/^((25[0-5]|2[0-4]\d|[01]?\d\d?)\.){3}(25[0-5]|2[0-4]\d|[01]?\d\d?)$/`. Edge cases: empty string, extra dots, whitespace.
 
 </QA>
 
 <QA question="Why do you want to join Microsoft?">
 
-Asked in interviews.
+Highlight: mission ("empower every person and organization"), impact at massive scale (Office, Azure, Windows), strong engineering culture, work-life balance, growth mindset philosophy under Satya Nadella, diverse product portfolio, investment in AI (Copilot, OpenAI partnership). Be specific: mention which product/team interests you and why. Show knowledge of Microsoft's recent innovations. Connect your skills to their challenges. Demonstrate alignment with their values.
 
 </QA>
 
 <QA question="Two nodes of a BST are swapped. Correct the BST.">
 
-Asked in interviews.
+In-order traversal of correct BST is sorted. Two swapped nodes create: one or two violations where `prev > current`. Do in-order traversal tracking violations. **First violation**: `first = prev`, `second = current`. **Second violation** (if exists): `second = current`. Swap values of `first` and `second`. Time: O(n), Space: O(h). Morris traversal achieves O(1) space. If adjacent nodes swapped: only one violation.
 
 </QA>
 
 <QA question="Draw a circle without floating point arithmetic.">
 
-Asked in interviews.
+**Bresenham's Circle Algorithm** (Midpoint Circle): uses only integer arithmetic. Start at `(0, r)`. Decision parameter `d = 1 - r`. For each step: if `d less than 0`, `d += 2x + 3`, move east. Else `d += 2(x-y) + 5`, move southeast (`y--`). Plot 8 symmetric points using octant symmetry: `(±x, ±y)` and `(±y, ±x)`. Continues while `x ≤ y`. Only addition and subtraction — no multiplication, division, or trigonometry needed.
 
 </QA>
 
@@ -400,13 +400,13 @@ Asked in interviews.
 
 <QA question="Apple SDE Sheet: Covers Arrays, Strings, Linked Lists, Stacks, Queues, Trees, Graphs, Dynamic Programming, Sorting, Searching, and System Design problems.">
 
-Asked in interviews.
+Apple focuses heavily on: **Arrays/Strings** (two pointers, sliding window, sorting), **Trees** (traversals, BST operations, LCA), **Graphs** (BFS/DFS, shortest path), **DP** (classic problems like LCS, knapsack), **System Design** (design iMessage, design Apple Music, design iCloud sync). Key themes: clean code quality, Swift/Objective-C knowledge (for iOS roles), optimization, concurrency, and attention to user experience in design questions.
 
 </QA>
 
 <QA question="Describe Apple's SDE interview process and the types of rounds involved.">
 
-Asked in interviews.
+Apple's process: 1) **Phone screen** — recruiter call + technical phone interview (1 coding problem). 2) **On-site** (4-6 rounds): 2-3 coding rounds (DS&A, problem-solving), 1 system design (senior+), 1-2 behavioral/team fit (focus on collaboration, conflict resolution, passion for Apple products). Emphasis on clean, production-quality code. Interviewers are from the hiring team. No standard LP framework like Amazon — focus on curiosity and craftsmanship.
 
 </QA>
 
@@ -414,60 +414,60 @@ Asked in interviews.
 
 <QA question="Netflix SDE Sheet: Array problems — subarrays, rotations, searching, and sorting within arrays.">
 
-Asked in interviews.
+Key array problems: **Subarrays** — max subarray sum (Kadane's O(n)), subarray with given sum (sliding window/prefix sum). **Rotations** — search in rotated sorted array (modified binary search O(log n)), find rotation point. **Searching** — binary search variations, search in 2D sorted matrix. **Sorting** — merge sort (stable), quick sort (in-place), counting sort for bounded ranges. Focus: O(n) or O(n log n) solutions, space optimization.
 
 </QA>
 
 <QA question="Netflix SDE Sheet: String problems — pattern matching, palindromes, and string manipulation.">
 
-Asked in interviews.
+Key string problems: **Pattern matching** — KMP algorithm O(n+m), Rabin-Karp (rolling hash), regex matching. **Palindromes** — longest palindromic substring (expand around center O(n²) or Manacher's O(n)), palindrome partitioning (backtracking + DP). **Manipulation** — string to integer (atoi), reverse words, anagram grouping (sorted key + hashmap), longest substring without repeating chars (sliding window O(n)).
 
 </QA>
 
 <QA question="Netflix SDE Sheet: Linked List problems — reversal, cycle detection, and merge operations.">
 
-Asked in interviews.
+Key linked list problems: **Reversal** — iterative (3 pointers O(n)), recursive, reverse in groups of k. **Cycle detection** — Floyd's slow/fast pointers O(n), find cycle start. **Merge** — merge two sorted lists (iterative/recursive O(m+n)), merge k sorted lists (min-heap O(n log k)). Also: find middle (slow/fast), remove nth from end (two pointers), intersection point of two lists, clone with random pointer.
 
 </QA>
 
 <QA question="Netflix SDE Sheet: Stack and Queue problems — bracket matching, next greater element, and BFS.">
 
-Asked in interviews.
+Key problems: **Stack** — valid parentheses (push open, pop on close O(n)), next greater element (monotonic stack O(n)), largest rectangle in histogram, implement min stack O(1). **Queue** — BFS traversal, implement queue using stacks, sliding window maximum (deque O(n)), rotten oranges (multi-source BFS). Patterns: monotonic stack for next greater/smaller, BFS for shortest path in unweighted graphs.
 
 </QA>
 
 <QA question="Netflix SDE Sheet: Tree problems — traversals, LCA, diameter, and BST validation.">
 
-Asked in interviews.
+Key tree problems: **Traversals** — inorder/preorder/postorder (recursive + iterative using stack), level-order (BFS with queue). **LCA** — recursive DFS for binary tree O(n), BST property for BST O(h). **Diameter** — max `leftHeight + rightHeight` at any node using post-order DFS O(n). **BST validation** — in-order should be sorted, or pass valid range [min, max] recursively. Also: serialize/deserialize, construct from traversals.
 
 </QA>
 
 <QA question="Netflix SDE Sheet: Graph problems — shortest path, cycle detection, topological sort, and connected components.">
 
-Asked in interviews.
+Key graph problems: **Shortest path** — Dijkstra's (weighted, non-negative O(E log V)), BFS (unweighted O(V+E)), Bellman-Ford (negative weights O(VE)). **Cycle detection** — DFS coloring (directed), Union-Find (undirected). **Topological sort** — Kahn's BFS or DFS postorder for DAGs. **Connected components** — DFS/BFS traversal or Union-Find. Also: bipartite check, number of islands, word ladder.
 
 </QA>
 
 <QA question="Netflix SDE Sheet: Dynamic Programming problems — LCS, knapsack, coin change, and matrix chain multiplication.">
 
-Asked in interviews.
+Key DP problems: **LCS** — 2D DP, `dp[i][j] = dp[i-1][j-1]+1` if match, else `max(dp[i-1][j], dp[i][j-1])`, O(mn). **0/1 Knapsack** — `dp[i][w] = max(dp[i-1][w], dp[i-1][w-wt[i]] + val[i])`. **Coin change** — unbounded: `dp[i] = min(dp[i], dp[i-coin]+1)` O(n·amount). **Matrix chain** — interval DP: `dp[i][j] = min(dp[i][k] + dp[k+1][j] + dims)` O(n³). Patterns: overlapping subproblems + optimal substructure.
 
 </QA>
 
 <QA question="Netflix SDE Sheet: Hash and Heap problems — frequency counting, top-K elements, and median finding.">
 
-Asked in interviews.
+Key problems: **Hashing** — frequency counting (HashMap O(n)), two sum (complement lookup O(n)), group anagrams (sorted key), longest substring without repeating (sliding window + set). **Heap** — top-K elements (min-heap of size K, O(n log K)), K closest points (max-heap), merge K sorted lists (min-heap O(n log K)). **Median** — two heaps (max-heap + min-heap), insertion O(log n), query O(1).
 
 </QA>
 
 <QA question="Netflix SDE Sheet: Searching and Sorting problems — binary search variations, merge sort, and quick sort.">
 
-Asked in interviews.
+Key problems: **Binary search** — search in rotated array, find first/last occurrence, search in 2D matrix, median of two sorted arrays O(log(min(m,n))). **Merge sort** — O(n log n), stable, count inversions during merge. **Quick sort** — O(n log n) average, in-place, Lomuto/Hoare partition. Also: counting sort O(n+k), radix sort O(d·(n+k)), bucket sort. Patterns: binary search on answer, partition-based selection.
 
 </QA>
 
 <QA question="Describe Netflix's interview rounds including phone screening, behavioral skills, and technical phone screening.">
 
-Asked in interviews.
+Netflix process: 1) **Recruiter screen** — culture fit, role alignment, salary expectations. 2) **Technical phone screen** — 1-2 coding problems (45-60 min), focus on clean code and communication. 3) **On-site** (5-6 rounds): 2-3 coding/system design, 1-2 behavioral (Netflix culture values: freedom and responsibility, context not control, radical candor). Netflix emphasizes: senior-level judgment, independent decision-making, no micromanagement culture. Compensation: top-of-market, all cash (no stock vesting).
 
 </QA>

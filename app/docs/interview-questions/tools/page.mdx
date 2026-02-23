@@ -12,121 +12,121 @@ In the repo root they're identical (stage all changes). git add . only stages ch
 
 <QA question="What is Git and GitHub, and how do you use them together?">
 
-Asked in interviews.
+**Git** is a distributed version control system that tracks changes in your codebase. Every developer has a full copy of the repo history. **GitHub** is a cloud hosting platform for Git repositories that adds collaboration features — pull requests, code reviews, issues, CI/CD (Actions), project boards. **Together**: you develop locally with Git (commit, branch, merge), then push to GitHub for collaboration — others clone/pull your changes, open PRs for review, and CI pipelines run automatically.
 
 </QA>
 
 <QA question="What is Git, and can GitHub work without Git?">
 
-Asked in interviews.
+**Git** is the underlying version control tool — it handles commits, branches, merges, and history tracking locally. **GitHub cannot work without Git** — it's fundamentally a Git repository hosting service. GitHub's core features (commits, branches, PRs, diffs) all depend on Git's data model. However, GitHub's web UI lets you make simple edits (create files, fix typos) without installing Git locally — but behind the scenes, Git operations are still happening on GitHub's servers.
 
 </QA>
 
 <QA question="What is the difference between Git and Ansible in a DevOps workflow?">
 
-Asked in interviews.
+**Git** is a version control system — it tracks and manages source code changes, enables branching/merging, and stores history. **Ansible** is a configuration management and automation tool — it provisions servers, installs software, deploys applications, and manages infrastructure state. In a DevOps workflow: Git stores your code AND your Ansible playbooks/infrastructure-as-code. When you push changes to Git, CI/CD pipelines trigger Ansible to apply those changes to servers. Git = "what should exist"; Ansible = "make it so."
 
 </QA>
 
 <QA question="What are the most important Git commands (push, pull, clone, commit, etc.)?">
 
-Asked in interviews.
+**Setup**: `git init` (create repo), `git clone` (copy remote repo). **Daily work**: `git add` (stage changes), `git commit -m` (save snapshot), `git status` (check state), `git diff` (view changes). **Branching**: `git branch` (list/create), `git checkout -b` / `git switch -c` (create + switch), `git merge` (combine branches). **Remote**: `git push` (upload commits), `git pull` (download + merge), `git fetch` (download only). **History**: `git log` (view history), `git blame` (who changed what). **Undo**: `git reset`, `git revert`, `git stash` (temporarily save changes).
 
 </QA>
 
 <QA question="What is the difference between Git and build tools like Gradle?">
 
-Asked in interviews.
+**Git** manages source code versioning — tracking changes, branching, merging, collaboration. It doesn't know how to compile or build your code. **Gradle** is a build automation tool — it compiles code, runs tests, resolves dependencies, packages artifacts (JAR/WAR), and deploys. They serve complementary purposes: Git tracks WHAT changed in your code; Gradle turns that code into a runnable application. In CI/CD: Git triggers the pipeline on push → Gradle builds and tests → artifact is deployed.
 
 </QA>
 
 <QA question="Can you explain how Git works internally (data structures)?">
 
-Asked in interviews.
+Git uses a **content-addressable filesystem** built on 4 object types stored as SHA-1 hashes: 1) **Blob** — stores file content (no filename). 2) **Tree** — represents a directory listing (maps filenames → blob hashes). 3) **Commit** — points to a tree (snapshot) + parent commit(s) + metadata (author, message, timestamp). 4) **Tag** — annotated pointer to a commit. **Refs** (branches, HEAD) are simply files containing commit hashes. A branch is just a pointer to the latest commit. The `.git/objects/` directory stores all objects, `.git/refs/` stores branch pointers. This model enables O(1) branching and efficient storage through object sharing.
 
 </QA>
 
 <QA question="What is the difference between git fetch and git pull?">
 
-Asked in interviews.
+`git fetch` downloads new commits and branches from the remote but does NOT merge them into your working branch — it updates remote-tracking branches (e.g., `origin/main`). `git pull` = `git fetch` + `git merge` — it downloads AND merges automatically. **Best practice**: use `git fetch` first to see what changed (`git log HEAD..origin/main`), then merge or rebase. Use `git pull --rebase` to rebase your local commits on top of remote changes instead of creating merge commits. Pull is convenient for simple workflows; fetch gives you more control.
 
 </QA>
 
 <QA question="What is git rebase and when should it be used over git merge?">
 
-Asked in interviews.
+`git rebase` replays your commits on top of another branch, creating a linear history. `git merge` creates a merge commit preserving both branch histories. **Use rebase**: on feature branches before merging to main (cleaner history), for `git pull --rebase` to avoid unnecessary merge commits. **Use merge**: on shared/public branches, when you want to preserve the exact history of when branches diverged and merged. **Golden rule**: never rebase commits that have been pushed and others may have pulled — it rewrites commit hashes and causes conflicts for collaborators.
 
 </QA>
 
 <QA question="Explain the standard Git workflow (Gitflow, Feature Branching).">
 
-Asked in interviews.
+**Feature Branching**: simplest — create a branch per feature from `main`, develop, open PR, review, merge, delete branch. **Gitflow**: more structured — `main` (production), `develop` (integration), `feature/*` (new features from develop), `release/*` (prep for production), `hotfix/*` (urgent prod fixes). **Trunk-based development**: everyone commits to `main` frequently (at least daily) using short-lived feature branches (less than 1 day). Feature flags hide incomplete work. **GitHub Flow**: simplified Gitflow — only `main` + feature branches, deploy from main after merge. Choose based on team size and release frequency.
 
 </QA>
 
 <QA question="What is a merge conflict and what are the steps to resolve it?">
 
-Asked in interviews.
+A **merge conflict** occurs when two branches modify the same lines of a file differently, and Git can't auto-merge. **Steps**: 1) Run `git merge` or `git rebase` — Git marks conflicts. 2) Open conflicted files — look for `<<<<<<<`, `=======`, `>>>>>>>` markers. 3) Edit the file to keep the correct version (or combine both). 4) Remove the conflict markers. 5) `git add` the resolved files. 6) `git commit` (for merge) or `git rebase --continue` (for rebase). **Prevention**: pull frequently, communicate with team about shared files, keep branches short-lived.
 
 </QA>
 
 <QA question="Explain the purpose and usage of git stash.">
 
-Asked in interviews.
+`git stash` temporarily saves uncommitted changes (staged and unstaged) and reverts your working directory to the last commit. Useful when you need to switch branches but aren't ready to commit. **Commands**: `git stash` (save changes), `git stash list` (see all stashes), `git stash pop` (restore latest stash and remove from list), `git stash apply` (restore but keep in list), `git stash drop` (delete a stash), `git stash branch name` (create branch from stash). Use `git stash -u` to include untracked files. Stash is a stack — LIFO order.
 
 </QA>
 
 <QA question="What is the difference between git reset (soft, mixed, hard) and git revert?">
 
-Asked in interviews.
+**git reset** moves HEAD backward, rewriting history. `--soft`: moves HEAD only (commits undone, changes stay staged). `--mixed` (default): moves HEAD + unstages changes (changes stay in working directory). `--hard`: moves HEAD + unstages + deletes changes (⚠️ destructive). **git revert** creates a NEW commit that undoes a previous commit's changes — history is preserved. **Use reset** on local/unpushed commits; **use revert** on shared/pushed commits. Reset rewrites history (dangerous for others); revert is always safe for shared branches.
 
 </QA>
 
 <QA question="How do you rename a local and remote branch in Git?">
 
-Asked in interviews.
+**Local**: `git branch -m old-name new-name` (or `git branch -m new-name` if on the branch). **Remote**: delete old remote branch and push new one: `git push origin --delete old-name` then `git push origin new-name`. **Update tracking**: `git push origin -u new-name`. Other team members need to: `git fetch --prune` to remove stale remote tracking branch, then `git checkout new-name`.
 
 </QA>
 
 <QA question="What are Git submodules and why would you use them?">
 
-Asked in interviews.
+**Submodules** let you include one Git repository inside another as a subdirectory, at a specific commit. **Use cases**: sharing common libraries across projects, including third-party dependencies with a pinned version, separating concerns in a monorepo. **Commands**: `git submodule add url path`, `git submodule update --init --recursive` (clone submodules), `git submodule update --remote` (update to latest). **Drawback**: complex workflow — team members must init submodules after cloning, and updates require explicit commits in parent repo. Alternatives: Git subtree (simpler) or package managers (npm, Maven).
 
 </QA>
 
 <QA question="Explain git cherry-pick and its use cases.">
 
-Asked in interviews.
+`git cherry-pick <commit-hash>` applies a specific commit from one branch onto your current branch, creating a new commit with the same changes but a different hash. **Use cases**: 1) Hotfix — apply a bug fix from develop to a release branch. 2) Selective migration — bring specific features/commits without merging the entire branch. 3) Recovering lost work — apply commits from a deleted branch. **Caveats**: can create duplicate commits if the source branch is later merged. Use sparingly — merging or rebasing is usually preferred for whole-branch integration.
 
 </QA>
 
 <QA question="How do you fix a commit message that has already been pushed?">
 
-Asked in interviews.
+**Last commit**: `git commit --amend -m "New message"` then `git push --force-with-lease`. **Older commit**: `git rebase -i HEAD~N`, change `pick` to `reword` for the target commit, save, edit message, then `git push --force-with-lease`. **⚠️ Warning**: both rewrite history. Use `--force-with-lease` (safer than `--force` — fails if someone else pushed). Communicate with team before force-pushing to shared branches. For shared branches, it's often better to just accept the typo.
 
 </QA>
 
 <QA question="What is the purpose of the .gitignore file?">
 
-Asked in interviews.
+`.gitignore` specifies files and directories that Git should NOT track. Entries are pattern-matched: `*.log` (all log files), `node_modules/` (directory), `!important.log` (negate — do track this). **Common ignores**: build outputs (`dist/`, `build/`), dependencies (`node_modules/`, `vendor/`), IDE files (`.idea/`, `.vscode/`), environment files (`.env`), OS files (`.DS_Store`, `Thumbs.db`). Place in repo root; can also have `.gitignore` in subdirectories. Files already tracked must be removed with `git rm --cached file` before .gitignore applies to them.
 
 </QA>
 
 <QA question="Explain the concept of 'Head' in Git.">
 
-Asked in interviews.
+**HEAD** is a pointer to the current commit you're on — it tells Git which snapshot is checked out. Usually HEAD points to a **branch name** (e.g., HEAD → main → commit abc123), and when you make a new commit, both HEAD and the branch move forward. **Detached HEAD** occurs when HEAD points directly to a commit instead of a branch (e.g., after `git checkout hash`). Commits in detached HEAD aren't on any branch and can be lost. `HEAD~1` = parent commit, `HEAD~2` = grandparent. `HEAD^1` = first parent (useful for merge commits).
 
 </QA>
 
 <QA question="How do you find a bug-introducing commit using Git bisect?">
 
-Asked in interviews.
+`git bisect` uses binary search to find the exact commit that introduced a bug. **Steps**: 1) `git bisect start` — begin bisect session. 2) `git bisect bad` — mark current commit as bad (has the bug). 3) `git bisect good commit` — mark a known good commit (no bug). 4) Git checks out a middle commit — test it. 5) Mark as `git bisect good` or `git bisect bad`. 6) Repeat until Git identifies the first bad commit. 7) `git bisect reset` — return to original state. Can be automated: `git bisect run <test-script>` runs a script at each step (exit 0 = good, non-zero = bad).
 
 </QA>
 
 <QA question="What is the difference between a Fork and a Clone?">
 
-Asked in interviews.
+**Clone** (`git clone`): creates a local copy of a repository on your machine. You push/pull to the same remote. Used by team members with write access. **Fork**: creates a server-side copy of someone else's repository under your account (GitHub/GitLab feature, not a Git concept). You have full write access to your fork. Used for open-source contributions — fork, clone your fork, make changes, push to your fork, then open a Pull Request to the original repo. Fork creates a new remote; clone just copies an existing one.
 
 </QA>
 
@@ -140,121 +140,121 @@ Asked in interviews.
 
 <QA question="What is Bash and what are its key features?">
 
-Asked in interviews.
+**Bash** (Bourne Again SHell) is a Unix shell and command-line interpreter, the default shell on most Linux distributions and macOS (pre-Catalina). **Key features**: command-line editing, command history, tab completion, aliases, functions, control structures (if/for/while), piping and redirection, job control (background/foreground processes), variable substitution, globbing (wildcard patterns), here documents, and programmable completion. It's both an interactive command interpreter and a scripting language.
 
 </QA>
 
 <QA question="How do you execute a script in Bash (different methods)?">
 
-Asked in interviews.
+1) **Direct**: `bash script.sh` — explicitly calls Bash interpreter. 2) **Shebang + execute**: `chmod +x script.sh` then `./script.sh` — uses the interpreter specified in `#!/bin/bash`. 3) **Source**: `source script.sh` or `. script.sh` — runs in current shell (variables/functions persist). 4) **Stdin**: `bash < script.sh` — pipe script to Bash. 5) **Inline**: `bash -c 'echo hello'` — execute a string. Key difference: `./script.sh` runs in a subshell (changes don't affect parent), `source` runs in current shell (environment changes persist).
 
 </QA>
 
 <QA question="Explain the functionality and structure of a shell script.">
 
-Asked in interviews.
+A shell script is a text file containing a sequence of commands. **Structure**: 1) **Shebang** — `#!/bin/bash` (first line, specifies interpreter). 2) **Comments** — lines starting with `#`. 3) **Variables** — `NAME="value"`, access with `$NAME`. 4) **Control flow** — `if/elif/else/fi`, `for/do/done`, `while/do/done`, `case/esac`. 5) **Functions** — `function_name() { commands; }`. 6) **Input/Output** — `read` for input, `echo`/`printf` for output, `>` / `>>` for redirection. 7) **Exit codes** — `exit 0` (success), `exit 1` (failure). Scripts automate repetitive tasks, system administration, deployment, and data processing.
 
 </QA>
 
 <QA question="How do you schedule a Bash script to run using crontab?">
 
-Asked in interviews.
+`crontab -e` opens the cron editor. Format: `MIN HOUR DAY MONTH WEEKDAY command`. Examples: `0 2 * * * /path/to/backup.sh` (daily at 2 AM), `*/5 * * * * /path/to/check.sh` (every 5 minutes), `0 0 * * 0 /path/to/weekly.sh` (Sundays at midnight). **Tips**: use absolute paths, redirect output (`>> /var/log/script.log 2>&1`), set `MAILTO=""` to suppress email, use `crontab -l` to list current jobs. `@reboot /path/to/startup.sh` runs once at boot. Environment is minimal in cron — explicitly set PATH or source profile.
 
 </QA>
 
 <QA question="What is the Bash command to suppress all output and errors (> /dev/null 2>&1)?">
 
-Asked in interviews.
+`command > /dev/null 2>&1` — `>` redirects stdout (file descriptor 1) to `/dev/null` (discards output), `2>&1` redirects stderr (fd 2) to wherever stdout goes (also `/dev/null`). Result: both normal output and error messages are silenced. Equivalent modern syntax: `command &>/dev/null`. `/dev/null` is a special file that discards all data written to it. Use when you only care about exit code, not output. To suppress only errors: `command 2>/dev/null`. To suppress only stdout: `command > /dev/null`.
 
 </QA>
 
 <QA question="How do you pass and handle command-line arguments in a Bash script?">
 
-Asked in interviews.
+**Access args**: `$1` (first arg), `$2` (second), ..., `$0` (script name). **Special variables**: `$#` (number of args), `$@` (all args as separate words), `$*` (all args as single string). **Example**: `./deploy.sh prod v2.1` → `$1=prod`, `$2=v2.1`. **Validation**: `if [ $# -lt 2 ]; then echo "Usage: $0 env version"; exit 1; fi`. **Shift**: `shift` removes $1 and shifts remaining args left. **getopts**: for flag-based args: `while getopts "f:v" opt; do case $opt in f) FILE=$OPTARG;; v) VERBOSE=1;; esac; done`.
 
 </QA>
 
 <QA question="What is a shebang (#! /bin/bash) and why is it used?">
 
-Asked in interviews.
+The **shebang** (`#!`) on the first line tells the OS which interpreter to use when executing the script as a program. `#!/bin/bash` — use Bash. `#!/usr/bin/env python3` — use Python (portable, searches PATH). `#!/bin/sh` — use POSIX shell (more portable, fewer features). Without a shebang, the script runs in whatever shell invoked it. **Why important**: ensures consistent behavior regardless of user's current shell. The `env` form (`#!/usr/bin/env bash`) is more portable as it finds the interpreter in PATH rather than assuming a fixed path.
 
 </QA>
 
 <QA question="What is the difference between a Shell and Bash specifically?">
 
-Asked in interviews.
+**Shell** is a generic term for any command-line interpreter — sh (Bourne Shell), bash, zsh, fish, csh, ksh, dash. It's the interface between user and OS kernel. **Bash** is a specific shell implementation — an enhanced successor to the original Bourne Shell (sh). Bash adds features: arrays, command-line editing, `[[` test syntax, `$(())` arithmetic, process substitution, `{a..z}` brace expansion, and programmable completion. `/bin/sh` on many systems is actually dash (Debian) or bash in POSIX mode. Scripts using `#!/bin/sh` should avoid Bash-specific features for portability.
 
 </QA>
 
 <QA question="How do you check if a directory or file exists in a Bash script?">
 
-Asked in interviews.
+**File exists**: `if [ -f "/path/to/file" ]; then echo "exists"; fi`. **Directory exists**: `if [ -d "/path/to/dir" ]; then echo "exists"; fi`. **Other tests**: `-e` (anything exists), `-r` (readable), `-w` (writable), `-x` (executable), `-s` (exists and non-empty), `-L` (is symlink). **Combine**: `if [ -f "$file" ] && [ -r "$file" ]; then ...`. **Modern Bash**: use `[[ ]]` for safer testing: `if [[ -f "$file" ]]; then ...` (handles spaces in filenames, supports pattern matching). Always quote variables: `"$path"`.
 
 </QA>
 
 <QA question="What is the difference between single quotes ('') and double quotes in Bash?">
 
-Asked in interviews.
+**Single quotes** (`'...'`): everything is literal — no variable expansion, no command substitution, no escape sequences. `'$HOME'` prints literally `$HOME`. **Double quotes** (`"..."`): allow variable expansion (`"$HOME"` → `/Users/you`), command substitution (`"$(date)"`), and escape sequences (`"\n"`). Protect spaces in filenames. **No quotes**: word splitting occurs, globbing expands (`*.txt` matches files). **Best practice**: always use double quotes around variables (`"$var"`) to prevent word splitting. Use single quotes for strings that should be completely literal.
 
 </QA>
 
 <QA question="How do you implement loops (for, while) in Bash?">
 
-Asked in interviews.
+**For loop**: `for i in 1 2 3; do echo $i; done` or `for ((i=0; i<10; i++)); do echo $i; done` or `for file in *.txt; do echo "$file"; done`. **While loop**: `while [ $count -lt 10 ]; do count=$((count + 1)); done`. **Read lines**: `while IFS= read -r line; do echo "$line"; done < file.txt`. **Until loop**: `until [ $count -ge 10 ]; do ...`. **Break/continue**: `break` exits loop, `continue` skips to next iteration. **Infinite loop**: `while true; do ...; done`.
 
 </QA>
 
 <QA question="Explain the use of tools like awk, sed, and grep in Bash scripting.">
 
-Asked in interviews.
+**grep** — search text using patterns: `grep "error" log.txt` (find lines containing "error"), `grep -r "TODO" src/` (recursive search), `grep -c` (count matches), `grep -E` (extended regex). **sed** — stream editor for transforming text: `sed 's/old/new/g' file` (find/replace), `sed -i '' 's/foo/bar/g' file` (in-place edit), `sed '5d' file` (delete line 5). **awk** — pattern scanning and processing: `awk '{print $2}' file` (print second column), `awk -F: '{print $1}' /etc/passwd` (custom delimiter), `awk '{sum+=$1} END {print sum}'` (column sum). Combine with pipes: `cat log | grep ERROR | awk '{print $3}' | sort | uniq -c`.
 
 </QA>
 
 <QA question="How do you debug a Bash script (set -x, set -e)?">
 
-Asked in interviews.
+**`set -x`** (xtrace): prints each command before executing it, showing variable expansions. Invaluable for tracing logic flow. **`set -e`**: exit immediately if any command fails (non-zero exit code). **`set -v`**: prints each line as read (before expansion). **`set -u`**: treat unset variables as errors. **Combine**: `set -euxo pipefail` at the top of scripts. **Other techniques**: `echo` debug messages, `trap 'echo "Error on line $LINENO"' ERR` for error locations, `bash -n script.sh` (syntax check without running), `shellcheck script.sh` (static analysis linting tool — highly recommended).
 
 </QA>
 
 <QA question="What is the difference between $? (exit status) and $# (argument count)?">
 
-Asked in interviews.
+**`$?`** — exit status of the last executed command. `0` = success, non-zero = failure. Example: `grep "pattern" file; echo $?` → `0` if found, `1` if not found. Used in conditional logic: `if [ $? -eq 0 ]; then echo "success"; fi`. **`$#`** — number of positional arguments passed to the script or function. Example: `./script.sh a b c` → `$#` is `3`. Used for argument validation: `if [ $# -lt 1 ]; then echo "Usage: $0 arg"; exit 1; fi`. Other special variables: `$$` (current PID), `$!` (last background PID).
 
 </QA>
 
 <QA question="How do you read user input during script execution?">
 
-Asked in interviews.
+**Basic**: `read -p "Enter name: " name` — prompts and stores input in `$name`. **Silent** (passwords): `read -sp "Password: " pass` — no echo. **Timeout**: `read -t 5 -p "Quick! " answer` — 5 second timeout. **Default value**: `read -p "Port [8080]: " port; port=${port:-8080}`. **Read into array**: `read -ra arr <<< "a b c"`. **Read file line by line**: `while IFS= read -r line; do echo "$line"; done < file.txt`. **Yes/No**: `read -p "Continue? [y/N] " confirm; [[ $confirm == [yY] ]] && echo "yes" || echo "no"`.
 
 </QA>
 
 <QA question="What are environment variables and how do you set them?">
 
-Asked in interviews.
+Environment variables are key-value pairs available to processes. **Set for current session**: `export MY_VAR="value"`. **Set for one command**: `ENV_VAR=value command`. **Persistent**: add `export MY_VAR="value"` to `~/.bashrc` or `~/.bash_profile`. **Common ones**: `PATH` (executable search dirs), `HOME` (user home dir), `USER` (current username), `SHELL` (current shell), `PWD` (working directory), `LANG` (locale). **View all**: `env` or `printenv`. **View one**: `echo $MY_VAR`. **Unset**: `unset MY_VAR`. In Docker/K8s, set via `-e` flag or ConfigMaps. In dotenv files for applications: `source .env`.
 
 </QA>
 
 <QA question="Explain the difference between 'exec' and 'source' commands.">
 
-Asked in interviews.
+**`source`** (or `.`): executes a script in the CURRENT shell. Variables, functions, and environment changes persist after the script finishes. Example: `source ~/.bashrc` reloads your config. **`exec`**: REPLACES the current shell process with a new command. The current shell is gone — never returns. Example: `exec python app.py` — the script's PID now runs Python. Used in Docker entrypoints to ensure the main process gets PID 1 (receives signals properly). `exec > logfile` redirects all subsequent output to a file. Key difference: source keeps the shell alive; exec replaces it entirely.
 
 </QA>
 
 <QA question="How do you perform arithmetic operations in Bash?">
 
-Asked in interviews.
+1) **`$(( ))`** (preferred): `result=$((5 + 3))`, `((count++))`, `((x = y * 2))`. Supports `+`, `-`, `*`, `/`, `%`, `**` (power). 2) **`let`**: `let "result = 5 + 3"`. 3) **`expr`** (legacy): `result=$(expr 5 + 3)` — needs spaces. 4) **`bc`** for floating-point: `echo "3.14 * 2" | bc` or `result=$(echo "scale=2; 10/3" | bc)` → `3.33`. **Note**: Bash arithmetic is integer-only. For decimals, use `bc`, `awk`, or Python. Comparison in arithmetic: `if (( x greater than 10 )); then ...`.
 
 </QA>
 
 <QA question="What is a pipe (|) and how does it work?">
 
-Asked in interviews.
+A **pipe** (`|`) connects the stdout of one command to the stdin of the next, creating a data processing pipeline. Example: `cat access.log | grep "404" | awk '{print $1}' | sort | uniq -c | sort -rn | head -10` — finds top 10 IPs getting 404 errors. Each command runs as a separate process, and data streams between them in real-time (no temporary files). **How it works**: the kernel creates a pipe buffer; the first process writes to it, the second reads from it. Pipes only connect stdout → stdin. Use `2>&1 |` or `|&` to also pipe stderr. Named pipes (FIFOs) allow unrelated processes to communicate: `mkfifo mypipe`.
 
 </QA>
 
 <QA question="Explain how to handle errors in Bash using traps.">
 
-Asked in interviews.
+`trap` catches signals and executes a command when they occur. **Syntax**: `trap 'command' SIGNAL`. **Common use cases**: `trap 'rm -f $tmpfile' EXIT` — cleanup on script exit (always runs). `trap 'echo "Error on line $LINENO"; exit 1' ERR` — log error location. `trap 'echo "Interrupted"; exit 130' INT` — handle Ctrl+C gracefully. `trap 'echo "Terminated"; cleanup; exit 143' TERM` — handle kill signal. **Signals**: `EXIT` (script exit), `ERR` (command failure), `INT` (Ctrl+C / SIGINT), `TERM` (SIGTERM), `DEBUG` (before each command). Traps ensure resources are cleaned up even on failure.
 
 </QA>
 
@@ -279,5 +279,103 @@ Merge: preserves complete history, safe for shared branches, creates merge commi
 <QA question="Reset vs Revert — when to use which?">
 
 Reset: rewrites history, use on local branches only. Revert: creates a new commit that undoes changes, safe for shared branches. Never reset commits that others have pulled — use revert instead.
+
+</QA>
+
+## Git (from InterviewBit)
+
+<QA question="Can you explain head in terms of git and also tell the number of heads that can be present in a repository?">
+
+**HEAD** is a reference to the currently checked-out commit — usually pointing to a branch tip. There can be **multiple heads** in a repository — every branch tip is a "head" (lowercase). The special `HEAD` (uppercase) is singular and tracks which branch you're currently on. So for a repo with branches `main`, `feature`, `bugfix`, there are 3 heads but only 1 HEAD. `git branch` shows all heads; `HEAD` shows the active one.
+
+</QA>
+
+<QA question="What is a conflict in Git?">
+
+A conflict occurs when Git cannot automatically merge changes because two branches modified the same lines of a file differently. Git marks conflicts with `<<<<<<<`, `=======`, and `>>>>>>>` markers in the file. You must manually edit the file to resolve the conflict, choosing which version to keep (or combining both), then `git add` the resolved file and complete the merge/rebase. Conflicts commonly happen during `git merge`, `git rebase`, `git cherry-pick`, and `git stash pop`.
+
+</QA>
+
+<QA question="What is the functionality of git ls-tree?">
+
+`git ls-tree` lists the contents of a tree object (directory snapshot) in a commit. It shows: file mode (permissions), object type (blob/tree), object SHA, and filename. Examples: `git ls-tree HEAD` — list root directory of current commit. `git ls-tree -r HEAD` — recursively list all files. `git ls-tree HEAD src/` — list contents of src/ directory. Useful for inspecting what files existed at any commit without checking it out, scripting, and understanding Git's internal tree structure.
+
+</QA>
+
+<QA question="What has to be run to squash multiple commits (last N) into a single commit?">
+
+Use interactive rebase: `git rebase -i HEAD~N` where N is the number of commits to squash. In the editor, change `pick` to `squash` (or `s`) for all commits except the first one. Save and close. A new editor opens for the combined commit message. Save and close again. The N commits are now one. If already pushed: `git push --force-with-lease`. Alternative: `git reset --soft HEAD~N && git commit -m "Combined message"` — achieves the same result without interactive UI.
+
+</QA>
+
+<QA question="Can you tell something about git reflog?">
+
+`git reflog` shows a chronological log of where HEAD has pointed — every checkout, commit, rebase, reset, merge, etc. Unlike `git log` (which shows commit ancestry), reflog tracks YOUR actions. **Primary use**: recovering "lost" commits after a `git reset --hard` or failed rebase. Example: `git reflog` → find the commit hash before the mistake → `git checkout hash` or `git reset --hard hash`. Reflog is local-only (not shared with remotes) and entries expire after 90 days by default. It's your safety net — almost nothing is truly lost in Git.
+
+</QA>
+
+<QA question="What consists of a commit object?">
+
+A Git commit object contains: 1) **Tree hash** — pointer to the root tree object (snapshot of all files at that point). 2) **Parent hash(es)** — pointer to parent commit(s). First commit has no parent; merge commits have multiple parents. 3) **Author** — name, email, and timestamp (who wrote the code). 4) **Committer** — name, email, and timestamp (who applied the commit — may differ from author in rebases/cherry-picks). 5) **Commit message** — description of changes. All this is hashed with SHA-1 to produce the commit ID. Any change to any field produces a completely different hash.
+
+</QA>
+
+<QA question="What is a detached HEAD and what causes this and how to avoid it?">
+
+**Detached HEAD** means HEAD points directly to a commit instead of a branch. **Causes**: `git checkout <commit-hash>`, `git checkout tag`, `git checkout HEAD~3`. **Problem**: new commits aren't on any branch and can be garbage-collected if you switch away without saving. **How to avoid**: always work on branches. If you're in detached HEAD and want to keep your work: `git checkout -b new-branch-name` to create a branch from your current position. **Intentional uses**: inspecting old commits, building/testing a specific version, experimenting safely.
+
+</QA>
+
+<QA question="What does git annotate command do?">
+
+`git annotate` (alias for `git blame`) shows who last modified each line of a file, including: the commit hash, author name, timestamp, and line content. Example: `git annotate file.js` shows line-by-line attribution. Useful for understanding when and why a line was changed, and by whom. Options: `git blame -L 10,20 file.js` (only lines 10-20), `git blame -w` (ignore whitespace), `git blame -M` (detect moved lines), `git blame --since="2 weeks ago"`. Note: `git blame` is the more commonly used name for this command.
+
+</QA>
+
+<QA question="What is the difference between git stash apply vs git stash pop command?">
+
+**`git stash pop`**: restores the latest stash and REMOVES it from the stash list. If there's a conflict during restore, the stash is NOT removed (so you don't lose it). **`git stash apply`**: restores the latest stash but KEEPS it in the stash list. You can apply the same stash to multiple branches. Use `pop` for normal workflow (restore and clean up). Use `apply` when you might need the stash again or want to apply it in multiple places. Both accept a stash reference: `git stash pop stash@{2}`.
+
+</QA>
+
+<QA question="Differentiate between git pull and git fetch.">
+
+**`git fetch`**: downloads new commits, branches, and tags from the remote repository but does NOT modify your working directory or current branch. Updates remote-tracking branches (e.g., `origin/main`). Safe — never causes conflicts. **`git pull`** = `git fetch` + `git merge` (or `git rebase` with `--rebase`). Downloads AND integrates changes into your current branch. Can cause merge conflicts. Best practice: `git fetch` first → review changes with `git log origin/main..HEAD` → then merge or rebase deliberately.
+
+</QA>
+
+<QA question="Can you tell the difference between Git and GitHub?">
+
+**Git**: a distributed version control system (software). Runs locally. Handles commits, branches, merges, history. Open-source, created by Linus Torvalds. Works entirely offline. **GitHub**: a web-based platform (service) that hosts Git repositories. Adds collaboration features: Pull Requests, code review, Issues, Actions (CI/CD), Packages, Projects, Discussions, Wiki, security scanning. Alternatives to GitHub: GitLab, Bitbucket, Gitea. Git works without GitHub; GitHub requires Git. Think of Git as the engine, GitHub as the car dealership with service center.
+
+</QA>
+
+<QA question="How to revert a bad commit which is already pushed?">
+
+Use `git revert <commit-hash>` — it creates a NEW commit that undoes the changes of the bad commit. History is preserved. Steps: 1) `git log` — find the bad commit hash. 2) `git revert abc123` — creates an undo commit. 3) Resolve any conflicts if prompted. 4) `git push` — share the revert. For multiple commits: `git revert abc123..def456` (range) or `git revert --no-commit abc123 def456` (batch into one revert commit). **Never use `git reset --hard` on pushed commits** — it rewrites history and breaks collaborators' repos.
+
+</QA>
+
+<QA question="What is the functionality of 'git cherry-pick' command?">
+
+`git cherry-pick hash` applies a specific commit's changes to your current branch, creating a new commit. It copies the diff, not the commit itself (new hash). **Use cases**: backporting a bug fix from `develop` to `release`, selectively including features, recovering specific commits from deleted branches. **Options**: `--no-commit` (apply changes without committing — combine multiple cherry-picks), `-x` (append source commit info to message). **Conflict resolution**: same as merge — resolve, `git add`, `git cherry-pick --continue`.
+
+</QA>
+
+<QA question="What are the factors involved in considering which command to choose among git merge and git rebase?">
+
+**Use merge when**: 1) working on shared/public branches, 2) you want to preserve exact branching history, 3) the team prefers explicit merge commits as markers, 4) multiple people work on the same branch. **Use rebase when**: 1) cleaning up local feature branch before merge, 2) you want a linear, readable history, 3) working alone on a feature branch, 4) updating feature branch with latest main (`git rebase main`). **Never rebase**: commits already pushed and pulled by others. **Team consensus**: pick one strategy and be consistent. Many teams use "rebase locally, merge to main."
+
+</QA>
+
+<QA question="How do you find a commit which broke something after a merge operation?">
+
+Use **`git bisect`**: 1) `git bisect start`. 2) `git bisect bad` (current commit is broken). 3) `git bisect good <last-known-good-commit>`. 4) Git checks out a middle commit — test it. 5) Mark `good` or `bad`. 6) Repeat until Git identifies the first bad commit. **Automated**: `git bisect run ./test_script.sh` — runs a script at each step (exit 0 = good, non-zero = bad). Can pinpoint the exact commit in O(log N) steps. After finding: `git bisect reset` to return to original state. Also useful: `git log --oneline merge_commit..HEAD` to list all commits from the merge.
+
+</QA>
+
+<QA question="What are the functionalities of git reset --mixed and git merge --abort?">
+
+**`git reset --mixed commit`** (default reset mode): moves HEAD to the specified commit, unstages all changes (removes them from staging area), but KEEPS changes in your working directory. Use when you want to re-organize what to commit. Example: `git reset HEAD~1` — undo last commit, keep changes as unstaged. **`git merge --abort`**: cancels a merge that has conflicts. Restores your branch to the state before `git merge` was started. Only works while conflicts are unresolved. After resolution and commit, use `git revert` instead. Similar: `git rebase --abort` cancels an in-progress rebase.
 
 </QA>

@@ -6,91 +6,91 @@ import { QA } from "@/components/QA";
 
 <QA question="What is a process and process table?">
 
-Asked in interviews.
+A **process** is a program in execution — it includes code, data, stack, heap, and OS resources (file handles, registers). The **process table** is an OS data structure that stores information about all active processes. Each entry is a **PCB** (Process Control Block) containing: PID, state, program counter, CPU registers, memory limits, I/O status, scheduling info. The OS uses the process table for context switching, scheduling, and resource management.
 
 </QA>
 
 <QA question="What are the different states of a process?">
 
-Asked in interviews.
+**New**: process is being created. **Ready**: waiting to be assigned to CPU. **Running**: executing on CPU. **Waiting/Blocked**: waiting for I/O or event. **Terminated**: finished execution. Transitions: New → Ready (admitted), Ready → Running (scheduler dispatch), Running → Ready (preempted/time quantum expired), Running → Waiting (I/O request), Waiting → Ready (I/O complete), Running → Terminated (exit).
 
 </QA>
 
 <QA question="What is a Thread?">
 
-Asked in interviews.
+A **thread** is the smallest unit of CPU execution within a process. Threads within the same process share code, data, and resources (files, memory) but have their own stack, program counter, and registers. Lighter than processes — creating/switching threads is faster. Types: **user-level threads** (managed by user library) and **kernel-level threads** (managed by OS). Modern apps use multithreading for parallelism (e.g., handling multiple requests).
 
 </QA>
 
 <QA question="What are the differences between a process and a thread?">
 
-Asked in interviews.
+**Process**: independent, own address space, heavy creation/context switch, communicate via IPC (pipes, sockets). **Thread**: shares address space within a process, lightweight creation/switch, communicates via shared memory directly. A crash in one process doesn't affect others; a crash in a thread can bring down the entire process. Processes provide isolation; threads provide concurrency within a process.
 
 </QA>
 
 <QA question="What are the benefits of multithreaded programming?">
 
-Asked in interviews.
+1) **Responsiveness** — UI thread stays responsive while background threads work. 2) **Resource sharing** — threads share process memory, no IPC overhead. 3) **Economy** — thread creation/switching is cheaper than processes. 4) **Scalability** — exploit multi-core CPUs (true parallelism). 5) **Simplified programming** — natural model for concurrent tasks (web servers handling multiple requests).
 
 </QA>
 
 <QA question="What is Thrashing?">
 
-Asked in interviews.
+**Thrashing** occurs when a system spends more time swapping pages in and out of memory than executing processes. The CPU utilization drops dramatically. Cause: too many processes competing for limited physical memory — each page fault triggers disk I/O, evicting pages needed by other processes. **Solution**: reduce degree of multiprogramming, add more RAM, use better page replacement algorithms, or implement working set model.
 
 </QA>
 
 <QA question="What is a Buffer?">
 
-Asked in interviews.
+A **buffer** is a temporary memory area used to hold data while it's being transferred between two locations or devices. **Purpose**: compensates for speed differences between producer and consumer (e.g., CPU is fast, disk is slow). Types: single buffer, double buffer (ping-pong), circular buffer. Used in I/O operations, streaming, network communication, and inter-process communication.
 
 </QA>
 
 <QA question="What is virtual memory?">
 
-Asked in interviews.
+**Virtual memory** is a memory management technique that creates an illusion of a larger main memory by using disk space. Each process gets its own virtual address space mapped to physical memory via page tables. Pages not currently needed are stored on disk (swap space). Benefits: processes can be larger than physical RAM, memory isolation between processes, efficient memory sharing, simplified programming. Implemented via demand paging.
 
 </QA>
 
 <QA question="Explain the main purpose of an operating system.">
 
-Asked in interviews.
+An OS manages hardware resources and provides services to applications. **Main purposes**: 1) **Resource management** — CPU scheduling, memory allocation, I/O device management. 2) **Abstraction** — hides hardware complexity. 3) **Process management** — creation, scheduling, synchronization. 4) **Security/protection** — isolates processes, controls access. 5) **File system** — organizes and manages data storage. 6) **User interface** — CLI or GUI.
 
 </QA>
 
 <QA question="What is demand paging and how does it work?">
 
-Asked in interviews.
+**Demand paging** loads pages into memory only when they're accessed (needed), not in advance. Initially, no pages are loaded. When a process accesses a page not in memory, a **page fault** occurs: OS traps to kernel, finds the page on disk, loads it into a free frame, updates the page table, and resumes the process. Benefits: faster process startup, less memory usage. Cost: page fault overhead (disk I/O). Performance depends on page fault rate.
 
 </QA>
 
 <QA question="What is a kernel?">
 
-Asked in interviews.
+The **kernel** is the core component of an OS that runs in privileged mode and manages all system resources. It handles: process scheduling, memory management, device drivers, system calls, interrupt handling, file systems. Types: **Monolithic kernel** (Linux — all services in kernel space, fast but large), **Microkernel** (Minix, QNX — minimal kernel, services in user space, modular but slower IPC), **Hybrid** (Windows NT, macOS — mix of both).
 
 </QA>
 
 <QA question="What are the different scheduling algorithms?">
 
-Asked in interviews.
+1) **FCFS** (First Come First Served) — non-preemptive, simple, convoy effect. 2) **SJF** (Shortest Job First) — optimal average wait time, starvation risk. 3) **SRTF** (Shortest Remaining Time First) — preemptive SJF. 4) **Round Robin** — time quantum, fair, good for time-sharing. 5) **Priority Scheduling** — higher priority first, starvation solved by aging. 6) **Multilevel Queue** — separate queues for different process types. 7) **MLFQ** — processes move between queues based on behavior.
 
 </QA>
 
 <QA question="Describe the objective of multi-programming.">
 
-Asked in interviews.
+**Multiprogramming** keeps multiple programs in memory simultaneously. When one process waits for I/O, the CPU switches to another. **Objective**: maximize CPU utilization by ensuring the CPU is never idle when there's work to do. Without multiprogramming, the CPU sits idle during I/O waits (which can be 70-90% of execution time). The OS scheduler decides which ready process gets the CPU next.
 
 </QA>
 
 <QA question="What is the time-sharing system?">
 
-Asked in interviews.
+A **time-sharing system** (multitasking OS) allows multiple users/processes to share the CPU by rapidly switching between them. Each process gets a small time slice (quantum). Creates the illusion that each user has their own dedicated machine. Response time is short (interactive). Examples: Unix, Linux, modern Windows. vs Batch systems (no interaction, jobs run to completion). Time-sharing = multiprogramming with time slicing.
 
 </QA>
 
 <QA question="What problems do we face in a computer system without an OS?">
 
-Asked in interviews.
+Without an OS: 1) No resource management — programs would conflict over CPU, memory, I/O. 2) No abstraction — each program must directly control hardware. 3) No multitasking — one program at a time. 4) No security — no process isolation or access control. 5) No file system — manual storage management. 6) No portability — programs tied to specific hardware. Essentially, every application would need to be a mini-OS itself.
 
 </QA>
 
@@ -98,253 +98,253 @@ Asked in interviews.
 
 <QA question="Briefly explain FCFS (First Come First Served) scheduling.">
 
-Asked in interviews.
+**FCFS**: processes are executed in the order they arrive in the ready queue. Non-preemptive. Simple to implement (FIFO queue). **Drawback**: convoy effect — short processes stuck behind long ones, leading to high average waiting time. Not suitable for time-sharing systems. Example: processes with burst times 24, 3, 3 — average wait = (0+24+27)/3 = 17ms. If reordered (3,3,24), average wait = (0+3+6)/3 = 3ms.
 
 </QA>
 
 <QA question="What is the RR (Round Robin) scheduling algorithm?">
 
-Asked in interviews.
+**Round Robin**: each process gets a fixed time quantum (e.g., 10ms). After the quantum expires, the process is preempted and moved to the back of the ready queue. Fair — no starvation. Good for time-sharing. **Time quantum choice**: too small = excessive context switching overhead; too large = degenerates into FCFS. Typical: 10-100ms. Average waiting time depends on quantum size. Used in most modern OS schedulers as a base.
 
 </QA>
 
 <QA question="What is Banker's algorithm?">
 
-Asked in interviews.
+The **Banker’s Algorithm** is a deadlock avoidance algorithm. It checks if granting a resource request leaves the system in a **safe state** (a sequence exists where all processes can finish). Maintains: **Available** (free resources), **Max** (max needs per process), **Allocation** (currently held), **Need** (Max - Allocation). On each request: pretend to grant it, run safety algorithm. If safe, grant; otherwise, make process wait.
 
 </QA>
 
 <QA question="State the main difference between logical and physical address space.">
 
-Asked in interviews.
+**Logical address** (virtual address): generated by CPU during program execution. Seen by the process. **Physical address**: actual address in RAM. Seen by the memory unit. The **MMU** (Memory Management Unit) translates logical to physical at runtime using page tables. Logical address space can be larger than physical (virtual memory). Each process has its own logical address space but shares physical memory.
 
 </QA>
 
 <QA question="How does dynamic loading aid in better memory space utilization?">
 
-Asked in interviews.
+**Dynamic loading**: a routine is loaded into memory only when it's called, not when the program starts. Unused routines never consume memory. Useful when large portions of code handle rare cases (error handling). The programmer manages it; no OS support required. Contrast with static loading where the entire program is loaded at startup. Improves memory utilization for large programs.
 
 </QA>
 
 <QA question="What are overlays?">
 
-Asked in interviews.
+**Overlays** are a technique for running programs larger than physical memory (before virtual memory existed). The programmer divides the program into sections (overlays) that are loaded and unloaded as needed. Only the currently needed overlay resides in memory. Requires the programmer to explicitly manage what's in memory. Replaced by virtual memory and demand paging in modern systems.
 
 </QA>
 
 <QA question="What is fragmentation?">
 
-Asked in interviews.
+**Fragmentation** is the inability to use free memory efficiently. **External fragmentation**: free memory is split into small, non-contiguous blocks — total free memory is enough but no single block is large enough. Solution: compaction, paging. **Internal fragmentation**: allocated memory is slightly larger than requested (due to fixed block sizes) — the unused portion inside the block is wasted. Solution: variable-sized partitions, smaller page sizes.
 
 </QA>
 
 <QA question="What is the basic function of paging?">
 
-Asked in interviews.
+**Paging** divides physical memory into fixed-size frames and logical memory into same-sized pages. A page table maps pages to frames. Eliminates external fragmentation (any free frame can hold any page). Pages are loaded on demand. The OS maintains a page table per process. Address translation: logical address = (page number, offset) → (frame number, offset). TLB caches recent translations for speed.
 
 </QA>
 
 <QA question="How does swapping result in better memory management?">
 
-Asked in interviews.
+**Swapping** moves entire processes between main memory and disk (backing store). When memory is full, a lower-priority process is swapped out to disk, freeing memory for a higher-priority process. When needed again, it's swapped back in. Increases the degree of multiprogramming. **Cost**: disk I/O is slow. Modern systems use demand paging instead of swapping entire processes, which is more granular and efficient.
 
 </QA>
 
 <QA question="Name some classic synchronization problems.">
 
-Asked in interviews.
+1) **Producer-Consumer** (bounded buffer) — producer adds items, consumer removes; synchronize buffer access. 2) **Readers-Writers** — multiple readers can read simultaneously, but writers need exclusive access. 3) **Dining Philosophers** — circular resource contention, illustrates deadlock. 4) **Sleeping Barber** — models waiting queue scenarios. Solved using semaphores, monitors, or mutexes.
 
 </QA>
 
 <QA question="What is the Direct Access Method?">
 
-Asked in interviews.
+**Direct Access Method** (random access) allows reading/writing a record directly by its position without reading preceding records. Based on a mathematical model of disk as a numbered sequence of blocks. Used by databases and file systems for fast record retrieval. Contrast with **sequential access** (read in order, like a tape). Direct access uses `seek(position)` then `read/write`. Essential for indexed files and database operations.
 
 </QA>
 
 <QA question="When does thrashing occur?">
 
-Asked in interviews.
+Thrashing occurs when the system's degree of multiprogramming is too high — too many processes compete for limited physical memory frames. Each process has fewer pages in memory, causing frequent page faults. Page fault handling evicts pages from other processes, which then fault. CPU utilization drops to near zero while the disk is 100% busy. The working set model and page fault frequency (PFF) scheme help detect and prevent thrashing.
 
 </QA>
 
 <QA question="What is the best page size when designing an operating system?">
 
-Asked in interviews.
+There's no single best page size — it's a trade-off. **Small pages** (4KB): less internal fragmentation, better fit for working set, but larger page tables. **Large pages** (2MB, 1GB — huge pages): smaller page tables, fewer TLB misses, more efficient disk I/O, but more internal fragmentation. Most systems use 4KB default with optional huge pages for specific workloads (databases, VMs). Page size must be a power of 2.
 
 </QA>
 
 <QA question="What is multitasking?">
 
-Asked in interviews.
+**Multitasking** is the ability of an OS to run multiple tasks (processes/threads) concurrently. On a single CPU, this is achieved via rapid context switching (time-sharing — giving each a time slice). On multi-core CPUs, true parallelism. Types: **cooperative** (process voluntarily yields CPU) and **preemptive** (OS forcibly switches based on priority/timer). Modern OSes use preemptive multitasking.
 
 </QA>
 
 <QA question="What is caching?">
 
-Asked in interviews.
+**Caching** stores copies of frequently accessed data in a faster storage layer (cache) to reduce access time. **Memory hierarchy**: CPU registers > L1 cache > L2 cache > L3 cache > RAM > SSD > HDD. When data is requested, check cache first (cache hit = fast); if not found (cache miss), fetch from slower storage and store in cache. Replacement policies: LRU, FIFO, LFU. Used in CPU caches, disk caches, web caches, DNS caches.
 
 </QA>
 
 <QA question="What is spooling?">
 
-Asked in interviews.
+**Spooling** (Simultaneous Peripheral Operations On-Line) uses a buffer (usually on disk) to hold data for slow I/O devices. Most common example: print spooling — print jobs are queued on disk; the printer processes them at its own speed while the CPU continues other work. Benefits: CPU isn't blocked waiting for slow devices, multiple processes can "use" the device simultaneously (by queueing). Decouples the speed of the CPU from I/O devices.
 
 </QA>
 
 <QA question="What is the functionality of an Assembler?">
 
-Asked in interviews.
+An **assembler** translates assembly language (human-readable mnemonics like `MOV`, `ADD`, `JMP`) into machine code (binary) that the CPU can execute. It resolves symbolic references (labels, variable names) into actual memory addresses. Types: **one-pass** (single scan, forward references are problematic) and **two-pass** (first pass builds symbol table, second pass generates machine code). Output is an object file linked by a linker.
 
 </QA>
 
 <QA question="What are interrupts?">
 
-Asked in interviews.
+**Interrupts** are signals that cause the CPU to stop current execution and handle an event. Types: **Hardware interrupts** (from I/O devices: keyboard, disk, timer), **Software interrupts** (trap/system call from a program), **Exceptions** (errors: division by zero, page fault). Flow: interrupt occurs → CPU saves state → jumps to interrupt handler (ISR) → handles event → restores state → resumes. The interrupt vector table maps interrupt numbers to handlers.
 
 </QA>
 
 <QA question="What is a GUI?">
 
-Asked in interviews.
+**GUI** (Graphical User Interface) provides visual interaction with the OS using windows, icons, menus, and pointers (WIMP). Users interact via mouse/touch instead of typing commands. Examples: Windows, macOS, GNOME/KDE (Linux). vs **CLI** (Command Line Interface): text-based, more efficient for experts, scriptable. GUI is easier to learn but slower for repetitive tasks. Modern OSes provide both.
 
 </QA>
 
 <QA question="What is preemptive multitasking?">
 
-Asked in interviews.
+**Preemptive multitasking**: the OS forcibly interrupts (preempts) a running process when its time quantum expires or a higher-priority process arrives. The process doesn't voluntarily give up the CPU. Prevents any single process from monopolizing the CPU. Used by all modern OSes (Linux, Windows, macOS). Requires timer interrupts and context switching. Contrast with cooperative multitasking where processes must voluntarily yield.
 
 </QA>
 
 <QA question="What is a pipe and when is it used?">
 
-Asked in interviews.
+A **pipe** is an IPC mechanism for one-way data flow between processes. Data written to the write end is read from the read end (FIFO). **Anonymous pipes**: between parent-child processes only; no name; temporary. `ls | grep txt` — stdout of `ls` piped to stdin of `grep`. **Named pipes (FIFOs)**: have a filesystem path; any processes can use them; persist until deleted. Pipes buffer data in kernel memory. Limited to byte streams. For bidirectional communication, use two pipes or sockets.
 
 </QA>
 
 <QA question="What are the advantages of semaphores?">
 
-Asked in interviews.
+**Semaphores** solve critical section and synchronization problems. **Advantages**: 1) Allow multiple processes/threads to access shared resources safely. 2) **Counting semaphores** can control access to resources with multiple instances. 3) Simple and efficient for many synchronization patterns. 4) Can coordinate ordering between processes (signaling). 5) Work across processes (not just threads). 6) No busy waiting (processes block and are woken up).
 
 </QA>
 
 <QA question="What is a bootstrap program in the OS?">
 
-Asked in interviews.
+A **bootstrap program** (bootloader) is the first program that runs when a computer is powered on. Stored in ROM/firmware (BIOS/UEFI). It initializes hardware (CPU registers, memory controllers), runs POST (Power-On Self-Test), locates and loads the OS kernel into memory, and transfers control to it. Examples: GRUB (Linux), Windows Boot Manager. Without it, the OS can't start. It bridges hardware initialization and OS startup.
 
 </QA>
 
 <QA question="What is IPC (Inter-Process Communication)?">
 
-Asked in interviews.
+**IPC** (Inter-Process Communication) enables processes to exchange data and synchronize. Needed because processes have separate address spaces and can't directly share memory. Methods include: pipes, message queues, shared memory, sockets, signals, and memory-mapped files. IPC is essential for microservices, client-server architectures, and any multi-process application architecture.
 
 </QA>
 
 <QA question="What are the different IPC mechanisms?">
 
-Asked in interviews.
+1) **Pipes** — unidirectional byte stream (anonymous or named). 2) **Message Queues** — structured messages with priorities. 3) **Shared Memory** — fastest, processes read/write same memory segment; needs synchronization. 4) **Sockets** — network communication (local or remote). 5) **Signals** — async notifications (SIGTERM, SIGKILL). 6) **Semaphores** — synchronization primitives. 7) **Memory-Mapped Files** — file mapped into process address space.
 
 </QA>
 
 <QA question="What is the difference between preemptive and non-preemptive scheduling?">
 
-Asked in interviews.
+**Preemptive**: OS can forcibly interrupt a running process (via timer/priority). Ensures fairness, prevents starvation. Higher overhead (context switches). Examples: Round Robin, SRTF, Priority (preemptive). **Non-preemptive** (cooperative): process runs until it voluntarily yields (blocks on I/O, terminates, or calls yield). Simpler, less overhead, but one process can hog the CPU. Examples: FCFS, SJF (non-preemptive). Modern OSes use preemptive scheduling.
 
 </QA>
 
 <QA question="What is a zombie process?">
 
-Asked in interviews.
+A **zombie process** has finished execution but its entry remains in the process table because the parent hasn't called `wait()` to read its exit status. It consumes a PID but no memory/CPU. States as `Z` in `ps`. If parent never calls `wait()`, zombies accumulate and can exhaust PIDs. Fix: parent should call `wait()`/`waitpid()`, or use `SIGCHLD` handler. If parent dies, `init` (PID 1) adopts and reaps zombies.
 
 </QA>
 
 <QA question="What are orphan processes?">
 
-Asked in interviews.
+An **orphan process** is a child process whose parent has terminated. The orphan is "adopted" by the `init` process (PID 1) or `systemd`, which becomes its new parent and will call `wait()` when the orphan terminates. Orphans continue to run normally — they just have a new parent. Unlike zombies, orphans aren't problematic since init/systemd properly reaps them.
 
 </QA>
 
 <QA question="What are starvation and aging in OS?">
 
-Asked in interviews.
+**Starvation**: a process waits indefinitely because higher-priority processes continuously get scheduled first. Occurs in priority scheduling and SJF. **Aging**: the solution to starvation — gradually increase the priority of waiting processes over time. After waiting long enough, even the lowest-priority process will eventually get the highest priority and execute. Example: increase priority by 1 every 15 minutes of waiting.
 
 </QA>
 
 <QA question="What is a monolithic kernel?">
 
-Asked in interviews.
+A **monolithic kernel** runs all OS services (file system, device drivers, memory management, networking) in kernel space as a single large binary. **Advantages**: fast (no IPC overhead between services), efficient. **Disadvantages**: large codebase, harder to maintain, a bug in any component can crash the entire system. **Examples**: Linux, Unix, MS-DOS. Contrast with microkernel (minimal kernel, services in user space) and hybrid kernel (mix).
 
 </QA>
 
 <QA question="What is Context Switching?">
 
-Asked in interviews.
+**Context switching** is the process of saving the state (registers, PC, stack pointer) of the currently running process and loading the saved state of the next process to run. Occurs during scheduling decisions (timer interrupt, I/O block, preemption). **Cost**: pure overhead — no useful work done during the switch. Involves saving/loading PCB, flushing TLB (in some cases), cache pollution. Typically takes microseconds. Minimizing context switches improves performance.
 
 </QA>
 
 <QA question="What is the difference between the Operating System and kernel?">
 
-Asked in interviews.
+**Operating System**: complete software system including kernel + system utilities + shell + GUI + user-facing services. **Kernel**: the core component of the OS that runs in privileged mode and manages hardware resources directly. The kernel handles scheduling, memory, devices, system calls. The OS includes the kernel plus everything else (file managers, text editors, network utilities). Linux is a kernel; Ubuntu is an OS that uses the Linux kernel.
 
 </QA>
 
 <QA question="What is PCB (Process Control Block)?">
 
-Asked in interviews.
+**PCB** (Process Control Block) is a data structure maintained by the OS for each process. Contains: **PID** (process identifier), **process state** (ready/running/waiting), **program counter** (next instruction address), **CPU registers** (saved during context switch), **scheduling info** (priority, pointers), **memory management info** (page table, limits), **I/O status** (open files, devices), **accounting info** (CPU time used). The OS uses PCBs to manage and switch between processes.
 
 </QA>
 
 <QA question="When is a system in a safe state?">
 
-Asked in interviews.
+A system is in a **safe state** if there exists a **safe sequence** — an ordering of all processes such that each process can obtain its maximum needed resources from currently available resources plus resources held by previously completed processes. If a safe sequence exists, no deadlock will occur. If no safe sequence exists, the system is in an **unsafe state** (deadlock may or may not occur). The Banker’s Algorithm ensures safe state before granting resources.
 
 </QA>
 
 <QA question="What is Cycle Stealing?">
 
-Asked in interviews.
+**Cycle stealing** is when a DMA (Direct Memory Access) controller takes over the memory bus from the CPU for one bus cycle to transfer data between I/O device and memory. The CPU is momentarily paused (one cycle "stolen"). Much more efficient than CPU-managed I/O because the CPU only loses occasional cycles rather than being fully occupied with data transfer. The DMA controller handles bulk data transfer while the CPU continues other work.
 
 </QA>
 
 <QA question="What are a Trap and Trapdoor?">
 
-Asked in interviews.
+**Trap**: a software-generated interrupt — an intentional exception caused by a program (e.g., system call via `int 0x80` or `syscall`, breakpoint). Transfers control to the OS kernel to perform privileged operations. **Trapdoor** (backdoor): an undocumented entry point in a system that bypasses normal security. Can be malicious (planted by attacker) or for debugging (left by developer). Traps are legitimate; trapdoors are security vulnerabilities.
 
 </QA>
 
 <QA question="What is the difference between a program and a process?">
 
-Asked in interviews.
+**Program**: passive entity — a file on disk containing code and data (executable). Static. **Process**: active entity — a program in execution with its own address space, registers, stack, heap, and OS resources. Dynamic. A program becomes a process when it's loaded into memory and starts executing. Multiple processes can run the same program simultaneously (e.g., multiple instances of a text editor), each with its own state.
 
 </QA>
 
 <QA question="What is a dispatcher?">
 
-Asked in interviews.
+A **dispatcher** is the OS module that gives control of the CPU to the process selected by the scheduler. It performs: 1) context switch (save old process state, load new), 2) switch to user mode, 3) jump to the correct address in the program to resume execution. The dispatcher is invoked on every process switch. It must be very fast — its overhead (dispatch latency) is pure overhead added to every context switch.
 
 </QA>
 
 <QA question="Define the term dispatch latency.">
 
-Asked in interviews.
+**Dispatch latency** is the time the dispatcher takes to stop one process and start another. Includes: saving state of current process, loading state of new process, switching to user mode, and jumping to the new process's instruction. Should be minimized as it represents pure overhead. Affected by: the complexity of context saving/loading, TLB flush requirements, and cache effects. Typically in the range of microseconds.
 
 </QA>
 
 <QA question="What are the goals of CPU scheduling?">
 
-Asked in interviews.
+1) **Maximize CPU utilization** — keep CPU busy. 2) **Maximize throughput** — complete as many processes per unit time as possible. 3) **Minimize turnaround time** — total time from submission to completion. 4) **Minimize waiting time** — time spent in ready queue. 5) **Minimize response time** — time from request to first response (important for interactive systems). 6) **Fairness** — each process gets a fair share of CPU. These goals often conflict — scheduling is about trade-offs.
 
 </QA>
 
 <QA question="What is a critical section?">
 
-Asked in interviews.
+A **critical section** is a code segment that accesses shared resources (variables, files, devices) and must not be executed by more than one process/thread simultaneously. Requirements for a solution: 1) **Mutual Exclusion** — only one process in the critical section at a time. 2) **Progress** — if no process is in the CS, only candidates should decide who enters, and the decision can't be postponed indefinitely. 3) **Bounded Waiting** — a limit on how long a process waits to enter.
 
 </QA>
 
 <QA question="Name some synchronization techniques.">
 
-Asked in interviews.
+1) **Mutex** (mutual exclusion lock) — binary lock, only owner can unlock. 2) **Semaphore** — integer-based signaling mechanism (binary or counting). 3) **Monitor** — high-level abstraction with mutual exclusion built-in (Java `synchronized`). 4) **Spinlock** — busy-waiting lock, efficient for short critical sections. 5) **Read-Write Lock** — allows concurrent readers but exclusive writers. 6) **Condition Variables** — wait/signal mechanism within monitors.
 
 </QA>
 
@@ -352,175 +352,175 @@ Asked in interviews.
 
 <QA question="What is the difference between a user-level thread and a kernel-level thread?">
 
-Asked in interviews.
+**User-level threads**: managed by a user-space library (e.g., POSIX pthreads in user mode, green threads). OS unaware of them. Fast to create/switch (no kernel involvement). If one blocks on I/O, all threads in the process block. **Kernel-level threads**: managed by the OS kernel. Each thread is independently scheduled. If one blocks, others continue. Slower to create/switch (system call overhead). Most modern OSes use kernel threads. Models: many-to-one, one-to-one, many-to-many.
 
 </QA>
 
 <QA question="What is the difference between Multithreading and Multitasking?">
 
-Asked in interviews.
+**Multithreading**: multiple threads within a SINGLE process sharing the same address space. Lightweight, fast communication via shared memory. **Multitasking**: multiple PROCESSES running concurrently, each with its own address space. Heavier, communicate via IPC. Multithreading is for parallelism within an app (e.g., web server handling requests). Multitasking is the OS running multiple apps simultaneously (browser + editor + terminal).
 
 </QA>
 
 <QA question="What are the drawbacks of semaphores?">
 
-Asked in interviews.
+1) **Priority inversion** — low-priority process holds a semaphore needed by high-priority process. 2) **Deadlock** — two processes each hold a semaphore the other needs. 3) **Programming errors** — forgetting to signal (causes deadlock) or signaling too many times (causes race conditions). 4) **No ownership** — any thread can signal, not just the holder. 5) **Complexity** — hard to reason about correctness. Monitors and higher-level abstractions are often preferred.
 
 </QA>
 
 <QA question="What is Peterson's approach?">
 
-Asked in interviews.
+**Peterson's solution** is a software-based approach to the critical section problem for two processes. Uses two variables: `flag[2]` (intent to enter CS) and `turn` (whose turn it is). Process i sets `flag[i] = true`, `turn = j`, then waits while `flag[j] && turn == j`. Satisfies mutual exclusion, progress, and bounded waiting. Limitations: only works for 2 processes, assumes atomic read/write, may not work on modern CPUs due to instruction reordering (needs memory barriers).
 
 </QA>
 
 <QA question="Define the term Bounded Waiting.">
 
-Asked in interviews.
+**Bounded waiting** means there's a limit on how many times other processes can enter the critical section after a process has made a request and before that request is granted. Prevents starvation — no process waits indefinitely. It's one of the three requirements for a correct critical section solution (along with mutual exclusion and progress). Example: in a bakery algorithm, each process gets a number; served in order.
 
 </QA>
 
 <QA question="What are the solutions to the critical section problem?">
 
-Asked in interviews.
+Solutions to the critical section problem: 1) **Software**: Peterson's algorithm, Bakery algorithm (for n processes), Dekker's algorithm. 2) **Hardware**: test-and-set, compare-and-swap (CAS) — atomic instructions. 3) **OS-provided**: Mutexes (binary lock), Semaphores (counting), Monitors (language-level). 4) **Language-level**: `synchronized` keyword (Java), `lock` statement (C#), `threading.Lock` (Python). Modern systems use hardware atomic instructions + OS primitives.
 
 </QA>
 
 <QA question="What is concurrency?">
 
-Asked in interviews.
+**Concurrency** is the ability to handle multiple tasks that can start, run, and complete in overlapping time periods. Does NOT necessarily mean simultaneous execution — on a single core, tasks are interleaved via context switching. On multi-core, tasks can truly run in parallel. Concurrency is about structure (dealing with many things at once); parallelism is about execution (doing many things at once). Essential for responsive UIs, web servers, and efficient resource utilization.
 
 </QA>
 
 <QA question="What are the drawbacks of concurrency?">
 
-Asked in interviews.
+1) **Race conditions** — outcome depends on execution order. 2) **Deadlock** — circular waiting for resources. 3) **Starvation** — a process never gets resources. 4) **Priority inversion** — low-priority task blocks high-priority task. 5) **Livelock** — processes change state but make no progress. 6) **Complexity** — harder to debug, test, and reason about. 7) **Non-determinism** — same code can produce different results. 8) **Overhead** — synchronization and context switching costs.
 
 </QA>
 
 <QA question="What are the necessary conditions which can lead to a deadlock?">
 
-Asked in interviews.
+Four **Coffman conditions** (ALL must hold simultaneously): 1) **Mutual Exclusion** — at least one resource is non-sharable. 2) **Hold and Wait** — a process holds resources while waiting for others. 3) **No Preemption** — resources can’t be forcibly taken from a process. 4) **Circular Wait** — a circular chain of processes, each waiting for a resource held by the next. To prevent deadlock, break any one condition.
 
 </QA>
 
 <QA question="What are the issues related to concurrency?">
 
-Asked in interviews.
+1) **Mutual exclusion** — resources can’t always be shared. 2) **Starvation** — some processes may never get resources. 3) **Deadlock** — circular waiting. 4) **Race conditions** — unpredictable outcomes from unsynchronized access. 5) **Priority inversion**. 6) **Livelock** — processes actively change state but make no progress. 7) **Complexity** in debugging and testing concurrent code. 8) **Non-determinism** — bugs may be intermittent and hard to reproduce.
 
 </QA>
 
 <QA question="Why do we use precedence graphs?">
 
-Asked in interviews.
+**Precedence graphs** (task graphs) show the execution ordering constraints between tasks/processes. Nodes = tasks, directed edges = dependencies (A → B means A must complete before B starts). Used for: 1) expressing concurrency constraints, 2) determining which tasks can run in parallel, 3) detecting if a valid execution order exists (topological sort). If the graph has a cycle, no valid ordering exists. Used in parallel computing, build systems, and scheduling.
 
 </QA>
 
 <QA question="Explain the resource allocation graph.">
 
-Asked in interviews.
+A **Resource Allocation Graph (RAG)** visualizes resource assignments and requests. **Nodes**: processes (circles) and resources (rectangles with dots for instances). **Edges**: request edge (process → resource = process wants resource), assignment edge (resource → process = resource is held by process). **Deadlock detection**: if the RAG has a cycle AND each resource type has only one instance, deadlock exists. With multiple instances, a cycle is necessary but not sufficient for deadlock.
 
 </QA>
 
 <QA question="What is a deadlock?">
 
-Asked in interviews.
+A **deadlock** is a state where two or more processes are blocked forever, each waiting for a resource held by another in the set. None can proceed. Example: Process A holds File1 and wants File2; Process B holds File2 and wants File1. **Handling strategies**: 1) **Prevention** — ensure one Coffman condition never holds. 2) **Avoidance** — Banker’s algorithm. 3) **Detection + Recovery** — detect cycles, kill/rollback processes. 4) **Ignore** (ostrich algorithm) — used by most OSes for simplicity.
 
 </QA>
 
 <QA question="What is the goal and functionality of memory management?">
 
-Asked in interviews.
+**Memory management** allocates and deallocates memory for processes. **Goals**: 1) Allocate memory to processes efficiently. 2) Keep track of free and used memory. 3) Protect processes from accessing each other’s memory. 4) Allow sharing when appropriate (shared libraries). 5) Support virtual memory (programs larger than physical RAM). **Functions**: allocation (contiguous, paging, segmentation), deallocation, protection (base/limit registers, page-level permissions), swapping, and address translation.
 
 </QA>
 
 <QA question="Explain address binding and its different types.">
 
-Asked in interviews.
+**Address binding** maps symbolic addresses to physical addresses. **Types by timing**: 1) **Compile-time** — physical address known at compile time. Generates absolute code. Must recompile if location changes. 2) **Load-time** — binding done when program is loaded into memory. Generates relocatable code. Compiler produces relative addresses; loader adds base. 3) **Execution-time** (runtime) — binding deferred until execution. Requires hardware support (MMU). Allows virtual memory, dynamic relocation. Most flexible; used by modern OSes.
 
 </QA>
 
 <QA question="What is an advantage of dynamic allocation algorithms?">
 
-Asked in interviews.
+Dynamic allocation algorithms (First Fit, Best Fit, Worst Fit) choose from a free-memory list at runtime. **Advantages**: 1) Efficient memory utilization — allocate variable-sized blocks based on actual needs. 2) No predetermined partition sizes needed. 3) Processes can get exactly the memory they need. 4) Better than fixed partitioning for diverse workloads. **First Fit** is fastest (first hole that fits); **Best Fit** minimizes waste (smallest adequate hole); **Worst Fit** leaves largest remaining hole.
 
 </QA>
 
 <QA question="Define Compaction.">
 
-Asked in interviews.
+**Compaction** is the process of moving all occupied memory to one end and all free memory to the other, creating one large contiguous free block. Solves **external fragmentation**. Similar to defragmentation. **Cost**: requires relocating processes (all address references must be updated), involves significant I/O and processing time. Only possible with dynamic relocation (execution-time address binding). Impractical in some systems due to overhead. Paging eliminates the need for compaction.
 
 </QA>
 
 <QA question="What are the advantages and disadvantages of a hashed-page table?">
 
-Asked in interviews.
+**Hashed page table**: uses a hash function on the virtual page number to index into the page table. **Advantages**: handles sparse address spaces efficiently (only pages actually used have entries), good for 64-bit address spaces where linear page tables would be enormous, fast lookup with good hash function. **Disadvantages**: hash collisions require chaining (linked lists per bucket), cache-unfriendly chain traversal, overhead of hash computation, more complex than linear tables.
 
 </QA>
 
 <QA question="What is the difference between paging and segmentation?">
 
-Asked in interviews.
+**Paging**: divides memory into fixed-size pages/frames. No external fragmentation. Internal fragmentation (last page may be partially used). Invisible to programmer. Page table maps pages to frames. **Segmentation**: divides memory into variable-size segments based on logical divisions (code, data, stack). External fragmentation possible. Visible to programmer (segment number + offset). Supports different protections per segment. Some systems combine both (segmented paging).
 
 </QA>
 
 <QA question="What is Associative Memory and Cache Memory?">
 
-Asked in interviews.
+**Associative Memory (TLB — Translation Lookaside Buffer)**: a fast, small hardware cache that stores recent page table entries (virtual-to-physical mappings). Parallel search — all entries checked simultaneously. Dramatically reduces memory access time since most lookups hit the TLB. **Cache Memory**: fast SRAM between CPU and main memory (DRAM) that stores frequently accessed data/instructions. Levels: L1 (fastest, smallest) > L2 > L3. Both exploit locality of reference.
 
 </QA>
 
 <QA question="What is 'Locality of Reference'?">
 
-Asked in interviews.
+**Locality of Reference** (principle of locality): programs tend to access a relatively small portion of their address space at any given time. **Temporal locality**: recently accessed data is likely to be accessed again soon (loops, variables). **Spatial locality**: data near recently accessed data is likely to be accessed soon (arrays, sequential code). This principle makes caching, TLBs, and virtual memory effective — the working set is small relative to total memory.
 
 </QA>
 
 <QA question="What are the advantages of virtual memory?">
 
-Asked in interviews.
+1) Programs can be larger than physical RAM. 2) More processes can be in memory simultaneously (higher multiprogramming). 3) Memory isolation between processes (each has own virtual address space). 4) Simplified programming (no need to manage physical addresses). 5) Efficient memory sharing (shared libraries mapped into multiple address spaces). 6) Demand paging — only load what’s needed. 7) Copy-on-write for efficient process forking.
 
 </QA>
 
 <QA question="How to calculate performance in virtual memory?">
 
-Asked in interviews.
+**Effective Access Time (EAT)** = (1 - p) × memory_access_time + p × page_fault_time. Where p = page fault rate. **Example**: memory access = 200ns, page fault time = 8ms (8,000,000ns), p = 0.001. EAT = 0.999 × 200 + 0.001 × 8,000,000 = 199.8 + 8,000 = 8,199.8ns. Even 0.1% page fault rate increases effective access time 40x. This is why minimizing page faults is critical — disk I/O is orders of magnitude slower than RAM.
 
 </QA>
 
 <QA question="What is the basic concept of the file system?">
 
-Asked in interviews.
+A **file system** organizes, stores, and retrieves data on storage devices. It provides: naming (files have names), organization (directories/folders), access control (permissions), metadata (size, timestamp, owner). **Key concepts**: files (named collections of data), directories (containers for files), paths (absolute/relative), mounting (attaching filesystem to directory tree). Common file systems: ext4 (Linux), NTFS (Windows), APFS (macOS), FAT32 (portable).
 
 </QA>
 
 <QA question="What are the different operations on a file?">
 
-Asked in interviews.
+1) **Create** — allocate space, create directory entry. 2) **Open** — load metadata into memory, return file descriptor. 3) **Read** — transfer data from file to process buffer. 4) **Write** — transfer data from process buffer to file. 5) **Seek** — reposition the file pointer for direct access. 6) **Close** — free metadata from memory, flush buffers. 7) **Delete** — remove directory entry, free allocated space. 8) **Truncate** — erase contents but keep attributes.
 
 </QA>
 
 <QA question="Define the term Bit-Vector.">
 
-Asked in interviews.
+A **bit vector** (bitmap) tracks free/allocated blocks on disk. Each bit represents one disk block: 0 = free, 1 = allocated (or vice versa). Finding a free block = finding the first 0 bit. **Advantages**: simple, efficient for finding contiguous free blocks. **Disadvantages**: requires extra space (for a 1TB disk with 4KB blocks, bitmap = 256 million bits = 32MB). Kept in memory for speed. Used by ext4, NTFS for free space management.
 
 </QA>
 
 <QA question="What is a File Allocation Table?">
 
-Asked in interviews.
+**FAT** (File Allocation Table) is a table on disk that maps file blocks. Each entry in the FAT corresponds to a disk block and contains the number of the next block in the file (or an end-of-file marker). To read a file: start at the first block (from directory entry), follow the chain through the FAT. **Advantages**: simple, random access possible by traversing chain. **Disadvantages**: random access is slow (must traverse chain), FAT itself must be in memory for performance. Used in FAT12/FAT16/FAT32, USB drives.
 
 </QA>
 
 <QA question="What is rotational latency?">
 
-Asked in interviews.
+**Rotational latency** is the time for the desired disk sector to rotate under the read/write head after the head is positioned on the correct track. Average rotational latency = half a revolution. For a 7200 RPM drive: one revolution = 60/7200 = 8.33ms, average rotational latency = 4.17ms. For 15000 RPM: ~2ms. This is one component of disk access time (along with seek time and transfer time). SSDs have zero rotational latency.
 
 </QA>
 
 <QA question="What is seek time?">
 
-Asked in interviews.
+**Seek time** is the time for the disk arm to move the read/write head to the correct track (cylinder). It’s the most expensive component of disk access time. Depends on the distance the head must travel. Average seek time for modern HDDs: 3-12ms. Disk scheduling algorithms (FCFS, SCAN, C-SCAN, LOOK) minimize total seek time by ordering disk requests intelligently. SSDs have near-zero seek time since they have no moving parts.
 
 </QA>
 
@@ -528,42 +528,249 @@ Asked in interviews.
 
 <QA question="What is Belady's Anomaly?">
 
-Asked in interviews.
+**Belady’s Anomaly**: counterintuitively, increasing the number of page frames can INCREASE the number of page faults with the FIFO page replacement algorithm. Example: reference string 1,2,3,4,1,2,5,1,2,3,4,5 — with 3 frames: 9 faults; with 4 frames: 10 faults. This anomaly does NOT occur with LRU or Optimal algorithms (they are "stack algorithms" — pages in N frames are always a subset of pages in N+1 frames). This is why FIFO is rarely used in practice.
 
 </QA>
 
 <QA question="What happens if a non-recursive mutex is locked more than once?">
 
-Asked in interviews.
+A **non-recursive mutex** (default mutex) should only be locked once by the owning thread. If locked again by the same thread: **undefined behavior** in POSIX (may deadlock, may corrupt state). In practice: the thread blocks waiting for itself to release the lock → **self-deadlock** (hangs forever). Solution: use a **recursive mutex** (`pthread_mutex_init` with `PTHREAD_MUTEX_RECURSIVE`) which tracks the lock count and allows the same thread to lock it multiple times (must unlock same number of times).
 
 </QA>
 
 <QA question="What are the advantages of a multiprocessor system?">
 
-Asked in interviews.
+1) **Increased throughput** — multiple CPUs handle more processes simultaneously. 2) **Reliability** — if one CPU fails, others continue (graceful degradation). 3) **Economy of scale** — cheaper than multiple single-processor systems sharing peripherals and storage. 4) **True parallelism** — parallel execution of threads/processes. Types: **SMP** (symmetric — all CPUs are equal) and **AMP** (asymmetric — one master CPU controls others).
 
 </QA>
 
 <QA question="What are real-time systems?">
 
-Asked in interviews.
+**Real-time systems** must respond to events within strict time constraints. **Hard real-time**: missing a deadline is a system failure (flight controls, medical devices, ABS brakes). **Soft real-time**: missing a deadline degrades quality but isn’t catastrophic (video streaming, audio playback). **RTOS** examples: FreeRTOS, VxWorks, QNX, RTLinux. Features: deterministic scheduling (priority-based, preemptive), minimal interrupt latency, bounded response times.
 
 </QA>
 
 <QA question="How to recover from a deadlock?">
 
-Asked in interviews.
+**Recovery methods**: 1) **Process termination**: abort ALL deadlocked processes (costly) or abort one at a time until deadlock breaks (pick lowest priority/least work done). 2) **Resource preemption**: forcibly take resources from some processes and give to others. Select victim based on cost (priority, resources held, time executed). **Rollback**: restart preempted process from a saved checkpoint. Risk: starvation if same process is always chosen as victim. Solution: include rollback count in victim selection.
 
 </QA>
 
 <QA question="What factors determine whether a detection algorithm must be utilized in a deadlock avoidance system?">
 
-Asked in interviews.
+Factors: 1) **How often does deadlock occur?** If rare, detection overhead may not be justified. 2) **How many processes are affected?** Run detection when a resource request can’t be immediately granted, or periodically (every N minutes), or when CPU utilization drops below a threshold (suggesting processes are blocked). Frequent detection = faster recovery but higher overhead. Infrequent detection = harder to determine which processes caused deadlock.
 
 </QA>
 
 <QA question="Enumerate the different RAID levels.">
 
-Asked in interviews.
+**RAID** (Redundant Array of Independent Disks): **RAID 0** — striping, no redundancy, high performance. **RAID 1** — mirroring, full redundancy, 2x disk cost. **RAID 5** — striping with distributed parity, survives 1 disk failure, good read performance. **RAID 6** — double parity, survives 2 disk failures. **RAID 10** (1+0) — mirror + stripe, excellent performance and redundancy, 2x cost. RAID 5/6 for storage efficiency; RAID 10 for performance-critical databases.
 
 </QA>
+
+## Operating Systems (from InterviewBit)
+
+<QA question="What are the benefits of a multiprocessor system?">
+
+1) **Increased throughput** — more CPUs = more parallel work. 2) **Reliability and fault tolerance** — one CPU failure doesn’t halt the system. 3) **Economy** — sharing resources (peripherals, memory) is cheaper than separate systems. 4) **Scalability** — add more processors as needed. Modes: **SMP** (all CPUs equal) and **AMP** (master-slave). Used in servers, scientific computing, databases.
+
+</QA>
+
+<QA question="What is RAID structure in OS? What are the different levels of RAID configuration?">
+
+**RAID** organizes multiple disks to improve performance and/or reliability. **RAID 0**: striping across disks (fast, no fault tolerance). **RAID 1**: mirroring (full redundancy). **RAID 5**: block-level striping with distributed parity (1 disk failure tolerance, efficient storage). **RAID 6**: double distributed parity (2 disk failures). **RAID 10**: combination of striping and mirroring (fast + reliable, high cost). Choice depends on performance vs redundancy vs cost trade-offs.
+
+</QA>
+
+<QA question="What is a bootstrap program in OS?">
+
+The **bootstrap program** is the first code that runs when a computer powers on. Stored in ROM/EPROM (firmware — BIOS or UEFI). It initializes CPU registers, device controllers, and memory; runs POST; locates the OS kernel on the boot device; loads it into RAM; and jumps to the kernel’s entry point. The OS then takes over and initializes system services, file systems, and the user environment. Examples of bootloaders: GRUB, LILO (Linux), Windows Boot Manager.
+
+</QA>
+
+<QA question="Explain demand paging.">
+
+**Demand paging** is a virtual memory strategy that loads pages into physical memory ONLY when accessed. A process starts with no pages in memory. When it accesses a page not in memory, a **page fault** occurs: the OS interrupts the process, finds the page on disk, loads it into a free frame (evicting another page if needed using LRU/FIFO/Optimal replacement), updates the page table, and resumes the process. Minimizes memory usage and speeds up process startup.
+
+</QA>
+
+<QA question="What do you mean by RTOS (Real-Time Operating System)?">
+
+**RTOS** (Real-Time Operating System) is designed for applications requiring deterministic, time-bounded responses. **Hard RTOS**: guarantees tasks complete within deadlines (aerospace, medical, automotive). **Soft RTOS**: prioritizes meeting deadlines but tolerates occasional misses (multimedia, gaming). Key features: priority-based preemptive scheduling, minimal interrupt latency, deterministic behavior, small memory footprint. Examples: FreeRTOS, VxWorks, QNX, Zephyr, RTLinux.
+
+</QA>
+
+<QA question="What is IPC? What are the different IPC mechanisms?">
+
+**IPC** (Inter-Process Communication) allows processes to exchange data and coordinate. **Mechanisms**: 1) **Pipes** — unidirectional byte stream. 2) **Named pipes (FIFOs)** — bidirectional, filesystem-named. 3) **Message queues** — structured messages. 4) **Shared memory** — fastest, direct memory access. 5) **Sockets** — network or local communication. 6) **Signals** — async notifications. 7) **Semaphores** — synchronization. Choice depends on: speed (shared memory is fastest), structure (message queues for structured data), scope (sockets for network).
+
+</QA>
+
+<QA question="What do you mean by overlays in OS?">
+
+**Overlays** were a pre-virtual-memory technique for running programs larger than available RAM. The programmer manually divides the program into sections (overlays). Only the currently needed overlay is loaded into memory; when another part is needed, it replaces the current one. Requires programmer to understand the program’s structure and manage memory explicitly. Obsoleted by virtual memory and demand paging, which handle this automatically and transparently.
+
+</QA>
+
+<QA question="What is latency, and why does it matter in an operating system?">
+
+**Latency** is the delay between a request and its response. **Types**: 1) **CPU latency** — pipeline stalls, cache misses. 2) **Memory latency** — RAM access time (~100ns). 3) **Disk latency** — seek time + rotational latency (ms for HDD, µs for SSD). 4) **Network latency** — round-trip time. 5) **Interrupt latency** — time to process an interrupt. 6) **Scheduling latency** — time from ready to running. Matters because it directly impacts system responsiveness and throughput. Minimizing latency is critical for real-time systems.
+
+</QA>
+
+<QA question="What is the difference between an interrupt, a trap, and an exception?">
+
+**Interrupt**: external (hardware) signal from I/O devices (keyboard, timer, disk) — asynchronous, can occur at any time. **Trap**: internal (software) signal — intentional, caused by a system call instruction (`syscall`, `int 0x80`) to request kernel services. Synchronous. **Exception**: internal signal caused by an error (division by zero, page fault, invalid opcode). Unintentional. Some are recoverable (page fault) and some aren’t (segfault). All three transfer control to the kernel via the interrupt vector table.
+
+</QA>
+
+<QA question="What is the difference between a system call and a library call?">
+
+**System call**: request from user program to the OS kernel for privileged operations (file I/O, process creation, memory allocation). Involves mode switch (user mode → kernel mode). Overhead due to context switch. Examples: `open()`, `read()`, `fork()`, `exec()`. **Library call**: function provided by a user-space library (e.g., `printf()`, `malloc()`). Runs in user mode. May or may not invoke system calls internally (`printf` eventually calls `write()` system call).
+
+</QA>
+
+<QA question="What is the difference between user mode and kernel mode?">
+
+**User mode**: restricted mode where application code runs. Cannot access hardware directly, execute privileged instructions, or access kernel memory. If a process tries, a trap occurs. **Kernel mode**: privileged mode where the OS kernel runs. Full access to hardware, all CPU instructions, and all memory. Mode switch occurs via system calls, interrupts, or exceptions. The CPU’s mode bit indicates current mode. This separation protects the system from buggy or malicious applications.
+
+</QA>
+
+<QA question="What is Reentrancy?">
+
+**Reentrancy** means a function can be safely called simultaneously by multiple threads or can be interrupted and re-entered before the previous invocation completes. A **reentrant function**: uses only local variables (stack), doesn’t modify global/static state, doesn’t call non-reentrant functions. Important for signal handlers and multithreaded code. `strtok()` is not reentrant (uses static buffer); `strtok_r()` is reentrant (user provides buffer).
+
+</QA>
+
+<QA question="What is the difference between paging and segmentation?">
+
+**Paging**: fixed-size units (pages/frames), eliminates external fragmentation, transparent to programmer, one page table per process. **Segmentation**: variable-size units based on logical program structure (code, data, stack segments), may have external fragmentation, visible to programmer (segment:offset addressing), supports different protection per segment. Paging is simpler and used by most modern OSes. Some architectures combine both (Intel x86 supports segmented paging).
+
+</QA>
+
+<QA question="What is thrashing in OS?">
+
+**Thrashing** is when the OS spends most of its time swapping pages between RAM and disk rather than executing processes. CPU utilization drops dramatically despite high disk activity. **Cause**: too many processes in memory, each with too few frames, causing constant page faults. **Detection**: monitor page fault rate and CPU utilization. **Solutions**: reduce degree of multiprogramming (suspend/swap out processes), increase RAM, use working set model, implement page fault frequency control.
+
+</QA>
+
+<QA question="What do you mean by asymmetric clustering?">
+
+In **asymmetric clustering**, one node is in **standby mode** (hot standby) while the other(s) actively run applications. The standby monitors the active node and takes over if it fails (**failover**). Only the active node handles requests. **Contrast with symmetric clustering**: all nodes run applications simultaneously, monitoring each other. Asymmetric: simpler, wastes standby resources. Symmetric: better resource utilization, more complex. Used in high-availability deployments (databases, enterprise apps).
+
+</QA>
+
+<QA question="What do you mean by Sockets in OS?">
+
+**Sockets** are endpoints for bidirectional communication between processes. Identified by (IP address, port number). **Types**: **Stream sockets (TCP)** — reliable, ordered, connection-oriented. **Datagram sockets (UDP)** — unreliable, unordered, connectionless. **Unix domain sockets** — IPC on the same machine (faster than TCP, no network overhead). Used for client-server communication, web servers, databases. `socket()`, `bind()`, `listen()`, `accept()`, `connect()`, `send()`/`recv()`.
+
+</QA>
+
+<QA question="Explain zombie process.">
+
+A **zombie process** has terminated but its parent hasn’t called `wait()` to retrieve its exit status. The process is dead but its PCB entry remains in the process table (consuming a PID). Shows as `Z` or `defunct` in `ps`. Not harmful in small numbers but many zombies can exhaust PIDs. Fix: parent should handle `SIGCHLD` and call `wait()`. If parent dies, `init`/`systemd` adopts and reaps the zombie.
+
+</QA>
+
+<QA question="What do you mean by cascading termination?">
+
+**Cascading termination**: when a parent process terminates, the OS automatically terminates ALL its child processes (and their children, recursively). This is the default behavior in some systems. Ensures no orphan processes are left running. In Unix/Linux, this doesn’t happen by default — orphans are adopted by `init`. But process groups and sessions can be used to implement cascading termination (`kill -SIGTERM -pgid`). Used in job control and process management.
+
+</QA>
+
+<QA question="What is Round Robin scheduling, and how does time quantum affect performance?">
+
+**Round Robin** gives each process a fixed **time quantum** (time slice). Processes run for the quantum, then are preempted and moved to the back of the ready queue. **Time quantum effect**: **Too small** (1ms) → excessive context switching overhead, poor throughput. **Too large** (1s) → approaches FCFS behavior, poor response time. **Optimal**: slightly larger than typical CPU burst time. Rule of thumb: 80% of CPU bursts should be shorter than the quantum. Typical: 10-100ms.
+
+</QA>
+
+<QA question="What is preemptive vs non-preemptive scheduling?">
+
+**Preemptive**: OS can forcibly take CPU from a running process (timer interrupt, higher-priority process arrives). Better responsiveness, fairness. Higher overhead. Examples: RR, SRTF, Preemptive Priority. Modern OSes use preemptive. **Non-preemptive**: process keeps CPU until it blocks (I/O), terminates, or voluntarily yields. Simpler, lower overhead, but one process can monopolize CPU. Examples: FCFS, SJF (non-preemptive), Cooperative multitasking.
+
+</QA>
+
+<QA question="What is copy-on-write, and where is it used?">
+
+**Copy-on-write (COW)**: when a process forks, parent and child initially SHARE the same physical pages (marked read-only). Only when either process WRITES to a page is it actually copied to a new frame. **Benefits**: `fork()` is nearly instant (no memory copy), saves memory when child calls `exec()` immediately (common pattern). **Used in**: `fork()` system call, virtual memory systems, Redis snapshots (RDB), Docker layers, Git objects.
+
+</QA>
+
+<QA question="What is priority inversion, and how can it be solved?">
+
+**Priority inversion**: a high-priority task is blocked because a low-priority task holds a needed resource, and a medium-priority task preempts the low-priority task — so the high-priority task effectively runs at low priority. **Solutions**: 1) **Priority Inheritance** — temporarily boost the low-priority task to the high-priority level so it can finish and release the resource quickly. 2) **Priority Ceiling** — assign each resource a ceiling priority; any task acquiring it runs at that ceiling. Famous case: Mars Pathfinder (1997).
+
+</QA>
+
+<QA question="Explain the producer-consumer problem.">
+
+The **Producer-Consumer problem**: a producer generates data into a bounded buffer; a consumer removes data. **Synchronization needed**: producer must wait if buffer is full; consumer must wait if buffer is empty; mutual exclusion on buffer access. **Solution using semaphores**: `mutex` (binary, protects buffer), `empty` (counting, initialized to buffer size), `full` (counting, initialized to 0). Producer: `wait(empty)`, `wait(mutex)`, produce, `signal(mutex)`, `signal(full)`. Consumer: `wait(full)`, `wait(mutex)`, consume, `signal(mutex)`, `signal(empty)`.
+
+</QA>
+
+<QA question="What is SMP (Symmetric Multiprocessing)?">
+
+**SMP** (Symmetric Multiprocessing): all processors are identical and share main memory and I/O. Any processor can run any task (OS or user). The OS runs on all processors equally. Each processor has its own cache but accesses shared memory uniformly. **Benefits**: true parallelism, load balancing. **Challenges**: cache coherence (keeping caches consistent), bus contention, synchronization overhead. Used in most modern multi-core systems. Contrast with **AMP** where one processor is the master.
+
+</QA>
+
+<QA question="What is Belady's Anomaly?">
+
+**Belady’s Anomaly**: with FIFO page replacement, increasing the number of page frames can paradoxically INCREASE page faults. This occurs because FIFO is not a stack algorithm — the set of pages in memory with N+1 frames is not necessarily a superset of the set with N frames. **LRU** and **Optimal** algorithms are stack algorithms and NEVER exhibit this anomaly. This is one reason FIFO page replacement is avoided in practice.
+
+</QA>
+
+<QA question="What is spooling in OS?">
+
+**Spooling** (Simultaneous Peripheral Operations On-Line) buffers data for slow devices on disk. The most common example is **print spooling**: applications send print jobs to a spool queue on disk; the spooler feeds them to the printer at its own speed. The CPU is freed immediately. Benefits: applications don’t wait for slow devices, multiple applications can "print" simultaneously, jobs can be prioritized/reordered. Also used for batch job input, email queuing.
+
+</QA>
+
+<QA question="What happens inside the OS when a process crashes unexpectedly?">
+
+When a process crashes: 1) OS receives signal (SIGSEGV, SIGABRT, etc.) or exception. 2) Default signal handler terminates the process. 3) OS records exit status. 4) OS reclaims all resources: closes open files, releases memory (page tables, frames), releases locks/semaphores, terminates child processes (or orphan them to init). 5) PCB remains until parent calls `wait()` (zombie state). 6) Core dump may be generated for debugging. 7) Parent is notified via `SIGCHLD`.
+
+</QA>
+
+<QA question="How does an operating system ensure memory protection between processes?">
+
+1) **Virtual address spaces** — each process has its own address space; can’t access another’s memory. 2) **Page table permissions** — read, write, execute bits per page. 3) **Base and limit registers** — hardware checks every memory access is within allowed range. 4) **MMU** enforces translation — invalid address triggers segmentation fault. 5) **Kernel/user mode separation** — user processes can’t access kernel memory. 6) **ASLR** (Address Space Layout Randomization) — randomizes memory layout to prevent exploits.
+
+</QA>
+
+<QA question="What is the difference between a hard link and a soft link?">
+
+**Hard link**: another directory entry pointing to the same inode. Same file data. `ls -i` shows same inode number. Can’t cross filesystems. Can’t link to directories. Deleting original doesn’t affect hard link. **Soft link (symlink)**: special file containing the PATH to target. Can cross filesystems. Can link to directories. Breaks if target is moved/deleted (dangling). `ln file hardlink`, `ln -s target symlink`. Hard links share inode; symlinks have their own inode.
+
+</QA>
+
+<QA question="What is an inode in a file system?">
+
+An **inode** (index node) is a data structure on Unix/Linux filesystems that stores metadata about a file: file type, permissions, owner/group, size, timestamps (access, modification, change), number of hard links, and pointers to data blocks (direct, single/double/triple indirect). Each file has one unique inode. The inode does NOT store the filename — that’s in the directory entry (which maps filename → inode number). `ls -i` shows inode numbers.
+
+</QA>
+
+<QA question="What is NUMA architecture, and how is it different from SMP?">
+
+**NUMA** (Non-Uniform Memory Access): multi-processor architecture where each processor has its own local memory. Accessing local memory is fast; accessing another processor’s memory (remote) is slower. Scales better than SMP for many processors. **SMP** (Symmetric Multiprocessing): all processors share a single memory with uniform access time. Simpler but limited scalability due to bus contention. NUMA is used in large servers (64+ cores); SMP in consumer multi-core CPUs.
+
+</QA>
+
+<QA question="Compare FIFO, LRU, and Optimal page replacement algorithms.">
+
+**FIFO** (First In First Out): replace the oldest page. Simple but suffers from Belady’s Anomaly. Poor performance. **LRU** (Least Recently Used): replace the page not used for the longest time. Good performance, no Belady’s Anomaly. Hardware overhead for tracking usage. **Optimal** (Belady’s): replace the page that won’t be used for the longest future time. Best possible performance but impossible to implement (requires future knowledge). Used as a benchmark. In practice: LRU approximations (clock algorithm).
+
+</QA>
+
+<QA question="How does a Translation Lookaside Buffer (TLB) improve performance?">
+
+The **TLB** is a small, fast hardware cache that stores recent virtual-to-physical page mappings. Without TLB: each memory access requires TWO accesses (one to page table in memory, one to actual data). With TLB: if the mapping is cached (TLB hit, ~1ns), skip the page table lookup. TLB hit rates are typically 95-99% due to locality of reference. **EAT** = hit_rate × (TLB_time + memory_time) + miss_rate × (TLB_time + 2 × memory_time). Context switches may flush TLB (expensive).
+
+</QA>
+
+<QA question="What is Multi-Level Feedback Queue (MLFQ) scheduling?">
+
+**MLFQ** uses multiple queues with different priority levels. Processes start in the highest-priority queue. Rules: 1) Higher-priority queue is served first. 2) Within a queue, use Round Robin. 3) If a process uses its entire time quantum, it’s demoted to a lower queue (CPU-bound). 4) If a process blocks before quantum expires, it stays or moves up (I/O-bound). 5) Periodically boost all processes to top queue (prevents starvation). MLFQ approximates SJF without knowing burst times. Used by Linux CFS and Windows scheduler.
+
+</QA>
+

@@ -12,97 +12,111 @@ MongoDB: flexible/evolving schemas, nested data, horizontal scaling, rapid proto
 
 <QA question="What is the difference between normal collection and bucket collection?">
 
-Asked in interviews.
+A **normal collection** stores each document independently. A **bucket collection** (time-series collection in MongoDB 5.0+) groups related time-series measurements into "buckets" — internally storing multiple data points in a single document to optimize storage and query performance. Bucket collections use `timeseries: { timeField, metaField }` and auto-manage bucketing. Best for IoT, logs, metrics data. Reduces index size and improves aggregation speed.
 
 </QA>
 
 <QA question="Why would you use MongoDB instead of MySQL?">
 
-Asked in interviews.
+Use MongoDB when: 1) Schema is flexible/evolving (no ALTER TABLE). 2) Data is hierarchical/nested (documents). 3) Need horizontal scaling (sharding built-in). 4) Rapid prototyping (no migrations). 5) Handling unstructured/semi-structured data. Use MySQL when: strict ACID transactions, complex joins, relational data, existing SQL expertise. MongoDB stores JSON-like documents; MySQL uses rows/columns in tables.
 
 </QA>
 
 <QA question="Given a collection of user details, write a MongoDB query to increase the age by 20% for documents where the age field exists.">
 
-Asked in interviews.
+`db.users.updateMany({ age: { $exists: true } }, [{ $set: { age: { $multiply: ["$age", 1.2] } } }])`. Uses aggregation pipeline syntax (array) in the update to reference the existing `age` field with `$multiply`. The `$exists: true` filter ensures only documents with an `age` field are updated. `$mul` operator alternative: `db.users.updateMany({ age: { $exists: true } }, { $mul: { age: 1.2 } })`.
 
 </QA>
 
 <QA question="Why would you choose Mongoose over the MongoDB driver?">
 
-Asked in interviews.
+**Mongoose** provides: 1) **Schema validation** (define structure, types, required fields). 2) **Middleware** (pre/post hooks for save, validate, remove). 3) **Virtuals** (computed properties). 4) **Population** (reference other documents, like JOIN). 5) **Built-in type casting**. 6) **Query helpers**. The native **MongoDB driver** is lower-level: more control, no schema, slightly better performance. Choose Mongoose for structured applications; native driver for maximum flexibility/performance.
 
 </QA>
 
 <QA question="What are indexes in MongoDB?">
 
-Asked in interviews.
+Indexes are data structures that store a small portion of the collection's data in an easy-to-traverse form, improving query speed. Without indexes, MongoDB scans every document (collection scan). **Types**: single field, compound, multikey (arrays), text (full-text search), hashed (for sharding), geospatial (2d/2dsphere), TTL (auto-delete). Create: `db.collection.createIndex({ field: 1 })`. Trade-off: faster reads, slower writes (index maintenance).
 
 </QA>
 
 <QA question="How to manage database, difference between mongoDB and SQL?">
 
-Asked in interviews.
+**MongoDB**: document-oriented (JSON-like BSON), flexible schema, horizontal scaling (sharding), rich query language, no joins (embedded documents or $lookup). **SQL** (MySQL/PostgreSQL): relational tables, strict schema, vertical scaling (primarily), SQL language, JOINs for related data, ACID transactions. MongoDB manages data via collections/documents; SQL uses tables/rows. MongoDB: `db.users.find()`. SQL: `SELECT * FROM users`. Choose based on data structure and access patterns.
 
 </QA>
 
 <QA question="What is sharding in MongoDB and how does it work?">
 
-Asked in interviews.
+**Sharding** distributes data across multiple servers (shards) for horizontal scaling. A **shard key** determines how data is distributed. Components: **shards** (hold data subsets), **config servers** (store metadata/routing), **mongos** (query router). Process: client → mongos → routes query to correct shard(s) based on shard key. Types: ranged sharding (contiguous ranges), hashed sharding (even distribution). Choose shard key carefully — should have high cardinality and even distribution.
 
 </QA>
 
 <QA question="What is indexing in MongoDB?">
 
-Asked in interviews.
+Indexing creates efficient data structures (B-tree) that allow MongoDB to find documents without scanning every document. Default: `_id` field is always indexed. Create: `db.collection.createIndex({ name: 1 })` (ascending). Compound: `createIndex({ name: 1, age: -1 })`. View indexes: `db.collection.getIndexes()`. Analyze: `db.collection.find().explain('executionStats')`. Remove unused indexes to reduce write overhead. Use `hint()` to force index usage.
 
 </QA>
 
 <QA question="What is the $shared operator in MongoDB?">
 
-Asked in interviews.
+There is no `$shared` operator in MongoDB. The likely intended question is about **sharding** (distributing data across servers) or the **$shard** command. Related operators: `$shardedDataDistribution` (aggregation stage for shard statistics). For sharding: `sh.shardCollection('db.collection', { key: 1 })` distributes a collection. `$merge` and `$out` can target specific shards. Sharding is an infrastructure concept, not a query operator.
 
 </QA>
 
 <QA question="What is the best way to save large files (e.g., photos) into a MongoDB database?">
 
-Asked in interviews.
+Use **GridFS** — MongoDB's specification for storing large files (over 16MB document limit). GridFS splits files into chunks (default 255KB) stored in `fs.chunks` and metadata in `fs.files`. Upload: `const bucket = new GridFSBucket(db); fs.createReadStream('photo.jpg').pipe(bucket.openUploadStream('photo.jpg'));`. For files under 16MB: store as **Binary (BinData)** in a regular document field. **Best practice**: store files in object storage (S3, GCS) and save only the URL in MongoDB.
 
 </QA>
 
 <QA question="Create a Dockerfile to make MongoDB available for developers.">
 
-Asked in interviews.
+```dockerfile
+FROM mongo:7
+ENV MONGO_INITDB_ROOT_USERNAME=admin
+ENV MONGO_INITDB_ROOT_PASSWORD=password
+COPY init.js /docker-entrypoint-initdb.d/
+EXPOSE 27017
+```
+Run: `docker build -t dev-mongo . && docker run -d -p 27017:27017 -v mongo-data:/data/db dev-mongo`. Or simpler with docker-compose: `services: mongo: image: mongo:7 ports: ["27017:27017"] volumes: [mongo-data:/data/db]`.
 
 </QA>
 
 <QA question="What types of joins are available in MongoDB?">
 
-Asked in interviews.
+MongoDB doesn't have traditional JOINs like SQL. Instead: 1) **$lookup** (aggregation) — performs a left outer join with another collection: `{ $lookup: { from: 'orders', localField: '_id', foreignField: 'userId', as: 'orders' } }`. 2) **Embedded documents** — denormalized data avoids joins. 3) **$graphLookup** — recursive lookup (for tree/graph data). 4) **Manual population** (Mongoose `.populate()`). $lookup is expensive — prefer embedding for frequent access patterns.
 
 </QA>
 
 <QA question="How can we connect to MongoDB using Javascript?">
 
-Asked in interviews.
+**Native driver**: `const { MongoClient } = require('mongodb'); const client = new MongoClient('mongodb://localhost:27017'); await client.connect(); const db = client.db('mydb'); const users = db.collection('users');`. **Mongoose**: `const mongoose = require('mongoose'); await mongoose.connect('mongodb://localhost:27017/mydb');`. For production: use connection string with auth, replica set, and connection pooling options.
 
 </QA>
 
 <QA question="How can we optimize a MongoDB database?">
 
-Asked in interviews.
+1) **Indexes** — create indexes on frequently queried fields; use `.explain()` to verify. 2) **Schema design** — embed vs reference based on access patterns. 3) **Projection** — return only needed fields. 4) **Aggregation pipeline** — process data server-side. 5) **Connection pooling**. 6) **Sharding** for horizontal scaling. 7) **Capped collections** for fixed-size data. 8) **Avoid large arrays** (unbounded growth). 9) **Use MongoDB Compass** profiler. 10) **WiredTiger cache** tuning.
 
 </QA>
 
 <QA question="What is the MongoDB code to connect from a NodeJS backend?">
 
-Asked in interviews.
+```javascript
+const mongoose = require('mongoose');
+mongoose.connect(process.env.MONGODB_URI || 'mongodb://localhost:27017/mydb', {
+  maxPoolSize: 10,
+}).then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('Connection error:', err));
+```
+Or native driver: `const { MongoClient } = require('mongodb'); const client = await MongoClient.connect(uri);`. Always use environment variables for connection strings in production.
 
 </QA>
 
 <QA question="How does over-indexing affect MongoDB performance, and how can it be prevented?">
 
-Asked in interviews.
+Every index adds overhead: 1) **Write performance** — each insert/update/delete must update ALL indexes. 2) **Storage** — indexes consume RAM and disk. 3) **Working set** — too many indexes may not fit in RAM (cache eviction). **Prevention**: 1) Only index fields used in queries. 2) Use compound indexes instead of multiple single-field indexes. 3) Review with `db.collection.getIndexes()` and `$indexStats`. 4) Remove unused indexes. 5) Use MongoDB's Performance Advisor (Atlas).
 
 </QA>
 
@@ -110,109 +124,131 @@ Asked in interviews.
 
 <QA question="What is the difference between WHERE and HAVING?">
 
-WHERE filters rows BEFORE grouping (can't use aggregate functions). HAVING filters groups AFTER GROUP BY (can use COUNT, SUM, AVG, etc.). Example: WHERE age > 18 ... GROUP BY city HAVING COUNT(*) > 10.
+WHERE filters rows BEFORE grouping (can't use aggregate functions). HAVING filters groups AFTER GROUP BY (can use COUNT, SUM, AVG, etc.). Example: WHERE age greater than 18 ... GROUP BY city HAVING COUNT(*) greater than 10.
 
 </QA>
 
 <QA question="What is your understanding of clauses and phrases?">
 
-Asked in interviews.
+In SQL, **clauses** are components of a query that define specific operations: `SELECT` (columns to return), `FROM` (tables), `WHERE` (filter rows), `GROUP BY` (group rows), `HAVING` (filter groups), `ORDER BY` (sort), `LIMIT` (restrict rows). Each clause has a specific purpose. Clauses are combined to form complete SQL statements. They execute in a logical order: FROM → WHERE → GROUP BY → HAVING → SELECT → ORDER BY → LIMIT.
 
 </QA>
 
 <QA question="Write a query to get the customer with the highest total order value for each year and month.">
 
-Asked in interviews.
+```sql
+WITH monthly_totals AS (
+  SELECT customer_id, YEAR(order_date) AS yr, MONTH(order_date) AS mo,
+         SUM(order_value) AS total_value,
+         ROW_NUMBER() OVER (PARTITION BY YEAR(order_date), MONTH(order_date) ORDER BY SUM(order_value) DESC) AS rn
+  FROM orders GROUP BY customer_id, YEAR(order_date), MONTH(order_date)
+)
+SELECT yr, mo, customer_id, total_value FROM monthly_totals WHERE rn = 1;
+```
+Uses CTE with `ROW_NUMBER()` window function to rank customers by total order value per month.
 
 </QA>
 
 <QA question="Describe the different types of joins (Inner, Left, Right, Full).">
 
-Asked in interviews.
+**INNER JOIN**: returns only rows with matching values in both tables. **LEFT JOIN** (LEFT OUTER): returns all rows from the left table + matching rows from right (NULL if no match). **RIGHT JOIN** (RIGHT OUTER): all rows from right + matching left (NULL if no match). **FULL OUTER JOIN**: all rows from both tables (NULL where no match). Use INNER for strict matches; LEFT for "give me all from one side plus related data."
 
 </QA>
 
 <QA question="How many columns can be created in a table?">
 
-Asked in interviews.
+Depends on the DBMS: **MySQL**: max 4096 columns per table. **PostgreSQL**: max 1600 columns (250–400 for wide rows). **SQL Server**: max 1024 columns. **Oracle**: max 1000 columns. In practice, if you need many columns, consider: normalization (split into related tables), JSON/JSONB columns for flexible data, or EAV (Entity-Attribute-Value) pattern. Wide tables indicate possible schema design issues.
 
 </QA>
 
 <QA question="How do you join three different tables in SQL?">
 
-Asked in interviews.
+```sql
+SELECT u.name, o.order_id, p.product_name
+FROM users u
+JOIN orders o ON u.id = o.user_id
+JOIN products p ON o.product_id = p.id
+WHERE u.active = true;
+```
+Chain JOIN clauses — each JOIN connects to a previously joined table via a foreign key relationship. Can mix join types (INNER, LEFT). Order matters for LEFT JOINs.
 
 </QA>
 
 <QA question="Explain the difference between inner and outer joins.">
 
-Asked in interviews.
+**INNER JOIN**: returns ONLY rows with matching values in both tables. Non-matching rows are excluded. **OUTER JOIN**: returns ALL rows from one or both tables. **LEFT OUTER**: all left rows + matching right. **RIGHT OUTER**: all right rows + matching left. **FULL OUTER**: all rows from both tables. Example: finding users WITH orders (INNER) vs finding ALL users including those WITHOUT orders (LEFT).
 
 </QA>
 
 <QA question="How do you insert or update data in a table?">
 
-Asked in interviews.
+**INSERT**: `INSERT INTO users (name, email) VALUES ('John', 'john@example.com');`. Bulk: `INSERT INTO users VALUES (...), (...), (...);`. **UPDATE**: `UPDATE users SET name = 'Jane' WHERE id = 1;`. **UPSERT** (insert or update): MySQL: `INSERT ... ON DUPLICATE KEY UPDATE`. PostgreSQL: `INSERT ... ON CONFLICT (id) DO UPDATE SET name = EXCLUDED.name`. Always use WHERE with UPDATE to avoid updating all rows.
 
 </QA>
 
 <QA question="What is the trigger point in SQL?">
 
-Asked in interviews.
+A **trigger** is a stored procedure that automatically executes in response to specific table events (INSERT, UPDATE, DELETE). **Types**: BEFORE trigger (validate/modify data before operation), AFTER trigger (audit logging, cascade updates after operation), INSTEAD OF trigger (replace the operation). Example: `CREATE TRIGGER audit_log AFTER UPDATE ON users FOR EACH ROW INSERT INTO audit (user_id, changed_at) VALUES (NEW.id, NOW());`. Use sparingly — hidden logic, performance overhead.
 
 </QA>
 
 <QA question="What are the common types of SQL views?">
 
-Asked in interviews.
+**Simple views**: based on a single table, no aggregations; updatable (can INSERT/UPDATE through them). **Complex views**: involve joins, subqueries, aggregate functions; generally read-only. **Materialized views**: physically stored result set, refreshed periodically — faster reads but stale data. **Indexed views** (SQL Server): materialized with indexes. Views provide abstraction, security (expose subset of columns), and simplify complex queries.
 
 </QA>
 
 <QA question="What is the definition of a UNION?">
 
-Asked in interviews.
+**UNION** combines result sets of two or more SELECT statements into a single result set. Rules: same number of columns, compatible data types. `UNION` removes duplicates (like DISTINCT). `UNION ALL` keeps duplicates (faster, no sorting). Example: `SELECT name FROM employees UNION SELECT name FROM contractors;`. Use UNION ALL when duplicates are acceptable or impossible — UNION adds a sort/distinct step.
 
 </QA>
 
 <QA question="Why SQL and not NoSQL?">
 
-Asked in interviews.
+Choose SQL when: 1) **ACID compliance** needed (financial, medical). 2) **Complex queries** with JOINs and aggregations. 3) **Data integrity** with foreign keys and constraints. 4) **Structured, relational data**. 5) **Mature tooling** and ecosystem. 6) **Reporting and analytics** (SQL is standard). NoSQL when: flexible schema, massive horizontal scaling, document/graph data. Most production systems use both (polyglot persistence).
 
 </QA>
 
 <QA question="What is the difference between DENSE_RANK, RANK, and ROW_NUMBER in SQL?">
 
-Asked in interviews.
+All are window functions for ordering. **ROW_NUMBER()**: assigns unique sequential numbers (1,2,3,4,5) — no ties. **RANK()**: assigns same rank for ties, skips next (1,2,2,4,5). **DENSE_RANK()**: assigns same rank for ties, NO gaps (1,2,2,3,4). Example with scores [100,90,90,80]: ROW_NUMBER: 1,2,3,4. RANK: 1,2,2,4. DENSE_RANK: 1,2,2,3. Use DENSE_RANK for "Nth highest salary" queries.
 
 </QA>
 
 <QA question="What do you mean by an SQL injection attack?">
 
-Asked in interviews.
+A **SQL injection** attack occurs when user input is inserted directly into SQL queries without sanitization. Attacker inputs malicious SQL: `' OR '1'='1' --` to bypass authentication or `'; DROP TABLE users; --` to destroy data. **Prevention**: 1) **Parameterized queries** (prepared statements) — `SELECT * FROM users WHERE id = $1`. 2) **ORM** (Prisma, Mongoose). 3) Input validation. 4) Least privilege DB user. NEVER concatenate user input into SQL strings.
 
 </QA>
 
 <QA question="Tell me about the functions used in SQL (Aggregate, Scalar).">
 
-Asked in interviews.
+**Aggregate functions** operate on sets of rows: `COUNT()`, `SUM()`, `AVG()`, `MIN()`, `MAX()`, `GROUP_CONCAT()`. Used with GROUP BY. **Scalar functions** operate on single values: `UPPER()`, `LOWER()`, `LENGTH()`, `SUBSTRING()`, `ROUND()`, `NOW()`, `COALESCE()`, `CAST()`, `CONCAT()`. Aggregate: `SELECT dept, AVG(salary) FROM employees GROUP BY dept`. Scalar: `SELECT UPPER(name), ROUND(salary, 2) FROM employees`.
 
 </QA>
 
 <QA question="What is RDBMS and why we use SQL?">
 
-Asked in interviews.
+**RDBMS** (Relational Database Management System) stores data in tables (rows and columns) with relationships between tables via foreign keys. Examples: PostgreSQL, MySQL, Oracle, SQL Server. **SQL** (Structured Query Language) is the standard language for interacting with RDBMS — querying, inserting, updating, deleting data, and managing schema. We use SQL because: declarative (say WHAT, not HOW), standardized, powerful for complex queries, 50+ years of proven reliability.
 
 </QA>
 
 <QA question="What is the order of execution of SQL clauses?">
 
-Asked in interviews.
+Logical execution order (NOT the written order): 1) **FROM** (+ JOINs) — identify tables. 2) **WHERE** — filter rows. 3) **GROUP BY** — group rows. 4) **HAVING** — filter groups. 5) **SELECT** — choose columns/expressions. 6) **DISTINCT** — remove duplicates. 7) **ORDER BY** — sort results. 8) **LIMIT/OFFSET** — restrict rows. This is why you can't use a SELECT alias in WHERE (WHERE runs before SELECT) but can in ORDER BY.
 
 </QA>
 
 <QA question="Write a query to find the 2nd highest salary using a window function.">
 
-Asked in interviews.
+```sql
+SELECT salary FROM (
+  SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk
+  FROM employees
+) ranked WHERE rnk = 2;
+```
+Alternative without window function: `SELECT MAX(salary) FROM employees WHERE salary` is less than `(SELECT MAX(salary) FROM employees);`. Or using LIMIT/OFFSET: `SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 1 OFFSET 1;`.
 
 </QA>
 
@@ -226,61 +262,61 @@ B-Tree (default): equality, range, sorting — most common. GIN: contains/overla
 
 <QA question="What is PostgreSQL?">
 
-Asked in interviews.
+**PostgreSQL** is an advanced, open-source, object-relational database system. Known for: 1) Full ACID compliance. 2) Advanced data types (JSONB, arrays, hstore, geometric). 3) Powerful indexing (B-tree, GIN, GiST, BRIN). 4) Full-text search. 5) Window functions, CTEs, lateral joins. 6) Extensions (PostGIS, pgvector). 7) MVCC for concurrency. 8) Streaming replication. 9) PL/pgSQL stored procedures. Most feature-rich open-source RDBMS.
 
 </QA>
 
 <QA question="Explain the difference between SQL and PostgreSQL.">
 
-Asked in interviews.
+**SQL** is a LANGUAGE (Structured Query Language) — standard for querying databases. **PostgreSQL** is a DATABASE SYSTEM (RDBMS) that implements SQL. SQL is the language you write; PostgreSQL is the engine that executes it. PostgreSQL extends standard SQL with: JSONB, arrays, custom types, `RETURNING` clause, `ON CONFLICT`, `LISTEN/NOTIFY`, window functions, CTEs, and many vendor-specific extensions.
 
 </QA>
 
 <QA question="What backup tools have you used in your company for PostgreSQL?">
 
-Asked in interviews.
+**pg_dump** — logical backup (single database): `pg_dump -Fc dbname > backup.dump`. **pg_dumpall** — all databases. **pg_basebackup** — physical backup (binary, full cluster). **WAL archiving** — continuous archiving for point-in-time recovery (PITR). Tools: **pgBackRest** (parallel, incremental, differential), **Barman** (backup and recovery), **WAL-G** (cloud-native, S3/GCS). Schedule with cron. Test restores regularly.
 
 </QA>
 
 <QA question="How do you optimize PostgreSQL queries?">
 
-Asked in interviews.
+1) **EXPLAIN ANALYZE** — view execution plan and actual timing. 2) **Indexes** — add B-tree, GIN, or GiST indexes on filtered/joined columns. 3) **Avoid SELECT *** — return only needed columns. 4) **Vacuum/Analyze** — update statistics and reclaim dead rows. 5) Rewrite queries — avoid correlated subqueries, use JOINs or CTEs. 6) **Connection pooling** (PgBouncer). 7) **Materialized views** for expensive computations. 8) Partitioning large tables. 9) Tune `work_mem`, `shared_buffers`.
 
 </QA>
 
 <QA question="Describe your experience with PostgreSQL administration and DBA tasks.">
 
-Asked in interviews.
+DBA tasks include: 1) **Backup/Recovery** — pg_dump, pg_basebackup, WAL archiving, PITR. 2) **Performance tuning** — EXPLAIN ANALYZE, index management, query optimization. 3) **Monitoring** — pg_stat_statements, pg_stat_activity, pgBadger logs. 4) **Replication** — streaming replication, logical replication. 5) **Upgrades** — pg_upgrade for major versions. 6) **Security** — pg_hba.conf, SSL, role management. 7) **Vacuuming** — autovacuum tuning. 8) **Connection pooling** — PgBouncer.
 
 </QA>
 
 <QA question="What are the different data types and constraints in PostgreSQL?">
 
-Asked in interviews.
+**Data types**: `integer`, `bigint`, `serial`, `text`, `varchar(n)`, `boolean`, `date`, `timestamp`, `numeric`, `jsonb`, `uuid`, `array`, `inet`, `point`. **Constraints**: `NOT NULL`, `UNIQUE`, `PRIMARY KEY`, `FOREIGN KEY`, `CHECK` (e.g., `CHECK (age greater than 0)`), `DEFAULT`, `EXCLUDE`. Constraints enforce data integrity. PostgreSQL also supports custom types (`CREATE TYPE`) and enum types.
 
 </QA>
 
 <QA question="Explain the concept of WAL (Write Ahead Logging) in PostgreSQL.">
 
-Asked in interviews.
+**WAL** ensures durability: changes are written to a sequential log file BEFORE being applied to the actual data pages. If the system crashes, PostgreSQL replays the WAL to recover un-flushed changes. Benefits: 1) **Crash recovery** — guarantees durability. 2) **Replication** — WAL records are streamed to replicas. 3) **Point-in-time recovery** (PITR) — replay WAL to a specific moment. WAL files are stored in `pg_wal/`. Configure with `wal_level`, `archive_mode`.
 
 </QA>
 
 <QA question="How do you handle replication and high availability in PostgreSQL?">
 
-Asked in interviews.
+**Streaming replication**: primary streams WAL to standby in real-time. Asynchronous (default) or synchronous. **Logical replication**: replicate specific tables/data (pub/sub model). **HA solutions**: **Patroni** (automated failover, uses etcd/ZooKeeper), **PgBouncer** (connection pooling), **HAProxy** (load balancing). Cloud: AWS RDS Multi-AZ, Cloud SQL HA. **Read replicas** scale read workloads. **pg_basebackup** for initial standby setup.
 
 </QA>
 
 <QA question="What is the use of EXPLAIN command in PostgreSQL?">
 
-Asked in interviews.
+`EXPLAIN` shows the query execution plan (how PostgreSQL will execute a query). `EXPLAIN ANALYZE` actually runs the query and shows real timing. Shows: scan type (Seq Scan, Index Scan), join method (Nested Loop, Hash Join, Merge Join), estimated vs actual rows, cost. Use to identify: missing indexes, full table scans, inefficient joins. `EXPLAIN (ANALYZE, BUFFERS, FORMAT JSON)` for detailed analysis.
 
 </QA>
 
 <QA question="Compare PostgreSQL with MySQL in terms of features and performance.">
 
-Asked in interviews.
+**PostgreSQL**: full ACID, advanced data types (JSONB, arrays), powerful indexing (GIN, GiST), window functions, CTEs, full-text search, extensible, better for complex queries/analytics. **MySQL**: simpler, faster for simple read-heavy workloads, wider hosting support, better replication tooling (historically). PostgreSQL wins on: feature richness, ANSI SQL compliance, data integrity. MySQL wins on: simplicity, read performance in simple workloads, ecosystem size.
 
 </QA>
 
@@ -320,271 +356,271 @@ Prisma: type-safe queries, auto-completion, schema migrations, rapid development
 
 <QA question="What is SQL?">
 
-Asked in interviews.
+**SQL** (Structured Query Language) is the standard programming language for managing and manipulating relational databases. It allows: querying data (SELECT), inserting (INSERT), updating (UPDATE), deleting (DELETE), creating/modifying schema (CREATE, ALTER, DROP), controlling access (GRANT, REVOKE), and managing transactions (COMMIT, ROLLBACK). SQL is declarative — you specify WHAT data you want, not HOW to get it.
 
 </QA>
 
 <QA question="What are the differences between SQL and MySQL?">
 
-Asked in interviews.
+**SQL**: a LANGUAGE (Structured Query Language) — the standard for querying databases. **MySQL**: a DATABASE MANAGEMENT SYSTEM (RDBMS) that uses SQL. Other RDBMS also use SQL: PostgreSQL, Oracle, SQL Server, SQLite. MySQL is one implementation; SQL is the language all RDBMS speak (with vendor-specific extensions). MySQL is owned by Oracle, open-source, popular for web applications.
 
 </QA>
 
 <QA question="What are tables and fields in SQL?">
 
-Asked in interviews.
+A **table** is a structured collection of data organized in rows and columns (like a spreadsheet). Each table represents an entity (users, orders). A **field** (column) defines a specific attribute with a data type (name VARCHAR, age INT). A **row** (record/tuple) is a single data entry. Tables have schemas defining column names, types, and constraints. Example: `CREATE TABLE users (id SERIAL PRIMARY KEY, name TEXT NOT NULL, email TEXT UNIQUE);`.
 
 </QA>
 
 <QA question="What are constraints in SQL? List common types.">
 
-Asked in interviews.
+**Constraints** are rules enforced on table data to maintain integrity. Types: **NOT NULL** — column cannot be NULL. **UNIQUE** — all values must be different. **PRIMARY KEY** — NOT NULL + UNIQUE, uniquely identifies each row. **FOREIGN KEY** — references primary key in another table (referential integrity). **CHECK** — validates a condition (`CHECK (age >= 0)`). **DEFAULT** — sets default value. **EXCLUDE** (PostgreSQL) — ensures non-overlapping ranges.
 
 </QA>
 
 <QA question="What is a Primary Key?">
 
-Asked in interviews.
+A **Primary Key** is a column (or combination of columns) that uniquely identifies each row in a table. Properties: must be UNIQUE, cannot be NULL, each table has only ONE primary key. Automatically creates a clustered index (in most RDBMS). Can be: natural key (email) or surrogate key (auto-increment ID, UUID). Example: `id SERIAL PRIMARY KEY` or `PRIMARY KEY (user_id, order_id)` (composite).
 
 </QA>
 
 <QA question="What is a Unique Constraint?">
 
-Asked in interviews.
+A **UNIQUE constraint** ensures all values in a column are different. Unlike PRIMARY KEY: allows NULL values (most RDBMS allow one NULL), a table can have multiple UNIQUE constraints. Used for: email addresses, usernames, phone numbers. Example: `CREATE TABLE users (id SERIAL PRIMARY KEY, email TEXT UNIQUE);`. Creates a unique index internally. Violation causes an error on INSERT/UPDATE.
 
 </QA>
 
 <QA question="What is a Foreign Key?">
 
-Asked in interviews.
+A **Foreign Key** is a column (or set of columns) that references the PRIMARY KEY of another table. Enforces **referential integrity** — values must exist in the referenced table. Actions on delete/update: `CASCADE` (propagate), `SET NULL`, `RESTRICT` (prevent), `SET DEFAULT`. Example: `orders.user_id REFERENCES users(id) ON DELETE CASCADE`. Foreign keys establish relationships between tables (1:1, 1:N, M:N).
 
 </QA>
 
 <QA question="What is a JOIN in SQL? What are the different types of JOINs?">
 
-Asked in interviews.
+A **JOIN** combines rows from two or more tables based on a related column. Types: **INNER JOIN** — matching rows only. **LEFT JOIN** — all left + matching right. **RIGHT JOIN** — all right + matching left. **FULL JOIN** — all rows from both. **CROSS JOIN** — Cartesian product. **SELF JOIN** — table joins itself. **NATURAL JOIN** — auto-join on same column names. Example: `SELECT * FROM users u JOIN orders o ON u.id = o.user_id;`.
 
 </QA>
 
 <QA question="What is a self-join?">
 
-Asked in interviews.
+A **self-join** is when a table joined with itself. Uses aliases to treat the same table as two different tables. Use cases: finding hierarchies (employee-manager), comparing rows within the same table. Example: `SELECT e.name AS employee, m.name AS manager FROM employees e JOIN employees m ON e.manager_id = m.id;`. Can use any join type (INNER, LEFT, etc.).
 
 </QA>
 
 <QA question="What is a cross-join in SQL?">
 
-Asked in interviews.
+A **CROSS JOIN** produces the Cartesian product of two tables — every row from table A paired with every row from table B. If A has 10 rows and B has 5, the result has 50 rows. No ON condition needed. Syntax: `SELECT * FROM colors CROSS JOIN sizes;`. Use cases: generating all combinations (e.g., sizes × colors for a product catalog), creating test data. Usually avoided for large tables due to huge result sets.
 
 </QA>
 
 <QA question="What is an Index in SQL? Explain different types of indexes.">
 
-Asked in interviews.
+An **index** is a data structure that speeds up data retrieval (like a book's index). Types: **B-Tree** (default): equality, range, sorting. **Hash**: exact equality only (some RDBMS). **Full-text**: text search (MATCH, tsvector). **Bitmap**: low-cardinality columns (data warehouses). **Composite**: multiple columns. **Partial** (PostgreSQL): index subset of rows. **Covering**: includes all query columns. Trade-off: faster reads, slower writes (index maintenance), extra storage.
 
 </QA>
 
 <QA question="What is the difference between clustered and non-clustered indexes?">
 
-Asked in interviews.
+**Clustered index**: physically reorders the table data to match the index. Only ONE per table (usually the primary key). Data and index stored together. Fastest for range queries. **Non-clustered index**: separate structure with pointers back to the data rows. Multiple per table. Lookup requires extra step (bookmark lookup) to retrieve actual data. PostgreSQL doesn't use the term — it has CLUSTER command but all indexes are non-clustered by default.
 
 </QA>
 
 <QA question="What is data integrity?">
 
-Asked in interviews.
+**Data integrity** ensures data accuracy, consistency, and reliability throughout its lifecycle. Types: **Entity integrity** — primary keys ensure unique identification. **Referential integrity** — foreign keys ensure valid relationships. **Domain integrity** — data types and CHECK constraints ensure valid values. **User-defined integrity** — business rules. Enforced through: constraints (PK, FK, UNIQUE, CHECK, NOT NULL), triggers, transactions, and application-level validation.
 
 </QA>
 
 <QA question="What is a subquery? What are its types?">
 
-Asked in interviews.
+A **subquery** is a query nested inside another query. **Types**: 1) **Scalar subquery** — returns single value: `SELECT name FROM users WHERE id = (SELECT MAX(id) FROM users)`. 2) **Row subquery** — returns single row. 3) **Table subquery** — returns multiple rows (used with IN, EXISTS). 4) **Correlated subquery** — references outer query (runs once per outer row). Non-correlated subqueries run once independently.
 
 </QA>
 
 <QA question="What is a correlated subquery?">
 
-Asked in interviews.
+A **correlated subquery** references a column from the outer query, so it executes once for each row of the outer query. Example: `SELECT e.name FROM employees e WHERE e.salary > (SELECT AVG(salary) FROM employees WHERE dept_id = e.dept_id)`. The inner query uses `e.dept_id` from the outer query. Slower than non-correlated (runs N times vs once). Can often be rewritten as JOINs for better performance.
 
 </QA>
 
 <QA question="What is the SELECT statement?">
 
-Asked in interviews.
+The **SELECT** statement retrieves data from one or more tables. Basic: `SELECT column1, column2 FROM table_name;`. All columns: `SELECT * FROM users;`. With conditions: `SELECT * FROM users WHERE age greater than 18;`. With aliases: `SELECT name AS full_name`. With functions: `SELECT COUNT(*), AVG(salary)`. With DISTINCT: `SELECT DISTINCT city`. It is the most commonly used SQL statement and is read-only (doesn't modify data).
 
 </QA>
 
 <QA question="What are some common clauses used with SELECT in SQL?">
 
-Asked in interviews.
+**WHERE** — filter rows. **FROM** — specify tables. **JOIN** — combine tables. **GROUP BY** — group rows for aggregation. **HAVING** — filter groups. **ORDER BY** — sort (ASC/DESC). **LIMIT/TOP** — restrict number of rows. **DISTINCT** — remove duplicates. **AS** — aliases. **BETWEEN** — range filter. **IN** — match list. **LIKE** — pattern matching. **IS NULL** — check for NULL values.
 
 </QA>
 
 <QA question="What are UNION, MINUS, and INTERSECT commands?">
 
-Asked in interviews.
+**UNION**: combines results from two SELECT statements, removes duplicates. `UNION ALL` keeps duplicates. **INTERSECT**: returns only rows common to both queries. **MINUS** (Oracle) / **EXCEPT** (PostgreSQL, SQL Server): returns rows in the first query NOT in the second. All require matching column count and compatible types. Example: `SELECT id FROM customers EXCEPT SELECT id FROM blacklist;`.
 
 </QA>
 
 <QA question="What is a cursor in SQL? How do you use one?">
 
-Asked in interviews.
+A **cursor** is a database object that allows row-by-row processing of a result set. Steps: 1) **DECLARE**: define the cursor with a SELECT. 2) **OPEN**: execute the query. 3) **FETCH**: retrieve rows one at a time. 4) **CLOSE**: release the result set. 5) **DEALLOCATE**: free resources. Use cases: complex row-by-row processing, stored procedures. **Avoid when possible** — set-based operations (JOINs, UPDATE with subqueries) are much faster.
 
 </QA>
 
 <QA question="What are entities and relationships in ER diagrams?">
 
-Asked in interviews.
+An **entity** is a real-world object or concept represented as a table (User, Order, Product). Shown as rectangles in ER diagrams. **Attributes**: properties of an entity (name, email) — shown as ovals. **Relationships**: associations between entities (User places Order) — shown as diamonds. Types: 1:1 (one user has one profile), 1:N (one user has many orders), M:N (students and courses — requires junction table).
 
 </QA>
 
 <QA question="List the different types of relationships in SQL.">
 
-Asked in interviews.
+**One-to-One** (1:1): each row in Table A relates to exactly one row in Table B (user → profile). Foreign key with UNIQUE constraint. **One-to-Many** (1:N): one row in A relates to multiple in B (user → orders). Foreign key on the "many" side. **Many-to-Many** (M:N): many rows relate to many (students ↔ courses). Requires a junction/bridge table with two foreign keys.
 
 </QA>
 
 <QA question="What is an alias in SQL?">
 
-Asked in interviews.
+An **alias** is a temporary name given to a table or column in a query for readability. Column alias: `SELECT first_name AS name FROM users;`. Table alias: `SELECT u.name FROM users u JOIN orders o ON u.id = o.user_id;`. Aliases only exist during query execution. Required for: self-joins (need two references to same table), subqueries in FROM clause, and simplifying long table/column names.
 
 </QA>
 
 <QA question="What is a view in SQL?">
 
-Asked in interviews.
+A **view** is a virtual table based on a stored SELECT query. `CREATE VIEW active_users AS SELECT * FROM users WHERE active = true;`. Then query: `SELECT * FROM active_users;`. Views don't store data (computed on access). **Benefits**: simplify complex queries, provide security (expose subset of data), abstract schema changes. **Materialized views** store results physically and must be refreshed. Simple views can be updatable.
 
 </QA>
 
 <QA question="What is Normalization? What are the different forms of normalization?">
 
-Asked in interviews.
+**Normalization** reduces data redundancy and ensures data integrity by organizing data into related tables. **1NF**: atomic values, no repeating groups. **2NF**: 1NF + no partial dependencies (all non-key columns depend on entire primary key). **3NF**: 2NF + no transitive dependencies (non-key columns don't depend on other non-key columns). **BCNF**: every determinant is a candidate key. Higher forms (4NF, 5NF) handle multi-valued and join dependencies.
 
 </QA>
 
 <QA question="What is denormalization?">
 
-Asked in interviews.
+**Denormalization** is intentionally adding redundancy to a normalized database to improve read performance. Examples: storing a user's name directly in the orders table (instead of joining), pre-calculating aggregates, duplicating data across tables. Trade-offs: faster reads (fewer JOINs) but slower writes (update multiple places), data inconsistency risk, more storage. Common in: read-heavy applications, data warehouses, NoSQL databases.
 
 </QA>
 
 <QA question="What is the difference between DROP and TRUNCATE?">
 
-Asked in interviews.
+**DROP**: completely removes the table (structure + data + indexes + constraints). `DROP TABLE users;`. Can't query the table afterward. **TRUNCATE**: removes ALL rows from a table but keeps the structure. `TRUNCATE TABLE users;`. Faster than DELETE (no row-by-row logging). Cannot be rolled back in some RDBMS (MySQL). Resets auto-increment. Neither can be filtered with WHERE (unlike DELETE).
 
 </QA>
 
 <QA question="What is the difference between DELETE and TRUNCATE statements?">
 
-Asked in interviews.
+**DELETE**: removes specific rows, supports WHERE clause, logs each row deletion (slower), can be rolled back, fires triggers, doesn't reset auto-increment. **TRUNCATE**: removes ALL rows, no WHERE, minimal logging (faster), usually can't be rolled back, doesn't fire triggers, resets auto-increment. Use DELETE for selective removal; TRUNCATE for clearing entire table quickly.
 
 </QA>
 
 <QA question="What are the different types of SQL commands? (DDL, DML, DCL, TCL)">
 
-Asked in interviews.
+**DDL** (Data Definition Language): CREATE, ALTER, DROP, TRUNCATE — define schema structure. **DML** (Data Manipulation Language): SELECT, INSERT, UPDATE, DELETE — manipulate data. **DCL** (Data Control Language): GRANT, REVOKE — control access/permissions. **TCL** (Transaction Control Language): COMMIT, ROLLBACK, SAVEPOINT — manage transactions. Some also list **DQL** (Data Query Language): SELECT specifically.
 
 </QA>
 
 <QA question="What are aggregate and scalar functions in SQL?">
 
-Asked in interviews.
+**Aggregate functions** operate on a set of values and return a single result: `COUNT()`, `SUM()`, `AVG()`, `MIN()`, `MAX()`, `STRING_AGG()`. Used with GROUP BY. **Scalar functions** operate on individual values: `UPPER()`, `LOWER()`, `ROUND()`, `LENGTH()`, `COALESCE()`, `CAST()`, `SUBSTRING()`, `NOW()`. Aggregate: `SELECT dept, COUNT(*) FROM emp GROUP BY dept`. Scalar: `SELECT UPPER(name) FROM users`.
 
 </QA>
 
 <QA question="What is a stored procedure?">
 
-Asked in interviews.
+A **stored procedure** is a precompiled set of SQL statements stored in the database and executed by name. `CREATE PROCEDURE get_user(IN uid INT) BEGIN SELECT * FROM users WHERE id = uid; END;`. Call: `CALL get_user(1);`. Benefits: reduce network traffic, enforce business logic on DB, reuse code. Can accept parameters (IN, OUT, INOUT). Drawbacks: vendor-specific syntax, harder to debug, version control challenges.
 
 </QA>
 
 <QA question="Explain triggers in SQL.">
 
-Asked in interviews.
+A **trigger** is a stored procedure that automatically fires on table events. `CREATE TRIGGER before_insert BEFORE INSERT ON orders FOR EACH ROW SET NEW.created_at = NOW();`. Types: BEFORE/AFTER × INSERT/UPDATE/DELETE. `NEW` references the new row; `OLD` the existing row. Use cases: audit logging, enforcing business rules, maintaining derived data. **Caution**: triggers are hidden logic, can cause cascading effects, and impact performance.
 
 </QA>
 
 <QA question="What is the difference between HAVING and WHERE clause?">
 
-Asked in interviews.
+**WHERE** filters individual rows BEFORE grouping — cannot use aggregate functions. **HAVING** filters groups AFTER GROUP BY — CAN use aggregate functions. Example: `SELECT dept, COUNT(*) as cnt FROM employees WHERE active = true GROUP BY dept HAVING COUNT(*) greater than 5;`. WHERE filters rows before aggregation; HAVING filters the aggregated results.
 
 </QA>
 
 <QA question="What is ACID property in SQL?">
 
-Asked in interviews.
+**Atomicity**: transaction is all-or-nothing (if any part fails, everything rolls back). **Consistency**: transaction moves DB from one valid state to another (constraints maintained). **Isolation**: concurrent transactions don't interfere with each other (isolation levels control this). **Durability**: committed data survives crashes (written to disk via WAL). ACID ensures reliable transactions in banking, e-commerce, and any system requiring data correctness.
 
 </QA>
 
 <QA question="What is a transaction in SQL?">
 
-Asked in interviews.
+A **transaction** is a sequence of SQL operations treated as a single unit of work. Either ALL operations succeed (COMMIT) or ALL fail (ROLLBACK). `BEGIN TRANSACTION; UPDATE accounts SET balance = balance - 100 WHERE id = 1; UPDATE accounts SET balance = balance + 100 WHERE id = 2; COMMIT;`. If any step fails, ROLLBACK undoes everything. Ensures ACID properties. Use `SAVEPOINT` for partial rollbacks.
 
 </QA>
 
 <QA question="What are OLTP and OLAP?">
 
-Asked in interviews.
+**OLTP** (Online Transaction Processing): handles day-to-day transactions. High volume of short operations (INSERT/UPDATE/DELETE). Normalized schema. Fast writes. Examples: banking, e-commerce, order processing. **OLAP** (Online Analytical Processing): handles complex analytical queries. Read-heavy, large aggregations. Denormalized/star schema. Data warehouses. Examples: BI reports, dashboards. OLTP serves operational needs; OLAP serves analytical needs.
 
 </QA>
 
 <QA question="How do you create empty tables with the same structure as another table?">
 
-Asked in interviews.
+**MySQL/PostgreSQL**: `CREATE TABLE new_table AS SELECT * FROM existing_table WHERE 1=0;` (no data, copies structure). Or: `CREATE TABLE new_table (LIKE existing_table INCLUDING ALL);` (PostgreSQL — includes indexes, constraints). **SQL Server**: `SELECT * INTO new_table FROM existing_table WHERE 1=0;`. The WHERE clause `1=0` or `FALSE` ensures no rows are copied, only the schema.
 
 </QA>
 
 <QA question="What is collation? What are the different collation sensitivity types?">
 
-Asked in interviews.
+**Collation** defines rules for string comparison and sorting (which characters are equal, how they sort). **Sensitivity types**: **Case sensitivity** — 'A' vs 'a' (CI = case insensitive, CS = case sensitive). **Accent sensitivity** — 'é' vs 'e' (AI/AS). **Width sensitivity** — half-width vs full-width. **Kana sensitivity** — Japanese character types. Example: `utf8mb4_general_ci` (MySQL), `en_US.UTF-8` (PostgreSQL). Affects WHERE, ORDER BY, UNIQUE constraints.
 
 </QA>
 
 <QA question="What are user-defined functions in SQL? What are the different types?">
 
-Asked in interviews.
+**UDFs** are custom functions created by users. **Types**: 1) **Scalar functions** — return a single value: `CREATE FUNCTION add_tax(price DECIMAL) RETURNS DECIMAL RETURN price * 1.1;`. 2) **Table-valued functions** — return a result set (used like a table in FROM/JOIN). 3) **Aggregate functions** — custom aggregation logic. Benefits: code reuse, encapsulation. UDFs can be used in SELECT, WHERE, and other clauses.
 
 </QA>
 
 <QA question="What is a live lock?">
 
-Asked in interviews.
+A **livelock** occurs when two or more processes continuously change their state in response to each other but make no progress (like two people stepping sideways in a hallway). Unlike a deadlock (processes stop), in a livelock processes are active but unproductive. Example: two transactions repeatedly try and back off, then retry simultaneously. **Prevention**: add random delays, prioritize transactions, limit retry attempts.
 
 </QA>
 
 <QA question="What is a case manipulation function in SQL?">
 
-Asked in interviews.
+**Case manipulation functions** change the case of string data: `UPPER('hello')` → 'HELLO'. `LOWER('HELLO')` → 'hello'. `INITCAP('hello world')` → 'Hello World' (PostgreSQL/Oracle). Used for: case-insensitive comparisons (`WHERE UPPER(name) = 'JOHN'`), formatting output, data normalization. Better approach for search: use ILIKE (PostgreSQL) or COLLATE for case-insensitive queries.
 
 </QA>
 
 <QA question="Name different types of case manipulation functions from SQL.">
 
-Asked in interviews.
+1) `UPPER(string)` — converts to uppercase. 2) `LOWER(string)` — converts to lowercase. 3) `INITCAP(string)` — capitalizes first letter of each word (PostgreSQL/Oracle). Related string functions: `TRIM()`, `LTRIM()`, `RTRIM()`, `REPLACE()`, `SUBSTRING()`, `CONCAT()`, `REVERSE()`, `LPAD()`, `RPAD()`. These are scalar functions — operate on individual values.
 
 </QA>
 
 <QA question="How can you fetch common records from two tables?">
 
-Asked in interviews.
+Use **INTERSECT**: `SELECT id, name FROM table_a INTERSECT SELECT id, name FROM table_b;`. Or use **INNER JOIN**: `SELECT a.* FROM table_a a JOIN table_b b ON a.id = b.id;`. Or use **IN**: `SELECT * FROM table_a WHERE id IN (SELECT id FROM table_b);`. Or **EXISTS**: `SELECT * FROM table_a a WHERE EXISTS (SELECT 1 FROM table_b b WHERE b.id = a.id);`. INTERSECT is most readable; JOIN offers flexibility.
 
 </QA>
 
 <QA question="What are the advantages and disadvantages of views in SQL?">
 
-Asked in interviews.
+**Advantages**: 1) Simplify complex queries (reusable). 2) Security — expose only certain columns/rows. 3) Abstraction — hide schema changes. 4) Logical data independence. **Disadvantages**: 1) No performance gain (computed on each access, unless materialized). 2) Can be slow for complex views. 3) Not all views are updatable. 4) Schema dependency — breaking changes in underlying tables break the view. Materialized views add caching but need refresh management.
 
 </QA>
 
 <QA question="What is a schema in SQL?">
 
-Asked in interviews.
+A **schema** is a logical container/namespace that organizes database objects (tables, views, functions, indexes). In PostgreSQL: `CREATE SCHEMA sales; CREATE TABLE sales.orders (...);`. Default schema: `public`. Benefits: 1) Organize objects by domain/feature. 2) Permission management per schema. 3) Avoid naming conflicts. 4) Multi-tenant separation. `search_path` controls which schemas are queried by default.
 
 </QA>
 
 <QA question="How to get the Nth highest salary from a table?">
 
-Asked in interviews.
+Using **DENSE_RANK**: `SELECT salary FROM (SELECT salary, DENSE_RANK() OVER (ORDER BY salary DESC) AS rnk FROM employees) t WHERE rnk = N;`. Using **LIMIT/OFFSET** (PostgreSQL/MySQL): `SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT 1 OFFSET N-1;`. Using **subquery**: `SELECT MIN(salary) FROM (SELECT DISTINCT salary FROM employees ORDER BY salary DESC LIMIT N) t;`.
 
 </QA>
 
@@ -592,168 +628,612 @@ Asked in interviews.
 
 <QA question="What is DBMS and what is its utility?">
 
-Asked in interviews.
+A **DBMS** (Database Management System) is software that manages databases: storing, retrieving, updating, and organizing data. **Utilities**: 1) Data storage management. 2) Query processing (SQL). 3) Concurrency control (multiple users). 4) Transaction management (ACID). 5) Security and access control. 6) Backup and recovery. 7) Data integrity (constraints). Examples: MySQL, PostgreSQL, MongoDB, Oracle, SQL Server.
 
 </QA>
 
 <QA question="What is a Database?">
 
-Asked in interviews.
+A **database** is an organized collection of structured data stored electronically. It provides efficient storage, retrieval, and manipulation of data. Types: relational (tables), document (JSON), key-value, graph, columnar. A database is managed by a DBMS. Properties: persistent storage, concurrent access, data integrity, querying capability. Examples: a company's customer records, an e-commerce product catalog.
 
 </QA>
 
 <QA question="What is a Database System?">
 
-Asked in interviews.
+A **Database System** is the complete environment: DBMS software + the database itself + applications + users. Components: 1) **Hardware** (servers, storage). 2) **Software** (DBMS, OS, application programs). 3) **Data** (stored information). 4) **Users** (DBAs, developers, end users). 5) **Procedures** (rules for using the system). The database system provides a complete infrastructure for data management.
 
 </QA>
 
 <QA question="Explain a few advantages of a DBMS.">
 
-Asked in interviews.
+1) **Data redundancy control** — normalization reduces duplication. 2) **Data integrity** — constraints enforce correctness. 3) **Data security** — access control, authentication. 4) **Concurrent access** — multiple users safely. 5) **Backup and recovery** — prevent data loss. 6) **Data independence** — separate physical from logical. 7) **Query language** (SQL) — powerful data access. 8) **ACID transactions**. 9) **Centralized management**.
 
 </QA>
 
 <QA question="What type of data abstraction are there in a DBMS?">
 
-Asked in interviews.
+Three levels of abstraction: 1) **Physical level** (internal) — how data is physically stored (files, indexes, disk blocks). Managed by DBA. 2) **Logical level** (conceptual) — what data is stored and relationships (tables, columns, constraints). Schema design. 3) **View level** (external) — what individual users see (views, subsets of data). Each user may have a different view. This three-schema architecture provides data independence.
 
 </QA>
 
 <QA question="What is a checkpoint in DBMS?">
 
-Asked in interviews.
+A **checkpoint** is a point where the DBMS writes all modified (dirty) pages from memory to disk and records a checkpoint in the transaction log. Purpose: 1) Reduces recovery time after crash (only need to replay log from last checkpoint). 2) Frees up log space. 3) Ensures durability. PostgreSQL: `CHECKPOINT` command. MySQL (InnoDB): sharp/fuzzy checkpoints. Automatic checkpoints happen periodically or when the WAL reaches a certain size.
 
 </QA>
 
 <QA question="What are the ACID properties in DBMS?">
 
-Asked in interviews.
+**Atomicity** — transactions are all-or-nothing. **Consistency** — DB moves from one valid state to another (constraints satisfied). **Isolation** — concurrent transactions don't see each other's uncommitted changes (controlled by isolation levels). **Durability** — once committed, data persists even after crashes (ensured by WAL/transaction logs). These properties guarantee database reliability and are fundamental to RDBMS.
 
 </QA>
 
 <QA question="How are data and information different?">
 
-Asked in interviews.
+**Data** is raw, unprocessed facts (numbers, text, symbols) without context. Example: "42", "John", "2025-01-15". **Information** is data that has been processed, organized, and contextualized to be meaningful. Example: "John is 42 years old, born on Jan 15". Data is the input; information is the output after processing. Databases store data; applications transform data into information for users.
 
 </QA>
 
 <QA question="Define a DBMS. What are its different types?">
 
-Asked in interviews.
+A **DBMS** is software for creating and managing databases. **Types**: 1) **Relational (RDBMS)** — tables with rows/columns, SQL (PostgreSQL, MySQL). 2) **Document** — JSON-like documents (MongoDB). 3) **Key-Value** — simple key-value pairs (Redis, DynamoDB). 4) **Graph** — nodes and edges for relationships (Neo4j). 5) **Columnar** — column-oriented storage (Cassandra, ClickHouse). 6) **Object-oriented** — stores objects directly. 7) **Time-series** — optimized for time-stamped data (InfluxDB, TimescaleDB).
 
 </QA>
 
 <QA question="What is a DFD and how is it related to DBMS?">
 
-Asked in interviews.
+A **DFD** (Data Flow Diagram) is a visual representation of how data flows through a system. Components: **processes** (circles — data transformation), **data stores** (open rectangles — databases), **data flows** (arrows), **external entities** (rectangles — users/systems). Levels: 0 (context diagram), 1 (high-level), 2+ (detailed). DFDs help in database design by identifying: what data is stored, how it's accessed, which processes modify it.
 
 </QA>
 
 <QA question="What are super, primary, candidate, and foreign keys?">
 
-Asked in interviews.
+**Super key**: any set of columns that uniquely identifies rows (can include extra columns). **Candidate key**: minimal super key (no redundant columns). A table can have multiple. **Primary key**: the chosen candidate key to uniquely identify rows. ONE per table. **Foreign key**: column(s) referencing another table's primary key. Enforces referential integrity. Example: `{id}`, `{email}` are candidate keys; `id` is primary key; `orders.user_id` is foreign key referencing `users.id`.
 
 </QA>
 
 <QA question="What is the difference between a 2-tier and 3-tier database architecture?">
 
-Asked in interviews.
+**2-tier**: client connects directly to database. Client handles UI + business logic; server handles data. Simple but not scalable. Desktop apps. **3-tier**: client → application server → database. Layers: presentation (UI), application (business logic), data (database). Benefits: scalability, security (DB not exposed), maintainability, independent scaling. Modern web apps are 3-tier (or N-tier). API servers act as the middle tier.
 
 </QA>
 
 <QA question="What is ER Modeling?">
 
-Asked in interviews.
+**ER Modeling** (Entity-Relationship) is a technique for designing database schemas using a visual diagram. Components: **Entities** (rectangles — tables), **Attributes** (ovals — columns), **Relationships** (diamonds — associations). Shows cardinality (1:1, 1:N, M:N). Steps: 1) Identify entities. 2) Define attributes. 3) Establish relationships. 4) Define cardinality. 5) Convert to tables. Used in the conceptual design phase before creating physical tables.
 
 </QA>
 
 <QA question="What is a functional dependency?">
 
-Asked in interviews.
+A **functional dependency** (FD) means column A determines column B: if two rows have the same value for A, they must have the same value for B. Written: A → B. Example: `student_id → student_name` (student ID determines the name). FDs are the basis of normalization. **Types**: partial (depends on part of composite key — violates 2NF), transitive (A → B → C — violates 3NF), trivial (A → A). Used in decomposing tables to eliminate redundancy.
 
 </QA>
 
 <QA question="What are the different levels of normalization?">
 
-Asked in interviews.
+**1NF**: atomic values, no repeating groups. **2NF**: 1NF + no partial dependencies. **3NF**: 2NF + no transitive dependencies. **BCNF**: for every FD X→Y, X must be a superkey. **4NF**: no multi-valued dependencies. **5NF**: no join dependencies. Most real databases aim for 3NF or BCNF. Higher forms are theoretical. Denormalization may be applied after normalization for performance.
 
 </QA>
 
 <QA question="What is the difference between a shared lock and an exclusive lock?">
 
-Asked in interviews.
+**Shared lock** (S-lock / read lock): multiple transactions can hold simultaneously. Used for reading — prevents writes during read. **Exclusive lock** (X-lock / write lock): only ONE transaction can hold. Used for writing — blocks all other reads and writes. Compatibility: S+S = OK, S+X = blocked, X+X = blocked. Locks ensure isolation. Held for duration of transaction (depending on isolation level).
 
 </QA>
 
 <QA question="What is meant by transparent DBMS?">
 
-Asked in interviews.
+A **transparent DBMS** hides the internal complexity from users. **Types of transparency**: 1) **Location transparency** — user doesn't know where data is physically stored. 2) **Replication transparency** — user doesn't know data is replicated. 3) **Fragmentation transparency** — user doesn't know data is partitioned. 4) **Concurrency transparency** — user doesn't see concurrent access effects. Important in distributed databases.
 
 </QA>
 
 <QA question="What is hashing and what are the different types of hashing?">
 
-Asked in interviews.
+**Hashing** maps data to a fixed-size value (hash) for fast retrieval (O(1) average). In DBMS: used for hash indexes and hash joins. **Types**: 1) **Static hashing** — fixed number of buckets (overflow chains). 2) **Dynamic hashing** — buckets grow/shrink (extendible hashing, linear hashing). 3) **Consistent hashing** — used in distributed systems (Redis cluster, DynamoDB). Hash functions: MD5, SHA, modulo. Collisions handled with chaining or open addressing.
 
 </QA>
 
 <QA question="What is Database Partitioning?">
 
-Asked in interviews.
+**Partitioning** splits a large table into smaller, manageable pieces. **Horizontal**: rows split across partitions (by range, hash, or list). Example: orders partitioned by year. **Vertical**: columns split (frequently and rarely accessed columns in separate tables). Benefits: faster queries (scan fewer rows), easier maintenance (drop old partitions), parallel processing. PostgreSQL: `PARTITION BY RANGE (created_at)`. Also called **sharding** when distributed across servers.
 
 </QA>
 
 <QA question="When does a deadlock occur in DBMS?">
 
-Asked in interviews.
+A **deadlock** occurs when two or more transactions wait for each other to release locks, creating a circular dependency. Example: Transaction A holds lock on row 1, waiting for lock on row 2. Transaction B holds lock on row 2, waiting for lock on row 1. Neither can proceed. **Resolution**: DBMS detects deadlocks (wait-for graph) and kills one transaction (victim selection). **Prevention**: lock ordering, timeouts, reducing transaction duration.
 
 </QA>
 
 <QA question="Differentiate between OLAP and OLTP.">
 
-Asked in interviews.
+**OLTP**: operational transactions, many short queries, normalized, write-heavy, low latency, current data. Examples: order processing, banking. **OLAP**: analytical queries, few complex queries with aggregations, denormalized (star/snowflake schema), read-heavy, historical data, data warehouses. OLTP → ETL → OLAP (data flows from transactional to analytical). Databases: OLTP — PostgreSQL, MySQL; OLAP — ClickHouse, Redshift, BigQuery.
 
 </QA>
 
 <QA question="What is Proactive, Retroactive, and Simultaneous updates?">
 
-Asked in interviews.
+**Proactive update**: change applied before the event triggers it (scheduled, anticipatory). Example: pre-calculating next month's price changes. **Retroactive update**: change applied after the event (correcting past data). Example: adjusting salary retroactively. **Simultaneous update**: two transactions update the same data at the same time. Causes concurrency issues (lost updates). Managed with locks, MVCC, or optimistic concurrency control.
 
 </QA>
 
 <QA question="What are B-trees and B+ trees in DBMS?">
 
-Asked in interviews.
+**B-tree**: self-balancing tree with multiple keys per node. All nodes can hold data. Used for indexing. O(log n) search. **B+ tree**: keys only in leaf nodes; internal nodes are index only. Leaf nodes are linked (efficient range scans). Most RDBMS use B+ trees for indexes (PostgreSQL, MySQL InnoDB). **Difference**: B+ tree leaf linking enables fast range scans; all data at leaf level; more keys per internal node (shallower tree, fewer disk reads).
 
 </QA>
 
 <QA question="Explain the different types of Normalization (1NF, 2NF, 3NF, BCNF).">
 
-Asked in interviews.
+**1NF**: each column has atomic values (no arrays, no repeating groups). **2NF**: 1NF + every non-key column depends on the ENTIRE primary key (no partial dependencies in composite keys). **3NF**: 2NF + no transitive dependency (non-key column shouldn't depend on another non-key column). **BCNF (Boyce-Codd)**: for every functional dependency X→Y, X must be a superkey. Stricter than 3NF. Most practical databases aim for 3NF.
 
 </QA>
 
 <QA question="What is Concurrency Control in DBMS?">
 
-Asked in interviews.
+**Concurrency control** manages simultaneous access to data by multiple transactions while maintaining consistency. Techniques: 1) **Locking** (shared/exclusive locks, 2-phase locking). 2) **MVCC** (Multi-Version Concurrency Control) — readers don't block writers (PostgreSQL, MySQL InnoDB). 3) **Timestamp ordering** — transactions ordered by timestamp. 4) **Optimistic concurrency** — validate at commit time. Problems prevented: lost updates, dirty reads, non-repeatable reads, phantom reads.
 
 </QA>
 
 <QA question="What is a query optimizer in DBMS?">
 
-Asked in interviews.
+The **query optimizer** is the DBMS component that determines the most efficient execution plan for a query. It analyzes: available indexes, table statistics (row counts, data distribution), join methods (nested loop, hash, merge), access paths (index scan vs seq scan), and cost estimates (I/O, CPU). Produces an execution plan. **Cost-based** optimizers use statistics; **rule-based** use heuristics. View with EXPLAIN in PostgreSQL/MySQL.
 
 </QA>
 
 <QA question="What is the difference between physical and logical data independence?">
 
-Asked in interviews.
+**Physical data independence**: changing storage structure (file format, indexes, compression) doesn't affect the logical schema or applications. Example: adding an index doesn't change queries. **Logical data independence**: changing the logical schema (adding columns, creating views) doesn't affect external schema or applications. Harder to achieve. Physical independence is more common. The three-schema architecture enables both types.
 
 </QA>
 
 <QA question="What is a database schema?">
 
-Asked in interviews.
+A **database schema** is the formal definition of the database structure: tables, columns, data types, constraints, relationships, indexes, and views. It's the blueprint. **Types**: physical schema (how data is stored on disk), logical schema (tables, relationships), external schema (user views). Schema is defined using DDL (CREATE TABLE, ALTER TABLE). In PostgreSQL, a schema is also a namespace within a database.
 
 </QA>
+
+## DBMS (from InterviewBit)
+
+<QA question="What is DBMS and what is its utility? Explain RDBMS with examples.">
+
+**DBMS** is software for managing databases. Provides: data storage, retrieval, concurrency, security, backup. **RDBMS** is a DBMS that stores data in tables with relationships via foreign keys, following Codd's relational model. Uses SQL. Enforces ACID transactions. Examples: **PostgreSQL** (advanced types, extensions), **MySQL** (simple, fast), **Oracle** (enterprise), **SQL Server** (Microsoft), **SQLite** (embedded). RDBMS enforces schema, constraints, and referential integrity.
+
+</QA>
+
+<QA question="Mention the issues with traditional file-based systems that make DBMS a better choice.">
+
+**File-based issues**: 1) **Data redundancy** — same data in multiple files. 2) **Data inconsistency** — updates may miss some copies. 3) **No concurrent access** — no locking mechanism. 4) **No data integrity** — no constraints or validation. 5) **Security limitations** — no fine-grained access control. 6) **No query language** — custom code for each access pattern. 7) **No backup/recovery** — manual process. 8) **Program-data dependence** — changing file format breaks programs. DBMS solves all of these.
+
+</QA>
+
+<QA question="Explain different languages present in DBMS.">
+
+1) **DDL** (Data Definition Language): CREATE, ALTER, DROP, TRUNCATE — define database structure. 2) **DML** (Data Manipulation Language): SELECT, INSERT, UPDATE, DELETE — manipulate data. 3) **DCL** (Data Control Language): GRANT, REVOKE — manage permissions. 4) **TCL** (Transaction Control Language): COMMIT, ROLLBACK, SAVEPOINT. 5) **DQL** (Data Query Language): SELECT (sometimes separated from DML). Each serves a different purpose in database management.
+
+</QA>
+
+<QA question="What is meant by ACID properties in DBMS?">
+
+**Atomicity**: all operations in a transaction succeed or all fail (no partial execution). **Consistency**: database transitions from one valid state to another (all constraints met). **Isolation**: concurrent transactions execute as if serial (controlled by isolation levels: READ UNCOMMITTED, READ COMMITTED, REPEATABLE READ, SERIALIZABLE). **Durability**: committed changes persist even after system crash (via WAL). These four properties are the foundation of reliable database transactions.
+
+</QA>
+
+<QA question="What is meant by normalization and denormalization?">
+
+**Normalization**: restructuring a database to reduce redundancy and dependency by dividing tables into smaller, related tables. Follows normal forms (1NF→3NF/BCNF). Benefits: data integrity, less redundancy, easier updates. **Denormalization**: intentionally introducing redundancy by merging tables or duplicating data. Benefits: faster reads, fewer JOINs. Trade-off: normalized = slower reads, faster writes; denormalized = faster reads, complex writes. Choose based on read/write ratio.
+
+</QA>
+
+<QA question="Explain the difference between a shared lock and an exclusive lock during a transaction.">
+
+**Shared lock** (S-lock): multiple transactions can read simultaneously. Prevents writes while any shared lock is held. **Exclusive lock** (X-lock): only one transaction can access. Blocks all other reads AND writes. **Compatibility matrix**: S+S=compatible, S+X=incompatible, X+X=incompatible. 2-phase locking: growing phase (acquire locks) then shrinking phase (release locks). Ensures serializability but can cause deadlocks.
+
+</QA>
+
+<QA question="What is Data Warehousing?">
+
+A **data warehouse** is a centralized repository for integrated data from multiple sources, optimized for analytics and reporting. Characteristics: subject-oriented, integrated, time-variant, non-volatile. **ETL** (Extract, Transform, Load) processes move data from OLTP systems to the warehouse. Uses star/snowflake schemas (fact and dimension tables). Tools: Snowflake, Redshift, BigQuery, Databricks. Different from operational databases: historical data, complex queries, read-heavy.
+
+</QA>
+
+<QA question="Explain different levels of data abstraction in a DBMS.">
+
+1) **Physical level** — lowest. How data is actually stored: files, indexes, disk blocks. Managed by DBMS internals. 2) **Logical level** — middle. What data is stored: tables, columns, relationships, constraints. Schema design. Most developers work at this level. 3) **View level** — highest. What specific users see: customized views, subsets of data. Different views for different user roles. Abstraction provides: data independence, security, simplified access.
+
+</QA>
+
+<QA question="What is an entity-relationship (E-R) model?">
+
+The **E-R model** is a conceptual data model for database design. **Entity**: real-world object (User, Product) — becomes a table. **Attribute**: property (name, price) — becomes a column. **Relationship**: association between entities (User "places" Order) — becomes foreign key or junction table. Diagram notation: rectangles (entities), ovals (attributes), diamonds (relationships), lines (cardinality). Used as the first step in database design before physical implementation.
+
+</QA>
+
+<QA question="Explain the difference between the DELETE and TRUNCATE command in a DBMS.">
+
+**DELETE**: DML command, removes rows one by one, supports WHERE, fires triggers, logs each deletion (slow), can be rolled back, doesn't reset auto-increment. **TRUNCATE**: DDL command, removes ALL rows at once, no WHERE, no triggers, minimal logging (fast), usually can't be rolled back, resets auto-increment. DELETE for selective removal; TRUNCATE for clearing entire tables quickly. TRUNCATE is essentially "drop and recreate the table."
+
+</QA>
+
+<QA question="Explain the difference between a 2-tier and 3-tier architecture in a DBMS.">
+
+**2-tier**: client (UI + business logic) directly communicates with database server. Simple. Examples: desktop database apps. Drawbacks: scalability, security (DB exposed). **3-tier**: client (UI) → application server (business logic/API) → database. Separation of concerns. Benefits: better security, scalability, maintainability, can scale each tier independently. Modern web apps use 3-tier+. The application server (Node.js/Django) acts as the middleware.
+
+</QA>
+
+<QA question="Explain different types of keys in a database.">
+
+**Super key**: set of columns uniquely identifying rows. **Candidate key**: minimal super key. **Primary key**: chosen candidate key (one per table). **Foreign key**: references another table's primary key. **Alternate key**: candidate keys not chosen as primary. **Composite key**: primary key with multiple columns. **Surrogate key**: system-generated artificial key (auto-increment, UUID). **Natural key**: real-world attribute used as key (SSN, email).
+
+</QA>
+
+<QA question="Explain different types of Normalization forms in a DBMS.">
+
+**1NF**: atomic values, unique rows. **2NF**: 1NF + no partial dependency (non-key depends on full key). **3NF**: 2NF + no transitive dependency (non-key doesn't depend on non-key). **BCNF**: every determinant is a candidate key. **4NF**: no multi-valued dependencies. **5NF**: no join dependencies. Practical target: 3NF/BCNF. Example: splitting `{student_id, course_id, instructor_name}` — instructor depends on course, not student (transitive dependency, violates 3NF).
+
+</QA>
+
+## DBMS Indexing & Query Optimization (from InterviewBit)
+
+<QA question="What is selectivity/cardinality and why does it matter for indexing?">
+
+**Cardinality**: number of distinct values in a column. **Selectivity**: ratio of distinct values to total rows (cardinality/row_count). High selectivity (e.g., primary key, email) — index is VERY useful. Low selectivity (e.g., gender with 2 values) — index may not help (optimizer prefers full scan). Rule: index columns with selectivity > ~10-20%. The query optimizer uses selectivity statistics to decide whether to use an index.
+
+</QA>
+
+<QA question="What is an index and why can indexing slow down INSERT/UPDATE/DELETE?">
+
+An **index** is a data structure (usually B+ tree) that enables fast data lookup. **Write overhead**: every INSERT/UPDATE/DELETE must update ALL relevant indexes. More indexes = more work per write. Index pages need rebalancing (B-tree splits). Index maintenance requires additional I/O. Trade-off: N indexes = N extra structures to maintain. Best practice: only create indexes that serve actual queries, review with `$indexStats` (MongoDB) or `pg_stat_user_indexes` (PostgreSQL).
+
+</QA>
+
+<QA question="Difference between clustered and non-clustered index.">
+
+**Clustered**: physically sorts the table data by the index key. Only ONE per table. The data IS the index (leaf nodes contain actual rows). Best for range scans. **Non-clustered**: separate structure pointing to rows. Multiple per table. Leaf nodes contain pointers (row IDs) to actual data. Requires "bookmark lookup" to access non-indexed columns. PostgreSQL: all indexes are non-clustered (CLUSTER command sorts once but isn't maintained).
+
+</QA>
+
+<QA question="When does a query not use an index even if one exists?">
+
+1) **Low selectivity** — too many rows match (seq scan faster). 2) **Function on indexed column** — `WHERE UPPER(name) = 'JOHN'` (index on `name` not used). 3) **Type mismatch** — comparing string column with number. 4) **Leading wildcard** — `LIKE '%pattern'`. 5) **OR conditions** across different columns. 6) **Small tables** — seq scan is cheaper. 7) **Stale statistics** — optimizer has wrong estimates. 8) **NOT/NULL checks** (some cases). Use EXPLAIN to verify.
+
+</QA>
+
+<QA question="What is a composite index and the leftmost prefix rule?">
+
+A **composite index** indexes multiple columns together: `CREATE INDEX idx ON orders (user_id, status, created_at)`. The **leftmost prefix rule**: the index can be used for queries that reference columns from LEFT to RIGHT. This index supports: `WHERE user_id = 1`, `WHERE user_id = 1 AND status = 'active'`, but NOT `WHERE status = 'active'` alone (skips leftmost column). Column order matters — put most selective/most queried columns first.
+
+</QA>
+
+<QA question="What is a covering index and how does it reduce table lookups?">
+
+A **covering index** includes ALL columns needed by a query. The query can be answered entirely from the index without accessing the actual table rows (no bookmark/heap lookup). PostgreSQL: `CREATE INDEX idx ON orders (user_id) INCLUDE (total, status)`. When a query only needs `user_id`, `total`, `status` — it's an "index-only scan" (much faster). Covering indexes trade storage for read performance.
+
+</QA>
+
+<QA question="What is an execution plan and what do you check first?">
+
+An **execution plan** shows how the database will execute a query (or actually ran it with ANALYZE). View with `EXPLAIN ANALYZE`. **Check first**: 1) **Scan type** — Seq Scan (bad for large tables) vs Index Scan. 2) **Actual rows vs estimated** — big differences = stale statistics. 3) **Highest cost nodes**. 4) **Join methods** — Nested Loop (small sets), Hash Join (medium), Merge Join (large sorted). 5) **Sort operations** — in-memory vs on-disk.
+
+</QA>
+
+<QA question="What is index fragmentation or bloat and its impact?">
+
+**Index fragmentation/bloat** occurs when index pages have wasted space due to deletions and updates. The index becomes larger than necessary and less efficient. **Impact**: more disk I/O, larger cache footprint, slower scans. **Causes**: DELETE creates dead space; UPDATE = DELETE + INSERT. **Fix**: PostgreSQL: `REINDEX INDEX idx_name` or `VACUUM FULL`. MySQL: `ALTER TABLE t ENGINE=InnoDB` or `OPTIMIZE TABLE`. Monitor index size relative to table size; rebuild when bloat exceeds 30-50%.
+
+</QA>
+
+## Transactions & Concurrency (from InterviewBit)
+
+<QA question="What is a transaction and what does autocommit mean?">
+
+A **transaction** groups SQL operations into an atomic unit. Either all succeed (COMMIT) or all fail (ROLLBACK). **Autocommit**: when enabled (default in most DBMS), each individual SQL statement is automatically committed. `INSERT INTO users VALUES (...)` is immediately permanent. To group operations: `BEGIN; ... COMMIT;` disables autocommit for that block. Disable autocommit with: `SET autocommit = 0` (MySQL) or use explicit `BEGIN` (PostgreSQL).
+
+</QA>
+
+<QA question="Explain the four isolation levels.">
+
+1) **READ UNCOMMITTED**: can see uncommitted changes (dirty reads). Fastest. 2) **READ COMMITTED** (PostgreSQL default): only see committed data. Prevents dirty reads. 3) **REPEATABLE READ** (MySQL InnoDB default): same query returns same results within a transaction. Prevents non-repeatable reads. 4) **SERIALIZABLE**: transactions execute as if serial. Prevents phantom reads. Strictest, slowest. Higher isolation = more consistency but lower concurrency.
+
+</QA>
+
+<QA question="Dirty read, non-repeatable read, and phantom read — explain each.">
+
+**Dirty read**: reading uncommitted data from another transaction (it may roll back). Prevented at READ COMMITTED+. **Non-repeatable read**: reading same row twice, getting different values (another transaction modified it between reads). Prevented at REPEATABLE READ+. **Phantom read**: re-executing a query returns NEW rows that weren't there before (another transaction inserted them). Prevented at SERIALIZABLE. Each anomaly is progressively harder to prevent.
+
+</QA>
+
+<QA question="What is a lost update and how do you prevent it?">
+
+A **lost update** occurs when two transactions read the same data, modify it, and one overwrites the other's change. Example: both read balance=100, both add 50, both write 150 — one update is lost (should be 200). **Prevention**: 1) **Pessimistic locking** — `SELECT ... FOR UPDATE` locks the row. 2) **Optimistic locking** — version column, check version at update time. 3) **SERIALIZABLE isolation**. 4) **Atomic operations** — `UPDATE SET balance = balance + 50`.
+
+</QA>
+
+<QA question="Optimistic locking vs pessimistic locking.">
+
+**Pessimistic locking**: lock resources BEFORE accessing. `SELECT * FROM accounts WHERE id = 1 FOR UPDATE`. Prevents conflicts by blocking. Good for high contention. Drawback: reduced concurrency, deadlock risk. **Optimistic locking**: no locks; check for conflicts at commit time using a version/timestamp column. `UPDATE accounts SET balance = 200, version = version + 1 WHERE id = 1 AND version = 5`. If version changed, retry. Good for low contention, high read workloads.
+
+</QA>
+
+<QA question="What is MVCC and how does it improve read concurrency?">
+
+**MVCC** (Multi-Version Concurrency Control): each transaction sees a snapshot of data at a specific point in time. Writes create new versions instead of overwriting. Readers NEVER block writers; writers NEVER block readers. PostgreSQL: uses xmin/xmax transaction IDs on each row. Old versions cleaned by VACUUM. MySQL InnoDB: undo log stores old versions. MVCC enables: READ COMMITTED and REPEATABLE READ without locking. Trade-off: storage overhead for multiple versions.
+
+</QA>
+
+<QA question="What is a deadlock and how do databases resolve it?">
+
+A **deadlock** is when two+ transactions wait for each other's locks in a circular dependency. Example: T1 locks A, waits for B; T2 locks B, waits for A. Neither can proceed. **Resolution**: 1) **Detection** — DBMS builds wait-for graph, detects cycles. 2) **Victim selection** — DBMS kills one transaction (usually the one with least work done). 3) Rolled-back transaction retries. **Prevention**: consistent lock ordering, shorter transactions, timeouts (`lock_timeout` in PostgreSQL).
+
+</QA>
+
+<QA question="What is write skew and why is it tricky?">
+
+**Write skew** occurs when two transactions read overlapping data, make decisions based on it, then write to DIFFERENT rows — individually valid but collectively violating an invariant. Example: two doctors both check if at least one is on-call, both see 2 on-call, both go off-call — now zero on-call. Not prevented by row-level locking (different rows). **Solutions**: SERIALIZABLE isolation, application-level checks with explicit locking (`SELECT ... FOR UPDATE` on the read set).
+
+</QA>
+
+## Replication & Sharding (from InterviewBit)
+
+<QA question="What is partitioning or sharding and when should you shard?">
+
+**Partitioning**: splitting a table into pieces. **Sharding**: distributing partitions across different servers. **When to shard**: 1) Single server can't handle the data volume. 2) Read/write throughput exceeds single server capacity. 3) Geographic distribution needed. **When NOT to shard**: as long as possible — adds significant complexity (cross-shard queries, distributed transactions, resharding). Try first: read replicas, caching, query optimization, vertical scaling.
+
+</QA>
+
+<QA question="What is replication lag and how should apps handle it?">
+
+**Replication lag** is the delay between a write on the primary and it appearing on replicas. Causes: network latency, heavy write load, slow replicas. **Handling**: 1) **Read-your-writes** — after writing, read from primary. 2) **Causal consistency** — track timestamps, read from replica only if caught up. 3) **Sticky sessions** — route user to same replica. 4) **Monitoring** — alert on growing lag. 5) **Fallback to primary** when lag exceeds threshold.
+
+</QA>
+
+<QA question="Leader–follower vs multi-leader replication.">
+
+**Leader-follower** (single-master): one leader accepts writes; followers replicate and serve reads. Simple. Failover promotes a follower. All writes go through one node. **Multi-leader** (multi-master): multiple nodes accept writes. Requires conflict resolution (last-write-wins, custom merge). More complex. Use cases: multi-datacenter (one leader per DC), offline clients. Multi-leader is harder but better for geographic distribution and write availability.
+
+</QA>
+
+<QA question="Hash-based vs range-based sharding.">
+
+**Hash-based**: apply hash function to shard key, distribute by hash value. Pros: even distribution, no hotspots. Cons: range queries require scatter-gather (query all shards). **Range-based**: assign contiguous ranges (e.g., users A-M on shard 1, N-Z on shard 2). Pros: efficient range scans. Cons: potential hotspots (some ranges have more data). Choose hash for uniform distribution; range for range query patterns.
+
+</QA>
+
+<QA question="What is a hot shard or partition and how do you mitigate it?">
+
+A **hot shard** receives disproportionately more traffic than others. Causes: poor shard key choice (e.g., sharding by date — all today's writes go to one shard), celebrity users, viral content. **Mitigation**: 1) Choose high-cardinality shard keys. 2) Add randomness (composite shard key with random suffix). 3) Split hot partitions. 4) Application-level caching for hot data. 5) Hash-based sharding for even distribution. MongoDB example: timestamps as shard key → hot shard.
+
+</QA>
+
+<QA question="What is eventual consistency in simple terms?">
+
+**Eventual consistency** means that if no new writes are made, all replicas will EVENTUALLY have the same data — but there's no guarantee WHEN. During the propagation window, different replicas may return different values. Trade-off for availability and partition tolerance (CAP theorem). Used by: DynamoDB, Cassandra, DNS, CDNs. Contrast with **strong consistency**: every read returns the latest write. Eventual consistency is acceptable when slightly stale data is OK (social media feeds, search indexes).
+
+</QA>
+
+<QA question="Why are distributed transactions hard and how do teams avoid them?">
+
+**Hard because**: 1) 2-phase commit (2PC) is slow (coordinator bottleneck, blocking if coordinator fails). 2) Network failures lead to ambiguous states. 3) Higher latency across servers. **Alternatives**: 1) **Saga pattern** — chain of local transactions with compensating actions on failure. 2) **Eventual consistency** — accept temporary inconsistency. 3) **Outbox pattern** — write to DB + outbox table, publish events asynchronously. 4) **Design around it** — keep related data on same shard.
+
+</QA>
+
+## MySQL (from InterviewBit)
+
+<QA question="What are the String Data Types in MySQL?">
+
+**CHAR(n)**: fixed-length string (padded with spaces). Max 255. **VARCHAR(n)**: variable-length string. Max 65,535 (limited by row size). **TEXT**: large text (TINYTEXT 255, TEXT 64KB, MEDIUMTEXT 16MB, LONGTEXT 4GB). **BINARY/VARBINARY**: binary data. **ENUM**: predefined set of values. **SET**: multiple values from predefined set. **BLOB**: binary large object. Use VARCHAR for most strings; TEXT for large content; CHAR for fixed-length codes.
+
+</QA>
+
+<QA question="What is BLOB in MySQL?">
+
+**BLOB** (Binary Large Object) stores binary data: images, files, serialized objects. Types: **TINYBLOB** (255 bytes), **BLOB** (64KB), **MEDIUMBLOB** (16MB), **LONGBLOB** (4GB). Data is stored as-is (no character set conversion). Use cases: storing binary files in the database. **Best practice**: store files in object storage (S3, GCS) and save only the URL/path in the database instead of using BLOBs.
+
+</QA>
+
+<QA question="How do you create a table using MySQL?">
+
+```sql
+CREATE TABLE users (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(100) NOT NULL,
+  email VARCHAR(255) UNIQUE NOT NULL,
+  age INT CHECK (age >= 0),
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+```
+Specify columns with data types and constraints. InnoDB engine provides ACID transactions and foreign keys. Always use `utf8mb4` for full Unicode support.
+
+</QA>
+
+<QA question="How to create an Index in MySQL?">
+
+`CREATE INDEX idx_name ON table_name (column_name);`. Composite: `CREATE INDEX idx ON orders (user_id, status);`. Unique: `CREATE UNIQUE INDEX idx ON users (email);`. Full-text: `CREATE FULLTEXT INDEX idx ON articles (title, content);`. In CREATE TABLE: `INDEX idx_name (column)`. Drop: `DROP INDEX idx_name ON table_name;`. View: `SHOW INDEX FROM table_name;`. Use `EXPLAIN` to verify index usage.
+
+</QA>
+
+<QA question="What are the types of relationships used in MySQL?">
+
+**One-to-One** (1:1): one row in Table A relates to exactly one in Table B. Implement with FK + UNIQUE constraint. **One-to-Many** (1:N): one row in A relates to many in B. Most common. FK on the "many" side. **Many-to-Many** (M:N): requires a junction/pivot table with two FKs. Example: `students_courses(student_id FK, course_id FK)`. **Self-referencing**: FK points to same table (e.g., employees.manager_id references employees.id).
+
+</QA>
+
+<QA question="What are MySQL Triggers?">
+
+**MySQL triggers** are stored procedures that execute automatically on INSERT, UPDATE, or DELETE events. Syntax: `CREATE TRIGGER trigger_name BEFORE|AFTER INSERT|UPDATE|DELETE ON table FOR EACH ROW BEGIN ... END;`. Access old/new values: `OLD.column`, `NEW.column`. Use cases: audit logging, auto-setting timestamps, maintaining derived data. Limitations: max one trigger per event/timing combo (before MySQL 8.0), no cascading triggers, debugging difficulty.
+
+</QA>
+
+<QA question="How do you create and execute views in MySQL?">
+
+**Create**: `CREATE VIEW active_users AS SELECT id, name, email FROM users WHERE status = 'active';`. **Use**: `SELECT * FROM active_users WHERE name LIKE 'J%';`. **Modify**: `CREATE OR REPLACE VIEW active_users AS SELECT ... ;`. **Drop**: `DROP VIEW active_users;`. **Updatable views**: simple views (single table, no aggregates) allow INSERT/UPDATE/DELETE through them. Use `WITH CHECK OPTION` to enforce the WHERE clause on modifications.
+
+</QA>
+
+<QA question="What is Sharding in SQL?">
+
+**Sharding** splits a database into multiple smaller databases (shards), each on a separate server. Each shard holds a subset of data based on a **shard key**. Horizontal partitioning across servers. Benefits: horizontal scaling, improved write throughput, data locality. Challenges: cross-shard queries (expensive), distributed transactions, resharding complexity, application-level routing. Strategies: hash-based (even distribution), range-based (efficient ranges), directory-based (lookup table). Use as last resort after optimizing.
+
+</QA>
+
+<QA question="Can you explain the logical architecture of MySQL?">
+
+MySQL architecture has three layers: 1) **Connection layer** — handles connections, authentication, connection pooling. Each client gets a thread. 2) **Server layer** — parser (SQL → parse tree), optimizer (execution plan), query cache (removed in 8.0), built-in functions. 3) **Storage engine layer** — pluggable engines: **InnoDB** (default, ACID, row-level locking, FK support), **MyISAM** (fast reads, table-level locking, no transactions), **Memory** (in-RAM). The layered design allows engine flexibility.
+
+</QA>
+
+## SQL (from InterviewBit)
+
+<QA question="What is a Cross-Join?">
+
+A **Cross-Join** (Cartesian product) combines every row from Table A with every row from Table B. If A has M rows and B has N rows, the result has M×N rows. `SELECT * FROM sizes CROSS JOIN colors;`. No JOIN condition. Use cases: generating all combinations (size-color matrix), test data generation. Rarely used in practice due to large result sets. Implicit syntax: `SELECT * FROM A, B` (without WHERE) is also a cross join.
+
+</QA>
+
+<QA question="What are UNION, MINUS and INTERSECT commands?">
+
+**UNION**: combines two SELECT results, removes duplicates. `UNION ALL` keeps duplicates (faster). **INTERSECT**: returns only rows present in BOTH results. **MINUS** (Oracle) / **EXCEPT** (SQL standard): returns rows in the first result that are NOT in the second. All require same column count and compatible types. Note: MySQL doesn't natively support INTERSECT/EXCEPT before 8.0.31 — use JOINs or subqueries instead.
+
+</QA>
+
+<QA question="What is a Subquery? What are its types?">
+
+A **subquery** is a query nested inside another query (in SELECT, FROM, WHERE, or HAVING). **Types**: 1) **Scalar** — returns single value: `WHERE salary > (SELECT AVG(salary) FROM emp)`. 2) **Row** — returns single row. 3) **Table** — returns multiple rows/columns (used in FROM as derived table). 4) **Correlated** — references outer query, runs once per outer row. 5) **Non-correlated** — independent, runs once. Correlated subqueries can often be rewritten as JOINs for performance.
+
+</QA>
+
+<QA question="What is an Alias in SQL?">
+
+An **alias** gives a temporary name to a table or column. Table: `SELECT u.name FROM users AS u;`. Column: `SELECT first_name AS name`. Used for: readability, required in self-joins (two references to same table), naming computed columns (`SELECT count(*) AS total`), referencing subqueries (`FROM (SELECT ...) AS subq`). Aliases exist only during query execution. The `AS` keyword is optional: `users u` works too.
+
+</QA>
+
+<QA question="What is a Self-Join?">
+
+A **self-join** joins a table to itself using aliases. The same table is treated as two logical tables. Example: finding employee-manager pairs: `SELECT e.name AS employee, m.name AS manager FROM employees e LEFT JOIN employees m ON e.manager_id = m.id;`. Use cases: hierarchical data, finding related rows in the same table (e.g., find users in the same city). Can use INNER, LEFT, or other join types.
+
+</QA>
+
+<QA question="What is Pattern Matching in SQL?">
+
+**Pattern matching** uses `LIKE` or `REGEXP/RLIKE` to filter text. **LIKE**: `%` matches any number of characters, `_` matches exactly one. `WHERE name LIKE 'J%'` (starts with J), `LIKE '%son'` (ends with son), `LIKE '__n%'` (third char is n). **REGEXP**: `WHERE name REGEXP '^[A-M]'`. **PostgreSQL**: `SIMILAR TO`, `~` (regex), `ILIKE` (case-insensitive). Note: leading `%` prevents index usage (full scan).
+
+</QA>
+
+<QA question="What is a Recursive Stored Procedure?">
+
+A **recursive stored procedure** calls itself until a termination condition is met. Example: calculating factorial or traversing hierarchies. `CREATE PROCEDURE traverse(IN id INT, IN depth INT) BEGIN IF depth greater than 0 THEN CALL traverse(child_id, depth - 1); END IF; END;`. MySQL limits recursion with `max_sp_recursion_depth` (default 0, must be increased). **Better alternatives**: recursive CTEs (`WITH RECURSIVE`) are preferred for hierarchical queries — more readable and standard.
+
+</QA>
+
+<QA question="What is the difference between OLTP and OLAP?">
+
+**OLTP**: operational — short transactions, many concurrent users, normalized, write-heavy, current data, low latency. Examples: banking, e-commerce checkout. **OLAP**: analytical — complex aggregations, few analysts, denormalized (star schema), read-heavy, historical data, batch processing. OLTP databases feed OLAP warehouses via ETL. OLTP: PostgreSQL, MySQL. OLAP: BigQuery, Redshift, ClickHouse, Snowflake.
+
+</QA>
+
+<QA question="What are Aggregate and Scalar functions?">
+
+**Aggregate**: operate on multiple rows, return single value. `COUNT()`, `SUM()`, `AVG()`, `MIN()`, `MAX()`, `GROUP_CONCAT()`. Used with GROUP BY. **Scalar**: operate on individual values, return one value per row. `UPPER()`, `LOWER()`, `ROUND()`, `LENGTH()`, `COALESCE()`, `CAST()`, `DATEDIFF()`, `NOW()`. Aggregate example: `SELECT dept, COUNT(*) FROM emp GROUP BY dept`. Scalar example: `SELECT UPPER(name), ROUND(price, 2) FROM products`.
+
+</QA>
+
+<QA question="What is a View?">
+
+A **view** is a saved SELECT query that acts as a virtual table. `CREATE VIEW top_customers AS SELECT * FROM customers WHERE total_orders greater than 100;`. Query it like a table: `SELECT * FROM top_customers;`. Benefits: simplify complex queries, security (restrict visible columns/rows), abstraction (hide schema complexity). Views don't store data (computed each time). **Materialized views** store results for faster access but need explicit refresh.
+
+</QA>
+
+<QA question="What is the difference between ROW_NUMBER, RANK, and DENSE_RANK?">
+
+All are window functions. For values [100, 90, 90, 80]: **ROW_NUMBER**: 1, 2, 3, 4 — unique numbers, arbitrary for ties. **RANK**: 1, 2, 2, 4 — same rank for ties, GAPS in sequence. **DENSE_RANK**: 1, 2, 2, 3 — same rank for ties, NO GAPS. Use ROW_NUMBER for unique ordering; RANK when gaps matter; DENSE_RANK for "Nth highest" queries. Syntax: `ROW_NUMBER() OVER (ORDER BY salary DESC)`.
+
+</QA>
+
+<QA question="What is a window function?">
+
+A **window function** performs calculations across a set of rows related to the current row WITHOUT collapsing rows (unlike GROUP BY). Uses `OVER()` clause. Types: **Ranking** — ROW_NUMBER, RANK, DENSE_RANK. **Aggregate** — SUM, AVG, COUNT over a window. **Navigation** — LAG, LEAD, FIRST_VALUE, LAST_VALUE. **Frame** — ROWS BETWEEN for running totals. Example: `SELECT name, salary, AVG(salary) OVER (PARTITION BY dept) AS dept_avg FROM employees;`.
+
+</QA>
+
+<QA question="What is a recursive CTE?">
+
+A **recursive CTE** (Common Table Expression) references itself to process hierarchical or iterative data. Syntax: `WITH RECURSIVE cte AS (base_case UNION ALL recursive_case) SELECT * FROM cte;`. Example: org chart: `WITH RECURSIVE org AS (SELECT id, name, manager_id FROM employees WHERE manager_id IS NULL UNION ALL SELECT e.id, e.name, e.manager_id FROM employees e JOIN org ON e.manager_id = org.id) SELECT * FROM org;`. Needs a termination condition to avoid infinite loops.
+
+</QA>
+
+<QA question="What is the difference between a CTE and a subquery?">
+
+**CTE** (WITH clause): named, reusable within the query, supports recursion, improves readability. **Subquery**: inline, can't be referenced multiple times, no recursion. CTEs are better for: complex multi-step queries, self-referencing (recursive), readability. Subqueries are fine for: simple one-off nesting. Performance: usually same execution plan (optimizer may inline CTEs). PostgreSQL: CTEs were optimization fences before v12 (now inlined).
+
+</QA>
+
+<QA question="How do you optimize a slow query?">
+
+1) **EXPLAIN ANALYZE** — identify bottleneck (Seq Scan, Sort on disk). 2) **Add indexes** on WHERE/JOIN/ORDER BY columns. 3) **Rewrite** — replace correlated subqueries with JOINs, use CTEs. 4) **Limit data** — SELECT only needed columns, use LIMIT. 5) **Update statistics** — ANALYZE (PostgreSQL), ANALYZE TABLE (MySQL). 6) **Avoid functions on indexed columns** (blocks index usage). 7) **Denormalize** for read-heavy patterns. 8) **Caching** — Redis for hot queries.
+
+</QA>
+
+<QA question="What is sargability in SQL?">
+
+**Sargable** (Search ARGument ABLE) means a query condition can use an index. **Sargable**: `WHERE age greater than 18`, `WHERE name LIKE 'John%'`, `WHERE created_at BETWEEN ...`. **Non-sargable**: `WHERE YEAR(created_at) = 2024` (function on column), `WHERE name LIKE '%John'` (leading wildcard), `WHERE price * 1.1 greater than 100` (expression on column). Fix non-sargable: rewrite `YEAR(date) = 2024` as `date BETWEEN '2024-01-01' AND '2024-12-31'`.
+
+</QA>
+
+<QA question="What is the difference between NOT IN and NOT EXISTS?">
+
+**NOT IN**: checks if a value is not in a list/subquery result. Problem: if the subquery returns ANY NULL, NOT IN returns no results (three-valued logic). **NOT EXISTS**: checks if a correlated subquery returns no rows. NULL-safe. Performance: NOT EXISTS often better — short-circuits (stops at first match). `WHERE id NOT IN (SELECT id FROM blacklist)` — fails if blacklist.id has NULLs. `WHERE NOT EXISTS (SELECT 1 FROM blacklist WHERE blacklist.id = users.id)` — always correct. Prefer NOT EXISTS.
+
+</QA>
+
+## PostgreSQL (from InterviewBit)
+
+<QA question="What are parallel queries in PostgreSQL?">
+
+PostgreSQL can split a query across multiple CPU cores for faster execution. Uses: **Parallel Sequential Scan** (large table scans), **Parallel Index Scan**, **Parallel Hash Join**, **Parallel Aggregation**. Controlled by: `max_parallel_workers_per_gather` (default 2), `min_parallel_table_scan_size` (8MB). Worker processes read portions of data in parallel. Not all queries parallelize (writes, cursors, some functions). Check with EXPLAIN — look for "Gather" nodes.
+
+</QA>
+
+<QA question="Does PostgreSQL support full text search?">
+
+Yes. PostgreSQL has built-in full-text search. **Components**: `tsvector` (document representation), `tsquery` (search query). Create: `ALTER TABLE articles ADD COLUMN search_vector tsvector; UPDATE articles SET search_vector = to_tsvector('english', title || ' ' || body);`. Query: `SELECT * FROM articles WHERE search_vector @@ to_tsquery('english', 'database & optimization');`. Index with GIN: `CREATE INDEX idx ON articles USING GIN(search_vector);`. Supports: stemming, ranking, highlighting, synonyms, dictionaries.
+
+</QA>
+
+<QA question="How do you perform case-insensitive searches using regular expressions in PostgreSQL?">
+
+Use **`~*`** operator for case-insensitive regex: `SELECT * FROM users WHERE name ~* 'john';`. Or use **`ILIKE`** for simple patterns: `WHERE name ILIKE '%john%'`. Regex operators: `~` (case-sensitive match), `~*` (case-insensitive match), `!~` (no match), `!~*` (case-insensitive no match). For indexed case-insensitive search: create expression index: `CREATE INDEX idx ON users (LOWER(name));` and query with `WHERE LOWER(name) = 'john'`.
+
+</QA>
+
+<QA question="What can you tell about WAL (Write Ahead Logging)?">
+
+WAL ensures all changes are written to a sequential log BEFORE being applied to the actual data pages. **Benefits**: 1) **Crash recovery** — replay WAL to restore state after crash. 2) **Replication** — stream WAL records to replicas. 3) **Point-in-time recovery** (PITR). 4) **Performance** — sequential writes to WAL are faster than random writes to data pages. Configuration: `wal_level` (replica/logical), `max_wal_size`, `archive_mode`. WAL files stored in `pg_wal/` directory.
+
+</QA>
+
+<QA question="Can you explain the architecture of PostgreSQL?">
+
+PostgreSQL uses a **client-server** model with per-connection processes. **Postmaster**: main process, spawns child processes. **Backend processes**: one per client connection (handles queries). **Background processes**: WAL writer, checkpointer, autovacuum, stats collector, bgwriter. **Shared memory**: shared buffers (data cache), WAL buffers, lock tables. **Storage**: data files in `PGDATA` directory, WAL in `pg_wal/`. Uses MVCC for concurrency. Connection pooling (PgBouncer) recommended for high connection counts.
+
+</QA>
+
+<QA question="What are ACID properties? Is PostgreSQL compliant with ACID?">
+
+**ACID**: **Atomicity** (all-or-nothing transactions), **Consistency** (valid state transitions, constraints enforced), **Isolation** (concurrent transactions don't interfere — PostgreSQL supports all 4 isolation levels), **Durability** (committed data persists via WAL). **Yes, PostgreSQL is fully ACID compliant**. Uses WAL for durability, MVCC for isolation, and constraint enforcement for consistency. One of the most ACID-compliant open-source databases.
+
+</QA>
+
+<QA question="What are partitioned tables called in PostgreSQL?">
+
+Partitioned tables in PostgreSQL are called **partitioned tables** (parent) with **partitions** (children). `CREATE TABLE orders (id INT, order_date DATE) PARTITION BY RANGE (order_date);`. Create partitions: `CREATE TABLE orders_2024 PARTITION OF orders FOR VALUES FROM ('2024-01-01') TO ('2025-01-01');`. Types: **RANGE** (date ranges), **LIST** (specific values like region), **HASH** (even distribution). PostgreSQL 10+ supports declarative partitioning. Child tables can be further sub-partitioned.
+
+</QA>
+
+<QA question="How do you define Indexes in PostgreSQL?">
+
+`CREATE INDEX idx_name ON table_name (column);`. **Types**: B-tree (default): `CREATE INDEX idx ON users (email);`. GIN: `CREATE INDEX idx ON articles USING GIN (search_vector);`. GiST: `CREATE INDEX idx ON places USING GIST (location);`. Partial: `CREATE INDEX idx ON orders (status) WHERE status = 'pending';`. Expression: `CREATE INDEX idx ON users (LOWER(email));`. Unique: `CREATE UNIQUE INDEX idx ON users (email);`. Concurrent: `CREATE INDEX CONCURRENTLY idx ON users (email);` (no table lock).
+
+</QA>
+
